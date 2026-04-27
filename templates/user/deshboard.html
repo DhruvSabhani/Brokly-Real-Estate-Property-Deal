@@ -1,0 +1,19 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+    {% tailwind_css %}
+    <title>Brokly Dashboard</title>
+  </head>
+  <body class="flex flex-col justify-center items-center h-screen text-2xl font-bold">
+    <h1>Welcome to Brokly Dashboard</h1>
+    {% if request.user.phone != '' %}
+      <h1>{{ request.user.phone }}&nbsp;<a href="/logout/" class="text-blue-500 hover:text-blue-700">Logout</a></h1>
+    {% else %}
+      <a href="/register/" class="text-blue-500 hover:text-blue-700">Login to Brokly</a>
+    {% endif %}
+  </body>
+</html>
