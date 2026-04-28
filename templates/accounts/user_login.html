@@ -1,21 +1,54 @@
 {% load static tailwind_tags %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="gu">
   <head>
     {% load static %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static 'Resources\bootstrap-5.3.8-dist\css\bootstrap.min.css' %}" />
-    <script src="{% static 'Resources\bootstrap-5.3.8-dist\js\bootstrap.bundle.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'Resources/bootstrap-5.3.8-dist/css/bootstrap.min.css' %}" />
+    <script src="{% static 'Resources/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js' %}"></script>
     {% tailwind_css %}
     <title>Login to │ Brokly</title>
+    <style>
+      body {
+        background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+      }
+      
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          z-index: auto;
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-fadeInUp {
+        animation: fadeInUp 1s ease forwards;
+      }
+      
+      @keyframes zoom {
+        0%,
+        100% {
+          transform: scale(1.1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+      }
+    </style>
   </head>
-  <body class="flex flex-col justify-center items-center w-screen h-screen text-2xl font-bold p-0 m-0 bg-black text-white">
+  <body class="flex flex-col justify-center items-center w-screen h-screen font-bold p-0 m-0 bg-black text-white animate-fadeInUp">
     <h1>Welcome to Brokly login page</h1>
     <p class="text-xl text-green-500 font-bold" id="msg"></p>
-    {% if request.user.is_authenticated %}
-      <form action="/register/" method="POST" enctype="multipart/form-data" id="userProfileForm">
-        {% csrf_token %}
+    <form id="userLoginForm" method="POST" action="/register/">
+      {% csrf_token %}
+      <input type="tel" class="w-full border p-2 rounded-xl mb-4 bg-transparent outline-none" name="phone" id="phone" placeholder="Enter phone" autofocus />
+      <div id="otp-box" class="hidden">
+        <input type="text" class="w-full border p-2 rounded-xl mb-4" name="otp" id="otp" placeholder="Enter OTP (after sending)" />
+      </div>
+      <div id="profileFields" class="hidden">
         <input type="file" name="img" id="img" class="w-full border p-2 mb-4 rounded-xl" />
         <input type="text" name="uname" id="uname" class="w-full border p-2 mb-4 rounded-xl" placeholder="username" />
         <select name="state" id="state" class="w-full border p-2 mb-4 rounded-xl">
@@ -24,30 +57,73 @@
         <select name="city" id="city" class="w-full border p-2 mb-4 rounded-xl">
           <option value="1">Ahmedabad</option>
         </select>
-        <button type="submit" class="w-full p-2 rounded-3 mb-4 bg-blue-600">Submit</button>
-      </form>
-    {% else %}
-      <form method="POST" id="userLoginForm" action="/register">
-        {% csrf_token %}
-        <input type="tel" class="w-full border p-2 rounded-xl mb-4 bg-transparent outline-none" name="phone" placeholder="Enter phone" value="{{ phone|default:'' }}" autofocus />
-        <input type="text" class="w-full border p-2 rounded-xl mb-4" name="otp" placeholder="Enter OTP (after sending)" />
-        <button type="submit" class="w-full p-2 rounded-3 mb-4 bg-blue-600">Submit</button>
-      </form>
-    {% endif %}
+      </div>
+      <button type="submit" id="btn" class="w-full p-2 rounded-3 mb-4 bg-blue-600">Continue</button>
+    </form>
+
     <script>
+      function getCookie(name) {
+        let cookieValue = null
+        document.cookie.split(';').forEach((c) => {
+          c = c.trim()
+          if (c.startsWith(name + '=')) {
+            cookieValue = decodeURIComponent(c.substring(name.length + 1))
+          }
+        })
+        return cookieValue
+      }
+      document.getElementById('otp').addEventListener('input', function () {
+        let otp = this.value
+        if (otp.length === 6) {
+          let formData = new FormData()
+          formData.append('phone', document.getElementById('phone').value)
+          formData.append('otp', otp)
+          fetch('', {
+            method: 'POST',
+            headers: {
+              'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: formData
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              let msg = document.getElementById('msg')
+              if (data.success) {
+                msg.innerText = 'OTP Verified'
+                msg.style.color = 'green'
+                document.getElementById('phone').classList.add('hidden')
+                document.getElementById('otp-box').classList.add('hidden')
+                document.getElementById('profileFields').classList.remove('hidden')
+                document.getElementById('uname').focus()
+                document.getElementById('btn').classList.remove('hidden')
+              } else {
+                msg.innerText = data.message || 'Invalid OTP'
+                msg.style.color = 'red'
+              }
+            })
+            .catch(() => {
+              document.getElementById('msg').innerText = 'Server error'
+            })
+        }
+      })
       document.getElementById('userLoginForm').addEventListener('submit', function (e) {
         e.preventDefault()
         let formData = new FormData(this)
         fetch('', {
           method: 'POST',
+          credentials: 'same-origin',
           headers: {
-            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            'X-CSRFToken': getCookie('csrftoken')
           },
           body: formData
         })
-          .then((res) => res.json())
+          .then((res) => {
+            if (!res.ok) throw new Error('HTTP ERROR ' + res.status)
+            return res.json()
+          })
           .then((data) => {
             let msg = document.getElementById('msg')
+      
             if (data.error) {
               msg.innerText = data.message
               msg.style.color = 'red'
@@ -55,8 +131,16 @@
               msg.innerText = data.message || 'success'
               msg.style.color = 'green'
             }
-            if (data.phone) {
-              document.querySelector('input[name=phone]').value = data.phone
+            if (data.step === 'otp') {
+              document.getElementById('otp-box').classList.remove('hidden')
+              document.getElementById('otp').focus()
+              document.getElementById('btn').classList.add('hidden')
+            }
+            //if (data.step === 'profile') {
+            // document.getElementById('profileFields').classList.remove('hidden')
+            //}
+            if (data.otp) {
+              document.getElementById('otp').value = data.otp
             }
             if (data.redirect) {
               window.location.href = data.redirect

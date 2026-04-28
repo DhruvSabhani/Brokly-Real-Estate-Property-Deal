@@ -7,8 +7,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% tailwind_css %}
     <title>Brokly Dashboard</title>
+    <style>
+      body {
+        background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+      }
+      
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          z-index: auto;
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-fadeInUp {
+        animation: fadeInUp 1s ease forwards;
+      }
+      
+      @keyframes zoom {
+        0%,
+        100% {
+          transform: scale(1.1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+      }
+    </style>
   </head>
-  <body class="flex flex-col justify-center items-center h-screen text-2xl font-bold">
+  <body class="flex flex-col justify-center items-center h-screen text-2xl font-bold animate-fadeInUp text-white">
     {% if request.user.is_authenticated and request.user.is_user %}
       <h1>Welcome to Brokly Dashboard</h1>
       <h2>{{ profile }}</h2>

@@ -7,8 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% tailwind_css %}
     <title>Broker Dashboard</title>
+
   </head>
-  <body class="flex flex-col justify-center items-center h-screen text-2xl font-bold">
+  <body class="flex flex-col justify-center items-center h-screen text-2xl font-bold animate-fadeInUp">
     {% if request.user.is_authenticated and request.user.is_broker %}
       <h1>Welcome to Broker Dashboard</h1>
       <h2>{{ profile }}</h2>
