@@ -11,9 +11,9 @@
   <body class="flex flex-col justify-center items-center w-screen h-screen text-2xl font-bold p-0 m-0">
     <h1>welcome to Brokly Broker login page</h1>
     <p class="text-xl text-green-500 font-bold" id="msg"></p>
-    <form method="POST" id="brokerLoginForm" accept="/broker/register">
+    <form method="POST" id="brokerLoginForm" action="/broker/register">
       {% csrf_token %}
-      <input type="tel" class="w-full border p-2 rounded mb-4 bg-transparen outline-none" name="phone" placeholder="Enter phone" value="{{ phone|default:'' }}" autofocus />
+      <input type="tel" class="w-full border p-2 rounded mb-4 bg-transparent outline-none" name="phone" placeholder="Enter phone" value="{{ phone|default:'' }}" autofocus />
       <input type="text" class="w-full border p-2 rounded mb-4" name="otp" placeholder="Enter OTP (after sending)" />
       <button type="submit" class="w-full p-2 rounded mb-4 bg-blue-600">Submit</button>
     </form>

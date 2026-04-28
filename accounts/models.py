@@ -68,7 +68,10 @@ class OTP(models.Model):
         super().save(*args, **kwargs)
 
     def is_valid(self):
-        return timezone.now() - self.created_at < timezone.timedelta(minutes=5)
+        return (
+            not self.is_used
+            and timezone.now() - self.created_at < timezone.timedelta(minutes=5)
+        )
 
     def __str__(self):
         return f"{self.phone} - {self.otp}"

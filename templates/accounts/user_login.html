@@ -2,21 +2,38 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    {% load static %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {% load static %}
+    <link rel="stylesheet" href="{% static 'Resources\bootstrap-5.3.8-dist\css\bootstrap.min.css' %}" />
+    <script src="{% static 'Resources\bootstrap-5.3.8-dist\js\bootstrap.bundle.min.js' %}"></script>
     {% tailwind_css %}
     <title>Login to │ Brokly</title>
   </head>
-  <body class="flex flex-col justify-center items-center w-screen h-screen text-2xl font-bold p-0 m-0">
-    <h1>welcome to Brokly login page</h1>
+  <body class="flex flex-col justify-center items-center w-screen h-screen text-2xl font-bold p-0 m-0 bg-black text-white">
+    <h1>Welcome to Brokly login page</h1>
     <p class="text-xl text-green-500 font-bold" id="msg"></p>
-    <form method="POST" id="userLoginForm" accept="/register">
-      {% csrf_token %}
-      <input type="tel" class="w-full border p-2 rounded mb-4 bg-transparen outline-none" name="phone" placeholder="Enter phone" value="{{ phone|default:'' }}" autofocus />
-      <input type="text" class="w-full border p-2 rounded mb-4" name="otp" placeholder="Enter OTP (after sending)" />
-      <button type="submit" class="w-full p-2 rounded mb-4 bg-blue-600">Submit</button>
-    </form>
+    {% if request.user.is_authenticated %}
+      <form action="/register/" method="POST" enctype="multipart/form-data" id="userProfileForm">
+        {% csrf_token %}
+        <input type="file" name="img" id="img" class="w-full border p-2 mb-4 rounded-xl" />
+        <input type="text" name="uname" id="uname" class="w-full border p-2 mb-4 rounded-xl" placeholder="username" />
+        <select name="state" id="state" class="w-full border p-2 mb-4 rounded-xl">
+          <option value="1">Gujarat</option>
+        </select>
+        <select name="city" id="city" class="w-full border p-2 mb-4 rounded-xl">
+          <option value="1">Ahmedabad</option>
+        </select>
+        <button type="submit" class="w-full p-2 rounded-3 mb-4 bg-blue-600">Submit</button>
+      </form>
+    {% else %}
+      <form method="POST" id="userLoginForm" action="/register">
+        {% csrf_token %}
+        <input type="tel" class="w-full border p-2 rounded-xl mb-4 bg-transparent outline-none" name="phone" placeholder="Enter phone" value="{{ phone|default:'' }}" autofocus />
+        <input type="text" class="w-full border p-2 rounded-xl mb-4" name="otp" placeholder="Enter OTP (after sending)" />
+        <button type="submit" class="w-full p-2 rounded-3 mb-4 bg-blue-600">Submit</button>
+      </form>
+    {% endif %}
     <script>
       document.getElementById('userLoginForm').addEventListener('submit', function (e) {
         e.preventDefault()
