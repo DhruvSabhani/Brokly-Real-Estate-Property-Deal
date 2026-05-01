@@ -6,8 +6,8 @@ from accounts.models import CustomUser, UserProfile, BrokerProfile
 @receiver(post_save, sender=CustomUser)
 def create_profiles(sender, instance, created, **kwargs):
     if created:
-        if instance.is_user == True:
+        if instance.is_user:
             UserProfile.objects.create(user=instance)
 
-        elif instance.is_broker == True:
+        elif instance.is_broker:
             BrokerProfile.objects.create(user=instance)

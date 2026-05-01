@@ -42,7 +42,7 @@
   <body class="flex flex-col justify-center items-center w-screen h-screen font-bold p-0 m-0 bg-black text-white animate-fadeInUp">
     <h1>Welcome to Brokly login page</h1>
     <p class="text-xl text-green-500 font-bold" id="msg"></p>
-    <form id="userLoginForm" method="POST" action="/register/">
+    <form id="userLoginForm" method="POST">
       {% csrf_token %}
       <input type="tel" class="w-full border p-2 rounded-xl mb-4 bg-transparent outline-none" name="phone" id="phone" placeholder="Enter phone" autofocus />
       <div id="otp-box" class="hidden">
@@ -72,80 +72,85 @@
         })
         return cookieValue
       }
-      document.getElementById('otp').addEventListener('input', function () {
-        let otp = this.value
-        if (otp.length === 6) {
-          let formData = new FormData()
-          formData.append('phone', document.getElementById('phone').value)
-          formData.append('otp', otp)
-          fetch('', {
-            method: 'POST',
-            headers: {
-              'X-CSRFToken': getCookie('csrftoken')
-            },
-            body: formData
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              let msg = document.getElementById('msg')
-              if (data.success) {
-                msg.innerText = 'OTP Verified'
-                msg.style.color = 'green'
-                document.getElementById('phone').classList.add('hidden')
-                document.getElementById('otp-box').classList.add('hidden')
-                document.getElementById('profileFields').classList.remove('hidden')
-                document.getElementById('uname').focus()
-                document.getElementById('btn').classList.remove('hidden')
-              } else {
-                msg.innerText = data.message || 'Invalid OTP'
-                msg.style.color = 'red'
-              }
-            })
-            .catch(() => {
-              document.getElementById('msg').innerText = 'Server error'
-            })
-        }
-      })
-      document.getElementById('userLoginForm').addEventListener('submit', function (e) {
+      const msg = document.getElementById('msg')
+      const form = document.getElementById('userLoginForm')
+      const phoneInput = document.getElementById('phone')
+      const otpBox = document.getElementById('otp-box')
+      const otpInput = document.getElementById('otp')
+      const profileFields = document.getElementById('profileFields')
+      const btn = document.getElementById('btn')
+      
+      form.addEventListener('submit', function (e) {
         e.preventDefault()
         let formData = new FormData(this)
-        fetch('', {
+        fetch(window.location.href, {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
-            'X-CSRFToken': getCookie('csrftoken')
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            'X-Requested-With': 'XMLHttpRequest'
           },
           body: formData
         })
           .then((res) => {
-            if (!res.ok) throw new Error('HTTP ERROR ' + res.status)
+            if (!res.ok) throw new Error('HTTP ' + res.status)
             return res.json()
           })
           .then((data) => {
-            let msg = document.getElementById('msg')
-      
             if (data.error) {
               msg.innerText = data.message
               msg.style.color = 'red'
-            } else {
-              msg.innerText = data.message || 'success'
+            }
+            if (data.success) {
+              msg.innerText = data.message
               msg.style.color = 'green'
             }
             if (data.step === 'otp') {
-              document.getElementById('otp-box').classList.remove('hidden')
-              document.getElementById('otp').focus()
-              document.getElementById('btn').classList.add('hidden')
-            }
-            //if (data.step === 'profile') {
-            // document.getElementById('profileFields').classList.remove('hidden')
-            //}
-            if (data.otp) {
-              document.getElementById('otp').value = data.otp
-            }
-            if (data.redirect) {
-              window.location.href = data.redirect
+              otpBox.classList.remove('hidden')
+              otpInput.focus()
+              btn.classList.add('hidden')
             }
           })
+          .catch((err) => {
+            console.error('ERROR:', err)
+            msg.innerText = 'Server Error / CSRF issue'
+          })
+      })
+      otpInput.addEventListener('input', function (e) {
+        if (this.value.length === 6) {
+          let formData = new FormData()
+          formData.append('phone', phoneInput.value)
+          formData.append('otp', otpInput.value)
+          fetch('', {
+            method: 'POST',
+            headers: { 'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value },
+            body: formData
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.error) {
+                msg.innerText = data.message
+                msg.style.color = 'red'
+                return
+              }
+              msg.innerText = data.message
+              msg.style.color = 'green'
+              if (data.step === 'profile') {
+                phoneInput.classList.add('hidden')
+                otpBox.classList.add('hidden')
+                profileFields.classList.remove('hidden')
+                btn.classList.remove('hidden')
+                btn.innerText = 'Complete Profile'
+                document.getElementById('uname').focus()
+              }
+              if (data.redirect) {
+                window.location.href = data.redirect
+              }
+              if (data.uname) {
+                console.log(data.uname)
+              }
+            })
+        }
       })
     </script>
   </body>

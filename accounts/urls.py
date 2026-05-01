@@ -7,7 +7,6 @@ urlpatterns = [
     # User
     path("", views.userDashboard, name="brokly_dashboard"),
     path("register/", views.user_login, name="login_to_brokly"),
-    # path("user_profile/", views.user_profile, name="user_profile"),
     path("logout/", views.user_logout, name="logout_to_brokly"),
     # Broker
     path("broker/register/", views.broker_login, name="login_to_broker"),
