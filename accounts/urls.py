@@ -5,11 +5,11 @@ from accounts import views
 
 urlpatterns = [
     # User
-    path("", views.userDashboard, name="brokly_dashboard"),
-    path("register/", views.user_login, name="login_to_brokly"),
-    path("logout/", views.user_logout, name="logout_to_brokly"),
+    path("", views.user_dashaboard, name="brokly_dashboard"),
+    path("login/", views.login_user, name="brokly_login"),
+    path("resend-otp/", views.resend_otp, name="resend_otp"),
+    path("verify-otp/", views.verify_otp, name="verify_otp"),
     # Broker
-    path("broker/register/", views.broker_login, name="login_to_broker"),
-    path("broker/dashboard/", views.brokerDashboard, name="broker_dashboard"),
-    path("broker/logout/", views.broker_logout, name="logout_to_broker"),
+    path("broker/", views.broker_dashaboard, name="broker_dashabord"),
+    path("broker/login/", views.login_broker, name="broker_login"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -40,11 +40,11 @@
   <body class="flex flex-col justify-center items-center h-screen text-2xl font-bold animate-fadeInUp text-white">
     {% if request.user.is_authenticated and request.user.is_user %}
       <h1>Welcome to Brokly Dashboard</h1>
-      <h2>{{ profile }}</h2>
+      <h2>{{ uProfile }}</h2>
       <a href="/logout/" class="text-blue-500 hover:text-blue-700">Logout</a>
     {% else %}
       <h1>Please login first</h1>
-      <a href="/register/" class="text-blue-500 hover:text-blue-700">Login to Brokly</a>
+      <a href="/login" class="text-blue-500 hover:text-blue-700">Login to Brokly</a>
     {% endif %}
   </body>
 </html>

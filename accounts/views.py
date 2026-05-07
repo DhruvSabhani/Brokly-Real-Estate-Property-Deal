@@ -1,150 +1,129 @@
-import re
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout
 from .models import *
 from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
+import json
 
 
-def is_valid_phone(phone):
-    return re.fullmatch(r"^[6-9][0-9]{9}$", phone)
+def generate_otp(phone):
+    otp_obj = OTP.objects.create(phone=phone)
+    print(f"OTP for {phone} : {otp_obj._raw_otp}")
+    return otp_obj._raw_otp
 
 
 @ensure_csrf_cookie
 def login_with_otp(request, role):
-    # Already login in
-    if request.user.is_authenticated:
-        if role == "user" and request.user.is_user:
-            return redirect("/")
-        if role == "broker" and request.user.is_broker:
-            return redirect("/broker/dashboard/")
+    # if request.user.is_authenticated:
+    # if request.user.is_user == "user":
+    #     return redirect(user_dashaboard)
+    # elif request.user.is_broker:
+    #     return redirect(broker_dashaboard)
+    # elif request.user.is_staff:
+    #     return redirect("/admin")
+    # else:
+    #     return redirect("/")
 
-    # POST request
     if request.method == "POST":
-        phone = request.POST.get("phone")
-        otp = request.POST.get("otp")
+        data = json.loads(request.body)
+        code = data.get("code")
+        phone = data.get("phone")
+        otp = data.get("otp")
+        request.session["role"] = role
 
-        # check phone number
-        if not phone or not is_valid_phone(phone):
-            return JsonResponse(
-                {
-                    "error": True,
-                    "message": "Please enter a valid 10-digit phone number starting with 6-9.",
-                }
-            )
-        # check otp
+        # create OTP
         if not otp:
-            otp_obj = OTP.objects.create(phone=phone)
-            print(f"OTP for {phone} : {otp_obj._raw_otp}")
-            return JsonResponse(
-                {
-                    "success": True,
-                    "message": "OTP sent",
-                    "step": "otp",
-                }
-            )
-        # OTP Verify
-        otp_recode = (
-            OTP.objects.filter(phone=phone, is_used=False)
-            .order_by("-created_at")
-            .first()
-        )
-        if not otp_recode or not otp_recode.check_otp_hash(otp):
-            return JsonResponse({"error": True, "message": "Invalid OTP"})
-        if otp_recode.is_expired:
-            return JsonResponse({"error": True, "message": "OTP expired"})
-        otp_recode.is_used = True
-        otp_recode.save()
-        # CustomUser Login
-        user, created = CustomUser.objects.get_or_create(phone=phone)
-        if role == "user":
-            user.is_user = True
-        else:
-            user.is_broker = True
-        user.is_active = True
-        user.save()
-        login(request, user)
-        # Profile check
-        if role == "user":
-            profile, created = UserProfile.objects.get_or_create(user=user)
+            otp = generate_otp(phone)
+            request.session["code"] = code
+            request.session["phone"] = phone
+            return JsonResponse({"success": True, "message": otp, "step": "otp"})
 
-            uname = request.POST.get("uname")
-            if created or not profile.name:
-                if not uname:  # No name provided in the current request
-                    return JsonResponse(
-                        {
-                            "success": True,
-                            "message": "OTP Verified Successfully",
-                            "step": "profile",
-                        }
-                    )
-            if not uname:
-                return JsonResponse({"error": True, "message": "Name is required"})
-            if uname:
-                profile.name = uname
-                profile.save()
-                return JsonResponse(
-                    {
-                        "success": True,
-                        "message": "Profile Update Seccessfully",
-                        "redirect": "/",
-                    }
-                )
-            return JsonResponse(
-                {"success": True, "message": "Login Successfully", "redirect": "/"}
-            )
+    country_code = CountryCode.objects.filter(is_active=True).all()
 
-        elif role == "broker":
-            BrokerProfile.objects.get_or_create(user=user)
-            return JsonResponse(
-                {
-                    "success": True,
-                    "message": "Broker Login Successfully",
-                    "redirect": "/broker/dashboard/",
-                }
-            )
+    context = {
+        "country_code": country_code,
+    }
+
     return render(
         request,
         "accounts/user_login.html" if role == "user" else "accounts/broker_login.html",
+        context,
     )
 
 
-def user_login(request):
+def resend_otp(request):
+    phone = request.session.get("phone")
+    if not phone:
+        return JsonResponse({"error": True, "message": "Session expired"})
+    otp = generate_otp(phone)
+    return JsonResponse({"success": True, "message": otp})
+
+
+def verify_otp(request):
+    if request.method != "POST":
+        return JsonResponse({"error": True, "message": "Invalid request"})
+    try:
+        data = json.loads(request.body)
+    except:
+        return JsonResponse({"error": True, "message": "Invalid JSON"})
+    code = request.session.get("code")
+    phone = request.session.get("phone")
+    otp = data.get("otp")
+    role = request.session.get("role")
+
+    if not phone or not role:
+        return JsonResponse({"error": True, "message": "Session expired"})
+
+    otp_record = (
+        OTP.objects.filter(phone=phone, is_used=False).order_by("-created_at").first()
+    )
+    if not otp_record:
+        return JsonResponse({"error": True, "message": "No OTP found"})
+    if not otp_record.check_otp_hash(otp):
+        return JsonResponse({"error": True, "message": "Invalid OTP"})
+    if otp_record.is_expired:
+        return JsonResponse({"error": True, "message": "OTP expried"})
+    otp_record.is_used = True
+    otp_record.save()
+    user, _ = CustomUser.objects.get_or_create(phone=phone)
+    if role == "broker":
+        user.is_broker = True
+    else:
+        user.is_user = True
+    user.is_staff = False
+    user.is_active = True
+    user.country_code = CountryCode.objects.get(id=code)
+    user.save()
+
+    login(request, user)
+
+    # check Profile
+    if role == "user":
+        UserProfile.objects.get_or_create(user=user)
+    if role == "broker":
+        BrokerProfile.objects.get_or_create(user=user)
+
+    request.session.pop("role", None)
+
+    return JsonResponse({"success": True, "step": "profile"})
+
+def login_user(request):
     return login_with_otp(request, "user")
 
 
-def broker_login(request):
+def login_broker(request):
     return login_with_otp(request, "broker")
 
 
-@login_required(login_url="/register")
-def userDashboard(request):
-    if request.user.is_staff or not request.user.is_user:
-        return redirect("/register/")
-    profile = UserProfile.objects.get(user=request.user)
-    return render(request, "user/dashboard.html", {"profile": profile})
+@login_required(login_url="/login")
+def user_dashaboard(request):
+    if not request.user.is_user:
+        return redirect("/login/")
+    uProfile = UserProfile.objects.get(user=request.user)
+    return render(request, "user/dashboard.html", {"uProfile": uProfile})
 
 
-@login_required(login_url="/broker/register")
-def brokerDashboard(request):
-    if request.user.is_staff or not request.user.is_broker:
-        return redirect("/broker/register/")
-    profile = BrokerProfile.objects.get(user=request.user)
-    return render(request, "broker/dashboard.html", {"profile": profile})
-
-
-def user_logout(request):
-    if request.user.is_authenticated:
-        request.user.is_user = False
-        request.user.save()
-    logout(request)
-    return redirect("/register")
-
-
-def broker_logout(request):
-    if request.user.is_authenticated:
-        request.user.is_broker = False
-        request.user.save()
-    logout(request)
-    return redirect("/broker/register")
+@login_required(login_url="/broker/login")
+def broker_dashaboard(request):
+    return render(request, "broker/dashboard.html")
