@@ -1,9 +1,20 @@
 * {
   transition: all 0.1s ease;
 }
+input:-webkit-autofill {
+  -webkit-text-fill-color: white;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+button,
+i {
+  cursor: pointer;
+}
+
 #uCountryCodeBtn:disabled,
 #phone:disabled {
   background-color: transparent;
+  cursor: not-allowed;
 }
 
 #sendOtpBtn:disabled {
@@ -19,6 +30,18 @@
 
 .otp-input:disabled {
   background-color: #1e2939;
+  cursor: not-allowed;
+}
+
+#uCityBtn:disabled {
+  background-color: #1e293991;
+  color: rgba(255, 255, 255, 0.459);
+  cursor: not-allowed;
+}
+
+#uUpdateBtn:disabled {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: rgba(255, 255, 255, 0.5);
   cursor: not-allowed;
 }
 

@@ -1,10 +1,22 @@
 from django.shortcuts import render, redirect
-from .models import *
+from accounts.models import *
 from django.http import JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.contrib.auth import login, logout
-from django.contrib.auth.decorators import login_required
 import json
+
+
+def get_states(request):
+    country_id = request.GET.get("country_id")
+    statemodal = State.objects.filter(country_code=country_id, is_active=True).values(
+        "id", "name"
+    )
+    return JsonResponse({"states": list(statemodal)})
+
+
+def get_cities(request):
+    state_id = request.GET.get("state_id")
+    citymodal = City.objects.filter(state=state_id, is_active=True).values("id", "name")
+    return JsonResponse({"cities": list(citymodal)})
 
 
 def generate_otp(phone):
@@ -15,34 +27,38 @@ def generate_otp(phone):
 
 @ensure_csrf_cookie
 def login_with_otp(request, role):
-    # if request.user.is_authenticated:
-    # if request.user.is_user == "user":
-    #     return redirect(user_dashaboard)
-    # elif request.user.is_broker:
-    #     return redirect(broker_dashaboard)
-    # elif request.user.is_staff:
-    #     return redirect("/admin")
-    # else:
-    #     return redirect("/")
+    if role == "user" and request.session.get("user_login"):
+        return redirect("/")
+    if role == "broker" and request.session.get("broker_login"):
+        return redirect("/broker/")
 
     if request.method == "POST":
-        data = json.loads(request.body)
+        try:
+            data = json.loads(request.body)
+        except:
+            return JsonResponse({"error": True, "message": "Invalid request"})
         code = data.get("code")
         phone = data.get("phone")
         otp = data.get("otp")
         request.session["role"] = role
 
-        # create OTP
-        if not otp:
-            otp = generate_otp(phone)
-            request.session["code"] = code
-            request.session["phone"] = phone
-            return JsonResponse({"success": True, "message": otp, "step": "otp"})
+        admin_user = CustomUser.objects.filter(
+            phone=phone, is_superuser=True, is_staff=True
+        ).exists()
+        if admin_user:
+            return JsonResponse({"error": True, "message": "Not valid number"})
 
-    country_code = CountryCode.objects.filter(is_active=True).all()
+        otp = generate_otp(phone)
+        request.session["code"] = code
+        request.session["phone"] = phone
+        return JsonResponse({"success": True, "message": otp, "step": "otp"})
+
+    countrycode = CountryCode.objects.filter(is_active=True)
+    statemodal = State.objects.filter(country_code=1, is_active=True).all()
 
     context = {
-        "country_code": country_code,
+        "countrycode": countrycode,
+        "statemodal": statemodal,
     }
 
     return render(
@@ -86,7 +102,8 @@ def verify_otp(request):
         return JsonResponse({"error": True, "message": "OTP expried"})
     otp_record.is_used = True
     otp_record.save()
-    user, _ = CustomUser.objects.get_or_create(phone=phone)
+
+    user, created = CustomUser.objects.get_or_create(phone=phone)
     if role == "broker":
         user.is_broker = True
     else:
@@ -96,17 +113,73 @@ def verify_otp(request):
     user.country_code = CountryCode.objects.get(id=code)
     user.save()
 
-    login(request, user)
-
+    profile_data = {}
     # check Profile
     if role == "user":
-        UserProfile.objects.get_or_create(user=user)
-    if role == "broker":
+        request.session["user_login"] = user.pk
+        uProfile, created = UserProfile.objects.get_or_create(user=user)
+        if uProfile.img or uProfile.name or uProfile.state:
+            profile_data = {
+                "img": uProfile.img.url if uProfile.img else None,
+                "name": uProfile.name if uProfile.name else None,
+                "state_id": uProfile.state.id if uProfile.state else None,
+                "state_name": uProfile.state.name if uProfile.state else None,
+                "city_id": uProfile.city.id if uProfile.city else None,
+                "city_name": uProfile.city.name if uProfile.city else None,
+            }
+
+    elif role == "broker":
+        request.session["broker_login"] = user.pk
         BrokerProfile.objects.get_or_create(user=user)
+        # redirect_url = "/broker/"
 
     request.session.pop("role", None)
 
-    return JsonResponse({"success": True, "step": "profile"})
+    return JsonResponse({"success": True, "step": "profile", "profile": profile_data})
+
+
+def user_profile(request):
+    if request.method != "POST":
+        return JsonResponse({"success": False, "message": "• Invalid request"})
+
+    uimg = request.FILES.get("uimg")
+    uname = request.POST.get("uname")
+    ustateid = request.POST.get("ustateid")
+    ucityid = request.POST.get("ucityid")
+
+    user_id = request.session.get("user_login")
+    if not user_id:
+        return JsonResponse({"error": True, "message": "Session expired"})
+
+    try:
+        user = CustomUser.objects.get(id=user_id)
+        uProfile, created = UserProfile.objects.get_or_create(user=user)
+    except UserProfile.DoesNotExist:
+        return JsonResponse({"error": True, "message": "Profile not found"})
+
+    if uimg:
+        uProfile.img = uimg
+
+    if uname:
+        uProfile.name = uname
+
+    if ustateid:
+        uProfile.state = State.objects.get(id=ustateid)
+
+    if ucityid:
+        uProfile.city = City.objects.get(id=ucityid)
+    uProfile.language = Language.objects.get(id=1)
+    uProfile.theme = Theme.objects.get(id=1)
+
+    uProfile.save()
+
+    return JsonResponse(
+        {
+            "success": True,
+            "message": "Profile updated successfully",
+        }
+    )
+
 
 def login_user(request):
     return login_with_otp(request, "user")
@@ -116,14 +189,32 @@ def login_broker(request):
     return login_with_otp(request, "broker")
 
 
-@login_required(login_url="/login")
-def user_dashaboard(request):
-    if not request.user.is_user:
+def user_dashboard(request):
+    user_id = request.session.get("user_login")
+    if not user_id:
         return redirect("/login/")
-    uProfile = UserProfile.objects.get(user=request.user)
-    return render(request, "user/dashboard.html", {"uProfile": uProfile})
+    user = CustomUser.objects.filter(id=user_id, is_user=True, is_active=True).first()
+    if not user:
+        request.session.flush()
+        return redirect("/login/")
+    uProfile, created = UserProfile.objects.get_or_create(user=user)
+    context = {"user": user, "uProfile": uProfile}
+    return render(request, "user/dashboard.html", context)
 
 
-@login_required(login_url="/broker/login")
-def broker_dashaboard(request):
-    return render(request, "broker/dashboard.html")
+def broker_dashboard(request):
+    broker_id = request.session.get("broker_login")
+    if not broker_id:
+        return redirect("/broker/login/")
+    user = CustomUser.objects.get(id=broker_id)
+    if not user.is_broker:
+        return redirect("/broker/login/")
+    bProfile = BrokerProfile.objects.get(user=user)
+    return render(request, "broker/dashboard.html", {"bProfile": bProfile})
+
+
+def user_logout(request):
+    request.session.pop("user_login", None)
+    request.session.pop("code", None)
+    request.session.pop("phone", None)
+    return redirect("/login/")

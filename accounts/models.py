@@ -6,8 +6,10 @@ from django.contrib.auth.models import (
 )
 from django.utils import timezone
 import random
-from datetime import timedelta
 from django.contrib.auth.hashers import make_password, check_password
+import os
+import uuid
+from datetime import timedelta, datetime
 
 # Create your models here.
 
@@ -153,7 +155,12 @@ class Theme(models.Model):
 
 
 def user_image_path(instance, filename):
-    return f"user/{instance.user.phone}/{filename}"
+    ext = filename.split(".")[-1]
+    filename = f"{uuid.uuid4().hex}.{ext}"
+    today = datetime.now()
+    return os.path.join(
+        "users", str(instance.user.phone), str(today.year), str(today.month), filename
+    )
 
 
 class UserProfile(models.Model):

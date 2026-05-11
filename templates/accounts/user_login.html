@@ -64,6 +64,7 @@
         <div class="w-full max-w-md p-4 rounded-2xl bg-white/70 dark:bg-gray-900 backdrop-blur-xl shadow-2xl animate-fadeInUp">
           <h2 class="text-center font-bold mb-4" style="font-size: 22px;">Welcome Back 👋</h2>
           <div class="flex-col">
+            <!-- Login Fields -->
             <div id="uLogin" class="w-full">
               <!-- Phone input -->
               <div class="w-full flex justify-between items-center rounded-lg focus-within:ring-2 focus-within:ring-orange-500 dark:border-gray-600 dark:bg-gray-800">
@@ -102,7 +103,7 @@
             <div id="uProfile" class="w-full hidden flex-col justify-center items-center">
               <!-- User Image -->
               <div id="uImg" class="relative">
-                <img src="{% static 'images/avatar.png' %}" alt="user avatar" id="avatarPreview" class="w-25 h-25 border rounded-full object-cover dark:border-gray-600 shadow-md" />
+                <img src="{% static 'images/avatar.png' %}" onerror="this.onerror=null; this.src='{% static 'images/avatar.png' %}'" alt="user avatar" id="avatarPreview" class="w-25 h-25 border rounded-full object-cover dark:border-gray-600 shadow-md" />
                 <label for="avatarInput" class="absolute bottom-1 right-0 w-7 h-7 dark:bg-gray-700 dark:text-white flex justify-center items-center rounded-full shadow-md"><i class="fa-solid fa-plus"></i></label>
                 <input type="file" id="avatarInput" name="avatarInput" class="hidden" accept="image/*" />
                 <script>
@@ -110,6 +111,7 @@
                     const file = e.target.files[0]
                     if (file) {
                       document.getElementById('avatarPreview').src = URL.createObjectURL(file)
+                      uUpdateBtn.disabled = false
                     }
                   })
                 </script>
@@ -122,8 +124,14 @@
               <script>
                 document.getElementById('uname').addEventListener('input', function () {
                   let name = this.value.trim()
+                  if (!name) {
+                    uUpdateBtn.disabled = true
+                  } else {
+                    uUpdateBtn.disabled = false
+                  }
                   if (name.length > 20) {
                     document.getElementById('unrm').innerText = '• Max 20 characters allowed'
+                    uUpdateBtn.disabled = true
                   }
                 })
               </script>
@@ -132,27 +140,33 @@
                 <!-- State -->
                 <button id="uStateBtn" class="w-full rounded-lg flex justify-start items-center p-2 outline-0 focus-within:ring-2 focus-within:ring-orange-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white">
                   <i class="fa-solid fa-angle-down fa-2xs mr-1"></i>
-                  <span id="uSelectedState">state select</span>
+                  <span id="uSelectedState"></span>
+                  <input type="hidden" id="uStateId" name="uStateId" />
                 </button>
                 <!-- City -->
                 <button id="uCityBtn" class="w-full rounded-lg flex justify-start items-center p-2 outline-0 focus-within:ring-2 focus-within:ring-orange-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white">
                   <i class="fa-solid fa-angle-down fa-2xs mr-1"></i>
-                  <span id="uSelectedCity">city select</span>
+                  <span id="uSelectedCity"></span>
+                  <input type="hidden" id="uCityId" name="uCityId" />
                 </button>
               </div>
               <!-- Button skip and Update profile -->
               <div id="uProBtn" class="w-full mt-6 flex justify-between items-center gap-2">
                 <!-- Skip Button -->
-                <button type="button" class="w-full rounded-lg border flex justify-center items-center p-2 dark:border-orange-500 dark:bg-transparent">skip</button>
+                <div class="w-full flex justify-center items-center">
+                  <button type="button" id="uConBtn" class="w-full rounded-lg border flex justify-center items-center p-2 dark:border-orange-500 dark:bg-transparent">Continue</button>
+                </div>
                 <!-- Update Profile Button -->
-                <button type="button" class="w-full rounded-lg flex justify-center items-center p-2 bg-orange-400">update profile</button>
+                <div class="w-full flex justify-center items-center">
+                  <button type="button" id="uUpdateBtn" class="w-full rounded-lg flex justify-center items-center p-2 bg-orange-400">Update profile</button>
+                  <div id="uLoaderUpdate" class="w-8 h-8 hidden justify-center items-center border-[6px] broder-gray-200 rounded-full border-t-orange-600 animate-spin"></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </main>
-
     <script>
       const uLogin = document.getElementById('uLogin')
       const countryCode = document.getElementById('uCountryCodeBtn')
@@ -168,7 +182,19 @@
       const resendOtpB = document.getElementById('resendOtpBtn')
       const timerText = document.getElementById('timerText')
       const verifyOtpLoader = document.getElementById('verifyOtpLoader')
+      
       const uProfile = document.getElementById('uProfile')
+      
+      const uAvatarPreview = document.getElementById('avatarPreview')
+      const uimg = document.getElementById('avatarInput')
+      const uname = document.getElementById('uname')
+      const ucitybtn = document.getElementById('uCityBtn')
+      ucitybtn.disabled = true
+      const uConBtn = document.getElementById('uConBtn')
+      const uUpdateBtn = document.getElementById('uUpdateBtn')
+      const uLoaderUpdate = document.getElementById('uLoaderUpdate')
+      
+      uUpdateBtn.disabled = true
       
       otpInputs.forEach((input) => {
         input.disabled = true
@@ -205,19 +231,21 @@
       phoneInput.addEventListener('input', function (e) {
         e.preventDefault()
         phoneInput.value = phoneInput.value.replace(/[^0-9]/g, '')
-        if (/^[6-9]\d{9}$/.test(phoneInput.value)) {
+        if (!phoneInput.value || !/^[6-9]\d{9}$/.test(phoneInput.value)) {
+          phoneError.innerText = 'Enter valid 10-digit phone number'
+          sendOtp.disabled = true
+          return
+        } else {
           phoneError.innerText = ''
           sendOtp.disabled = false
-        } else {
-          phoneError.innerText = 'Please enter a valid 10-digit phone number starting with 6-9.'
-          sendOtp.disabled = true
         }
       })
       // send OTP
       function sendOTP() {
-        let code = uCountryId.value.trim()
+        let codeID = uCountryId.value.trim()
+        let codeShow = document.getElementById('uSelectedCode').innerText
         let phone = phoneInput.value.trim()
-        if (!confirm('Send OTP to +91 ' + phone)) return
+        if (!confirm('Send OTP to ' + codeShow + ' ' + phone)) return
         countryCode.disabled = true
         phoneInput.disabled = true
         sendOtp.classList.add('hidden')
@@ -230,12 +258,17 @@
             'X-CSRFToken': getCSRF(),
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ phone: phone, code: code })
+          body: JSON.stringify({ phone: phone, code: codeID })
         })
           .then((res) => res.json())
           .then((data) => {
             if (data.error) {
               phoneError.innerText = data.message
+              countryCode.disabled = false
+              phoneInput.disabled = false
+              sendOtp.classList.remove('hidden')
+              sendOtpLoder.classList.add('hidden')
+              sendOtp.disabled = true
             }
             if (data.success) {
               phoneError.innerText = data.message
@@ -286,7 +319,7 @@
               }
             })
             // focus on last filled input
-            const lastInput = Math.min(pasteData.length, otpInputs.length) - 1
+            const lastInput = Math.min(pastedata.length, otpInputs.length) - 1
             otpInputs[lastInput].focus()
           }
         })
@@ -328,6 +361,10 @@
       }
       // Verify OTP
       function verifyOTP() {
+        let uSelectedState = document.getElementById('uSelectedState')
+        let uStateId = document.getElementById('uStateId')
+        let uSelectedCity = document.getElementById('uSelectedCity')
+        let uCityId = document.getElementById('uCityId')
         resendOtpB.classList.add('hidden')
         timerText.classList.add('hidden')
         verifyOtpLoader.classList.remove('hidden')
@@ -360,14 +397,34 @@
               timerText.classList.add('hidden')
               verifyOtpLoader.classList.remove('hidden')
               verifyOtpLoader.classList.add('flex')
+              //  window.location.href = data.redirect
               pausedTime()
             }
             if (data.step === 'profile') {
               pausedTime()
-      
               uLogin.classList.add('hidden')
               uProfile.classList.remove('hidden')
               uProfile.classList.add('flex')
+            }
+            if (data.profile) {
+              uname.value = data.profile.name || ''
+      
+              uSelectedState.innerText = data.profile.state_name || 'Select State'
+              if (data.profile.state_name) {
+                ucitybtn.disabled = false
+              } else {
+                ucitybtn.disabled = true
+              }
+              uStateId.value = data.profile.state_id || ''
+      
+              uSelectedCity.innerText = data.profile.city_name || 'Select City'
+              uCityId.value = data.profile.city_id || ''
+      
+              if (data.profile.img) {
+                uAvatarPreview.src = data.profile.img
+              } else {
+                uAvatarPreview.src = '/static/images/avatar.png'
+              }
             }
           })
           .catch(() => {
@@ -376,6 +433,53 @@
             window.location.reload()
           })
       }
+      // Continue Button
+      uConBtn.addEventListener('click', function (e) {
+        window.location.href = '/'
+      })
+      // User Update Profile
+      uUpdateBtn.addEventListener('click', function (e) {
+        e.preventDefault()
+        let file = uimg.files[0]
+        let name = uname.value.trim()
+        let stateid = document.getElementById('uStateId').value.trim()
+        let cityid = document.getElementById('uCityId').value.trim()
+      
+        let fd = new FormData()
+        if (file) fd.append('uimg', file)
+        fd.append('uname', name)
+        fd.append('ustateid', stateid)
+        fd.append('ucityid', cityid)
+      
+        if (!confirm('Are you sure you want to update your profile?')) return
+      
+        uUpdateBtn.classList.replace('flex', 'hidden')
+        uLoaderUpdate.classList.replace('hidden', 'flex')
+      
+        fetch('/user-profile/', {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': getCSRF()
+          },
+          body: fd
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.error) {
+              alert(data.message)
+            }
+            if (data.success) {
+              alert(data.message)
+              uUpdateBtn.classList.replace('hidden', 'flex')
+              uLoaderUpdate.classList.replace('flex', 'hidden')
+            }
+          })
+          .catch(() => {
+            alert('Something went wrong. Try again.')
+            uUpdateBtn.classList.replace('hidden', 'flex')
+            uLoaderUpdate.classList.replace('flex', 'hidden')
+          })
+      })
       // CSRF token function
       function getCSRF() {
         return document.cookie
@@ -384,11 +488,10 @@
           ?.split('=')[1]
       }
     </script>
-
-    <!-- 🌍 Country Code Modal -->
+    <!-- Country Code Modal -->
     <div id="uCountryModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden items-center justify-center z-100 text-xl">
       <div class="bg-white dark:bg-gray-800 dark:text-white w-full max-w-md p-2 m-2 rounded-2xl shadow-xl animate-scaleIn">
-        <!-- Header -->
+        <!-- header -->
         <div class="flex justify-between items-center mb-2">
           <div class="w-full flex justify-center items-center rounded-full outline-0 dark:bg-gray-600" id="searchModal">
             <div id="searchIcon" class="w-7 h-7 p-2 m-1 dark:bg-gray-700 flex justify-center items-center rounded-full">
@@ -398,23 +501,69 @@
           </div>
           <button id="modelClose" class="w-7 h-7 p-4 m-1 ml-4 dark:bg-gray-600 hover:bg-gray-700 flex justify-center items-center rounded-full" onclick="uCloseCountryCodeModal()"><i class="fa-solid fa-close text-lg"></i></button>
         </div>
-        <div class="w-full h-px p-0 m-0 dark:bg-gray-600 mb-2"></div>
-        <!-- List -->
+        <div class="w-full h-px p-0 m-0 dark:bg-gray-600 mt-1 mb-1"></div>
+        <!-- list country and code -->
         <div id="countryList" class="max-h-100 overflow-y-auto space-y-1">
-          {% for c in country_code %}
+          {% for c in countrycode %}
             <div class="uCountry-item flex justify-between items-center p-2 rounded cursor-pointer dark:hover:bg-gray-700" data-name="{{ c.country_name|lower }}" data-code="{{ c.country_code|lower }}" onclick="uSelectedCountry('{{ c.id }}','{{ c.country_code }}')">
               <span>{{ c.country_name }}</span>
               <span class="text-gray-400">{{ c.country_code }}</span>
             </div>
           {% endfor %}
-          <div id="uNotData" class="text-center h-20">
+          <div id="uNotData" class="text-center flex justify-center items-center h-20">
             <i class="fa-solid fa-database fa-3x text-gray-400"></i>
             <h1 class="text-gray-400">Not Data Found</h1>
           </div>
         </div>
       </div>
     </div>
-    <!-- 🌍 Country Code Modal JS -->
-    <script src="{% static 'js/accounts/country_code_modal.js' %}"></script>
+    <!-- Country Code Modal JS -->
+    <script src="{% static 'js/accounts/user/country_code_modal.js' %}"></script>
+    <!-- State Select Modal -->
+    <div id="uStateModal" class="fixed py-20 inset-0 bg-black/50 backdrop-blur-xs hidden justify-center items-start z-100 text-xl">
+      <div class="bg-white dark:bg-gray-800 dark:text-white w-full max-w-md p-2 m-2 rounded-2xl shadow-xl animate-scaleIn">
+        <!-- hearder -->
+        <div class="flex justify-center items-center">
+          <div class="w-full flex justify-center items-center rounded-full outline-0 dark:bg-gray-600" id="searchModal">
+            <div id="searchIcon" class="w-7 h-7 p-2 m-1 dark:bg-gray-700 flex justify-center items-center rounded-full">
+              <i class="fa-brands fa-sistrix text-lg"></i>
+            </div>
+            <input type="text" class="w-full m-1 rounded-r-full dark:bg-gray-600 dark:text-white outline-none" id="uSearchState" placeholder="Search state" autofocus />
+          </div>
+          <button id="modelStateClose" class="w-7 h-7 p-4 m-1 ml-4 dark:bg-gray-600 hover:bg-gray-700 flex justify-center items-center rounded-full" onclick="uCloseStateModal()"><i class="fa-solid fa-close text-lg"></i></button>
+        </div>
+        <div class="w-full h-px p-0 m-0 dark:bg-gray-600 mt-1 mb-1"></div>
+        <div id="stateList" class="max-h-100 overflow-y-auto snap-y-1"></div>
+        <div id="uStateNotData" class="text-center flex justify-center items-center h-20">
+          <i class="fa-solid fa-database fa-3x text-gray-400"></i>
+          <h1 class="text-gray-400 ml-2">No Data Found</h1>
+        </div>
+      </div>
+    </div>
+    <!-- State Select Modal JS -->
+    <script src="{% static 'js/accounts/user/state_select_modal.js' %}"></script>
+    <!-- City Select Modal -->
+    <div id="uCityModal" class="fixed py-20 inset-0 bg-black/50 backdrop-blur-xs hidden justify-center items-start z-100 text-xl">
+      <div class="bg-white dark:bg-gray-800 dark:text-white w-full max-w-md p-2 m-2 rounded-2xl shadow-xl animate-scaleIn">
+        <!-- hearder -->
+        <div class="flex justify-center items-center">
+          <div class="w-full flex justify-center items-center rounded-full outline-0 dark:bg-gray-600" id="searchModal">
+            <div id="searchIcon" class="w-7 h-7 p-2 m-1 dark:bg-gray-700 flex justify-center items-center rounded-full">
+              <i class="fa-brands fa-sistrix text-lg"></i>
+            </div>
+            <input type="text" class="w-full m-1 rounded-r-full dark:bg-gray-600 dark:text-white outline-none" id="uSearchCity" placeholder="Search city" autofocus />
+          </div>
+          <button id="modelCityClose" class="w-7 h-7 p-4 m-1 ml-4 dark:bg-gray-600 hover:bg-gray-700 flex justify-center items-center rounded-full" onclick="uCloseCityModal()"><i class="fa-solid fa-close text-lg"></i></button>
+        </div>
+        <div class="w-full h-px p-0 m-0 dark:bg-gray-600 mt-1 mb-1"></div>
+        <div id="cityList" class="max-h-100 overflow-y-auto snap-y-1"></div>
+        <div id="uCityNotData" class="text-center flex justify-center items-center h-20">
+          <i class="fa-solid fa-database fa-3x text-gray-400"></i>
+          <h1 class="text-gray-400 ml-2">No Data Found</h1>
+        </div>
+      </div>
+    </div>
+    <!-- City Select Modal JS -->
+    <script src="{% static 'js/accounts/user/city_select_modal.js' %}"></script>
   </body>
 </html>
