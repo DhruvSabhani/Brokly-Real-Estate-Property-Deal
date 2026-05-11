@@ -9,7 +9,7 @@ import random
 from django.contrib.auth.hashers import make_password, check_password
 import os
 import uuid
-from datetime import timedelta, datetime
+from datetime import timedelta
 
 # Create your models here.
 
@@ -157,10 +157,7 @@ class Theme(models.Model):
 def user_image_path(instance, filename):
     ext = filename.split(".")[-1]
     filename = f"{uuid.uuid4().hex}.{ext}"
-    today = datetime.now()
-    return os.path.join(
-        "users", str(instance.user.phone), str(today.year), str(today.month), filename
-    )
+    return os.path.join("users", str(instance.user.phone), filename)
 
 
 class UserProfile(models.Model):
@@ -180,9 +177,22 @@ class UserProfile(models.Model):
     def __str__(self):
         return f"UserProfile ({self.user.phone})"
 
+    def save(self, *args, **kwargs):
+        if self.pk:
+            try:
+                old_img = UserProfile.objects.get(pk=self.pk).img
+                if old_img or old_img != self.img:
+                    if os.path.isfile(old_img.path):
+                        os.remove(old_img.path)
+            except UserProfile.DoesNotExist:
+                pass
+        super().save(*args, **kwargs)
+
 
 def broker_image_path(instance, filename):
-    return f"broker/{instance.user.phone}/{filename}"
+    ext = filename.split(".")[-1]
+    filename = f"{uuid.uuid4().hex}.{ext}"
+    return os.path.join("broker", str(instance.user.phone), filename)
 
 
 class BrokerProfile(models.Model):
@@ -201,3 +211,14 @@ class BrokerProfile(models.Model):
 
     def __str__(self):
         return f"BrokerProfile ({self.user.phone})"
+
+    def save(self, *args, **kwargs):
+        if self.pk:
+            try:
+                old_img = BrokerProfile.objects.get(pk=self.pk).img
+                if old_img or old_img != self.img:
+                    if os.path.isfile(old_img.path):
+                        os.remove(old_img.path)
+            except BrokerProfile.DoesNotExist:
+                pass
+        super().save(*args, **kwargs)
