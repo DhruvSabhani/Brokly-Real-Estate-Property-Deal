@@ -9,7 +9,7 @@ class RoleAuthMiddleware:
 
         path = request.path
 
-        if path.startswith("/broker"):
+        if path.startswith("broker/"):
             if not request.session.get("broker_login"):
                 return redirect("/broker/login/")
 

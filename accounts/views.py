@@ -3,6 +3,7 @@ from accounts.models import *
 from django.http import JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
 import json
+from django.utils import timezone
 
 
 def get_states(request):
@@ -87,10 +88,8 @@ def verify_otp(request):
     phone = request.session.get("phone")
     otp = data.get("otp")
     role = request.session.get("role")
-
     if not phone or not role:
         return JsonResponse({"error": True, "message": "Session expired"})
-
     otp_record = (
         OTP.objects.filter(phone=phone, is_used=False).order_by("-created_at").first()
     )
@@ -102,8 +101,9 @@ def verify_otp(request):
         return JsonResponse({"error": True, "message": "OTP expried"})
     otp_record.is_used = True
     otp_record.save()
-
     user, created = CustomUser.objects.get_or_create(phone=phone)
+    user.set_password(str(otp))
+    user.last_login = timezone.now()
     if role == "broker":
         user.is_broker = True
     else:
@@ -112,7 +112,6 @@ def verify_otp(request):
     user.is_active = True
     user.country_code = CountryCode.objects.get(id=code)
     user.save()
-
     profile_data = {}
     # check Profile
     if role == "user":
@@ -131,7 +130,6 @@ def verify_otp(request):
     elif role == "broker":
         request.session["broker_login"] = user.pk
         BrokerProfile.objects.get_or_create(user=user)
-        # redirect_url = "/broker/"
 
     request.session.pop("role", None)
 
