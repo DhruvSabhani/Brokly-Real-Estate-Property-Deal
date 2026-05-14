@@ -1,0 +1,22 @@
+{
+  "name": "brokly",
+  "version": "1.0.0",
+  "description": "<h2>Brokly Real Estate Property Deal\r <h4>a arceate platform to Users select or search location related property(PG, Plot, Commercial) show.</h4>",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DhruvSabhani/Brokly-Real-Estate-Property-Deal.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/DhruvSabhani/Brokly-Real-Estate-Property-Deal/issues"
+  },
+  "homepage": "https://github.com/DhruvSabhani/Brokly-Real-Estate-Property-Deal#readme"
+}

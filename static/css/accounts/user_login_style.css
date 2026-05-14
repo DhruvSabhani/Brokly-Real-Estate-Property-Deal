@@ -1,17 +1,23 @@
 * {
   transition: all 0.1s ease;
 }
+
 input:-webkit-autofill {
   -webkit-text-fill-color: white;
   transition: background-color 5000s ease-in-out 0s;
 }
 
+.icon,
 button,
 i {
   cursor: pointer;
 }
 
-#uCountryCodeBtn:disabled,
+#uCountryCodeBtn:disabled {
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: not-allowed;
+}
 #phone:disabled {
   background-color: transparent;
   cursor: not-allowed;

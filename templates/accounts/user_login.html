@@ -1,6 +1,6 @@
 {% load static tailwind_tags %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     {% load static %}
     <meta charset="UTF-8" />
@@ -14,7 +14,7 @@
     {% tailwind_css %}
     <style>
       ::-webkit-scrollbar {
-        width: 10px;
+        width: 6px;
       }
       ::-webkit-scrollbar-track {
         background: transparent;
@@ -26,15 +26,39 @@
     </style>
   </head>
 
-  <body class="bg-white dark:bg-gray-950 text-black dark:text-white justify-center items-center transition-all duration-100 ease-in">
+  <body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-white transition-all duration-300 ease-in-out">
     {% comment %}Header{% endcomment %}
-    <header class="fixed top-0 w-full z-50 px-6 py-3 flex justify-between items-center">
+    <header class="fixed top-0 w-full z-50 px-6 py-3 flex justify-between items-cente">
       <div class="left">
-        <a href="/login" class="flex justify-center items-center"><h1 class="text-4xl font-semibold text-white">Brokly</h1></a>
+        <a href="/login" class="flex justify-center items-center"><h1 class="text-4xl font-semibold text-orange-500 dark:text-orange-500">Brokly</h1></a>
       </div>
       <div class="right flex justify-end items-center gap-6">
-        <button class="flex justify-end items-center"><i class="fa-solid fa-language" style="font-size: 22px;"></i></button>
-        <button id="themeToggle" class="flex justify-end items-center"><i id="themeIcon" class="fa-solid fa-sun text-[21px]"></i></button>
+        <button class="flex justify-end items-center"><i class="fa-solid fa-language text-gray-400" style="font-size: 22px;"></i></button>
+        <button id="themeToggle" class="flex justify-end items-center"><i id="themeIcon" class="fa-solid fa-sun" style="font-size: 22px;"></i></button>
+        <script>
+          const html = document.documentElement
+          const btn = document.getElementById('themeToggle')
+          const icon = document.getElementById('themeIcon')
+          const savedTheme = localStorage.getItem('theme')
+          
+          if (savedTheme === 'dark') {
+            html.classList.add('dark')
+            icon.classList.replace('fa-moon', 'fa-sun')
+          } else {
+            html.classList.remove('dark')
+            icon.classList.replace('fa-sun', 'fa-moon')
+          }
+          btn.addEventListener('click', function () {
+            html.classList.toggle('dark')
+            if (html.classList.contains('dark')) {
+              localStorage.setItem('theme', 'dark')
+              icon.classList.replace('fa-moon', 'fa-sun')
+            } else {
+              localStorage.setItem('theme', 'light')
+              icon.classList.replace('fa-sun', 'fa-moon')
+            }
+          })
+        </script>
       </div>
     </header>
     <script>
@@ -69,8 +93,8 @@
               {% comment %}Phone input{% endcomment %}
               <div class="w-full flex justify-between items-center rounded-lg focus-within:ring-2 focus-within:ring-orange-500 dark:border-gray-600 dark:bg-gray-800">
                 <button id="uCountryCodeBtn" class="p-1 m-1 outline-0 text-gray-700 dark:text-white flex justify-center items-center">
-                  <i class="fa-solid fa-angle-down fa-2xs mr-1"></i>
-                  <span id="uSelectedCode"></span>
+                  {% comment %} <i class="fa-solid fa-angle-down fa-2xs mr-1"></i> {% endcomment %}
+                  <span id="uSelectedCode" class="font-normal"></span>
                   <input type="hidden" id="uCountryId" name="uCountryId" />
                 </button>
                 <div class="w-px h-6 bg-gray-300 dark:bg-gray-600"></div>
@@ -170,6 +194,7 @@
     <script>
       const uLogin = document.getElementById('uLogin')
       const countryCode = document.getElementById('uCountryCodeBtn')
+      countryCode.disabled = true
       const phoneCode = document.getElementById('uCountryId')
       const phoneInput = document.getElementById('phone')
       const phoneError = document.getElementById('prm')
