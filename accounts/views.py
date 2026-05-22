@@ -1,3 +1,5 @@
+from urllib import request
+
 from django.shortcuts import render, redirect
 from accounts.models import *
 from django.http import JsonResponse
@@ -49,9 +51,11 @@ def login_with_otp(request, role):
         if admin_user:
             return JsonResponse({"error": True, "message": "Not valid number"})
 
-        otp = generate_otp(phone)
         request.session["code"] = code
         request.session["phone"] = phone
+        if not otp:
+            otp = generate_otp(phone)
+
         return JsonResponse({"success": True, "message": otp, "step": "otp"})
 
     countrycode = CountryCode.objects.filter(is_active=True)
@@ -138,22 +142,23 @@ def verify_otp(request):
 
 def user_profile(request):
     if request.method != "POST":
-        return JsonResponse({"success": False, "message": "• Invalid request"})
-
-    uimg = request.FILES.get("uimg")
-    uname = request.POST.get("uname")
-    ustateid = request.POST.get("ustateid")
-    ucityid = request.POST.get("ucityid")
+        return JsonResponse({"success": False, "message": "Invalid request"})
 
     user_id = request.session.get("user_login")
     if not user_id:
         return JsonResponse({"error": True, "message": "Session expired"})
 
-    try:
-        user = CustomUser.objects.get(id=user_id)
-        uProfile, created = UserProfile.objects.get_or_create(user=user)
-    except UserProfile.DoesNotExist:
-        return JsonResponse({"error": True, "message": "Profile not found"})
+    user = CustomUser.objects.filter(id=user_id).first()
+    
+    if not user:
+        return JsonResponse({"error": True, "message": "User not found"})
+  
+    uProfile, created = UserProfile.objects.get_or_create(user=user)
+
+    uimg = request.FILES.get("uimg")
+    uname = request.POST.get("uname")
+    ustateid = request.POST.get("ustateid")
+    ucityid = request.POST.get("ucityid")
 
     if uimg:
         uProfile.img = uimg
@@ -162,10 +167,14 @@ def user_profile(request):
         uProfile.name = uname
 
     if ustateid:
-        uProfile.state = State.objects.get(id=ustateid)
+        state = State.objects.filter(id=ustateid).first()
+        if state:
+            uProfile.state = state
 
     if ucityid:
-        uProfile.city = City.objects.get(id=ucityid)
+        city = City.objects.filter(id=ucityid).first()
+        if city:
+            uProfile.city = city
     uProfile.language = Language.objects.get(id=1)
     uProfile.theme = Theme.objects.get(id=1)
 

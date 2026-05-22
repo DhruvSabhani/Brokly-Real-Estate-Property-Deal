@@ -1,6 +1,6 @@
 {% load static tailwind_tags %}
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="">
   <head>
     {% load static %}
     <meta charset="UTF-8" />
@@ -8,217 +8,371 @@
     <title>Login to │ Brokly</title>
     {% comment %}CSS{% endcomment %}
     <link rel="stylesheet" href="{% static 'css/accounts/user_login_style.css' %}" />
-    {% comment %}Font Awesome{% endcomment %}
-    <link rel="stylesheet" href="{% static 'resources/fontawesome-free-7.1.0-web/css/all.min.css' %}" />
     {% comment %}Tailwind CSS{% endcomment %}
     {% tailwind_css %}
     <style>
       ::-webkit-scrollbar {
-        width: 6px;
-      }
-      ::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      ::-webkit-scrollbar-thumb {
-        background-color: gray;
-        border-radius: 10px;
+        width: 0;
       }
     </style>
   </head>
-
-  <body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-white transition-all duration-300 ease-in-out">
-    {% comment %}Header{% endcomment %}
-    <header class="fixed top-0 w-full z-50 px-6 py-3 flex justify-between items-cente">
-      <div class="left">
-        <a href="/login" class="flex justify-center items-center"><h1 class="text-4xl font-semibold text-orange-500 dark:text-orange-500">Brokly</h1></a>
+  <body class="u-login-body min-w-full h-screen bg-[#FAFAF6] lg:dark:bg-black dark:bg-black text-black dark:text-white transition-colors duration-700 ease-in-out animate-fadeInUp lg:overflow-x-hidden">
+    {% comment %}header{% endcomment %}
+    <header class="u-header sticky top-0 left-0 w-full z-50 px-5 flex justify-between items-center lg:px-10 bg-white/30 dark:bg-black/30">
+      <div class="u-header-left-side flex justify-center items-center">
+        <a href="/login" class="flex justify-center items-center">
+          <img src="{% static 'images/logo.svg' %}" alt="Brokly Logo" class="w-20" />
+          <h1 class="text-3xl font-semibold text-black dark:text-white">Brokly</h1>
+        </a>
       </div>
-      <div class="right flex justify-end items-center gap-6">
-        <button class="flex justify-end items-center"><i class="fa-solid fa-language text-gray-400" style="font-size: 22px;"></i></button>
-        <button id="themeToggle" class="flex justify-end items-center"><i id="themeIcon" class="fa-solid fa-sun" style="font-size: 22px;"></i></button>
+      <div class="u-header-right-side flex justify-center items-center gap-3">
+        <div class="u-theme rounded-2xl border lg:border-2 border-black/10 dark:border-white/10">
+          <button id="u-theme-btn" class="relative w-12 h-12 lg:w-10 lg:h-10 rounded-2xl flex items-center justify-center overflow-hidden group transition-all duration-300 hover:scale-105 active:scale-95">
+            <svg id="u-moon-icon" xmlns="{% static 'icons/moon-star.svg' %}" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute text-orange-500 transition-all duration-500 scale-100 rotate-0 dark:scale-0 dark:rotate-90">
+              <path d="M18 5h4" />
+              <path d="M20 3v4" />
+              <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
+            </svg>
+            <svg id="u-sun-icon" xmlns="{% static 'icons/sun.svg' %}" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute text-orange-500 transition-all duration-500 scale-0 -rotate-90 dark:scale-100 dark:rotate-0">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2" />
+              <path d="M12 20v2" />
+              <path d="m4.93 4.93 1.41 1.41" />
+              <path d="m17.66 17.66 1.41 1.41" />
+              <path d="M2 12h2" />
+              <path d="M20 12h2" />
+              <path d="m6.34 17.66-1.41 1.41" />
+              <path d="m19.07 4.93-1.41 1.41" />
+            </svg>
+          </button>
+        </div>
         <script>
           const html = document.documentElement
-          const btn = document.getElementById('themeToggle')
-          const icon = document.getElementById('themeIcon')
-          const savedTheme = localStorage.getItem('theme')
-          
-          if (savedTheme === 'dark') {
+          const themeBtn = document.getElementById('u-theme-btn')
+          const savedTheme = localStorage.getItem('utheme')
+          if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             html.classList.add('dark')
-            icon.classList.replace('fa-moon', 'fa-sun')
           } else {
             html.classList.remove('dark')
-            icon.classList.replace('fa-sun', 'fa-moon')
           }
-          btn.addEventListener('click', function () {
+          themeBtn.addEventListener('click', () => {
             html.classList.toggle('dark')
             if (html.classList.contains('dark')) {
-              localStorage.setItem('theme', 'dark')
-              icon.classList.replace('fa-moon', 'fa-sun')
+              localStorage.setItem('utheme', 'dark')
             } else {
-              localStorage.setItem('theme', 'light')
-              icon.classList.replace('fa-sun', 'fa-moon')
+              localStorage.setItem('utheme', 'light')
             }
+            themeBtn.animate([{ transform: 'scale(1)' }, { transform: 'scale(.85)' }, { transform: 'scale(1)' }], {
+              duration: 250
+            })
           })
         </script>
+        <div class="u-language-btn text-gray-600 dark:text-white">
+          <button class="relative w-12 h-12 lg:w-30 lg:h-10 flex justify-center items-center rounded-2xl border border-gray-200 dark:border-white/10 dark:bg-white/2 lg:border-none lg:bg-transparent lg:dark:bg-white/0" disabled>
+            <svg xmlns="{% static 'icons/globe.svg' %}" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe-icon lucide-globe">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+              <path d="M2 12h20" />
+            </svg>
+            <span id="u-selected-language" class="font-medium font-sans px-2 hidden lg:block">English</span>
+            <svg xmlns="{% static 'icons/chevron-down.svg' %}" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down hidden lg:block">
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </button>
+        </div>
       </div>
     </header>
     <script>
       window.addEventListener('scroll', () => {
-        const hearder = document.querySelector('header')
+        const header = document.querySelector('header')
         if (window.scrollY > 50) {
-          hearder.classList.add('backdrop-blur-sm')
+          header.classList.add('backdrop-blur-sm')
         } else {
-          hearder.classList.remove('backdrop-blur-sm')
+          header.classList.remove('backdrop-blur-sm')
         }
       })
     </script>
-    {% comment %}Main{% endcomment %}
-    <main class="text-lg flex flex-col lg:flex-row lg:min-h-screen">
-      {% comment %}Left Side{% endcomment %}
-      <div class="lg:block lg:w-1/2 relative overflow-hidden">
-        <img src="{% static 'images/w1.jpg' %}" alt="wallpaper" class="absolute inset-0 w-full h-full object-cover scale-110 animate-[zoom_20s_linear_infinite]" />
-        <div class="absolute inset-0 bg-linear-to-br from-black/60 to-black/60"></div>
-        <div class="absolute bottom-10 left-8 right-8 animate-fadeInUp">
-          <h1 class="font-bold mb-9 leading-tight" style="font-size: 35px;">Find Homes and any Property Near You. Connect with Trusted Brokers.</h1>
-          <p class="font-medium" style="font-size: 24px;">Brokly is a smart real estate platform where users can search nearby PGs, homes, flats, rooms and commercial properties using live location, price, and distance filters. Brokers can list properties for buy, sell or rent, while the admin panel manages and monitors all user and broker activities in one place.</p>
-        </div>
-      </div>
-      {% comment %}Right Side{% endcomment %}
-      <div class="w-full lg:w-1/2 flex flex-col justify-start items-center relative top-16">
-        <img src="{% static 'images/logo.svg' %}" alt="Brokly Logo" class="w-50 mb-5 scale-110 animate-[zoom_6s_linear_infinite]" />
-        <div class="w-full max-w-md p-4 rounded-2xl bg-white/70 dark:bg-gray-900 backdrop-blur-xl shadow-2xl animate-fadeInUp">
-          <h2 class="text-center font-bold mb-4" style="font-size: 22px;">Welcome Back 👋</h2>
-          <div class="flex-col">
-            {% comment %}Login Fields{% endcomment %}
-            <div id="uLogin" class="w-full">
-              {% comment %}Phone input{% endcomment %}
-              <div class="w-full flex justify-between items-center rounded-lg focus-within:ring-2 focus-within:ring-orange-500 dark:border-gray-600 dark:bg-gray-800">
-                <button id="uCountryCodeBtn" class="p-1 m-1 outline-0 text-gray-700 dark:text-white flex justify-center items-center">
-                  {% comment %} <i class="fa-solid fa-angle-down fa-2xs mr-1"></i> {% endcomment %}
-                  <span id="uSelectedCode" class="font-normal"></span>
-                  <input type="hidden" id="uCountryId" name="uCountryId" />
-                </button>
-                <div class="w-px h-6 bg-gray-300 dark:bg-gray-600"></div>
-                <input type="tel" id="phone" name="phone" class="w-full p-1 m-1 bg-transparent text-white outline-0" placeholder="Phone number" />
+    {% comment %}main{% endcomment %}
+    <main class="w-full min-h-screen relative bottom-[80px] grid lg:grid-cols-2 lg:dark:bg-black dark:bg-[#000000] bg-[#ffffff] overflow-hidden">
+      {% comment %}left side{% endcomment %}
+      <section class="relative hidden lg:flex min-h-screen">
+        <img src="{% static 'images/u_light_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 lg:h-full object-cover object-center transition-opacity duration-700 ease-in-out dark:opacity-0 opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
+        <img src="{% static 'images/u_dark_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 lg:w-full lg:h-full object-cover object-center transition-opacity duration-700 ease-in-out opacity-0 dark:opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
+        <div class="absolute inset-0 bg-gradient-to-tr from-white/30 via-white/30 to-white/30 dark:from-black/30 dark:via-black/30 dark:to-black/30 pointer-events-none"></div>
+        <div class="relative z-10 hidden lg:flex flex-col justify-end px-10 pb-5">
+          <h1 class="text-4xl leading-tight font-bold text-black dark:text-white w-100">
+            Find Homes and any
+            <span class="text-orange-500">Property Near You.</span>
+          </h1>
+          <p class="text-xl py-2 text-gray-700 leading-relaxed dark:text-white/70">Connect with Trusted Brokers & Owner.</p>
+          <p class="text-[15px] text-gray-600 mb-4 font-medium w-100 dark:text-white/80">Brokly is a smart real estate platform where users can search nearby PGs, homes, flats, rooms and commercial properties using live location, price, and distance filters. Brokers and Owner can list properties for buy, sell or rent, while the admin panel manages and monitors all user and broker portal activities in one place.</p>
+          {% comment %}features{% endcomment %}
+          <div class="u-feature flex items-start gap-5 mt-2 flex-row">
+            <div class="u-smart-search flex flex-col items-start gap-1 w-full">
+              <div class="u-search-icon rounded-xl p-2 m-2 flex justify-start items-start bg-orange-50 dark:bg-[#12181f]">
+                <svg xmlns="{% static 'icons/search.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search text-orange-500">
+                  <path d="m21 21-4.34-4.34" />
+                  <circle cx="11" cy="11" r="8" />
+                </svg>
               </div>
-              <p id="prm" class="text-sm wrap-break-word font-semibold mb-4 text-red-600"></p>
-              <div class="w-full h-full flex justify-center items-center">
-                <button id="sendOtpBtn" class="w-full h-full bg-orange-400 py-2 rounded-lg shadow-lg" onclick="sendOTP();">Send OTP</button>
-                <div id="loader" class="w-8 h-8 mt-5 hidden justify-center items-center border-[6px] broder-gray-200 rounded-full border-t-orange-600 animate-spin"></div>
-              </div>
-              {% comment %}OTP input{% endcomment %}
-              <div id="otp-box" class="hidden">
-                <div class="w-full flex justify-center items-center gap-6 mb-1">
-                  <input type="text" inputmode="numeric" maxlength="1" class="otp-input w-10 h-10 text-center text-xl outline-0 rounded-lg focus-within:ring-2 focus-within:ring-orange-500 dark:border-gray-600 dark:bg-gray-800" />
-                  <input type="text" inputmode="numeric" maxlength="1" class="otp-input w-10 h-10 text-center text-xl outline-0 rounded-lg focus-within:ring-2 focus-within:ring-orange-500 dark:border-gray-600 dark:bg-gray-800" />
-                  <input type="text" inputmode="numeric" maxlength="1" class="otp-input w-10 h-10 text-center text-xl outline-0 rounded-lg focus-within:ring-2 focus-within:ring-orange-500 dark:border-gray-600 dark:bg-gray-800" />
-                  <input type="text" inputmode="numeric" maxlength="1" class="otp-input w-10 h-10 text-center text-xl outline-0 rounded-lg focus-within:ring-2 focus-within:ring-orange-500 dark:border-gray-600 dark:bg-gray-800" />
-                  <input type="text" inputmode="numeric" maxlength="1" class="otp-input w-10 h-10 text-center text-xl outline-0 rounded-lg focus-within:ring-2 focus-within:ring-orange-500 dark:border-gray-600 dark:bg-gray-800" />
-                  <input type="text" inputmode="numeric" maxlength="1" class="otp-input w-10 h-10 text-center text-xl outline-0 rounded-lg focus-within:ring-2 focus-within:ring-orange-500 dark:border-gray-600 dark:bg-gray-800" />
-                </div>
-                <p id="orm" class="text-sm wrap-break-word font-semibold mb-4 text-red-600 ml-7"></p>
-                <div class="flex justify-center items-center gap-1" style="font-size: initial;">
-                  <button id="resendOtpBtn" class="text-blue-300 font-normal" onclick="resendOTP();" disabled>Resend OTP?</button>
-                  <p id="timerText" class="text-blue-100"></p>
-                  <div id="verifyOtpLoader" class="w-8 h-8 hidden justify-center items-center border-[6px] broder-gray-200 rounded-full border-t-orange-600 animate-spin"></div>
-                </div>
+              <div class="flex-row">
+                <p class="text-sm font-semibold tracking-wide text-gray-900 dark:text-neutral-100">Smart Search</p>
+                <p class="text-xs leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">Find the best properties near you.</p>
               </div>
             </div>
-            {% comment %}User Profile{% endcomment %}
-            <div id="uProfile" class="w-full hidden flex-col justify-center items-center">
-              {% comment %}User Image{% endcomment %}
-              <div id="uImg" class="relative">
-                <img src="{% static 'images/avatar.png' %}" onerror="this.onerror=null; this.src='{% static 'images/avatar.png' %}'" alt="user avatar" id="avatarPreview" class="w-25 h-25 border rounded-full object-cover dark:border-gray-600 shadow-md" />
-                <label for="avatarInput" class="absolute bottom-1 right-0 w-7 h-7 dark:bg-gray-700 dark:text-white flex justify-center items-center rounded-full shadow-md"><i class="fa-solid fa-plus"></i></label>
-                <input type="file" id="avatarInput" name="avatarInput" class="hidden" accept="image/*" />
-                <script>
-                  document.getElementById('avatarInput').addEventListener('change', function (e) {
-                    const file = e.target.files[0]
-                    if (file) {
-                      document.getElementById('avatarPreview').src = URL.createObjectURL(file)
-                      uUpdateBtn.disabled = false
-                    }
-                  })
-                </script>
+            <div class="u-smart-filter flex flex-col items-start gap-1 w-full">
+              <div class="u-filter-icon rounded-xl p-2 m-2 flex justify-center items-center bg-orange-50 dark:bg-[#12181f]">
+                <svg xmlns="{% static 'icons/sliders-horizontal.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sliders-horizontal-icon lucide-sliders-horizontal text-orange-500">
+                  <path d="M10 5H3" />
+                  <path d="M12 19H3" />
+                  <path d="M14 3v4" />
+                  <path d="M16 17v4" />
+                  <path d="M21 12h-9" />
+                  <path d="M21 19h-5" />
+                  <path d="M21 5h-7" />
+                  <path d="M8 10v4" />
+                  <path d="M8 12H3" />
+                </svg>
               </div>
-              {% comment %}User Name{% endcomment %}
-              <div class="flex justify-center items-center mt-3 w-full rounded-lg focus-within:ring-2 focus-within:ring-orange-500 dark:border-gray-600 dark:bg-gray-800">
-                <input type="text" id="uname" placeholder="Enter username" class="w-full p-1 m-1 bg-transparent outline-none text-white" />
+              <div class="flex-row">
+                <p class="text-sm font-semibold tracking-wide text-gray-900 dark:text-neutral-100">Smart Filters</p>
+                <p class="text-xs leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">Filter by price, distance & more.</p>
               </div>
-              <p id="unrm" class="text-sm ml-3 wrap-break-word w-full font-semibold text-red-600"></p>
-              <script>
-                document.getElementById('uname').addEventListener('input', function () {
-                  let name = this.value.trim()
-                  if (!name) {
-                    uUpdateBtn.disabled = true
-                  } else {
-                    uUpdateBtn.disabled = false
-                  }
-                  if (name.length > 20) {
-                    document.getElementById('unrm').innerText = '• Max 20 characters allowed'
-                    uUpdateBtn.disabled = true
-                  }
-                })
-              </script>
-              {% comment %}User State and City{% endcomment %}
-              <div id="uStateCity" class="w-full mt-3 flex justify-between items-center gap-2">
-                {% comment %}State{% endcomment %}
-                <button id="uStateBtn" class="w-full rounded-lg flex justify-start items-center p-2 outline-0 focus-within:ring-2 focus-within:ring-orange-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white">
-                  <i class="fa-solid fa-angle-down fa-2xs mr-1"></i>
-                  <span id="uSelectedState"></span>
-                  <input type="hidden" id="uStateId" name="uStateId" />
-                </button>
-                {% comment %}City{% endcomment %}
-                <button id="uCityBtn" class="w-full rounded-lg flex justify-start items-center p-2 outline-0 focus-within:ring-2 focus-within:ring-orange-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white">
-                  <i class="fa-solid fa-angle-down fa-2xs mr-1"></i>
-                  <span id="uSelectedCity"></span>
-                  <input type="hidden" id="uCityId" name="uCityId" />
-                </button>
+            </div>
+            <div class="u-live-location flex flex-col items-start gap-1 w-full">
+              <div class="u-location-icon rounded-xl p-2 m-2 flex justify-center items-center bg-orange-50 dark:bg-[#12181f]">
+                <svg xmlns="{% static 'icons/map-pin.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin text-orange-500">
+                  <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
               </div>
-              {% comment %}Button skip and Update profile{% endcomment %}
-              <div id="uProBtn" class="w-full mt-6 flex justify-between items-center gap-2">
-                {% comment %}Skip Button{% endcomment %}
-                <div class="w-full flex justify-center items-center">
-                  <button type="button" id="uConBtn" class="w-full rounded-lg border flex justify-center items-center p-2 dark:border-orange-500 dark:bg-transparent">Continue</button>
-                </div>
-                {% comment %}Update Profile Button{% endcomment %}
-                <div class="w-full flex justify-center items-center">
-                  <button type="button" id="uUpdateBtn" class="w-full rounded-lg flex justify-center items-center p-2 bg-orange-400">Update profile</button>
-                  <div id="uLoaderUpdate" class="w-8 h-8 hidden justify-center items-center border-[6px] broder-gray-200 rounded-full border-t-orange-600 animate-spin"></div>
-                </div>
+              <div class="flex-row">
+                <p class="text-sm font-semibold tracking-wide text-gray-900 dark:text-neutral-100">Live Location</p>
+                <p class="text-xs leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">Search properties by location and map.</p>
+              </div>
+            </div>
+            <div class="u-verified-listing flex flex-col items-start gap-1 w-full">
+              <div class="u-verified-icon rounded-xl p-2 m-2 flex justify-center items-center bg-orange-50 dark:bg-[#12181f]">
+                <svg xmlns="{% static 'icons/shield-check.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check-icon lucide-shield-check text-orange-500">
+                  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+                  <path d="m9 12 2 2 4-4" />
+                </svg>
+              </div>
+              <div class="flex-row">
+                <p class="text-sm font-semibold tracking-wide text-gray-900 dark:text-neutral-100">Verified Listings</p>
+                <p class="text-xs leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">Only trusted & verified properties.</p>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
+      {% comment %}right side{% endcomment %}
+      <section class="relative w-full min-h-screen flex flex-col justify-center items-center lg:overflow-hidden">
+        <div class="absolute inset-0 lg:hidden overflow-hidden">
+          <img src="{% static 'images/u_light_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 w-full h-[50%] object-cover object-center transition-opacity duration-700 ease-in-out dark:opacity-0 opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
+          <img src="{% static 'images/u_dark_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 w-full h-[50%] object-cover object-center transition-opacity duration-700 ease-in-out opacity-0 dark:opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
+          <div class="absolute inset-0 bg-gradient-to-br from-white/30 via-white/30 to-white/30 dark:from-black/30 dark:via-black/30 dark:to-black/30 pointer-events-none"></div>
+          <div class="relative z-10 flex flex-col justify-center items-center px-6 pt-80">
+            <h1 class="text-[33px] leading-none font-extrabold text-black dark:text-white max-w-[340px] text-center">
+              Find Homes and any
+              <span class="text-orange-500">Property Near You.</span>
+            </h1>
+            <p class="mt-1 text-gray-700 leading-7 dark:text-white/70 max-w-[300px]">Connect with Trusted Brokers & Owner.</p>
+          </div>
+        </div>
+        <div class="relative px-5 py-6 rounded-3xl w-full min-h-screen flex flex-col justify-start items-center">
+          {% comment %}login field{% endcomment %}
+          <div id="uLogin" class="w-full max-w-[450px] flex flex-col justify-center items-center mt-[420px] lg:mt-[100px]">
+            <img src="{% static 'images/logo.svg' %}" alt="Brokly Logo" class="w-30 hidden lg:flex" />
+            <h2 class="text-center text-2xl font-bold text-gray-950 dark:text-white">Welcome Back 👋</h2>
+            <p class="text-gray-500 dark:text-white/50">Login to continue to your account</p>
+            {% comment %}phone input{% endcomment %}
+            <label for="phone" class="mt-6 w-full text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">Mobile Number</label>
+            <div class="flex w-full h-14 lg:h-12 overflow-hidden rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl">
+              <button type="button" id="uCountryCodeBtn" class="px-4 flex items-center justify-center gap-1 font-semibold bg-black/10 dark:bg-white/5 text-black/90 dark:text-white text-lg">
+                <span id="uSelectedCode"></span>
+                {% comment %} <svg xmlns="{% static 'icons/chevron-down.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down">
+                  <path d="m6 9 6 6 6-6" />
+                </svg> {% endcomment %}
+                <input type="hidden" id="uCountryId" name="uCountryId" />
+              </button>
+              <input type="tel" id="phone" name="phone" class="w-[350px] font-normal px-4 bg-transparent text-gray-900 placeholder:text-gray-400 dark:text-white text-xl lg:text-lg outline-0" placeholder="Phone number" />
+              <div id="phoneCheckIcon" class="hidden justify-center items-center px-3">
+                <svg xmlns="{% static 'icons/check-check.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-check-icon lucide-check-check text-orange-500">
+                  <path d="M18 6 7 17l-5-5" />
+                  <path d="m22 10-7.5 7.5L13 16" />
+                </svg>
+              </div>
+            </div>
+            {% comment %}error phone input{% endcomment %}
+            <p id="prm" class="text-sm w-[450px] wrap-break-word font-normal text-red-600 px-1 py-1"></p>
+            {% comment %}send otp btn{% endcomment %}
+            <button id="sendOtpBtn" class="w-full mt-6 py-3 lg:py-2 text-lg bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-all shadow flex justify-center items-center gap-3">
+              <span id="btnText">Send OTP</span>
+              <div id="loader" class="hidden w-6 h-6 border-[4px] border-white/30 rounded-full border-t-white animate-spin"></div>
+            </button>
+            <div id="otp-box" class="hidden w-full flex-col mt-4">
+              <label class="w-full text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">Enter OTP</label>
+              <div class="w-full flex justify-center items-center gap-6 lg:gap-8 mt-2">
+                <input type="text" inputmode="numeric" maxlength="1" class="otp-input w-13 h-13 lg:w-11 lg:h-11 text-center text-lg outline-0 rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border-1 border-gray-300 dark:border-white/10 bg-white/70 dark:bg-white/5" />
+                <input type="text" inputmode="numeric" maxlength="1" class="otp-input w-13 h-13 lg:w-11 lg:h-11 text-center text-lg outline-0 rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border-1 border-gray-300 dark:border-white/10 bg-white/70 dark:bg-white/5" />
+                <input type="text" inputmode="numeric" maxlength="1" class="otp-input w-13 h-13 lg:w-11 lg:h-11 text-center text-lg outline-0 rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border-1 border-gray-300 dark:border-white/10 bg-white/70 dark:bg-white/5" />
+                <input type="text" inputmode="numeric" maxlength="1" class="otp-input w-13 h-13 lg:w-11 lg:h-11 text-center text-lg outline-0 rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border-1 border-gray-300 dark:border-white/10 bg-white/70 dark:bg-white/5" />
+                <input type="text" inputmode="numeric" maxlength="1" class="otp-input w-13 h-13 lg:w-11 lg:h-11 text-center text-lg outline-0 rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border-1 border-gray-300 dark:border-white/10 bg-white/70 dark:bg-white/5" />
+                <input type="text" inputmode="numeric" maxlength="1" class="otp-input w-13 h-13 lg:w-11 lg:h-11 text-center text-lg outline-0 rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border-1 border-gray-300 dark:border-white/10 bg-white/70 dark:bg-white/5" />
+              </div>
+              <p id="orm" class="text-sm w-[400px] wrap-break-word font-normal text-red-600 px-1 py-1"></p>
+              <div class="flex justify-center items-center gap-1 mt-4 text-base">
+                <svg xmlns="{% static 'icons/clock.svg' %}" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="otpClockIcon" class="lucide lucide-clock-icon lucide-clock text-orange-500 mr-1">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 6v6l4 2" />
+                </svg>
+                <button id="resendOtpBtn" class="text-orange-500 hover:text-orange-600 dark:hover:text-orange-400 font-medium transition-all duration-300" onclick="resendOTP();">Resend OTP in</button>
+                <p id="timerText" class="text-orange-500 font-medium"></p>
+                <div id="verifyOtpLoader" class="w-5 h-5 hidden justify-center items-center border-[4px] border-black/20 border-t-black dark:border-white/20 dark:border-t-white rounded-full animate-spin"></div>
+              </div>
+            </div>
+          </div>
+          {% comment %}profile field{% endcomment %}
+          <div id="uProfile" class="w-full max-w-[600px] hidden flex-col justify-center items-center mt-[420px] lg:mt-[100px]">
+            {% comment %}profile title{% endcomment %}
+            <div class="w-full lg:max-w-[600px] flex justify-between items-center px-4 py-2">
+              <div class="flex-col">
+                <h1 class="text-lg font-medium">Create Your Profile</h1>
+                <h6 class="text-sm font-normal text-gray-600 dark:text-white/50">Let`s get started with a few details about you.</h6>
+              </div>
+              <button type="button" id="uConBtn" class="text-lg font-medium rounded-lg flex justify-center items-center px-8 py-1 border-2 border-orange-400">Continue</button>
+            </div>
+            <hr class="w-full lg:max-w-[600px] border-0 border-t-2 border-dashed border-black/5 dark:border-white/5 p-1 m-1" />
+            {% comment %}user avatar{% endcomment %}
+            <div id="uImg" class="relative">
+              <img src="{% static 'images/avatar.png' %}" onerror="this.onerror=null; this.src='{% static 'images/avatar.png' %}'" alt="user avatar" id="avatarPreview" class="w-24 h-24 border rounded-full object-cover border-black/15 dark:border-white/15 shadow-sm" />
+              <label for="avatarInput" class="absolute bottom-0 right-0 w-8 h-8 bg-orange-400 text-black flex justify-center items-center rounded-full shadow-md">
+                <svg xmlns="{% static 'icons/plus.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus">
+                  <path d="M5 12h14" />
+                  <path d="M12 5v14" />
+                </svg>
+              </label>
+              <input type="file" id="avatarInput" name="avatarInput" class="hidden" accept="image/*" />
+              <script>
+                document.getElementById('avatarInput').addEventListener('change', function (e) {
+                  const file = e.target.files[0]
+                  if (file) {
+                    document.getElementById('avatarPreview').src = URL.createObjectURL(file)
+                  }
+                })
+              </script>
+            </div>
+            {% comment %}user name{% endcomment %}
+            <label for="uname" class="w-full max-w-[450px] text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">Full Name</label>
+            <div class="w-full max-w-[450px] rounded-lg focus-within:ring-2 focus-within:ring-orange-500 border border-black/15 dark:border-white/15 bg-white/5 dark:bg-black/5 backdrop-blur-xl">
+              <input type="text" id="uname" placeholder="Enter your full name" class="w-full font-normal px-3 py-3 lg:px-2 lg:py-2 bg-transparent rounded-lg outline-0 text-gray-900 placeholder:text-gray-400 dark:text-white text-base" />
+            </div>
+            <p id="unrm" class="text-sm w-[450px] wrap-break-word font-normal text-red-600 px-1 py-1"></p>
+            <script>
+              document.getElementById('uname').addEventListener('input', function () {
+                let name = this.value.trim()
+                if (name.length > 20) {
+                  document.getElementById('unrm').innerText = 'Max 20 characters allowed'
+                } else {
+                  document.getElementById('unrm').innerText = ''
+                }
+              })
+            </script>
+            {% comment %}User State and City Select Btn{% endcomment %}
+            <div id="uStateCity" class="w-full max-w-[450px] mt-3 flex flex-row justify-between items-center gap-2">
+              {% comment %}State{% endcomment %}
+              <div class="w-full flex flex-col justify-center items-center">
+                <label for="uStateBtn" class="w-full max-w-[450px] text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">State</label>
+                <button id="uStateBtn" class="w-full border rounded-lg focus:ring-2 focus:ring-orange-500 border-black/15 dark:border-white/15 bg-white/5 dark:bg-black/5 backdrop-blur-xl flex justify-start items-center px-3 py-3 lg:px-2 lg:py-2 gap-2">
+                  <svg xmlns="{% static 'icons/chevron-down.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down">
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                  <span id="uSelectedState"></span>
+                  <input type="hidden" id="uStateId" name="uStateId" />
+                </button>
+              </div>
+              {% comment %}City{% endcomment %}
+              <div class="w-full flex flex-col justify-center items-center">
+                <label for="uCityBtn" id="uCityLabel" class="w-full max-w-[450px] text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">City</label>
+                <button id="uCityBtn" class="w-full border rounded-lg focus:ring-2 focus:ring-orange-500 border-black/15 dark:border-white/15 bg-white/5 dark:bg-black/5 backdrop-blur-xl flex justify-start items-center px-3 py-3 lg:px-2 lg:py-2 gap-2">
+                  <svg xmlns="{% static 'icons/chevron-down.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down">
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                  <span id="uSelectedCity"></span>
+                  <input type="hidden" id="uCityId" name="uCityId" />
+                </button>
+              </div>
+            </div>
+            {% comment %}user update profile btn{% endcomment %}
+            <button id="uUpdateBtn" class="w-full max-w-[450px] mt-6 py-3 lg:py-2 text-lg bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-all shadow flex justify-center items-center gap-3">
+              <span id="uUpbtnText"></span>
+              <div id="uLoaderUpdate" class="w-6 h-6 border-[4px] border-white/30 rounded-full border-t-white animate-spin"></div>
+            </button>
+            <p class="text-xs px-1 py-1 text-gray-400 font-medium">You can update these details anytime later.</p>
+          </div>
+        </div>
+        <div class="absolute bottom-20 w-full text-center px-5 py-5 lg:py-0 text-sm text-gray-600 dark:text-white/50">
+          <div class="flex justify-center items-center gap-1">
+            <svg xmlns="{% static 'icons/lock-keyhole.svg' %}" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock-keyhole-icon lucide-lock-keyhole">
+              <circle cx="12" cy="16" r="1" />
+              <rect x="3" y="10" width="18" height="12" rx="2" />
+              <path d="M7 10V7a5 5 0 0 1 10 0v3" />
+            </svg>By continuing, you agree to our <span class="text-orange-500 hover:text-orange-600 dark:hover:text-orange-400 font-medium transition-all duration-300">Terms of Service and Privacy Policy.</span>
+          </div>
+        </div>
+      </section>
     </main>
     <script>
+      // variable u-login
       const uLogin = document.getElementById('uLogin')
+      // variable phone input
       const countryCode = document.getElementById('uCountryCodeBtn')
       countryCode.disabled = true
       const phoneCode = document.getElementById('uCountryId')
       const phoneInput = document.getElementById('phone')
       const phoneError = document.getElementById('prm')
+      const phoneCheckIcon = document.getElementById('phoneCheckIcon')
+      // variable send otp btn
       const sendOtp = document.getElementById('sendOtpBtn')
-      sendOtp.disabled = true
+      const btnText = document.getElementById('btnText')
       const sendOtpLoder = document.getElementById('loader')
+      // variable otp input
       const otpBox = document.getElementById('otp-box')
       const otpInputs = document.querySelectorAll('.otp-input')
       const otpError = document.getElementById('orm')
+      const otpClockIcon = document.getElementById('otpClockIcon')
+      // variable resend otp
       const resendOtpB = document.getElementById('resendOtpBtn')
       const timerText = document.getElementById('timerText')
       const verifyOtpLoader = document.getElementById('verifyOtpLoader')
+      // variable u profile
       const uProfile = document.getElementById('uProfile')
       const uAvatarPreview = document.getElementById('avatarPreview')
       const uimg = document.getElementById('avatarInput')
       const uname = document.getElementById('uname')
+      // variable u skip btn
+      const uConBtn = document.getElementById('uConBtn')
+      // variable state select btn
+      document.getElementById('uStateId').value = ''
+      document.getElementById('uSelectedState').innerText = 'Select State'
+      // variable city select btn
+      const ucitylabel = document.getElementById('uCityLabel')
+      ucitylabel.classList.add('disabled')
       const ucitybtn = document.getElementById('uCityBtn')
       ucitybtn.disabled = true
-      const uConBtn = document.getElementById('uConBtn')
+      document.getElementById('uCityId').value = ''
+      document.getElementById('uSelectedCity').innerText = 'Select City'
+      // variable update profile btn
       const uUpdateBtn = document.getElementById('uUpdateBtn')
+      const uUpbtnText = document.getElementById('uUpbtnText')
+      uUpbtnText.innerText = 'Update profile'
       const uLoaderUpdate = document.getElementById('uLoaderUpdate')
-      uUpdateBtn.disabled = true
+      uLoaderUpdate.classList.add('hidden')
+      
       otpInputs.forEach((input) => {
         input.disabled = true
+        input.value = ''
       })
       let senconds
       let isPaused = false
@@ -246,28 +400,48 @@
       function pausedTime() {
         isPaused = true
       }
-      //  check Phone number input validation
+      // check Phone number input validation
       phoneInput.addEventListener('input', function (e) {
         e.preventDefault()
         phoneInput.value = phoneInput.value.replace(/[^0-9]/g, '')
-        if (!phoneInput.value || !/^[6-9]\d{9}$/.test(phoneInput.value)) {
-          phoneError.innerText = 'Enter valid 10-digit phone number'
-          sendOtp.disabled = true
+        if (!phoneInput.value) {
+          phoneError.innerText = 'Phone number is required'
+          phoneCheckIcon.classList.replace('flex', 'hidden')
           return
-        } else {
-          phoneError.innerText = ''
-          sendOtp.disabled = false
         }
+        if (!/^[6-9]\d{9}$/.test(phoneInput.value)) {
+          phoneError.innerText = 'Enter valid 10-digit phone number'
+          phoneCheckIcon.classList.replace('flex', 'hidden')
+          return
+        }
+        phoneError.innerText = ''
+        phoneCheckIcon.classList.replace('hidden', 'flex')
+      })
+      // check OTP input validation
+      sendOtp.addEventListener('click', function (e) {
+        e.preventDefault()
+        let phone = phoneInput.value.trim()
+        if (!phone) {
+          phoneError.innerText = 'Phone number is required'
+          phoneCheckIcon.classList.replace('flex', 'hidden')
+          phoneInput.focus()
+          return
+        }
+        if (!/^[6-9]\d{9}$/.test(phone)) {
+          phoneError.innerText = 'Enter valid 10-digit phone number'
+          phoneCheckIcon.classList.replace('flex', 'hidden')
+          return
+        }
+        sendOTP()
       })
       // send OTP
       function sendOTP() {
         let codeID = uCountryId.value.trim()
         let codeShow = document.getElementById('uSelectedCode').innerText
         let phone = phoneInput.value.trim()
-        if (!confirm('Send OTP to ' + codeShow + ' ' + phone)) return
         countryCode.disabled = true
         phoneInput.disabled = true
-        sendOtp.classList.add('hidden')
+        btnText.innerText = 'Sending...'
         sendOtpLoder.classList.remove('hidden')
       
         fetch('/login/', {
@@ -285,15 +459,14 @@
               phoneError.innerText = data.message
               countryCode.disabled = false
               phoneInput.disabled = false
-              sendOtp.classList.remove('hidden')
+              btnText.innerText = 'Send OTP'
               sendOtpLoder.classList.add('hidden')
-              sendOtp.disabled = true
             }
             if (data.success) {
               phoneError.innerText = data.message
             }
             if (data.step === 'otp') {
-              sendOtpLoder.classList.add('hidden')
+              sendOtp.classList.replace('flex', 'hidden')
               otpBox.classList.remove('hidden')
               otpInputs.forEach((input) => {
                 input.disabled = false
@@ -304,8 +477,7 @@
           })
           .catch(() => {
             alert('Something went wrong. Try again.')
-            sendOtpLoder.classList.add('hidden')
-            sendOtp.classList.remove('hidden')
+            sendOtp.classList.replace('flex', 'hidden')
             window.location.reload()
           })
       }
@@ -353,6 +525,10 @@
       }
       // Resend OTP
       function resendOTP() {
+        otpClockIcon.classList.add('hidden')
+        resendOtpB.classList.add('hidden')
+        timerText.classList.add('hidden')
+        verifyOtpLoader.classList.remove('hidden')
         fetch('/resend-otp/', {
           method: 'POST',
           headers: {
@@ -366,9 +542,14 @@
               otpError.innerText = data.message
             }
             if (data.success) {
+              otpClockIcon.classList.remove('hidden')
+              resendOtpB.classList.remove('hidden')
+              timerText.classList.remove('hidden')
+              verifyOtpLoader.classList.add('hidden')
               otpError.innerText = data.message
               otpInputs.forEach((input) => {
                 input.disabled = false
+                input.value = ''
               })
               otpInputs[0].focus()
               startTimer()
@@ -384,10 +565,10 @@
         let uStateId = document.getElementById('uStateId')
         let uSelectedCity = document.getElementById('uSelectedCity')
         let uCityId = document.getElementById('uCityId')
+        otpClockIcon.classList.add('hidden')
         resendOtpB.classList.add('hidden')
         timerText.classList.add('hidden')
-        verifyOtpLoader.classList.remove('hidden')
-        verifyOtpLoader.classList.add('flex')
+        verifyOtpLoader.classList.replace('hidden', 'flex')
         let otp = getOTP()
         if (otp.length !== 6) {
           otpError.innerText = 'Enter complete 6-digit OTP'
@@ -406,28 +587,31 @@
           .then((data) => {
             if (data.error) {
               otpError.innerText = data.message
+              otpClockIcon.classList.remove('hidden')
               resendOtpB.classList.remove('hidden')
               timerText.classList.remove('hidden')
-              verifyOtpLoader.classList.add('hidden')
-              verifyOtpLoader.classList.remove('flex')
+              verifyOtpLoader.classList.replace('flex', 'hidden')
+              otpInputs.forEach((input) => {
+                input.value = ''
+              })
+              otpInputs[0].focus()
+              return
             }
             if (data.success) {
+              otpError.innerText = ''
+              pausedTime()
+              otpClockIcon.classList.add('hidden')
               resendOtpB.classList.add('hidden')
               timerText.classList.add('hidden')
-              verifyOtpLoader.classList.remove('hidden')
-              verifyOtpLoader.classList.add('flex')
-              //  window.location.href = data.redirect
-              pausedTime()
+              verifyOtpLoader.classList.replace('flex', 'hidden')
             }
             if (data.step === 'profile') {
-              pausedTime()
-              uLogin.classList.add('hidden')
+              uLogin.classList.replace('flex', 'hidden')
               uProfile.classList.remove('hidden')
               uProfile.classList.add('flex')
             }
             if (data.profile) {
               uname.value = data.profile.name || ''
-      
               uSelectedState.innerText = data.profile.state_name || 'Select State'
               if (data.profile.state_name) {
                 ucitybtn.disabled = false
@@ -435,10 +619,8 @@
                 ucitybtn.disabled = true
               }
               uStateId.value = data.profile.state_id || ''
-      
               uSelectedCity.innerText = data.profile.city_name || 'Select City'
               uCityId.value = data.profile.city_id || ''
-      
               if (data.profile.img) {
                 uAvatarPreview.src = data.profile.img
               } else {
@@ -447,12 +629,15 @@
             }
           })
           .catch(() => {
-            alert('Something went wrong. Try again.')
+            verifyOtpLoader.classList.replace('flex', 'hidden')
+            resendOtpB.classList.remove('hidden')
+            timerText.classList.remove('hidden')
+            otpClockIcon.classList.remove('hidden')
             pausedTime()
-            window.location.reload()
+            alert('Something went wrong. Try again.')
           })
       }
-      // Continue Button
+      // Continue(Skip) Button
       uConBtn.addEventListener('click', function (e) {
         window.location.href = '/'
       })
@@ -463,17 +648,24 @@
         let name = uname.value.trim()
         let stateid = document.getElementById('uStateId').value.trim()
         let cityid = document.getElementById('uCityId').value.trim()
+        let nameError = document.getElementById('unrm')
+        nameError.innerText = ''
+        alert(file)
+      
+        if (!name) {
+          nameError.innerText = 'username is required'
+          return
+        }
+      
+        if (!confirm('Are you sure you want to update your profile?')) return
+        uUpbtnText.innerText = ''
+        uLoaderUpdate.classList.remove('hidden')
       
         let fd = new FormData()
         if (file) fd.append('uimg', file)
         fd.append('uname', name)
-        fd.append('ustateid', stateid)
-        fd.append('ucityid', cityid)
-      
-        if (!confirm('Are you sure you want to update your profile?')) return
-      
-        uUpdateBtn.classList.replace('flex', 'hidden')
-        uLoaderUpdate.classList.replace('hidden', 'flex')
+        if (stateid) fd.append('ustateid', stateid)
+        if (cityid) fd.append('ucityid', cityid)
       
         fetch('/user-profile/', {
           method: 'POST',
@@ -489,14 +681,16 @@
             }
             if (data.success) {
               alert(data.message)
-              uUpdateBtn.classList.replace('hidden', 'flex')
-              uLoaderUpdate.classList.replace('flex', 'hidden')
+              uUpbtnText.innerText = 'Update profile'
+              uLoaderUpdate.classList.add('hidden')
             }
           })
           .catch(() => {
             alert('Something went wrong. Try again.')
-            uUpdateBtn.classList.replace('hidden', 'flex')
-            uLoaderUpdate.classList.replace('flex', 'hidden')
+          })
+          .finally(() => {
+            uUpbtnText.innerText = 'Update profile'
+            uLoaderUpdate.classList.add('hidden')
           })
       })
       // CSRF token function
@@ -508,30 +702,42 @@
       }
     </script>
     {% comment %}Country Code Modal{% endcomment %}
-    <div id="uCountryModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden items-center justify-center z-100 text-xl">
-      <div class="bg-white dark:bg-gray-800 dark:text-white w-full max-w-md p-2 m-2 rounded-2xl shadow-xl animate-scaleIn">
+    <div id="uCountryModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden justify-center items-start pt-[100px] z-100 text-xl px-2">
+      <div class="bg-white/90 dark:bg-[#111827]/90 dark:text-white w-full max-w-md p-2 rounded-3xl border border-gray-200 dark:border-white/10 backdrop-blur-2xl shadow-xl animate-scaleIn">
         {% comment %}header{% endcomment %}
         <div class="flex justify-between items-center mb-2">
-          <div class="w-full flex justify-center items-center rounded-full outline-0 dark:bg-gray-600" id="searchModal">
-            <div id="searchIcon" class="w-7 h-7 p-2 m-1 dark:bg-gray-700 flex justify-center items-center rounded-full">
-              <i class="fa-brands fa-sistrix text-lg"></i>
+          <div class="w-full flex justify-center items-center rounded-full outline-0 bg-gray-100 dark:bg-[#1F2937]" id="searchModal">
+            <div id="searchIcon" class="w-9 h-9 p-2 m-1 bg-white dark:bg-[#111827] flex justify-center items-center rounded-full">
+              <svg xmlns="{% static 'icons/search.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search">
+                <path d="m21 21-4.34-4.34" />
+                <circle cx="11" cy="11" r="8" />
+              </svg>
             </div>
-            <input type="text" class="w-full m-1 rounded-r-full dark:bg-gray-600 dark:text-white outline-none" id="uSearchCountryCode" placeholder="Search country or code" />
+            <input type="text" class="w-full text-lg px-2 bg-transparent dark:text-white outline-none placeholder:text-gray-400" id="uSearchCountryCode" placeholder="Search country or code" />
           </div>
-          <button id="modelClose" class="w-7 h-7 p-4 m-1 ml-4 dark:bg-gray-600 hover:bg-gray-700 flex justify-center items-center rounded-full" onclick="uCloseCountryCodeModal()"><i class="fa-solid fa-close text-lg"></i></button>
+          <button id="modelClose" class="min-w-[35px] h-[35px] ml-4 bg-gray-100 dark:bg-[#1F2937] hover:bg-gray-200 dark:hover:bg-[#374151] flex justify-center items-center rounded-full transition-all duration-300" onclick="uCloseCountryCodeModal()">
+            <svg xmlns="{% static 'icons/x.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x font-bold">
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </button>
         </div>
-        <div class="w-full h-px p-0 m-0 dark:bg-gray-600 mt-1 mb-1"></div>
-        {% comment %} <!-- list country and code --> {% endcomment %}
-        <div id="countryList" class="max-h-100 overflow-y-auto space-y-1">
+        <div class="w-full h-px bg-gray-300 dark:bg-white/20 my-2"></div>
+        {% comment %}list country and code{% endcomment %}
+        <div id="countryList" class="max-h-[500px] overflow-y-auto space-y-1">
           {% for c in countrycode %}
-            <div class="uCountry-item flex justify-between items-center p-2 rounded cursor-pointer dark:hover:bg-gray-700" data-name="{{ c.country_name|lower }}" data-code="{{ c.country_code|lower }}" onclick="uSelectedCountry('{{ c.id }}','{{ c.country_code }}')">
+            <div class="uCountry-item flex justify-between items-center p-3 rounded-3xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] transition-all duration-200" data-name="{{ c.country_name|lower }}" data-code="{{ c.country_code|lower }}" onclick="uSelectedCountry('{{ c.id }}','{{ c.country_code }}')">
               <span>{{ c.country_name }}</span>
               <span class="text-gray-400">{{ c.country_code }}</span>
             </div>
           {% endfor %}
-          <div id="uNotData" class="text-center flex justify-center items-center h-20">
-            <i class="fa-solid fa-database fa-3x text-gray-400"></i>
-            <h1 class="text-gray-400">Not Data Found</h1>
+          <div id="uNotData" class="text-center flex justify-center items-center h-24 gap-2">
+            <svg xmlns="{% static 'icons/database.svg' %}" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database-icon lucide-database text-gray-400">
+              <ellipse cx="12" cy="5" rx="9" ry="3" />
+              <path d="M3 5V19A9 3 0 0 0 21 19V5" />
+              <path d="M3 12A9 3 0 0 0 21 12" />
+            </svg>
+            <h1 class="text-gray-400 text-lg">Not Data Found</h1>
           </div>
         </div>
       </div>
@@ -539,46 +745,70 @@
     {% comment %}Country Code Modal JS{% endcomment %}
     <script src="{% static 'js/accounts/user/country_code_modal.js' %}"></script>
     {% comment %}State Select Modal{% endcomment %}
-    <div id="uStateModal" class="fixed py-20 inset-0 bg-black/50 backdrop-blur-xs hidden justify-center items-start z-100 text-xl">
-      <div class="bg-white dark:bg-gray-800 dark:text-white w-full max-w-md p-2 m-2 rounded-2xl shadow-xl animate-scaleIn">
-        {% comment %} <!-- hearder --> {% endcomment %}
-        <div class="flex justify-center items-center">
-          <div class="w-full flex justify-center items-center rounded-full outline-0 dark:bg-gray-600" id="searchModal">
-            <div id="searchIcon" class="w-7 h-7 p-2 m-1 dark:bg-gray-700 flex justify-center items-center rounded-full">
-              <i class="fa-brands fa-sistrix text-lg"></i>
+    <div id="uStateModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden justify-center items-start pt-[100px] z-100 text-xl px-2">
+      <div class="bg-white/90 dark:bg-[#111827]/90 dark:text-white w-full max-w-md p-2 rounded-3xl border border-gray-200 dark:border-white/10 backdrop-blur-2xl shadow-xl animate-scaleIn">
+        {% comment %}header{% endcomment %}
+        <div class="flex justify-between items-center mb-2">
+          <div class="w-full flex justify-center items-center rounded-full outline-0 bg-gray-100 dark:bg-[#1F2937]" id="searchModal">
+            <div id="searchIcon" class="w-9 h-9 p-2 m-1 bg-white dark:bg-[#111827] flex justify-center items-center rounded-full">
+              <svg xmlns="{% static 'icons/search.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search">
+                <path d="m21 21-4.34-4.34" />
+                <circle cx="11" cy="11" r="8" />
+              </svg>
             </div>
-            <input type="text" class="w-full m-1 rounded-r-full dark:bg-gray-600 dark:text-white outline-none" id="uSearchState" placeholder="Search state" autofocus />
+            <input type="text" class="w-full text-lg px-2 bg-transparent dark:text-white outline-none placeholder:text-gray-400" id="uSearchState" placeholder="Search state" />
           </div>
-          <button id="modelStateClose" class="w-7 h-7 p-4 m-1 ml-4 dark:bg-gray-600 hover:bg-gray-700 flex justify-center items-center rounded-full" onclick="uCloseStateModal()"><i class="fa-solid fa-close text-lg"></i></button>
+          <button id="modelStateClose" class="min-w-[35px] h-[35px] ml-4 bg-gray-100 dark:bg-[#1F2937] hover:bg-gray-200 dark:hover:bg-[#374151] flex justify-center items-center rounded-full transition-all duration-300" onclick="uCloseStateModal()">
+            <svg xmlns="{% static 'icons/x.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x font-bold">
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </button>
         </div>
-        <div class="w-full h-px p-0 m-0 dark:bg-gray-600 mt-1 mb-1"></div>
-        <div id="stateList" class="max-h-100 overflow-y-auto snap-y-1"></div>
-        <div id="uStateNotData" class="text-center flex justify-center items-center h-20">
-          <i class="fa-solid fa-database fa-3x text-gray-400"></i>
-          <h1 class="text-gray-400 ml-2">No Data Found</h1>
+        <div class="w-full h-px bg-gray-300 dark:bg-white/20 my-2"></div>
+        <div id="stateList" class="max-h-[500px] overflow-y-auto space-y-1"></div>
+        <div id="uStateNotData" class="text-center flex justify-center items-center h-24 gap-2">
+          <svg xmlns="{% static 'icons/database.svg' %}" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database-icon lucide-database text-gray-400">
+            <ellipse cx="12" cy="5" rx="9" ry="3" />
+            <path d="M3 5V19A9 3 0 0 0 21 19V5" />
+            <path d="M3 12A9 3 0 0 0 21 12" />
+          </svg>
+          <h1 class="text-gray-400 text-lg">Not Data Found</h1>
         </div>
       </div>
     </div>
     {% comment %}State Select Modal JS{% endcomment %}
     <script src="{% static 'js/accounts/user/state_select_modal.js' %}"></script>
     {% comment %}City Select Modal{% endcomment %}
-    <div id="uCityModal" class="fixed py-20 inset-0 bg-black/50 backdrop-blur-xs hidden justify-center items-start z-100 text-xl">
-      <div class="bg-white dark:bg-gray-800 dark:text-white w-full max-w-md p-2 m-2 rounded-2xl shadow-xl animate-scaleIn">
-        <!-- hearder -->
-        <div class="flex justify-center items-center">
-          <div class="w-full flex justify-center items-center rounded-full outline-0 dark:bg-gray-600" id="searchModal">
-            <div id="searchIcon" class="w-7 h-7 p-2 m-1 dark:bg-gray-700 flex justify-center items-center rounded-full">
-              <i class="fa-brands fa-sistrix text-lg"></i>
+    <div id="uCityModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden justify-center items-start pt-[100px] z-100 text-xl px-2">
+      <div class="bg-white/90 dark:bg-[#111827]/90 dark:text-white w-full max-w-md p-2 rounded-3xl border border-gray-200 dark:border-white/10 backdrop-blur-2xl shadow-xl animate-scaleIn">
+        {% comment %}header{% endcomment %}
+        <div class="flex justify-between items-center mb-2">
+          <div class="w-full flex justify-center items-center rounded-full outline-0 bg-gray-100 dark:bg-[#1F2937]" id="searchModal">
+            <div id="searchIcon" class="w-9 h-9 p-2 m-1 bg-white dark:bg-[#111827] flex justify-center items-center rounded-full">
+              <svg xmlns="{% static 'icons/search.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search">
+                <path d="m21 21-4.34-4.34" />
+                <circle cx="11" cy="11" r="8" />
+              </svg>
             </div>
-            <input type="text" class="w-full m-1 rounded-r-full dark:bg-gray-600 dark:text-white outline-none" id="uSearchCity" placeholder="Search city" autofocus />
+            <input type="text" class="w-full text-lg px-2 bg-transparent dark:text-white outline-none placeholder:text-gray-400" id="uSearchCity" placeholder="Search city" />
           </div>
-          <button id="modelCityClose" class="w-7 h-7 p-4 m-1 ml-4 dark:bg-gray-600 hover:bg-gray-700 flex justify-center items-center rounded-full" onclick="uCloseCityModal()"><i class="fa-solid fa-close text-lg"></i></button>
+          <button id="modelCityClose" class="min-w-[35px] h-[35px] ml-4 bg-gray-100 dark:bg-[#1F2937] hover:bg-gray-200 dark:hover:bg-[#374151] flex justify-center items-center rounded-full transition-all duration-300" onclick="uCloseCityModal()">
+            <svg xmlns="{% static 'icons/x.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x font-bold">
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </button>
         </div>
-        <div class="w-full h-px p-0 m-0 dark:bg-gray-600 mt-1 mb-1"></div>
-        <div id="cityList" class="max-h-100 overflow-y-auto snap-y-1"></div>
-        <div id="uCityNotData" class="text-center flex justify-center items-center h-20">
-          <i class="fa-solid fa-database fa-3x text-gray-400"></i>
-          <h1 class="text-gray-400 ml-2">No Data Found</h1>
+        <div class="w-full h-px bg-gray-300 dark:bg-white/20 my-2"></div>
+        <div id="cityList" class="max-h-[500px] overflow-y-auto space-y-1"></div>
+        <div id="uCityNotData" class="text-center flex justify-center items-center h-24 gap-2">
+          <svg xmlns="{% static 'icons/database.svg' %}" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database-icon lucide-database text-gray-400">
+            <ellipse cx="12" cy="5" rx="9" ry="3" />
+            <path d="M3 5V19A9 3 0 0 0 21 19V5" />
+            <path d="M3 12A9 3 0 0 0 21 12" />
+          </svg>
+          <h1 class="text-gray-400 text-lg">Not Data Found</h1>
         </div>
       </div>
     </div>

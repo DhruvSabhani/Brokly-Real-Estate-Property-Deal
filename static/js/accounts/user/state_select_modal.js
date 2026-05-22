@@ -6,6 +6,7 @@ const uStateModal = document.getElementById("uStateModal");
 const uStateSeaI = document.getElementById("uSearchState");
 const uStateList = document.getElementById("stateList");
 const uStateND = document.getElementById("uStateNotData");
+
 uStateBtn.addEventListener("click", () => {
   uStateModal.classList.replace("hidden", "flex");
   uStateND.classList.add("hidden");
@@ -24,7 +25,7 @@ uStateBtn.addEventListener("click", () => {
       }
       data.states.forEach((s) => {
         let name = s.name.charAt(0).toUpperCase() + s.name.slice(1);
-        html += `<div class="uState-item flex justify-between items-center p-2 rounded cursor-pointer dark:hover:bg-gray-700" data-name="${s.name.toLowerCase()}" onclick="uStateSelected('${s.id}','${name}')"><span>${name}</span></div>`;
+        html += `<div class="uState-item flex justify-between items-center p-3 rounded-3xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] transition-all duration-200" data-name="${s.name.toLowerCase()}" onclick="uStateSelected('${s.id}','${name}')"><span>${name}</span></div>`;
       });
       uStateList.innerHTML = html;
     });
@@ -35,10 +36,10 @@ function uCloseStateModal() {
 function uStateSelected(id, name) {
   uStateId.value = id;
   uSelectedState.innerText = name;
+  ucitylabel.classList.remove("disabled");
   ucitybtn.disabled = false;
   uCityId.value = "";
   uSelectedCity.innerText = "" || "Select City";
-  uUpdateBtn.disabled = false;
   uCloseStateModal();
 }
 uStateSeaI.addEventListener("keyup", () => {

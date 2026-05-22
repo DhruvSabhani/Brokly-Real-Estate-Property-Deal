@@ -9,7 +9,7 @@ const uCityND = document.getElementById("uCityNotData");
 uCityBtn.addEventListener("click", () => {
   uCityModal.classList.replace("hidden", "flex");
   uCityND.classList.add("hidden");
-  setTimeout(() => uStateSeaI.focus(), 100);
+  setTimeout(() => uCitySeaI.focus(), 100);
   let uState_ID = document.getElementById("uStateId").value;
   fetch(`/get-cities/?state_id=${uState_ID}`)
     .then((res) => res.json())
@@ -22,7 +22,7 @@ uCityBtn.addEventListener("click", () => {
       }
       data.cities.forEach((c) => {
         let name = c.name.charAt(0).toUpperCase() + c.name.slice(1);
-        html += `<div class="uCity-item flex justify-between items-center p-2 rounded cursor-pointer dark:hover:bg-gray-700" data-name="${c.name.toLowerCase()}" onclick="uCitySelected('${c.id}','${name}')"><span>${name}</span></div>`;
+        html += `<div class="uCity-item flex justify-between items-center p-3 rounded-3xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] transition-all duration-200" data-name="${c.name.toLowerCase()}" onclick="uCitySelected('${c.id}','${name}')"><span>${name}</span></div>`;
       });
       uCityList.innerHTML = html;
     });
@@ -33,7 +33,6 @@ function uCloseCityModal() {
 function uCitySelected(id, name) {
   uCityId.value = id;
   uSelectedCity.innerText = name;
-  uUpdateBtn.disabled = false;
   uCloseCityModal();
 }
 uCitySeaI.addEventListener("keyup", () => {
