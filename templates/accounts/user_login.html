@@ -27,7 +27,7 @@
       </div>
       <div class="u-header-right-side flex justify-center items-center gap-3">
         <div class="u-theme rounded-2xl border lg:border-2 border-black/10 dark:border-white/10">
-          <button id="u-theme-btn" class="relative w-12 h-12 lg:w-10 lg:h-10 rounded-2xl flex items-center justify-center overflow-hidden group transition-all duration-300 hover:scale-105 active:scale-95">
+          <button id="u-theme-btn" class="relative w-12 h-12 lg:w-10 lg:h-10 rounded-2xl flex items-center justify-center overflow-hidden group transition-all duration-300 hover:scale-105 active:scale-95" value="1">
             <svg id="u-moon-icon" xmlns="{% static 'icons/moon-star.svg' %}" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute text-orange-500 transition-all duration-500 scale-100 rotate-0 dark:scale-0 dark:rotate-90">
               <path d="M18 5h4" />
               <path d="M20 3v4" />
@@ -55,6 +55,7 @@
           } else {
             html.classList.remove('dark')
           }
+          
           themeBtn.addEventListener('click', () => {
             html.classList.toggle('dark')
             if (html.classList.contains('dark')) {
@@ -67,7 +68,7 @@
             })
           })
         </script>
-        <div class="u-language-btn text-gray-600 dark:text-white">
+        {% comment %} <div class="u-language-btn text-gray-600 dark:text-white">
           <button class="relative w-12 h-12 lg:w-30 lg:h-10 flex justify-center items-center rounded-2xl border border-gray-200 dark:border-white/10 dark:bg-white/2 lg:border-none lg:bg-transparent lg:dark:bg-white/0" disabled>
             <svg xmlns="{% static 'icons/globe.svg' %}" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe-icon lucide-globe">
               <circle cx="12" cy="12" r="10" />
@@ -79,7 +80,7 @@
               <path d="m6 9 6 6 6-6" />
             </svg>
           </button>
-        </div>
+        </div> {% endcomment %}
       </div>
     </header>
     <script>
@@ -93,11 +94,11 @@
       })
     </script>
     {% comment %}main{% endcomment %}
-    <main class="w-full min-h-screen relative bottom-[80px] grid lg:grid-cols-2 lg:dark:bg-black dark:bg-[#000000] bg-[#ffffff] overflow-hidden">
+    <main class="w-full min-h-fit relative bottom-[80px] grid lg:grid-cols-2 lg:dark:bg-black dark:bg-[#000000] bg-[#ffffff] overflow-hidden">
       {% comment %}left side{% endcomment %}
       <section class="relative hidden lg:flex min-h-screen">
-        <img src="{% static 'images/u_light_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 lg:h-full object-cover object-center transition-opacity duration-700 ease-in-out dark:opacity-0 opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
-        <img src="{% static 'images/u_dark_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 lg:w-full lg:h-full object-cover object-center transition-opacity duration-700 ease-in-out opacity-0 dark:opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
+        <img src="{% static 'images/u_light_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 lg:w-full lg:h-[70%] object-cover object-center transition-opacity duration-700 ease-in-out dark:opacity-0 opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
+        <img src="{% static 'images/u_dark_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 lg:w-full lg:h-[70%] object-cover object-center transition-opacity duration-700 ease-in-out opacity-0 dark:opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
         <div class="absolute inset-0 bg-gradient-to-tr from-white/30 via-white/30 to-white/30 dark:from-black/30 dark:via-black/30 dark:to-black/30 pointer-events-none"></div>
         <div class="relative z-10 hidden lg:flex flex-col justify-end px-10 pb-5">
           <h1 class="text-4xl leading-tight font-bold text-black dark:text-white w-100">
@@ -167,7 +168,7 @@
         </div>
       </section>
       {% comment %}right side{% endcomment %}
-      <section class="relative w-full min-h-screen flex flex-col justify-center items-center lg:overflow-hidden">
+      <section class="relative w-full min-h-full flex flex-col justify-center items-center lg:overflow-hidden">
         <div class="absolute inset-0 lg:hidden overflow-hidden">
           <img src="{% static 'images/u_light_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 w-full h-[50%] object-cover object-center transition-opacity duration-700 ease-in-out dark:opacity-0 opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
           <img src="{% static 'images/u_dark_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 w-full h-[50%] object-cover object-center transition-opacity duration-700 ease-in-out opacity-0 dark:opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
@@ -182,7 +183,7 @@
         </div>
         <div class="relative px-5 py-6 rounded-3xl w-full min-h-screen flex flex-col justify-start items-center">
           {% comment %}login field{% endcomment %}
-          <div id="uLogin" class="w-full max-w-[450px] flex flex-col justify-center items-center mt-[420px] lg:mt-[100px]">
+          <div id="uLogin" class="w-full max-w-[450px] hidden flex-col justify-center items-center mt-[420px] lg:mt-[100px]">
             <img src="{% static 'images/logo.svg' %}" alt="Brokly Logo" class="w-30 hidden lg:flex" />
             <h2 class="text-center text-2xl font-bold text-gray-950 dark:text-white">Welcome Back 👋</h2>
             <p class="text-gray-500 dark:text-white/50">Login to continue to your account</p>
@@ -234,7 +235,7 @@
             </div>
           </div>
           {% comment %}profile field{% endcomment %}
-          <div id="uProfile" class="w-full max-w-[600px] hidden flex-col justify-center items-center mt-[420px] lg:mt-[100px]">
+          <div id="uProfile" class="w-full max-w-[600px] flex flex-col justify-center items-center mt-[420px] lg:mt-[100px]">
             {% comment %}profile title{% endcomment %}
             <div class="w-full lg:max-w-[600px] flex justify-between items-center px-4 py-2">
               <div class="flex-col">
@@ -256,6 +257,7 @@
               <input type="file" id="avatarInput" name="avatarInput" class="hidden" accept="image/*" />
               <script>
                 document.getElementById('avatarInput').addEventListener('change', function (e) {
+                  e.preventDefault()
                   const file = e.target.files[0]
                   if (file) {
                     document.getElementById('avatarPreview').src = URL.createObjectURL(file)
@@ -324,6 +326,9 @@
       </section>
     </main>
     <script>
+      // variable theme value
+      const nameTheme = localStorage.getItem('utheme')
+      const valueTheme = nameTheme === 'dark' ? '2' : '1'
       // variable u-login
       const uLogin = document.getElementById('uLogin')
       // variable phone input
@@ -619,6 +624,7 @@
                 ucitybtn.disabled = true
               }
               uStateId.value = data.profile.state_id || ''
+              ucitylabel.classList.remove('disabled')
               uSelectedCity.innerText = data.profile.city_name || 'Select City'
               uCityId.value = data.profile.city_id || ''
               if (data.profile.img) {
@@ -650,22 +656,21 @@
         let cityid = document.getElementById('uCityId').value.trim()
         let nameError = document.getElementById('unrm')
         nameError.innerText = ''
-        alert(file)
       
         if (!name) {
           nameError.innerText = 'username is required'
           return
         }
       
-        if (!confirm('Are you sure you want to update your profile?')) return
-        uUpbtnText.innerText = ''
-        uLoaderUpdate.classList.remove('hidden')
-      
         let fd = new FormData()
         if (file) fd.append('uimg', file)
         fd.append('uname', name)
         if (stateid) fd.append('ustateid', stateid)
         if (cityid) fd.append('ucityid', cityid)
+      
+        if (!confirm('Are you sure you want to update your profile?')) return
+        uUpbtnText.innerText = ''
+        uLoaderUpdate.classList.remove('hidden')
       
         fetch('/user-profile/', {
           method: 'POST',
@@ -676,6 +681,7 @@
         })
           .then((res) => res.json())
           .then((data) => {
+            console.log('data:', data)
             if (data.error) {
               alert(data.message)
             }

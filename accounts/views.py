@@ -125,9 +125,9 @@ def verify_otp(request):
             profile_data = {
                 "img": uProfile.img.url if uProfile.img else None,
                 "name": uProfile.name if uProfile.name else None,
-                "state_id": uProfile.state.id if uProfile.state else None,
+                "state_id": uProfile.state.pk if uProfile.state else None,
                 "state_name": uProfile.state.name if uProfile.state else None,
-                "city_id": uProfile.city.id if uProfile.city else None,
+                "city_id": uProfile.city.pk if uProfile.city else None,
                 "city_name": uProfile.city.name if uProfile.city else None,
             }
 
@@ -149,10 +149,10 @@ def user_profile(request):
         return JsonResponse({"error": True, "message": "Session expired"})
 
     user = CustomUser.objects.filter(id=user_id).first()
-    
+
     if not user:
         return JsonResponse({"error": True, "message": "User not found"})
-  
+
     uProfile, created = UserProfile.objects.get_or_create(user=user)
 
     uimg = request.FILES.get("uimg")

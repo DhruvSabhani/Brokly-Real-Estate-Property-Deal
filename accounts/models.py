@@ -181,7 +181,7 @@ class UserProfile(models.Model):
         if self.pk:
             try:
                 old_img = UserProfile.objects.get(pk=self.pk).img
-                if old_img or old_img != self.img:
+                if old_img and old_img != self.img:
                     if os.path.isfile(old_img.path):
                         os.remove(old_img.path)
             except UserProfile.DoesNotExist:
@@ -216,7 +216,7 @@ class BrokerProfile(models.Model):
         if self.pk:
             try:
                 old_img = BrokerProfile.objects.get(pk=self.pk).img
-                if old_img or old_img != self.img:
+                if old_img and old_img != self.img:
                     if os.path.isfile(old_img.path):
                         os.remove(old_img.path)
             except BrokerProfile.DoesNotExist:
