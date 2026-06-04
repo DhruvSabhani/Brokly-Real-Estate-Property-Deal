@@ -39,7 +39,7 @@ function uStateSelected(id, name) {
   ucitylabel.classList.remove("disabled");
   ucitybtn.disabled = false;
   uCityId.value = "";
-  uSelectedCity.innerText = "" || "Select City";
+  uSelectedCity.innerText = uSelectedCity.getAttribute("data-select-city");
   uCloseStateModal();
 }
 uStateSeaI.addEventListener("keyup", () => {

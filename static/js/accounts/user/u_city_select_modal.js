@@ -6,6 +6,7 @@ const uCityModal = document.getElementById("uCityModal");
 const uCitySeaI = document.getElementById("uSearchCity");
 const uCityList = document.getElementById("cityList");
 const uCityND = document.getElementById("uCityNotData");
+
 uCityBtn.addEventListener("click", () => {
   uCityModal.classList.replace("hidden", "flex");
   uCityND.classList.add("hidden");

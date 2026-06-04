@@ -8,10 +8,6 @@ const uCodeNotData = document.getElementById("uNotData");
 
 uCodeNotData.classList.add("hidden");
 
-if (!uSelectedCode.innerText.trim() || !uCountryId.value) {
-  uCountryId.value = "1";
-  uSelectedCode.innerText = "+91";
-}
 uCodeBtn.addEventListener("click", () => {
   uCountryModal.classList.replace("hidden", "flex");
 });

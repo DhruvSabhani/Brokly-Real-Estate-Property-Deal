@@ -1,13 +1,14 @@
 {% load static tailwind_tags %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en" class="">
   <head>
     {% load static %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login to │ Brokly</title>
+    <title>{% trans 'Login to │ Brokly' %}</title>
     {% comment %}CSS{% endcomment %}
-    <link rel="stylesheet" href="{% static 'css/accounts/user_login_style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/accounts/login_style.css' %}" />
     {% comment %}Tailwind CSS{% endcomment %}
     {% tailwind_css %}
     <style>
@@ -16,18 +17,17 @@
       }
     </style>
   </head>
-  <body class="u-login-body min-w-full h-screen bg-[#FAFAF6] lg:dark:bg-black dark:bg-black text-black dark:text-white transition-colors duration-700 ease-in-out animate-fadeInUp lg:overflow-x-hidden">
+
+  <body class="u-login-body min-w-full h-screen bg-[#FAFAF6] lg:dark:bg-black dark:bg-black text-black dark:text-white transition-colors duration-1000 ease-in-out animate-fadeInUp lg:overflow-x-hidden">
     {% comment %}header{% endcomment %}
-    <header class="u-header sticky top-0 left-0 w-full z-50 px-5 flex justify-between items-center lg:px-10 bg-white/30 dark:bg-black/30">
+    <header class="u-header sticky top-0 left-0 w-full z-50 px-5 flex justify-between items-center lg:px-10 bg-white/30 dark:bg-black/30 lg:bg-white/10 lg:dark:bg-black/10">
       <div class="u-header-left-side flex justify-center items-center">
-        <a href="/login" class="flex justify-center items-center">
-          <img src="{% static 'images/logo.svg' %}" alt="Brokly Logo" class="w-20" />
-          <h1 class="text-3xl font-semibold text-black dark:text-white">Brokly</h1>
-        </a>
+        <img src="{% static 'images/logo.svg' %}" alt="Brokly Logo" class="w-20" />
+        <h1 class="text-3xl font-semibold text-black dark:text-white">Brokly</h1>
       </div>
       <div class="u-header-right-side flex justify-center items-center gap-3">
         <div class="u-theme rounded-2xl border lg:border-2 border-black/10 dark:border-white/10">
-          <button id="u-theme-btn" class="relative w-12 h-12 lg:w-10 lg:h-10 rounded-2xl flex items-center justify-center overflow-hidden group transition-all duration-300 hover:scale-105 active:scale-95" value="1">
+          <button id="u-theme-btn" class="relative w-12 h-12 lg:w-10 lg:h-10 rounded-2xl flex items-center justify-center overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95">
             <svg id="u-moon-icon" xmlns="{% static 'icons/moon-star.svg' %}" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute text-orange-500 transition-all duration-500 scale-100 rotate-0 dark:scale-0 dark:rotate-90">
               <path d="M18 5h4" />
               <path d="M20 3v4" />
@@ -45,42 +45,60 @@
               <path d="m19.07 4.93-1.41 1.41" />
             </svg>
           </button>
-        </div>
-        <script>
-          const html = document.documentElement
-          const themeBtn = document.getElementById('u-theme-btn')
-          const savedTheme = localStorage.getItem('utheme')
-          if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            html.classList.add('dark')
-          } else {
-            html.classList.remove('dark')
-          }
-          
-          themeBtn.addEventListener('click', () => {
-            html.classList.toggle('dark')
-            if (html.classList.contains('dark')) {
-              localStorage.setItem('utheme', 'dark')
+          <script>
+            const html = document.documentElement
+            const themeBtn = document.getElementById('u-theme-btn')
+            const savedTheme = localStorage.getItem('utheme')
+            localStorage.setItem('uthemeValue', '1')
+            
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+              html.classList.add('dark')
             } else {
-              localStorage.setItem('utheme', 'light')
+              html.classList.remove('dark')
             }
-            themeBtn.animate([{ transform: 'scale(1)' }, { transform: 'scale(.85)' }, { transform: 'scale(1)' }], {
-              duration: 250
+            
+            themeBtn.addEventListener('click', () => {
+              html.classList.toggle('dark')
+              if (html.classList.contains('dark')) {
+                localStorage.setItem('utheme', 'dark')
+                localStorage.setItem('uthemeValue', '2')
+              } else {
+                localStorage.setItem('utheme', 'light')
+                localStorage.setItem('uthemeValue', '1')
+              }
+              themeBtn.animate([{ transform: 'scale(1)' }, { transform: 'scale(.85)' }, { transform: 'scale(1)' }], {
+                duration: 250
+              })
             })
-          })
-        </script>
-        {% comment %} <div class="u-language-btn text-gray-600 dark:text-white">
-          <button class="relative w-12 h-12 lg:w-30 lg:h-10 flex justify-center items-center rounded-2xl border border-gray-200 dark:border-white/10 dark:bg-white/2 lg:border-none lg:bg-transparent lg:dark:bg-white/0" disabled>
+          </script>
+        </div>
+
+        <div class="u-language-btn text-orange-500 lg:text-gray-600 lg:dark:text-white">
+          <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+          <button type="button" id="uLanguageBtn" class="relative w-32 h-12 lg:w-auto lg:h-10 flex justify-center items-center rounded-2xl border border-gray-200 dark:border-white/10 dark:bg-white/2 lg:border-none lg:bg-transparent lg:dark:bg-white/0 transition-all duration-300 hover:text-orange-500 hover:scale-95 active:scale-95">
             <svg xmlns="{% static 'icons/globe.svg' %}" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe-icon lucide-globe">
               <circle cx="12" cy="12" r="10" />
               <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
               <path d="M2 12h20" />
             </svg>
-            <span id="u-selected-language" class="font-medium font-sans px-2 hidden lg:block">English</span>
-            <svg xmlns="{% static 'icons/chevron-down.svg' %}" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down hidden lg:block">
+            <span id="uSelectedLanguage" class="font-medium font-sans px-2">
+              {% comment %} {% for l in languages %}
+                {% if l.code == current_language %}
+                  {{ l.name|capfirst }}
+                {% endif %}
+              {% endfor %} {% endcomment %}
+
+              {% if request.LANGUAGE_CODE == 'gu' %}
+                ગુજરાતી
+              {% else %}
+                English
+              {% endif %}
+            </span>
+            <svg xmlns="{% static 'icons/chevron-down.svg' %}" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down">
               <path d="m6 9 6 6 6-6" />
             </svg>
           </button>
-        </div> {% endcomment %}
+        </div>
       </div>
     </header>
     <script>
@@ -93,6 +111,7 @@
         }
       })
     </script>
+
     {% comment %}main{% endcomment %}
     <main class="w-full min-h-fit relative bottom-[80px] grid lg:grid-cols-2 lg:dark:bg-black dark:bg-[#000000] bg-[#ffffff] overflow-hidden">
       {% comment %}left side{% endcomment %}
@@ -101,14 +120,18 @@
         <img src="{% static 'images/u_dark_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 lg:w-full lg:h-[70%] object-cover object-center transition-opacity duration-700 ease-in-out opacity-0 dark:opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
         <div class="absolute inset-0 bg-gradient-to-tr from-white/30 via-white/30 to-white/30 dark:from-black/30 dark:via-black/30 dark:to-black/30 pointer-events-none"></div>
         <div class="relative z-10 hidden lg:flex flex-col justify-end px-10 pb-5">
-          <h1 class="text-4xl leading-tight font-bold text-black dark:text-white w-100">
-            Find Homes and any
-            <span class="text-orange-500">Property Near You.</span>
+          <h1 class="text-3xl leading-tight font-bold text-black dark:text-white w-100">
+            {% trans 'Find Homes, Flats, PGs & Commercial Properties' %}
+            <span class="text-orange-500">{% trans 'All in One Place.' %}</span>
           </h1>
-          <p class="text-xl py-2 text-gray-700 leading-relaxed dark:text-white/70">Connect with Trusted Brokers & Owner.</p>
-          <p class="text-[15px] text-gray-600 mb-4 font-medium w-100 dark:text-white/80">Brokly is a smart real estate platform where users can search nearby PGs, homes, flats, rooms and commercial properties using live location, price, and distance filters. Brokers and Owner can list properties for buy, sell or rent, while the admin panel manages and monitors all user and broker portal activities in one place.</p>
+          <p class="text-xl py-2 text-gray-700 leading-relaxed dark:text-white/70">
+            {% trans 'Connect with Trusted Brokers, Property Owners & Builders.' %}
+          </p>
+          <p class="text-[15px] text-gray-600 mb-4 font-medium dark:text-white/80">
+            {% trans 'Brokly is a smart real estate platform, where users can search for nearby PGs, houses, flats, rooms and commercial properties using live location, price and distance based filters. Brokers and property owners can list their properties for sale or rent, while the admin panel manages and monitors all user, broker and property related activities from a single dashboard.' %}
+          </p>
           {% comment %}features{% endcomment %}
-          <div class="u-feature flex items-start gap-5 mt-2 flex-row">
+          <div class="u-feature flex items-start gap-5 flex-row">
             <div class="u-smart-search flex flex-col items-start gap-1 w-full">
               <div class="u-search-icon rounded-xl p-2 m-2 flex justify-start items-start bg-orange-50 dark:bg-[#12181f]">
                 <svg xmlns="{% static 'icons/search.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search text-orange-500">
@@ -117,8 +140,12 @@
                 </svg>
               </div>
               <div class="flex-row">
-                <p class="text-sm font-semibold tracking-wide text-gray-900 dark:text-neutral-100">Smart Search</p>
-                <p class="text-xs leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">Find the best properties near you.</p>
+                <p class="text-sm font-semibold tracking-wide text-gray-900 dark:text-neutral-100">
+                  {% trans 'Smart Search' %}
+                </p>
+                <p class="text-xs leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">
+                  {% trans 'Find the best properties near you.' %}
+                </p>
               </div>
             </div>
             <div class="u-smart-filter flex flex-col items-start gap-1 w-full">
@@ -136,8 +163,12 @@
                 </svg>
               </div>
               <div class="flex-row">
-                <p class="text-sm font-semibold tracking-wide text-gray-900 dark:text-neutral-100">Smart Filters</p>
-                <p class="text-xs leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">Filter by price, distance & more.</p>
+                <p class="text-sm font-semibold tracking-wide text-gray-900 dark:text-neutral-100">
+                  {% trans 'Smart Filters' %}
+                </p>
+                <p class="text-xs leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">
+                  {% trans 'Filter by price, distance & more.' %}
+                </p>
               </div>
             </div>
             <div class="u-live-location flex flex-col items-start gap-1 w-full">
@@ -148,8 +179,12 @@
                 </svg>
               </div>
               <div class="flex-row">
-                <p class="text-sm font-semibold tracking-wide text-gray-900 dark:text-neutral-100">Live Location</p>
-                <p class="text-xs leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">Search properties by location and map.</p>
+                <p class="text-sm font-semibold tracking-wide text-gray-900 dark:text-neutral-100">
+                  {% trans 'Live Location' %}
+                </p>
+                <p class="text-xs leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">
+                  {% trans 'Search properties by location and map.' %}
+                </p>
               </div>
             </div>
             <div class="u-verified-listing flex flex-col items-start gap-1 w-full">
@@ -160,44 +195,71 @@
                 </svg>
               </div>
               <div class="flex-row">
-                <p class="text-sm font-semibold tracking-wide text-gray-900 dark:text-neutral-100">Verified Listings</p>
-                <p class="text-xs leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">Only trusted & verified properties.</p>
+                <p class="text-sm font-semibold tracking-wide text-gray-900 dark:text-neutral-100">
+                  {% trans 'Verified Listings' %}
+                </p>
+                <p class="text-xs leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">
+                  {% trans 'Only trusted & verified properties.' %}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="u-needs-help mt-6 w-full rounded-xl px-4 py-4 gap-3 flex justify-center items-center bg-orange-50 dark:bg-[#12181fd0]">
+            <div class="u-help-icon flex justify-center items-center">
+              <svg xmlns="{% static 'icons/headset.svg' %}" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headset-icon lucide-headset text-orange-500">
+                <path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z" />
+                <path d="M21 16v2a4 4 0 0 1-4 4h-5" />
+              </svg>
+            </div>
+            <div class="flex flex-row justify-between items-center w-full">
+              <div class="flex flex-col justify-center items-start">
+                <p class="text-sm font-semibold tracking-wide text-gray-900 dark:text-neutral-100">
+                  {% trans '24/7 Customer Support' %}
+                </p>
+                <p class="text-xs leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">
+                  {% trans 'Contact our support team anytime for assistance' %}
+                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
+
       {% comment %}right side{% endcomment %}
       <section class="relative w-full min-h-full flex flex-col justify-center items-center lg:overflow-hidden">
         <div class="absolute inset-0 lg:hidden overflow-hidden">
-          <img src="{% static 'images/u_light_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 w-full h-[50%] object-cover object-center transition-opacity duration-700 ease-in-out dark:opacity-0 opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
-          <img src="{% static 'images/u_dark_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 w-full h-[50%] object-cover object-center transition-opacity duration-700 ease-in-out opacity-0 dark:opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
+          <img src="{% static 'images/u_light_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 w-full min-h-fit object-cover object-center transition-opacity duration-700 ease-in-out dark:opacity-0 opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
+          <img src="{% static 'images/u_dark_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 w-full min-h-fit object-cover object-center transition-opacity duration-700 ease-in-out opacity-0 dark:opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
           <div class="absolute inset-0 bg-gradient-to-br from-white/30 via-white/30 to-white/30 dark:from-black/30 dark:via-black/30 dark:to-black/30 pointer-events-none"></div>
-          <div class="relative z-10 flex flex-col justify-center items-center px-6 pt-80">
-            <h1 class="text-[33px] leading-none font-extrabold text-black dark:text-white max-w-[340px] text-center">
-              Find Homes and any
-              <span class="text-orange-500">Property Near You.</span>
+          <div class="relative z-10 flex flex-col justify-center items-center px-6 pt-52">
+            <h1 class="text-[24px] leading-none font-extrabold text-black dark:text-white max-w-[500px] text-center">
+              {% trans 'Find Homes, Flats, PGs & Commercial Properties' %}
+              <span class="text-[24px] text-orange-500">{% trans 'All in One Place.' %}</span>
             </h1>
-            <p class="mt-1 text-gray-700 leading-7 dark:text-white/70 max-w-[300px]">Connect with Trusted Brokers & Owner.</p>
+            <p class="mt-1 text-gray-700 leading-7 dark:text-white/70 max-w-[500px]">
+              {% trans 'Connect with Trusted Brokers, Property Owners & Builders.' %}
+            </p>
           </div>
         </div>
         <div class="relative px-5 py-6 rounded-3xl w-full min-h-screen flex flex-col justify-start items-center">
           {% comment %}login field{% endcomment %}
-          <div id="uLogin" class="w-full max-w-[450px] hidden flex-col justify-center items-center mt-[420px] lg:mt-[100px]">
+          <div id="uLogin" class="w-full max-w-[450px] flex flex-col justify-center items-center mt-[280px] lg:mt-[30px]">
             <img src="{% static 'images/logo.svg' %}" alt="Brokly Logo" class="w-30 hidden lg:flex" />
-            <h2 class="text-center text-2xl font-bold text-gray-950 dark:text-white">Welcome Back 👋</h2>
-            <p class="text-gray-500 dark:text-white/50">Login to continue to your account</p>
+            <h2 class="text-center text-2xl font-bold text-gray-950 dark:text-white">{% trans 'Welcome Back 👋' %}</h2>
+            <p class="text-gray-500 dark:text-white/50">
+              {% trans 'Login to continue to your account' %}
+            </p>
             {% comment %}phone input{% endcomment %}
-            <label for="phone" class="mt-6 w-full text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">Mobile Number</label>
+            <label for="phone" class="mt-6 w-full text-[18px] lg:text-[15px] mr-1 py-2 font-semibold text-black/90 dark:text-white/90">{% trans 'Mobile Number' %}</label>
             <div class="flex w-full h-14 lg:h-12 overflow-hidden rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl">
               <button type="button" id="uCountryCodeBtn" class="px-4 flex items-center justify-center gap-1 font-semibold bg-black/10 dark:bg-white/5 text-black/90 dark:text-white text-lg">
-                <span id="uSelectedCode"></span>
+                <span id="uSelectedCode">+91</span>
                 {% comment %} <svg xmlns="{% static 'icons/chevron-down.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down">
                   <path d="m6 9 6 6 6-6" />
                 </svg> {% endcomment %}
-                <input type="hidden" id="uCountryId" name="uCountryId" />
+                <input type="hidden" id="uCountryId" name="uCountryId" value="1" />
               </button>
-              <input type="tel" id="phone" name="phone" class="w-[350px] font-normal px-4 bg-transparent text-gray-900 placeholder:text-gray-400 dark:text-white text-xl lg:text-lg outline-0" placeholder="Phone number" />
+              <input type="tel" id="phone" name="phone" value="9999999999" class="w-[350px] font-normal px-4 bg-transparent text-gray-900 placeholder:text-gray-400 dark:text-white text-xl lg:text-lg outline-0" placeholder="{% trans 'Phone number' %}" />
               <div id="phoneCheckIcon" class="hidden justify-center items-center px-3">
                 <svg xmlns="{% static 'icons/check-check.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-check-icon lucide-check-check text-orange-500">
                   <path d="M18 6 7 17l-5-5" />
@@ -209,18 +271,18 @@
             <p id="prm" class="text-sm w-[450px] wrap-break-word font-normal text-red-600 px-1 py-1"></p>
             {% comment %}send otp btn{% endcomment %}
             <button id="sendOtpBtn" class="w-full mt-6 py-3 lg:py-2 text-lg bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-all shadow flex justify-center items-center gap-3">
-              <span id="btnText">Send OTP</span>
+              <span id="btnText">{% trans 'Send OTP' %}</span>
               <div id="loader" class="hidden w-6 h-6 border-[4px] border-white/30 rounded-full border-t-white animate-spin"></div>
             </button>
             <div id="otp-box" class="hidden w-full flex-col mt-4">
-              <label class="w-full text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">Enter OTP</label>
+              <label for="otp1" class="w-full text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">{% trans 'Enter OTP' %}</label>
               <div class="w-full flex justify-center items-center gap-6 lg:gap-8 mt-2">
-                <input type="text" inputmode="numeric" maxlength="1" class="otp-input w-13 h-13 lg:w-11 lg:h-11 text-center text-lg outline-0 rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border-1 border-gray-300 dark:border-white/10 bg-white/70 dark:bg-white/5" />
-                <input type="text" inputmode="numeric" maxlength="1" class="otp-input w-13 h-13 lg:w-11 lg:h-11 text-center text-lg outline-0 rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border-1 border-gray-300 dark:border-white/10 bg-white/70 dark:bg-white/5" />
-                <input type="text" inputmode="numeric" maxlength="1" class="otp-input w-13 h-13 lg:w-11 lg:h-11 text-center text-lg outline-0 rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border-1 border-gray-300 dark:border-white/10 bg-white/70 dark:bg-white/5" />
-                <input type="text" inputmode="numeric" maxlength="1" class="otp-input w-13 h-13 lg:w-11 lg:h-11 text-center text-lg outline-0 rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border-1 border-gray-300 dark:border-white/10 bg-white/70 dark:bg-white/5" />
-                <input type="text" inputmode="numeric" maxlength="1" class="otp-input w-13 h-13 lg:w-11 lg:h-11 text-center text-lg outline-0 rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border-1 border-gray-300 dark:border-white/10 bg-white/70 dark:bg-white/5" />
-                <input type="text" inputmode="numeric" maxlength="1" class="otp-input w-13 h-13 lg:w-11 lg:h-11 text-center text-lg outline-0 rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border-1 border-gray-300 dark:border-white/10 bg-white/70 dark:bg-white/5" />
+                <input type="text" id="otp1" inputmode="numeric" maxlength="1" class="otp-input w-13 h-13 lg:w-11 lg:h-11 text-center text-lg outline-0 rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border-1 border-gray-300 dark:border-white/10 bg-white/70 dark:bg-white/5" />
+                <input type="text" id="otp2" inputmode="numeric" maxlength="1" class="otp-input w-13 h-13 lg:w-11 lg:h-11 text-center text-lg outline-0 rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border-1 border-gray-300 dark:border-white/10 bg-white/70 dark:bg-white/5" />
+                <input type="text" id="otp3" inputmode="numeric" maxlength="1" class="otp-input w-13 h-13 lg:w-11 lg:h-11 text-center text-lg outline-0 rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border-1 border-gray-300 dark:border-white/10 bg-white/70 dark:bg-white/5" />
+                <input type="text" id="otp4" inputmode="numeric" maxlength="1" class="otp-input w-13 h-13 lg:w-11 lg:h-11 text-center text-lg outline-0 rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border-1 border-gray-300 dark:border-white/10 bg-white/70 dark:bg-white/5" />
+                <input type="text" id="otp5" inputmode="numeric" maxlength="1" class="otp-input w-13 h-13 lg:w-11 lg:h-11 text-center text-lg outline-0 rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border-1 border-gray-300 dark:border-white/10 bg-white/70 dark:bg-white/5" />
+                <input type="text" id="otp6" inputmode="numeric" maxlength="1" class="otp-input w-13 h-13 lg:w-11 lg:h-11 text-center text-lg outline-0 rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border-1 border-gray-300 dark:border-white/10 bg-white/70 dark:bg-white/5" />
               </div>
               <p id="orm" class="text-sm w-[400px] wrap-break-word font-normal text-red-600 px-1 py-1"></p>
               <div class="flex justify-center items-center gap-1 mt-4 text-base">
@@ -228,21 +290,67 @@
                   <circle cx="12" cy="12" r="10" />
                   <path d="M12 6v6l4 2" />
                 </svg>
-                <button id="resendOtpBtn" class="text-orange-500 hover:text-orange-600 dark:hover:text-orange-400 font-medium transition-all duration-300" onclick="resendOTP();">Resend OTP in</button>
+                <button id="resendOtpBtn" class="text-orange-500 hover:text-orange-600 dark:hover:text-orange-400 font-medium transition-all duration-300" onclick="resendOTP();">{% trans 'Resend OTP in' %}</button>
                 <p id="timerText" class="text-orange-500 font-medium"></p>
                 <div id="verifyOtpLoader" class="w-5 h-5 hidden justify-center items-center border-[4px] border-black/20 border-t-black dark:border-white/20 dark:border-t-white rounded-full animate-spin"></div>
               </div>
             </div>
-          </div>
-          {% comment %}profile field{% endcomment %}
-          <div id="uProfile" class="w-full max-w-[600px] flex flex-col justify-center items-center mt-[420px] lg:mt-[100px]">
-            {% comment %}profile title{% endcomment %}
-            <div class="w-full lg:max-w-[600px] flex justify-between items-center px-4 py-2">
-              <div class="flex-col">
-                <h1 class="text-lg font-medium">Create Your Profile</h1>
-                <h6 class="text-sm font-normal text-gray-600 dark:text-white/50">Let`s get started with a few details about you.</h6>
+
+            <div id="propertyRelated" class="w-full flex flex-col justify-center items-center">
+              {% comment %}Explore Divider{% endcomment %}
+              <div id="orDivider" class="mt-6 flex items-center w-full">
+                <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-white/10"></div>
+                <span class="px-4 text-[11px] uppercase tracking-[0.2em] font-bold text-gray-500 dark:text-white/40 whitespace-nowrap">{% trans 'Brokly Portal' %}</span>
+                <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-white/10"></div>
               </div>
-              <button type="button" id="uConBtn" class="text-lg font-medium rounded-lg flex justify-center items-center px-8 py-1 border-2 border-orange-400">Continue</button>
+
+              {% comment %}Property Types{% endcomment %}
+              <div class="flex items-center justify-center gap-2 mt-4 flex-wrap">
+                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20">{% trans 'Buy' %}</span>
+                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">{% trans 'Sell' %}</span>
+                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20">{% trans 'Rent' %}</span>
+              </div>
+
+              {% comment %}Broker CTA{% endcomment %}
+              <a href="/broker" id="brokerPolterBtn" class="group w-full mt-5 py-3 lg:py-2 text-base rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold shadow-lg shadow-orange-500/20 transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-3">
+                <span>{% trans 'Partner with Brokly' %}</span>
+                <svg xmlns="{% static 'icons/arrow-right.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:translate-x-1">
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
+              </a>
+
+              {% comment %}property owner title{% endcomment %}
+              <p class="mt-2 text-center text-xs text-gray-500 dark:text-white/40">
+                {% trans 'List properties, connect with buyers and grow your business.' %}
+              </p>
+
+              {% comment %}policy title{% endcomment %}
+              <div class="mt-8 lg:mt-12">
+                <p class="gap-1 text-sm text-center flex flex-wrap justify-center items-center w-[330px] text-gray-500 dark:text-white/50 leading-tight">
+                  <svg xmlns="{% static 'icons/lock-keyhole.svg' %}" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock-keyhole shrink-0">
+                    <circle cx="12" cy="16" r="1" />
+                    <rect x="3" y="10" width="18" height="12" rx="2" />
+                    <path d="M7 10V7a5 5 0 0 1 10 0v3" />
+                  </svg>
+                  <span>{% trans 'By continuing, you agree to our' %}</span>
+                  <span class="text-orange-500 hover:text-orange-600 dark:hover:text-orange-400 font-semibold transition-all duration-300 hover:underline">{% trans 'Terms of Service' %}</span>
+                  {% trans 'and' %}
+                  <span class="text-orange-500 hover:text-orange-600 dark:hover:text-orange-400 font-semibold transition-all duration-300 hover:underline">{% trans 'Privacy Policy.' %}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {% comment %}profile field{% endcomment %}
+          <div id="uProfile" class="w-full max-w-[600px] hidden flex-col justify-center items-center mt-[300px] lg:mt-[100px]">
+            {% comment %}profile title{% endcomment %}
+            <div class="w-full lg:max-w-[600px] flex justify-between items-center px-2 py-2">
+              <div class="flex-col">
+                <h1 class="text-lg font-medium">{% trans 'Create Your Profile' %}</h1>
+                <h6 class="text-sm font-normal text-gray-600 dark:text-white/50">{% trans 'Let`s get started with a few details about you.' %}</h6>
+              </div>
+              <button type="button" id="uConBtn" class="text-lg font-medium rounded-lg flex justify-center items-center px-8 py-1 border-2 border-orange-400">{% trans 'Continue' %}</button>
             </div>
             <hr class="w-full lg:max-w-[600px] border-0 border-t-2 border-dashed border-black/5 dark:border-white/5 p-1 m-1" />
             {% comment %}user avatar{% endcomment %}
@@ -266,16 +374,16 @@
               </script>
             </div>
             {% comment %}user name{% endcomment %}
-            <label for="uname" class="w-full max-w-[450px] text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">Full Name</label>
+            <label for="uname" class="w-full max-w-[450px] text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">{% trans 'Full Name' %}</label>
             <div class="w-full max-w-[450px] rounded-lg focus-within:ring-2 focus-within:ring-orange-500 border border-black/15 dark:border-white/15 bg-white/5 dark:bg-black/5 backdrop-blur-xl">
-              <input type="text" id="uname" placeholder="Enter your full name" class="w-full font-normal px-3 py-3 lg:px-2 lg:py-2 bg-transparent rounded-lg outline-0 text-gray-900 placeholder:text-gray-400 dark:text-white text-base" />
+              <input type="text" id="uname" placeholder="{% trans 'Enter your full name' %}" class="w-full font-normal px-3 py-3 lg:px-2 lg:py-2 bg-transparent rounded-lg outline-0 text-gray-900 placeholder:text-gray-400 dark:text-white text-base" />
             </div>
             <p id="unrm" class="text-sm w-[450px] wrap-break-word font-normal text-red-600 px-1 py-1"></p>
             <script>
               document.getElementById('uname').addEventListener('input', function () {
                 let name = this.value.trim()
                 if (name.length > 20) {
-                  document.getElementById('unrm').innerText = 'Max 20 characters allowed'
+                  document.getElementById('unrm').innerText = '{% trans "Maximum 20 characters allowed" %}'
                 } else {
                   document.getElementById('unrm').innerText = ''
                 }
@@ -285,7 +393,7 @@
             <div id="uStateCity" class="w-full max-w-[450px] mt-3 flex flex-row justify-between items-center gap-2">
               {% comment %}State{% endcomment %}
               <div class="w-full flex flex-col justify-center items-center">
-                <label for="uStateBtn" class="w-full max-w-[450px] text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">State</label>
+                <label for="uStateBtn" class="w-full max-w-[450px] text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">{% trans 'State' %}</label>
                 <button id="uStateBtn" class="w-full border rounded-lg focus:ring-2 focus:ring-orange-500 border-black/15 dark:border-white/15 bg-white/5 dark:bg-black/5 backdrop-blur-xl flex justify-start items-center px-3 py-3 lg:px-2 lg:py-2 gap-2">
                   <svg xmlns="{% static 'icons/chevron-down.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down">
                     <path d="m6 9 6 6 6-6" />
@@ -296,39 +404,115 @@
               </div>
               {% comment %}City{% endcomment %}
               <div class="w-full flex flex-col justify-center items-center">
-                <label for="uCityBtn" id="uCityLabel" class="w-full max-w-[450px] text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">City</label>
+                <label for="uCityBtn" id="uCityLabel" class="w-full max-w-[450px] text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">{% trans 'City' %}</label>
                 <button id="uCityBtn" class="w-full border rounded-lg focus:ring-2 focus:ring-orange-500 border-black/15 dark:border-white/15 bg-white/5 dark:bg-black/5 backdrop-blur-xl flex justify-start items-center px-3 py-3 lg:px-2 lg:py-2 gap-2">
                   <svg xmlns="{% static 'icons/chevron-down.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down">
                     <path d="m6 9 6 6 6-6" />
                   </svg>
-                  <span id="uSelectedCity"></span>
+                  <span id="uSelectedCity" data-select-city="{% trans 'Select City' %}"></span>
                   <input type="hidden" id="uCityId" name="uCityId" />
                 </button>
               </div>
             </div>
             {% comment %}user update profile btn{% endcomment %}
             <button id="uUpdateBtn" class="w-full max-w-[450px] mt-6 py-3 lg:py-2 text-lg bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-all shadow flex justify-center items-center gap-3">
-              <span id="uUpbtnText"></span>
+              <span id="uUpbtnText">{% trans 'Update Profile' %}</span>
               <div id="uLoaderUpdate" class="w-6 h-6 border-[4px] border-white/30 rounded-full border-t-white animate-spin"></div>
             </button>
-            <p class="text-xs px-1 py-1 text-gray-400 font-medium">You can update these details anytime later.</p>
+            <p class="text-xs px-1 py-1 text-gray-400 font-medium">
+              {% trans 'You can update these details anytime later.' %}
+            </p>
           </div>
-        </div>
-        <div class="absolute bottom-20 w-full text-center px-5 py-5 lg:py-0 text-sm text-gray-600 dark:text-white/50">
-          <div class="flex justify-center items-center gap-1">
-            <svg xmlns="{% static 'icons/lock-keyhole.svg' %}" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock-keyhole-icon lucide-lock-keyhole">
-              <circle cx="12" cy="16" r="1" />
-              <rect x="3" y="10" width="18" height="12" rx="2" />
-              <path d="M7 10V7a5 5 0 0 1 10 0v3" />
-            </svg>By continuing, you agree to our <span class="text-orange-500 hover:text-orange-600 dark:hover:text-orange-400 font-medium transition-all duration-300">Terms of Service and Privacy Policy.</span>
+
+          {% comment %}mobile view features{% endcomment %}
+          <div class="lg:hidden u-m-features w-full flex flex-col justify-center items-center gap-2 mt-10">
+            <div class="u-brokly-info flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
+              <div class="u-brokly-logo flex justify-start items-center">
+                <img src="{% static 'images/logo.svg' %}" alt="Brokly Logo" class="w-28" />
+              </div>
+              <div class="flex justify-center items-center w-full p-2 text-justify">
+                <p class="text-sm font-tracking-wide text-gray-900 dark:text-neutral-100">
+                  {% trans 'Brokly is a smart real estate platform, where users can search for nearby PGs, houses, flats, rooms and commercial properties using live location, price and distance based filters. Brokers and property owners can list their properties for sale or rent, while the admin panel manages and monitors all user, broker and property related activities from a single dashboard.' %}
+                </p>
+              </div>
+            </div>
+            <div class="u-smart-search flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
+              <div class="u-search-icon rounded-xl p-4 m-4 flex justify-start items-center bg-orange-50 dark:bg-[#12181f]">
+                <svg xmlns="{% static 'icons/search.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search text-orange-500">
+                  <path d="m21 21-4.34-4.34" />
+                  <circle cx="11" cy="11" r="8" />
+                </svg>
+              </div>
+              <div class="flex-row">
+                <p class="text-lg font-semibold tracking-wide text-gray-900 dark:text-neutral-100">
+                  {% trans 'Smart Search' %}
+                </p>
+                <p class="text-base leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">
+                  {% trans 'Find the best properties near you.' %}
+                </p>
+              </div>
+            </div>
+            <div class="u-smart-filter flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
+              <div class="u-filter-icon rounded-xl p-4 m-4 flex justify-center items-center bg-orange-50 dark:bg-[#12181f]">
+                <svg xmlns="{% static 'icons/sliders-horizontal.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sliders-horizontal-icon lucide-sliders-horizontal text-orange-500">
+                  <path d="M10 5H3" />
+                  <path d="M12 19H3" />
+                  <path d="M14 3v4" />
+                  <path d="M16 17v4" />
+                  <path d="M21 12h-9" />
+                  <path d="M21 19h-5" />
+                  <path d="M21 5h-7" />
+                  <path d="M8 10v4" />
+                  <path d="M8 12H3" />
+                </svg>
+              </div>
+              <div class="flex-row">
+                <p class="text-lg font-semibold tracking-wide text-gray-900 dark:text-neutral-100">
+                  {% trans 'Smart Filters' %}
+                </p>
+                <p class="text-base leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">
+                  {% trans 'Filter by price, distance & more.' %}
+                </p>
+              </div>
+            </div>
+            <div class="u-live-location flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
+              <div class="u-location-icon rounded-xl p-4 m-4 flex justify-center items-center bg-orange-50 dark:bg-[#12181f]">
+                <svg xmlns="{% static 'icons/map-pin.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin text-orange-500">
+                  <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+              </div>
+              <div class="flex-row">
+                <p class="text-lg font-semibold tracking-wide text-gray-900 dark:text-neutral-100">
+                  {% trans 'Live Location' %}
+                </p>
+                <p class="text-base leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">
+                  {% trans 'Search properties by location and map.' %}
+                </p>
+              </div>
+            </div>
+            <div class="u-verified-listing flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
+              <div class="u-verified-icon rounded-xl p-4 m-4 flex justify-center items-center bg-orange-50 dark:bg-[#12181f]">
+                <svg xmlns="{% static 'icons/shield-check.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check-icon lucide-shield-check text-orange-500">
+                  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+                  <path d="m9 12 2 2 4-4" />
+                </svg>
+              </div>
+              <div class="flex-row">
+                <p class="text-lg font-semibold tracking-wide text-gray-900 dark:text-neutral-100">
+                  {% trans 'Verified Listings' %}
+                </p>
+                <p class="text-base leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">
+                  {% trans 'Only trusted & verified properties.' %}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
     </main>
+
     <script>
-      // variable theme value
-      const nameTheme = localStorage.getItem('utheme')
-      const valueTheme = nameTheme === 'dark' ? '2' : '1'
       // variable u-login
       const uLogin = document.getElementById('uLogin')
       // variable phone input
@@ -342,6 +526,10 @@
       const sendOtp = document.getElementById('sendOtpBtn')
       const btnText = document.getElementById('btnText')
       const sendOtpLoder = document.getElementById('loader')
+      // variable property related
+      const propertyRelated = document.getElementById('propertyRelated')
+      propertyRelated.classList.remove('hidden')
+      propertyRelated.classList.add('flex')
       // variable otp input
       const otpBox = document.getElementById('otp-box')
       const otpInputs = document.querySelectorAll('.otp-input')
@@ -360,18 +548,18 @@
       const uConBtn = document.getElementById('uConBtn')
       // variable state select btn
       document.getElementById('uStateId').value = ''
-      document.getElementById('uSelectedState').innerText = 'Select State'
+      document.getElementById('uSelectedState').innerText = '{% trans "Select State" %}'
       // variable city select btn
       const ucitylabel = document.getElementById('uCityLabel')
       ucitylabel.classList.add('disabled')
       const ucitybtn = document.getElementById('uCityBtn')
       ucitybtn.disabled = true
       document.getElementById('uCityId').value = ''
-      document.getElementById('uSelectedCity').innerText = 'Select City'
+      document.getElementById('uSelectedCity').innerText = '{% trans "Select City" %}'
       // variable update profile btn
       const uUpdateBtn = document.getElementById('uUpdateBtn')
       const uUpbtnText = document.getElementById('uUpbtnText')
-      uUpbtnText.innerText = 'Update profile'
+      uUpbtnText.innerText = '{% trans "Update profile" %}'
       const uLoaderUpdate = document.getElementById('uLoaderUpdate')
       uLoaderUpdate.classList.add('hidden')
       
@@ -410,12 +598,12 @@
         e.preventDefault()
         phoneInput.value = phoneInput.value.replace(/[^0-9]/g, '')
         if (!phoneInput.value) {
-          phoneError.innerText = 'Phone number is required'
+          phoneError.innerText = '{% trans "Phone number is required" %}'
           phoneCheckIcon.classList.replace('flex', 'hidden')
           return
         }
         if (!/^[6-9]\d{9}$/.test(phoneInput.value)) {
-          phoneError.innerText = 'Enter valid 10-digit phone number'
+          phoneError.innerText = '{% trans "Enter valid 10-digit phone number" %}'
           phoneCheckIcon.classList.replace('flex', 'hidden')
           return
         }
@@ -427,13 +615,13 @@
         e.preventDefault()
         let phone = phoneInput.value.trim()
         if (!phone) {
-          phoneError.innerText = 'Phone number is required'
+          phoneError.innerText = '{% trans "Phone number is required" %}'
           phoneCheckIcon.classList.replace('flex', 'hidden')
           phoneInput.focus()
           return
         }
         if (!/^[6-9]\d{9}$/.test(phone)) {
-          phoneError.innerText = 'Enter valid 10-digit phone number'
+          phoneError.innerText = '{% trans "Enter valid 10-digit phone number" %}'
           phoneCheckIcon.classList.replace('flex', 'hidden')
           return
         }
@@ -446,7 +634,7 @@
         let phone = phoneInput.value.trim()
         countryCode.disabled = true
         phoneInput.disabled = true
-        btnText.innerText = 'Sending...'
+        btnText.innerText = '{% trans "OTP Sending..." %}'
         sendOtpLoder.classList.remove('hidden')
       
         fetch('/login/', {
@@ -464,13 +652,15 @@
               phoneError.innerText = data.message
               countryCode.disabled = false
               phoneInput.disabled = false
-              btnText.innerText = 'Send OTP'
+              btnText.innerText = '{% trans "Send OTP" %}'
               sendOtpLoder.classList.add('hidden')
             }
             if (data.success) {
               phoneError.innerText = data.message
             }
             if (data.step === 'otp') {
+              propertyRelated.classList.remove('flex')
+              propertyRelated.classList.add('hidden')
               sendOtp.classList.replace('flex', 'hidden')
               otpBox.classList.remove('hidden')
               otpInputs.forEach((input) => {
@@ -481,7 +671,7 @@
             }
           })
           .catch(() => {
-            alert('Something went wrong. Try again.')
+            alert("{% trans 'Something went wrong. Try again.' %}")
             sendOtp.classList.replace('flex', 'hidden')
             window.location.reload()
           })
@@ -561,7 +751,7 @@
             }
           })
           .catch(() => {
-            alert('Something went wrong. Try again.')
+            alert("{% trans 'Something went wrong. Try again.' %}")
           })
       }
       // Verify OTP
@@ -576,7 +766,7 @@
         verifyOtpLoader.classList.replace('hidden', 'flex')
         let otp = getOTP()
         if (otp.length !== 6) {
-          otpError.innerText = 'Enter complete 6-digit OTP'
+          otpError.innerText = '{% trans "Enter complete 6-digit OTP" %}'
           return
         }
         fetch('/verify-otp/', {
@@ -617,7 +807,7 @@
             }
             if (data.profile) {
               uname.value = data.profile.name || ''
-              uSelectedState.innerText = data.profile.state_name || 'Select State'
+              uSelectedState.innerText = data.profile.state_name || '{% trans "Select State" %}'
               if (data.profile.state_name) {
                 ucitybtn.disabled = false
               } else {
@@ -625,7 +815,7 @@
               }
               uStateId.value = data.profile.state_id || ''
               ucitylabel.classList.remove('disabled')
-              uSelectedCity.innerText = data.profile.city_name || 'Select City'
+              uSelectedCity.innerText = data.profile.city_name || '{% trans "Select City" %}'
               uCityId.value = data.profile.city_id || ''
               if (data.profile.img) {
                 uAvatarPreview.src = data.profile.img
@@ -640,16 +830,41 @@
             timerText.classList.remove('hidden')
             otpClockIcon.classList.remove('hidden')
             pausedTime()
-            alert('Something went wrong. Try again.')
+            alert("{% trans 'Something went wrong. Try again.' %}")
           })
       }
       // Continue(Skip) Button
       uConBtn.addEventListener('click', function (e) {
-        window.location.href = '/'
+        e.preventDefault()
+        let themeValue = localStorage.getItem('uthemeValue')
+        let languageId = localStorage.getItem('ulangId')
+      
+        let fd = new FormData()
+        fd.append('utheme', themeValue)
+        fd.append('ulang', languageId)
+      
+        fetch('/user-profile/', {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': getCSRF()
+          },
+          body: fd
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.error) {
+              alert(data.message)
+            }
+            if (data.success) {
+              window.location.href = '/'
+            }
+          })
       })
       // User Update Profile
       uUpdateBtn.addEventListener('click', function (e) {
         e.preventDefault()
+        let themeValue = localStorage.getItem('uthemeValue')
+        let languageId = localStorage.getItem('ulangId')
         let file = uimg.files[0]
         let name = uname.value.trim()
         let stateid = document.getElementById('uStateId').value.trim()
@@ -658,17 +873,19 @@
         nameError.innerText = ''
       
         if (!name) {
-          nameError.innerText = 'username is required'
+          nameError.innerText = '{% trans "Username is required" %}'
           return
         }
       
         let fd = new FormData()
+        fd.append('utheme', themeValue)
+        fd.append('ulang', languageId)
         if (file) fd.append('uimg', file)
         fd.append('uname', name)
         if (stateid) fd.append('ustateid', stateid)
         if (cityid) fd.append('ucityid', cityid)
       
-        if (!confirm('Are you sure you want to update your profile?')) return
+        if (!confirm('{% trans "Are you sure you want to update your profile?" %}')) return
         uUpbtnText.innerText = ''
         uLoaderUpdate.classList.remove('hidden')
       
@@ -681,21 +898,20 @@
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log('data:', data)
             if (data.error) {
               alert(data.message)
             }
             if (data.success) {
-              alert(data.message)
-              uUpbtnText.innerText = 'Update profile'
               uLoaderUpdate.classList.add('hidden')
+              uUpbtnText.innerText = data.message
+              setTimeout(() => {
+                uUpbtnText.innerText = '{% trans "Update profile" %}'
+              }, 2000)
             }
           })
           .catch(() => {
-            alert('Something went wrong. Try again.')
-          })
-          .finally(() => {
-            uUpbtnText.innerText = 'Update profile'
+            alert("{% trans 'Something went wrong. Try again.' %}")
+            uUpbtnText.innerText = '{% trans "Update profile" %}'
             uLoaderUpdate.classList.add('hidden')
           })
       })
@@ -707,6 +923,36 @@
           ?.split('=')[1]
       }
     </script>
+
+    {% comment %}Language Selected Modal{% endcomment %}
+    <div id="uLanguageModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden justify-center items-start pt-[100px] z-100 text-xl px-2">
+      <div id="uLanguage" class="bg-white/90 dark:bg-[#111827]/90 dark:text-white w-full max-w-md p-2 rounded-2xl border border-gray-200 dark:border-white/10 backdrop-blur-2xl shadow-xl animate-scaleIn">
+        {% comment %}header{% endcomment %}
+        <div class="flex justify-between items-center px-2">
+          <span class="text-[18px] font-medium">{% trans 'Select Your Language' %}</span>
+          <button id="modelClose" class="min-w-[35px] h-[35px] bg-gray-100 dark:bg-[#1F2937] hover:bg-gray-200 dark:hover:bg-[#374151] flex justify-center items-center rounded-full transition-all duration-300" onclick="uCloseLanguageModal()">
+            <svg xmlns="{% static 'icons/x.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x font-bold">
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="w-full h-px bg-gray-300 dark:bg-white/20 my-2"></div>
+        {% comment %}list language{% endcomment %}
+        <div id="languageList" class="max-h-[500px] overflow-y-auto space-y-1">
+          {% for l in languages %}
+            <button type="button" class="uLanguage-item w-full flex justify-between items-center px-2 py-2 rounded-xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] transition-all duration-200" onclick="uSelectedLanguage('{{ l.id }}','{{ l.name|capfirst }}','{{ l.code }}')">
+              <span class="text-[20px] font-normal">{{ l.name|capfirst }}</span>
+              <span class="text-[16px] text-gray-400">{{ l.code }}</span>
+            </button>
+          {% endfor %}
+        </div>
+      </div>
+      <div id="uLangSelectLoader" class="w-10 h-10 flex justify-center items-center border-[8px] border-white/30 rounded-full border-t-white animate-spin [animation-duration:.5s]"></div>
+    </div>
+    {% comment %}Language Selected Modal JS{% endcomment %}
+    <script src="{% static 'js/accounts/user/u_language_select_modal.js' %}"></script>
+
     {% comment %}Country Code Modal{% endcomment %}
     <div id="uCountryModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden justify-center items-start pt-[100px] z-100 text-xl px-2">
       <div class="bg-white/90 dark:bg-[#111827]/90 dark:text-white w-full max-w-md p-2 rounded-3xl border border-gray-200 dark:border-white/10 backdrop-blur-2xl shadow-xl animate-scaleIn">
@@ -719,7 +965,7 @@
                 <circle cx="11" cy="11" r="8" />
               </svg>
             </div>
-            <input type="text" class="w-full text-lg px-2 bg-transparent dark:text-white outline-none placeholder:text-gray-400" id="uSearchCountryCode" placeholder="Search country or code" />
+            <input type="text" class="w-full text-lg px-2 bg-transparent dark:text-white outline-none placeholder:text-gray-400" id="uSearchCountryCode" placeholder="{% trans 'Search country or code' %}" />
           </div>
           <button id="modelClose" class="min-w-[35px] h-[35px] ml-4 bg-gray-100 dark:bg-[#1F2937] hover:bg-gray-200 dark:hover:bg-[#374151] flex justify-center items-center rounded-full transition-all duration-300" onclick="uCloseCountryCodeModal()">
             <svg xmlns="{% static 'icons/x.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x font-bold">
@@ -743,13 +989,14 @@
               <path d="M3 5V19A9 3 0 0 0 21 19V5" />
               <path d="M3 12A9 3 0 0 0 21 12" />
             </svg>
-            <h1 class="text-gray-400 text-lg">Not Data Found</h1>
+            <h1 class="text-gray-400 text-lg">{% trans 'No results found' %}</h1>
           </div>
         </div>
       </div>
     </div>
     {% comment %}Country Code Modal JS{% endcomment %}
-    <script src="{% static 'js/accounts/user/country_code_modal.js' %}"></script>
+    <script src="{% static 'js/accounts/user/u_country_code_modal.js' %}"></script>
+
     {% comment %}State Select Modal{% endcomment %}
     <div id="uStateModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden justify-center items-start pt-[100px] z-100 text-xl px-2">
       <div class="bg-white/90 dark:bg-[#111827]/90 dark:text-white w-full max-w-md p-2 rounded-3xl border border-gray-200 dark:border-white/10 backdrop-blur-2xl shadow-xl animate-scaleIn">
@@ -762,7 +1009,7 @@
                 <circle cx="11" cy="11" r="8" />
               </svg>
             </div>
-            <input type="text" class="w-full text-lg px-2 bg-transparent dark:text-white outline-none placeholder:text-gray-400" id="uSearchState" placeholder="Search state" />
+            <input type="text" class="w-full text-lg px-2 bg-transparent dark:text-white outline-none placeholder:text-gray-400" id="uSearchState" placeholder="{% trans 'Search state' %}" />
           </div>
           <button id="modelStateClose" class="min-w-[35px] h-[35px] ml-4 bg-gray-100 dark:bg-[#1F2937] hover:bg-gray-200 dark:hover:bg-[#374151] flex justify-center items-center rounded-full transition-all duration-300" onclick="uCloseStateModal()">
             <svg xmlns="{% static 'icons/x.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x font-bold">
@@ -779,12 +1026,13 @@
             <path d="M3 5V19A9 3 0 0 0 21 19V5" />
             <path d="M3 12A9 3 0 0 0 21 12" />
           </svg>
-          <h1 class="text-gray-400 text-lg">Not Data Found</h1>
+          <h1 class="text-gray-400 text-lg">{% trans 'No results found' %}</h1>
         </div>
       </div>
     </div>
     {% comment %}State Select Modal JS{% endcomment %}
-    <script src="{% static 'js/accounts/user/state_select_modal.js' %}"></script>
+    <script src="{% static 'js/accounts/user/u_state_select_modal.js' %}"></script>
+
     {% comment %}City Select Modal{% endcomment %}
     <div id="uCityModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden justify-center items-start pt-[100px] z-100 text-xl px-2">
       <div class="bg-white/90 dark:bg-[#111827]/90 dark:text-white w-full max-w-md p-2 rounded-3xl border border-gray-200 dark:border-white/10 backdrop-blur-2xl shadow-xl animate-scaleIn">
@@ -797,7 +1045,7 @@
                 <circle cx="11" cy="11" r="8" />
               </svg>
             </div>
-            <input type="text" class="w-full text-lg px-2 bg-transparent dark:text-white outline-none placeholder:text-gray-400" id="uSearchCity" placeholder="Search city" />
+            <input type="text" class="w-full text-lg px-2 bg-transparent dark:text-white outline-none placeholder:text-gray-400" id="uSearchCity" placeholder="{% trans 'Search city' %}" />
           </div>
           <button id="modelCityClose" class="min-w-[35px] h-[35px] ml-4 bg-gray-100 dark:bg-[#1F2937] hover:bg-gray-200 dark:hover:bg-[#374151] flex justify-center items-center rounded-full transition-all duration-300" onclick="uCloseCityModal()">
             <svg xmlns="{% static 'icons/x.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x font-bold">
@@ -814,11 +1062,11 @@
             <path d="M3 5V19A9 3 0 0 0 21 19V5" />
             <path d="M3 12A9 3 0 0 0 21 12" />
           </svg>
-          <h1 class="text-gray-400 text-lg">Not Data Found</h1>
+          <h1 class="text-gray-400 text-lg">{% trans 'No results found' %}</h1>
         </div>
       </div>
     </div>
     {% comment %}City Select Modal JS{% endcomment %}
-    <script src="{% static 'js/accounts/user/city_select_modal.js' %}"></script>
+    <script src="{% static 'js/accounts/user/u_city_select_modal.js' %}"></script>
   </body>
 </html>

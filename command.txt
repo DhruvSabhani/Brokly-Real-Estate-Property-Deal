@@ -129,3 +129,10 @@ create a Dark/white mode : user to django-tailwind css
 > pip install 'django-tailwind[reload]'
 > py manage.py tailwind install
 > py manage.py tailwind start
+
+-------------------
+language change:
+-------------------
+locale folder create - Gujarati language
+> py manage.py makemessages -l gu // django-admin makemessages -l gu
+> py manage.py compilemessages

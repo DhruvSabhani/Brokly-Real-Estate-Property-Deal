@@ -1,17 +1,13 @@
 {% load static tailwind_tags %}
-{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="">
   <head>
+    {% load static %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% tailwind_css %}
-    <title>Broker Dashboard</title>
+    <title>Brokly Portal Dashboard</title>
     <style>
-      body {
-        background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
-      }
-      
       @keyframes fadeInUp {
         from {
           opacity: 0;
@@ -37,14 +33,15 @@
       }
     </style>
   </head>
-  <body class="flex flex-col justify-center items-center h-screen text-2xl font-bold animate-fadeInUp text-white">
-    {% if request.user.is_authenticated and request.user.is_broker %}
-      <h1>Welcome to Broker Dashboard</h1>
-      <h2>{{ profile }}</h2>
-      <a href="/broker/logout/" class="text-blue-500 hover:text-blue-700">Logout</a>
-    {% else %}
-      <h1>Please login first</h1>
-      <a href="/broker/register/" class="text-blue-500 hover:text-blue-700">Login to Broker</a>
-    {% endif %}
+  <body class="flex flex-col justify-center items-center h-screen text-2xl font-bold animate-fadeInUp">
+    <h1>Welcome to Brokly Portal Dashboard</h1>
+    <h2>{{ bProfile }}</h2>
+    <h2>name : {{ bProfile.name }}</h2>
+    <h2>state : {{ bProfile.state }}</h2>
+    <h2>city : {{ bProfile.city }}</h2>
+    <h2>created_at : {{ bProfile.created_at }}</h2>
+    <h2>updated_at : {{ bProfile.updated_at }}</h2>
+    <h2>last_login : {{ bProfile.last_login }}</h2>
+    <a href="/broker-logout/" class="text-blue-500 hover:text-blue-700">Logout</a>
   </body>
 </html>
