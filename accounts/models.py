@@ -26,7 +26,7 @@ class CustomUserManager(BaseUserManager):
     def create_superuser(self, phone, password=None, **extra_fields):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
-        extra_fields.setdefault("is_broker", False)
+        extra_fields.setdefault("is_portal", False)
         extra_fields.setdefault("is_user", False)
         return self.create_user(phone, password, **extra_fields)
 
@@ -45,19 +45,34 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     country_code = models.ForeignKey(
         "CountryCode", on_delete=models.SET_NULL, null=True, blank=True
     )
-    phone = models.CharField(max_length=15, unique=True, db_index=True)
+    phone = models.CharField(max_length=15, db_index=True)
+    full_phone = models.CharField(
+        max_length=30, db_index=True, unique=True, null=True, blank=True
+    )
     is_user = models.BooleanField(default=False)
-    is_broker = models.BooleanField(default=False)
+    is_portal = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    USERNAME_FIELD = "phone"
+    USERNAME_FIELD = "full_phone"
     objects = CustomUserManager()
 
-    def __str__(self) -> str:
-        return self.phone
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["country_code", "phone"], name="unique_country_phone"
+            )
+        ]
+
+    def save(self, *args, **kwargs):
+        code = self.country_code.country_code if self.country_code else ""
+        self.full_phone = f"{code}{self.phone}"
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.full_phone or self.phone
 
 
 class OTP(models.Model):
@@ -189,15 +204,15 @@ class UserProfile(models.Model):
         super().save(*args, **kwargs)
 
 
-def broker_image_path(instance, filename):
+def portal_image_path(instance, filename):
     ext = filename.split(".")[-1]
     filename = f"{uuid.uuid4().hex}.{ext}"
-    return os.path.join("broker", str(instance.user.phone), filename)
+    return os.path.join("portal", str(instance.user.phone), filename)
 
 
-class BrokerProfile(models.Model):
+class PortalProfile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    img = models.ImageField(upload_to=broker_image_path, blank=True, null=True)
+    img = models.ImageField(upload_to=portal_image_path, blank=True, null=True)
     name = models.CharField(max_length=55, blank=True)
     state = models.ForeignKey(State, on_delete=models.SET_NULL, null=True, blank=True)
     city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True, blank=True)
@@ -210,15 +225,15 @@ class BrokerProfile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"BrokerProfile ({self.user.phone})"
+        return f"PortalProfile ({self.user.phone})"
 
     def save(self, *args, **kwargs):
         if self.pk:
             try:
-                old_img = BrokerProfile.objects.get(pk=self.pk).img
+                old_img = PortalProfile.objects.get(pk=self.pk).img
                 if old_img and old_img != self.img:
                     if os.path.isfile(old_img.path):
                         os.remove(old_img.path)
-            except BrokerProfile.DoesNotExist:
+            except PortalProfile.DoesNotExist:
                 pass
         super().save(*args, **kwargs)

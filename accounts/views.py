@@ -7,6 +7,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 import json
 from django.utils import timezone
 from django.utils.translation import get_language, gettext as _
+from accounts.utils import user_required, portal_required
 
 
 def change_panel_language(request):
@@ -23,8 +24,8 @@ def change_panel_language(request):
 
     if panel == "user":
         request.session["user_language"] = language
-    elif panel == "broker":
-        request.session["broker_language"] = language
+    elif panel == "portal":
+        request.session["portal_language"] = language
     else:
         return JsonResponse(
             {
@@ -66,8 +67,8 @@ def generate_otp(phone):
 def login_with_otp(request, role):
     if role == "user" and request.session.get("user_login"):
         return redirect("/")
-    if role == "broker" and request.session.get("broker_login"):
-        return redirect("/broker/")
+    if role == "portal" and request.session.get("portal_login"):
+        return redirect("/portal/")
 
     if request.method == "POST":
         try:
@@ -98,14 +99,13 @@ def login_with_otp(request, role):
 
     context = {
         "languages": languages,
-        # "current_language": get_language(),
         "countrycode": countrycode,
         "statemodal": statemodal,
     }
 
     return render(
         request,
-        "accounts/user_login.html" if role == "user" else "accounts/broker_login.html",
+        "accounts/user_login.html" if role == "user" else "accounts/portal_login.html",
         context,
     )
 
@@ -129,6 +129,10 @@ def verify_otp(request):
     phone = request.session.get("phone")
     otp = data.get("otp")
     role = request.session.get("role")
+
+    code_id = CountryCode.objects.filter(id=int(code)).first()
+    full_phone = f"{code_id.country_code}{phone}"
+
     if not phone or not role:
         return JsonResponse({"error": True, "message": _("Session expired")})
     otp_record = (
@@ -142,17 +146,21 @@ def verify_otp(request):
         return JsonResponse({"error": True, "message": _("OTP expired")})
     otp_record.is_used = True
     otp_record.save()
-    user, created = CustomUser.objects.get_or_create(phone=phone)
+
+    user, created = CustomUser.objects.get_or_create(
+        full_phone=full_phone,
+        defaults={"phone": phone, "country_code": code_id},
+    )
     user.set_password(str(otp))
     user.last_login = timezone.now()
-    if role == "broker":
-        user.is_broker = True
+    if role == "portal":
+        user.is_portal = True
     else:
         user.is_user = True
     user.is_staff = False
     user.is_active = True
     if code and code != "null":
-        user.country_code = CountryCode.objects.filter(id=int(code)).first()
+        user.country_code = code_id
     else:
         user.country_code = CountryCode.objects.filter(id=1).first()
     user.save()
@@ -171,17 +179,17 @@ def verify_otp(request):
                 "city_name": uProfile.city.name if uProfile.city else None,
             }
 
-    elif role == "broker":
-        request.session["broker_login"] = user.pk
-        bProfile, created = BrokerProfile.objects.get_or_create(user=user)
-        if bProfile.img or bProfile.name or bProfile.state:
+    elif role == "portal":
+        request.session["portal_login"] = user.pk
+        pProfile, created = PortalProfile.objects.get_or_create(user=user)
+        if pProfile.img or pProfile.name or pProfile.state:
             profile_data = {
-                "img": bProfile.img.url if bProfile.img else None,
-                "name": bProfile.name if bProfile.name else None,
-                "state_id": bProfile.state.pk if bProfile.state else None,
-                "state_name": bProfile.state.name if bProfile.state else None,
-                "city_id": bProfile.city.pk if bProfile.city else None,
-                "city_name": bProfile.city.name if bProfile.city else None,
+                "img": pProfile.img.url if pProfile.img else None,
+                "name": pProfile.name if pProfile.name else None,
+                "state_id": pProfile.state.pk if pProfile.state else None,
+                "state_name": pProfile.state.name if pProfile.state else None,
+                "city_id": pProfile.city.pk if pProfile.city else None,
+                "city_name": pProfile.city.name if pProfile.city else None,
             }
 
     request.session.pop("role", None)
@@ -247,55 +255,55 @@ def user_profile(request):
     )
 
 
-def broker_profile(request):
+def portal_profile(request):
     if request.method != "POST":
         return JsonResponse({"success": False, "message": _("Invalid request")})
 
-    broker_id = request.session.get("broker_login")
-    if not broker_id:
+    portal_id = request.session.get("portal_login")
+    if not portal_id:
         return JsonResponse({"error": True, "message": _("Session expired")})
 
-    broker = CustomUser.objects.filter(id=broker_id).first()
+    portal = CustomUser.objects.filter(id=portal_id).first()
 
-    if not broker:
-        return JsonResponse({"error": True, "message": _("Broker not found")})
+    if not portal:
+        return JsonResponse({"error": True, "message": _("Portal not found")})
 
-    bProfile, created = BrokerProfile.objects.get_or_create(user=broker)
+    pProfile, created = PortalProfile.objects.get_or_create(user=portal)
 
-    btheme = request.POST.get("btheme")
-    blang = request.POST.get("blang")
-    bimg = request.FILES.get("bimg")
-    bname = request.POST.get("bname")
-    bstateid = request.POST.get("bstateid")
-    bcityid = request.POST.get("bcityid")
+    ptheme = request.POST.get("ptheme")
+    plang = request.POST.get("plang")
+    pimg = request.FILES.get("pimg")
+    pname = request.POST.get("pname")
+    pstateid = request.POST.get("pstateid")
+    pcityid = request.POST.get("pcityid")
 
-    if btheme and btheme != "null":
-        bProfile.theme = Theme.objects.filter(id=btheme).first()
+    if ptheme and ptheme != "null":
+        pProfile.theme = Theme.objects.filter(id=ptheme).first()
     else:
-        bProfile.theme = Theme.objects.filter(id=1).first()
+        pProfile.theme = Theme.objects.filter(id=1).first()
 
-    if blang and blang != "null":
-        bProfile.language = Language.objects.filter(id=blang).first()
+    if plang and plang != "null":
+        pProfile.language = Language.objects.filter(id=plang).first()
     else:
-        bProfile.language = Language.objects.filter(id=1).first()
+        pProfile.language = Language.objects.filter(id=1).first()
 
-    if bimg:
-        bProfile.img = bimg
+    if pimg:
+        pProfile.img = pimg
 
-    if bname:
-        bProfile.name = bname
+    if pname:
+        pProfile.name = pname
 
-    if bstateid:
-        state = State.objects.filter(id=bstateid).first()
+    if pstateid:
+        state = State.objects.filter(id=pstateid).first()
         if state:
-            bProfile.state = state
+            pProfile.state = state
 
-    if bcityid:
-        city = City.objects.filter(id=bcityid).first()
+    if pcityid:
+        city = City.objects.filter(id=pcityid).first()
         if city:
-            bProfile.city = city
+            pProfile.city = city
 
-    bProfile.save()
+    pProfile.save()
 
     return JsonResponse(
         {
@@ -309,32 +317,68 @@ def login_user(request):
     return login_with_otp(request, "user")
 
 
-def login_broker(request):
-    return login_with_otp(request, "broker")
+def login_portal(request):
+    return login_with_otp(request, "portal")
 
 
+@user_required
 def user_dashboard(request):
-    user_id = request.session.get("user_login")
-    if not user_id:
-        return redirect("/login/")
-    user = CustomUser.objects.filter(id=user_id, is_user=True, is_active=True).first()
-    if not user:
-        request.session.flush()
-        return redirect("/login/")
-    uProfile, created = UserProfile.objects.get_or_create(user=user)
-    context = {"user": user, "uProfile": uProfile}
+    context = {
+        "user": request.user_obj,
+        "uProfile": request.uProfile,
+        "active": "home",
+    }
     return render(request, "user/dashboard.html", context)
 
 
-def broker_dashboard(request):
-    broker_id = request.session.get("broker_login")
-    if not broker_id:
-        return redirect("/broker/login/")
-    broker = CustomUser.objects.get(id=broker_id)
-    if not broker.is_broker:
-        return redirect("/broker/login/")
-    bProfile = BrokerProfile.objects.get(user=broker)
-    return render(request, "broker/dashboard.html", {"bProfile": bProfile})
+@user_required
+def user_help(request):
+    context = {
+        "user": request.user_obj,
+        "uProfile": request.uProfile,
+        "active": "help",
+    }
+    return render(request, "user/help.html", context)
+
+
+@user_required
+def user_setting(request):
+    context = {
+        "user": request.user_obj,
+        "uProfile": request.uProfile,
+        "active": "setting",
+    }
+    return render(request, "user/setting.html", context)
+
+
+@portal_required
+def portal_dashboard(request):
+    context = {
+        "portal": request.user_obj,
+        "pProfile": request.pProfile,
+        "active": "home",
+    }
+    return render(request, "portal/dashboard.html", context)
+
+
+@portal_required
+def portal_help(request):
+    context = {
+        "portal": request.user_obj,
+        "pProfile": request.pProfile,
+        "active": "help",
+    }
+    return render(request, "portal/help.html", context)
+
+
+@portal_required
+def portal_setting(request):
+    context = {
+        "portal": request.user_obj,
+        "pProfile": request.pProfile,
+        "active": "setting",
+    }
+    return render(request, "portal/setting.html", context)
 
 
 def user_logout(request):
@@ -344,8 +388,8 @@ def user_logout(request):
     return redirect("/login/")
 
 
-def broker_logout(request):
-    request.session.pop("broker_login", None)
+def portal_logout(request):
+    request.session.pop("portal_login", None)
     request.session.pop("code", None)
     request.session.pop("phone", None)
-    return redirect("/broker/login/")
+    return redirect("/portal/login/")

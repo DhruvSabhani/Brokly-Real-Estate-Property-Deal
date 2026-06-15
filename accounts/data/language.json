@@ -1,0 +1,22 @@
+[
+    {
+        "model": "accounts.Language",
+        "pk": 1,
+        "fields": {
+            "code": "en",
+            "name": "english",
+            "is_active": true,
+            "created_at": "2026-05-02 11:22:13.387307+05:30"
+        }
+    },
+    {
+        "model": "accounts.Language",
+        "pk": 2,
+        "fields": {
+            "code": "gu",
+            "name": "ગુજરાતી",
+            "is_active": true,
+            "created_at": "2026-05-02 11:22:13.387307+05:30"
+        }
+    }
+]

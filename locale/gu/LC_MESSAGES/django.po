@@ -7,193 +7,167 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-04 12:24+0530\n"
+"POT-Creation-Date: 2026-06-12 17:01+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: gu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .\accounts\views.py:14 .\accounts\views.py:76 .\accounts\views.py:123
-#: .\accounts\views.py:194 .\accounts\views.py:252
+#: .\accounts\views.py:15 .\accounts\views.py:77 .\accounts\views.py:124
+#: .\accounts\views.py:195 .\accounts\views.py:253
 msgid "Invalid request"
 msgstr "અમાન્ય વિનંતી"
 
-#: .\accounts\views.py:22
+#: .\accounts\views.py:23
 msgid "Invalid language"
 msgstr "અમાન્ય ભાષા"
 
-#: .\accounts\views.py:32
+#: .\accounts\views.py:33
 msgid "Invalid panel"
 msgstr "અમાન્ય પેનલ"
 
-#: .\accounts\views.py:38
+#: .\accounts\views.py:39
 msgid "Language changed successfully"
 msgstr "ભાષા સફળતાપૂર્વક બદલાઈ ગઈ"
 
-#: .\accounts\views.py:86
+#: .\accounts\views.py:87
 msgid "Not valid number"
 msgstr "માન્ય નંબર નથી"
 
-#: .\accounts\views.py:116 .\accounts\views.py:133 .\accounts\views.py:198
-#: .\accounts\views.py:256
+#: .\accounts\views.py:117 .\accounts\views.py:134 .\accounts\views.py:199
+#: .\accounts\views.py:257
 msgid "Session expired"
-msgstr "સત્ર સમાપ્ત થયું"
+msgstr "સેશન સમાપ્ત થયું"
 
-#: .\accounts\views.py:127
+#: .\accounts\views.py:128
 msgid "Invalid JSON"
 msgstr "અમાન્ય JSON"
 
-#: .\accounts\views.py:138
+#: .\accounts\views.py:139
 msgid "No OTP found"
-msgstr "કોઈ OTP મળ્યો નથી"
+msgstr "OTP મળ્યો નથી"
 
-#: .\accounts\views.py:140
+#: .\accounts\views.py:141
 msgid "Invalid OTP"
 msgstr "અમાન્ય OTP"
 
-#: .\accounts\views.py:142
+#: .\accounts\views.py:143
 msgid "OTP expired"
-msgstr "OTP સમાપ્ત"
+msgstr "OTP સમાપ્ત થયો"
 
-#: .\accounts\views.py:203
+#: .\accounts\views.py:204
 msgid "User not found"
 msgstr "વપરાશકર્તા મળ્યો નથી"
 
-#: .\accounts\views.py:245 .\accounts\views.py:303
+#: .\accounts\views.py:246 .\accounts\views.py:304
 msgid "Profile updated successfully"
 msgstr "પ્રોફાઇલ સફળતાપૂર્વક અપડેટ થઈ"
 
-#: .\accounts\views.py:261
+#: .\accounts\views.py:262
 msgid "Broker not found"
-msgstr "બ્રોકરની માહિતી મળી નથી"
+msgstr "બ્રોકર મળ્યો નથી"
 
 #: .\templates\accounts\broker_login.html:9
-msgid "Login to │ Brokly Broker Portal"
-msgstr "Brokly બ્રોકર પોર્ટલમાં પ્રવેશ કરો"
+msgid "Log in - Brokly Portal"
+msgstr "લોગ ઇન - બ્રોકલી પોર્ટલ"
 
-#: .\templates\accounts\broker_login.html:135
+#: .\templates\accounts\broker_login.html:128
 msgid "Welcome to,"
 msgstr "સ્વાગત છે,"
 
-#: .\templates\accounts\broker_login.html:136
+#: .\templates\accounts\broker_login.html:129
 msgid "Brokly Broker Portal"
 msgstr "બ્રોકલી બ્રોકર પોર્ટલ"
 
-#: .\templates\accounts\broker_login.html:139
-#: .\templates\accounts\broker_login.html:441
-msgid ""
-"Manage listings, track leads, connect with clients and grow your real estate "
-"business from one powerful dashboard."
-msgstr ""
-"એક શક્તિશાળી ડેશબોર્ડ દ્વારા તમારી પ્રોપર્ટી લિસ્ટિંગ મેનેજ કરો, લીડ્સ ટ્રેક કરો, "
-"ગ્રાહકો સાથે જોડાઓ અને તમારા રિયલ એસ્ટેટ વ્યવસાયને વિકસાવો."
-
-#: .\templates\accounts\broker_login.html:153
-#: .\templates\accounts\broker_login.html:454
+#: .\templates\accounts\broker_login.html:147
+#: .\templates\accounts\broker_login.html:456
+#, python-format
 msgid "100% Secure"
 msgstr "100% સુરક્ષિત"
 
-#: .\templates\accounts\broker_login.html:156
-#: .\templates\accounts\broker_login.html:457
+#: .\templates\accounts\broker_login.html:150
+#: .\templates\accounts\broker_login.html:459
 msgid "Your data is safe and encrypted at all times."
-msgstr "તમારો ડેટા હંમેશા સુરક્ષિત અને એન્ક્રિપ્ટેડ રહે છે."
+msgstr "તમારો ડેટા હંમેશા સુરક્ષિત અને એન્ક્રિપ્ટેડ છે."
 
-#: .\templates\accounts\broker_login.html:169
-#: .\templates\accounts\broker_login.html:470
+#: .\templates\accounts\broker_login.html:163
+#: .\templates\accounts\broker_login.html:472
 msgid "Manage Properties"
-msgstr "પ્રોપર્ટી મેનેજ કરો"
+msgstr "મિલકતો મેનેજ કરો"
 
-#: .\templates\accounts\broker_login.html:172
-#: .\templates\accounts\broker_login.html:473
+#: .\templates\accounts\broker_login.html:166
+#: .\templates\accounts\broker_login.html:475
 msgid "Add, edit and manage all your properties easily."
-msgstr "તમારી તમામ પ્રોપર્ટી સરળતાથી ઉમેરો, સંપાદિત કરો અને મેનેજ કરો."
+msgstr "તમારી બધી મિલકતો સરળતાથી ઉમેરો, સંપાદિત કરો અને મેનેજ કરો."
 
-#: .\templates\accounts\broker_login.html:187
-#: .\templates\accounts\broker_login.html:488
+#: .\templates\accounts\broker_login.html:181
+#: .\templates\accounts\broker_login.html:490
 msgid "Track Clients & Leads"
-msgstr "ગ્રાહકો અને લીડ્સ ટ્રેક કરો"
+msgstr "ક્લાયન્ટ્સ અને લીડ્સ ટ્રેક કરો"
 
-#: .\templates\accounts\broker_login.html:190
-#: .\templates\accounts\broker_login.html:491
-msgid "Keep track of your clients, leads and conversations in one place."
-msgstr "તમારા ગ્રાહકો, લીડ્સ અને વાતચીતને એક જ જગ્યાએ ટ્રેક કરો."
-
-#: .\templates\accounts\broker_login.html:207
-#: .\templates\accounts\broker_login.html:508
-msgid "Grow Your Business"
-msgstr "તમારો વ્યવસાય વધારો"
-
-#: .\templates\accounts\broker_login.html:210
+#: .\templates\accounts\broker_login.html:202
 #: .\templates\accounts\broker_login.html:511
-msgid "Powerful tools and insights to help you close more deals."
-msgstr "વધુ સોદા પૂર્ણ કરવામાં મદદરૂપ શક્તિશાળી સાધનો અને માહિતી."
+msgid "Grow Your Business"
+msgstr "તમારો બિઝનેસ વધારો"
 
-#: .\templates\accounts\broker_login.html:223
-#: .\templates\accounts\broker_login.html:524
-#: .\templates\accounts\user_login.html:224
+#: .\templates\accounts\broker_login.html:219
+#: .\templates\accounts\broker_login.html:528
+#: .\templates\accounts\user_login.html:223
 msgid "24/7 Customer Support"
-msgstr "24/7 ગ્રાહક સેવા"
+msgstr "24/7 ગ્રાહક સહાય"
 
-#: .\templates\accounts\broker_login.html:226
-#: .\templates\accounts\broker_login.html:527
-#: .\templates\accounts\user_login.html:227
+#: .\templates\accounts\broker_login.html:222
+#: .\templates\accounts\broker_login.html:531
+#: .\templates\accounts\user_login.html:226
 msgid "Contact our support team anytime for assistance"
-msgstr "મદદ અને માર્ગદર્શન માટે કોઈપણ સમયે અમારી સપોર્ટ ટીમનો સંપર્ક કરો"
+msgstr "સહાય માટે અમારી સપોર્ટ ટીમનો ક્યારેય પણ સંપર્ક કરો"
 
-#: .\templates\accounts\broker_login.html:247
+#: .\templates\accounts\broker_login.html:243
 msgid "Brokly Portal Login"
 msgstr "બ્રોકલી પોર્ટલ લોગિન"
 
-#: .\templates\accounts\broker_login.html:249
-msgid "Access your Brokly portal and manage your business efficiently."
-msgstr "તમારા બ્રોકલી પોર્ટલમાં પ્રવેશ કરો અને તમારા વ્યવસાયને અસરકારક રીતે મેનેજ કરો."
-
-#: .\templates\accounts\broker_login.html:253
-#: .\templates\accounts\user_login.html:263
+#: .\templates\accounts\broker_login.html:250
+#: .\templates\accounts\user_login.html:262
 msgid "Mobile Number"
 msgstr "મોબાઇલ નંબર"
 
-#: .\templates\accounts\broker_login.html:263
-#: .\templates\accounts\user_login.html:273
+#: .\templates\accounts\broker_login.html:262
+#: .\templates\accounts\user_login.html:274
 msgid "Phone number"
 msgstr "ફોન નંબર"
 
-#: .\templates\accounts\broker_login.html:277
-#: .\templates\accounts\broker_login.html:676
-#: .\templates\accounts\user_login.html:287
-#: .\templates\accounts\user_login.html:682
+#: .\templates\accounts\broker_login.html:276
+#: .\templates\accounts\broker_login.html:680
+#: .\templates\accounts\user_login.html:288
+#: .\templates\accounts\user_login.html:689
 msgid "Send OTP"
 msgstr "OTP મોકલો"
 
-#: .\templates\accounts\broker_login.html:281
-#: .\templates\accounts\user_login.html:291
+#: .\templates\accounts\broker_login.html:280
+#: .\templates\accounts\user_login.html:292
 msgid "Enter OTP"
 msgstr "OTP દાખલ કરો"
 
-#: .\templates\accounts\broker_login.html:296
-#: .\templates\accounts\user_login.html:306
+#: .\templates\accounts\broker_login.html:295
+#: .\templates\accounts\user_login.html:307
 msgid "Resend OTP in"
 msgstr "OTP ફરી મોકલો"
 
-#: .\templates\accounts\broker_login.html:306
+#: .\templates\accounts\broker_login.html:305
 msgid "User Dashboard"
 msgstr "વપરાશકર્તા ડેશબોર્ડ"
 
-#: .\templates\accounts\broker_login.html:313
+#: .\templates\accounts\broker_login.html:312
 msgid "Continue as User"
-msgstr "વપરાશકર્તા તરીકે આગળ વધો"
-
-#: .\templates\accounts\broker_login.html:323
-msgid "Search properties, connect with brokers and discover your next home."
-msgstr "મિલકતો શોધો, બ્રોકરો સાથે જોડાઓ અને તમારું આગામી ઘર શોધો."
+msgstr "વપરાશકર્તા તરીકે ચાલુ રાખો"
 
 #: .\templates\accounts\broker_login.html:335
-#: .\templates\accounts\user_login.html:354
+#: .\templates\accounts\user_login.html:355
 msgid "By continuing, you agree to our"
-msgstr "આગળ વધીને, તમે અમારી"
+msgstr "ચાલુ રાખવાથી, તમે અમારી સાથે સંમત થાઓ છો"
 
 #: .\templates\accounts\broker_login.html:336
 msgid "Terms & Conditions"
@@ -201,173 +175,172 @@ msgstr "નિયમો અને શરતો"
 
 #: .\templates\accounts\broker_login.html:349
 msgid "Create Your Portal Profile"
-msgstr "તમારી પ્રોફાઇલ બનાવો"
+msgstr "તમારી પોર્ટલ પ્રોફાઇલ બનાવો"
 
 #: .\templates\accounts\broker_login.html:350
-#: .\templates\accounts\user_login.html:371
+#: .\templates\accounts\user_login.html:372
 msgid "Let`s get started with a few details about you."
-msgstr "ચાલો, તમારા વિશેની થોડી માહિતીથી શરૂઆત કરીએ."
+msgstr "તમારી કેટલીક વિગતો સાથે શરૂઆત કરીએ."
 
 #: .\templates\accounts\broker_login.html:352
-#: .\templates\accounts\user_login.html:373
+#: .\templates\accounts\user_login.html:374
 msgid "Continue"
-msgstr "આગળ વધો"
+msgstr "ચાલુ રાખો"
 
 #: .\templates\accounts\broker_login.html:378
-#: .\templates\accounts\user_login.html:399
+#: .\templates\accounts\user_login.html:400
 msgid "Full Name"
-msgstr "પૂરું નામ"
+msgstr "પૂર્ણ નામ"
 
 #: .\templates\accounts\broker_login.html:380
-#: .\templates\accounts\user_login.html:401
+#: .\templates\accounts\user_login.html:402
 msgid "Enter your full name"
-msgstr "તમારું પૂરું નામ દાખલ કરો"
+msgstr "તમારું પૂર્ણ નામ દાખલ કરો"
 
 #: .\templates\accounts\broker_login.html:387
-#: .\templates\accounts\user_login.html:408
+#: .\templates\accounts\user_login.html:409
 msgid "Maximum 20 characters allowed"
-msgstr "મહત્તમ 20 અક્ષરો જ માન્ય છે"
+msgstr "મહત્તમ 20 અક્ષરોની મંજૂરી છે"
 
 #: .\templates\accounts\broker_login.html:399
-#: .\templates\accounts\user_login.html:420
+#: .\templates\accounts\user_login.html:421
 msgid "State"
 msgstr "રાજ્ય"
 
 #: .\templates\accounts\broker_login.html:411
-#: .\templates\accounts\user_login.html:432
+#: .\templates\accounts\user_login.html:433
 msgid "City"
 msgstr "શહેર"
 
 #: .\templates\accounts\broker_login.html:416
-#: .\templates\accounts\broker_login.html:579
-#: .\templates\accounts\broker_login.html:839
-#: .\templates\accounts\user_login.html:437
-#: .\templates\accounts\user_login.html:585
-#: .\templates\accounts\user_login.html:845
+#: .\templates\accounts\broker_login.html:583
+#: .\templates\accounts\broker_login.html:843
+#: .\templates\accounts\user_login.html:438
+#: .\templates\accounts\user_login.html:592
+#: .\templates\accounts\user_login.html:852
 msgid "Select City"
 msgstr "શહેર પસંદ કરો"
 
 #: .\templates\accounts\broker_login.html:424
-#: .\templates\accounts\user_login.html:445
+#: .\templates\accounts\user_login.html:446
 msgid "Update Profile"
 msgstr "પ્રોફાઇલ અપડેટ કરો"
 
 #: .\templates\accounts\broker_login.html:428
-#: .\templates\accounts\user_login.html:449
+#: .\templates\accounts\user_login.html:450
 msgid "You can update these details anytime later."
 msgstr "તમે આ વિગતો પછી ક્યારે પણ અપડેટ કરી શકો છો."
 
-#: .\templates\accounts\broker_login.html:572
-#: .\templates\accounts\broker_login.html:831
-#: .\templates\accounts\user_login.html:578
-#: .\templates\accounts\user_login.html:837
+#: .\templates\accounts\broker_login.html:576
+#: .\templates\accounts\broker_login.html:835
+#: .\templates\accounts\user_login.html:585
+#: .\templates\accounts\user_login.html:844
 msgid "Select State"
 msgstr "રાજ્ય પસંદ કરો"
 
-#: .\templates\accounts\broker_login.html:583
-#: .\templates\accounts\broker_login.html:929
-#: .\templates\accounts\broker_login.html:935
-#: .\templates\accounts\user_login.html:589
-#: .\templates\accounts\user_login.html:935
-#: .\templates\accounts\user_login.html:941
+#: .\templates\accounts\broker_login.html:587
+#: .\templates\accounts\broker_login.html:933
+#: .\templates\accounts\broker_login.html:939
+#: .\templates\accounts\user_login.html:596
+#: .\templates\accounts\user_login.html:942
+#: .\templates\accounts\user_login.html:948
 msgid "Update profile"
 msgstr "પ્રોફાઇલ અપડેટ કરો"
 
-#: .\templates\accounts\broker_login.html:622
-#: .\templates\accounts\broker_login.html:639
-#: .\templates\accounts\user_login.html:628
-#: .\templates\accounts\user_login.html:645
+#: .\templates\accounts\broker_login.html:626
+#: .\templates\accounts\broker_login.html:643
+#: .\templates\accounts\user_login.html:635
+#: .\templates\accounts\user_login.html:652
 msgid "Phone number is required"
 msgstr "ફોન નંબર જરૂરી છે"
 
-#: .\templates\accounts\broker_login.html:627
-#: .\templates\accounts\broker_login.html:645
-#: .\templates\accounts\user_login.html:633
-#: .\templates\accounts\user_login.html:651
+#: .\templates\accounts\broker_login.html:631
+#: .\templates\accounts\broker_login.html:649
+#: .\templates\accounts\user_login.html:640
+#: .\templates\accounts\user_login.html:658
 msgid "Enter valid 10-digit phone number"
 msgstr "માન્ય 10 અંકનો ફોન નંબર દાખલ કરો"
 
-#: .\templates\accounts\broker_login.html:658
-#: .\templates\accounts\user_login.html:664
+#: .\templates\accounts\broker_login.html:662
+#: .\templates\accounts\user_login.html:671
 msgid "OTP Sending..."
-msgstr "OTP મોકલાઈ રહ્યું છે..."
+msgstr "OTP મોકલાઈ રહ્યો છે..."
 
-#: .\templates\accounts\broker_login.html:695
-#: .\templates\accounts\broker_login.html:775
-#: .\templates\accounts\broker_login.html:854
-#: .\templates\accounts\broker_login.html:934
-#: .\templates\accounts\user_login.html:701
-#: .\templates\accounts\user_login.html:781
-#: .\templates\accounts\user_login.html:860
-#: .\templates\accounts\user_login.html:940
+#: .\templates\accounts\broker_login.html:699
+#: .\templates\accounts\broker_login.html:779
+#: .\templates\accounts\broker_login.html:858
+#: .\templates\accounts\broker_login.html:938
+#: .\templates\accounts\user_login.html:708
+#: .\templates\accounts\user_login.html:788
+#: .\templates\accounts\user_login.html:867
+#: .\templates\accounts\user_login.html:947
 msgid "Something went wrong. Try again."
 msgstr "કંઈક ખોટું થયું. ફરી પ્રયાસ કરો."
 
-#: .\templates\accounts\broker_login.html:790
-#: .\templates\accounts\user_login.html:796
+#: .\templates\accounts\broker_login.html:794
+#: .\templates\accounts\user_login.html:803
 msgid "Enter complete 6-digit OTP"
-msgstr "સંપૂર્ણ 6 અંકનો OTP દાખલ કરો"
+msgstr "પૂર્ણ 6 અંકનો OTP દાખલ કરો"
 
-#: .\templates\accounts\broker_login.html:897
-#: .\templates\accounts\user_login.html:903
+#: .\templates\accounts\broker_login.html:901
+#: .\templates\accounts\user_login.html:910
 msgid "Username is required"
-msgstr "વપરાશકર્તાનું નામ જરૂરી છે"
+msgstr "વપરાશકર્તા નામ જરૂરી છે"
 
-#: .\templates\accounts\broker_login.html:909
-#: .\templates\accounts\user_login.html:915
+#: .\templates\accounts\broker_login.html:913
+#: .\templates\accounts\user_login.html:922
 msgid "Are you sure you want to update your profile?"
 msgstr "શું તમે ખરેખર તમારી પ્રોફાઇલ અપડેટ કરવા માંગો છો?"
 
-#: .\templates\accounts\broker_login.html:955
-#: .\templates\accounts\user_login.html:961
+#: .\templates\accounts\broker_login.html:959
+#: .\templates\accounts\user_login.html:968
 msgid "Select Your Language"
 msgstr "તમારી ભાષા પસંદ કરો"
 
-#: .\templates\accounts\broker_login.html:995
-#: .\templates\accounts\user_login.html:1001
+#: .\templates\accounts\broker_login.html:999
+#: .\templates\accounts\user_login.html:1008
 msgid "Search country or code"
 msgstr "દેશ અથવા કોડ શોધો"
 
-#: .\templates\accounts\broker_login.html:1020
-#: .\templates\accounts\broker_login.html:1060
-#: .\templates\accounts\broker_login.html:1099
-#: .\templates\accounts\user_login.html:1026
-#: .\templates\accounts\user_login.html:1066
-#: .\templates\accounts\user_login.html:1105
+#: .\templates\accounts\broker_login.html:1024
+#: .\templates\accounts\broker_login.html:1064
+#: .\templates\accounts\broker_login.html:1103
+#: .\templates\accounts\user_login.html:1033
+#: .\templates\accounts\user_login.html:1073
+#: .\templates\accounts\user_login.html:1112
 msgid "No results found"
 msgstr "કોઈ પરિણામ મળ્યું નથી"
 
-#: .\templates\accounts\broker_login.html:1043
-#: .\templates\accounts\user_login.html:1049
+#: .\templates\accounts\broker_login.html:1047
+#: .\templates\accounts\user_login.html:1056
 msgid "Search state"
 msgstr "રાજ્ય શોધો"
 
-#: .\templates\accounts\broker_login.html:1082
-#: .\templates\accounts\user_login.html:1088
+#: .\templates\accounts\broker_login.html:1086
+#: .\templates\accounts\user_login.html:1095
 msgid "Search city"
 msgstr "શહેર શોધો"
 
 #: .\templates\accounts\user_login.html:9
-msgid "Login to │ Brokly"
-msgstr "બ્રોકલીમાં લોગઇન કરો │ Brokly"
+msgid "Log in - Brokly"
+msgstr "લૉગ ઇન - બ્રોકલી"
+
+#: .\templates\accounts\user_login.html:129
+#: .\templates\accounts\user_login.html:243
+msgid "Find Homes, Flats, PGs & Commercial Properties"
+msgstr "ઘરો, ફ્લેટ્સ, PG અને કોમર્શિયલ પ્રોપર્ટી શોધો"
 
 #: .\templates\accounts\user_login.html:130
 #: .\templates\accounts\user_login.html:244
-msgid "Find Homes, Flats, PGs & Commercial Properties"
-msgstr "ઘર, ફ્લેટ, પીજી અને કોમર્શિયલ મિલકતો શોધો"
-
-#: .\templates\accounts\user_login.html:131
-#: .\templates\accounts\user_login.html:245
 msgid "All in One Place."
 msgstr "બધું એક જ જગ્યાએ."
 
-#: .\templates\accounts\user_login.html:134
-#: .\templates\accounts\user_login.html:248
+#: .\templates\accounts\user_login.html:133
+#: .\templates\accounts\user_login.html:247
 msgid "Connect with Trusted Brokers, Property Owners & Builders."
-msgstr "વિશ્વસનીય બ્રોકરો, મિલકત માલિકો અને બિલ્ડરો સાથે જોડાઓ."
+msgstr "વિશ્વસનીય બ્રોકરો, પ્રોપર્ટી માલિકો અને બિલ્ડરો સાથે જોડાઓ."
 
-#: .\templates\accounts\user_login.html:137
-#: .\templates\accounts\user_login.html:462
+#: .\templates\accounts\user_login.html:136
 msgid ""
 "Brokly is a smart real estate platform, where users can search for nearby "
 "PGs, houses, flats, rooms and commercial properties using live location, "
@@ -375,97 +348,169 @@ msgid ""
 "properties for sale or rent, while the admin panel manages and monitors all "
 "user, broker and property related activities from a single dashboard."
 msgstr ""
-"Brokly એક સ્માર્ટ રિયલ એસ્ટેટ પ્લેટફોર્મ છે, જ્યાં વપરાશકર્તાઓ લાઇવ લોકેશન, કિંમત અને અંતર "
-"આધારિત ફિલ્ટર્સનો ઉપયોગ કરીને નજીકના PG, ઘર, ફ્લેટ, રૂમ અને કોમર્શિયલ મિલકતો સરળતાથી "
-"શોધી શકે છે. બ્રોકરો અને મિલકત માલિકો તેમની મિલકતો વેચાણ અથવા ભાડા માટે લિસ્ટ કરી શકે "
-"છે, જ્યારે એડમિન પેનલ એક જ ડેશબોર્ડ પરથી તમામ વપરાશકર્તા, બ્રોકર અને મિલકત સંબંધિત "
-"પ્રવૃત્તિઓનું સંચાલન અને દેખરેખ રાખે છે."
+"બ્રોકલી એક સ્માર્ટ રિયલ એસ્ટેટ પ્લેટફોર્મ છે, જ્યાં વપરાશકર્તાઓ લાઇવ લોકેશન, "
+"કિંમત અને અંતર આધારિત ફિલ્ટર્સનો ઉપયોગ કરીને નજીકના PG, ઘરો, ફ્લેટ્સ, રૂમ "
+"અને કોમર્શિયલ પ્રોપર્ટી શોધી શકે છે. બ્રોકરો અને પ્રોપર્ટી માલિકો વેચાણ અથવા "
+"ભાડા માટે પોતાની પ્રોપર્ટી લિસ્ટ કરી શકે છે, જ્યારે એડમિન પેનલ એક જ "
+"ડેશબોર્ડમાંથી બધા વપરાશકર્તા, બ્રોકર અને પ્રોપર્ટી સંબંધિત પ્રવૃત્તિઓનું "
+"સંચાલન અને મોનિટરિંગ કરે છે."
 
-#: .\templates\accounts\user_login.html:151
-#: .\templates\accounts\user_login.html:475
+#: .\templates\accounts\user_login.html:150
+#: .\templates\accounts\user_login.html:482
 msgid "Smart Search"
 msgstr "સ્માર્ટ શોધ"
 
-#: .\templates\accounts\user_login.html:154
-#: .\templates\accounts\user_login.html:478
+#: .\templates\accounts\user_login.html:153
+#: .\templates\accounts\user_login.html:485
 msgid "Find the best properties near you."
-msgstr "તમારી નજીકની શ્રેષ્ઠ મિલકતો શોધો."
+msgstr "તમારી નજીકની શ્રેષ્ઠ પ્રોપર્ટી શોધો."
 
-#: .\templates\accounts\user_login.html:174
-#: .\templates\accounts\user_login.html:498
+#: .\templates\accounts\user_login.html:173
+#: .\templates\accounts\user_login.html:505
 msgid "Smart Filters"
 msgstr "સ્માર્ટ ફિલ્ટર્સ"
 
-#: .\templates\accounts\user_login.html:177
-#: .\templates\accounts\user_login.html:501
+#: .\templates\accounts\user_login.html:176
+#: .\templates\accounts\user_login.html:508
 msgid "Filter by price, distance & more."
-msgstr "કિંમત, અંતર અને વધુ દ્વારા ફિલ્ટર કરો."
+msgstr "કિંમત, અંતર અને વધુના આધારે ફિલ્ટર કરો."
 
-#: .\templates\accounts\user_login.html:190
-#: .\templates\accounts\user_login.html:514
+#: .\templates\accounts\user_login.html:189
+#: .\templates\accounts\user_login.html:521
 msgid "Live Location"
 msgstr "લાઇવ લોકેશન"
 
-#: .\templates\accounts\user_login.html:193
-#: .\templates\accounts\user_login.html:517
+#: .\templates\accounts\user_login.html:192
+#: .\templates\accounts\user_login.html:524
 msgid "Search properties by location and map."
-msgstr "લોકેશન અને નકશા દ્વારા મિલકતો શોધો."
+msgstr "લોકેશન અને મેપ દ્વારા પ્રોપર્ટી શોધો."
 
-#: .\templates\accounts\user_login.html:206
-#: .\templates\accounts\user_login.html:530
+#: .\templates\accounts\user_login.html:205
+#: .\templates\accounts\user_login.html:537
 msgid "Verified Listings"
-msgstr "ચકાસેલી યાદીઓ"
+msgstr "વેરિફાઇડ લિસ્ટિંગ્સ"
 
-#: .\templates\accounts\user_login.html:209
-#: .\templates\accounts\user_login.html:533
+#: .\templates\accounts\user_login.html:208
+#: .\templates\accounts\user_login.html:540
 msgid "Only trusted & verified properties."
-msgstr "ફક્ત વિશ્વસનીય અને ચકાસેલી મિલકતો."
+msgstr "ફક્ત વિશ્વસનીય અને વેરિફાઇડ પ્રોપર્ટી."
 
-#: .\templates\accounts\user_login.html:257
+#: .\templates\accounts\user_login.html:256
 msgid "Welcome Back 👋"
 msgstr "ફરી સ્વાગત છે 👋"
 
-#: .\templates\accounts\user_login.html:259
+#: .\templates\accounts\user_login.html:258
 msgid "Login to continue to your account"
-msgstr "તમારા એકાઉન્ટમાં આગળ વધવા માટે લોગિન કરો"
+msgstr "તમારા એકાઉન્ટમાં આગળ વધવા માટે લૉગ ઇન કરો"
 
-#: .\templates\accounts\user_login.html:317
+#: .\templates\accounts\user_login.html:318 .\templates\base_broker.html:11
 msgid "Brokly Portal"
 msgstr "બ્રોકલી પોર્ટલ"
 
-#: .\templates\accounts\user_login.html:324
+#: .\templates\accounts\user_login.html:325
 msgid "Buy"
 msgstr "ખરીદો"
 
-#: .\templates\accounts\user_login.html:325
+#: .\templates\accounts\user_login.html:326
 msgid "Sell"
 msgstr "વેચો"
 
-#: .\templates\accounts\user_login.html:326
+#: .\templates\accounts\user_login.html:327
 msgid "Rent"
-msgstr "ભાડે આપો"
+msgstr "ભાડે લો"
 
-#: .\templates\accounts\user_login.html:332
+#: .\templates\accounts\user_login.html:333
 msgid "Partner with Brokly"
-msgstr "બ્રોકલીના ભાગીદાર બનો"
+msgstr "બ્રોકલી સાથે ભાગીદાર બનો"
 
-#: .\templates\accounts\user_login.html:342
+#: .\templates\accounts\user_login.html:343
 msgid "List properties, connect with buyers and grow your business."
-msgstr ""
-"તમારી મિલકતોની જાહેરાત કરો, ખરીદદારો સાથે જોડાઓ અને તમારા વ્યવસાયને નવી ઊંચાઈ આપો."
-
-#: .\templates\accounts\user_login.html:355
-msgid "Terms of Service"
-msgstr "સેવાની નિયમો અને શરતો"
+msgstr "પ્રોપર્ટી લિસ્ટ કરો, ખરીદદારો સાથે જોડાઓ અને તમારો બિઝનેસ વધારો."
 
 #: .\templates\accounts\user_login.html:356
+msgid "Terms of Service"
+msgstr "સેવાની શરતો"
+
+#: .\templates\accounts\user_login.html:357
 msgid "and"
 msgstr "અને"
 
-#: .\templates\accounts\user_login.html:357
+#: .\templates\accounts\user_login.html:358
 msgid "Privacy Policy."
 msgstr "ગોપનીયતા નીતિ."
 
-#: .\templates\accounts\user_login.html:370
+#: .\templates\accounts\user_login.html:371
 msgid "Create Your Profile"
 msgstr "તમારી પ્રોફાઇલ બનાવો"
+
+#: .\templates\base_user.html:11 .\templates\partials\user\navbar.html:18
+#: .\templates\partials\user\navbar.html:28 .\templates\user\dashboard.html:4
+msgid "Home"
+msgstr "હોમ"
+
+#: .\templates\partials\user\navbar.html:33
+#: .\templates\partials\user\navbar.html:43 .\templates\user\help.html:5
+msgid "Help & Support"
+msgstr "મદદ અને સપોર્ટ"
+
+#: .\templates\partials\user\navbar.html:48
+#: .\templates\partials\user\navbar.html:58 .\templates\user\setting.html:5
+msgid "Setting"
+msgstr "સેટિંગ"
+
+#: .\templates\partials\user\navbar.html:68
+msgid "Theme"
+msgstr "થીમ"
+
+#: .\templates\partials\user\navbar.html:92
+msgid "Dark Mode"
+msgstr "ડાર્ક મોડ"
+
+#: .\templates\partials\user\navbar.html:93
+msgid "Light Mode"
+msgstr "લાઇટ મોડ"
+
+#: .\templates\partials\user\navbar.html:126
+#: .\templates\partials\user\navbar.html:135
+msgid "View Profile"
+msgstr "પ્રોફાઇલ જુઓ"
+
+#: .\templates\user\dashboard.html:16
+msgid "Add Address"
+msgstr "સરનામું ઉમેરો"
+
+#: .\templates\user\dashboard.html:35
+msgid "Welcome to Brokly Dashboard"
+msgstr "Brokly ડેશબોર્ડમાં આપનું સ્વાગત છે"
+
+#: .\templates\user\dashboard.html:37
+msgid "name"
+msgstr "નામ"
+
+#: .\templates\user\dashboard.html:38
+msgid "state"
+msgstr "રાજ્ય"
+
+#: .\templates\user\dashboard.html:39
+msgid "city"
+msgstr "શહેર"
+
+#: .\templates\user\dashboard.html:40
+msgid "created_at"
+msgstr "બનાવેલ તારીખ"
+
+#: .\templates\user\dashboard.html:41
+msgid "updated_at"
+msgstr "અપડેટ કરેલ તારીખ"
+
+#: .\templates\user\dashboard.html:42
+msgid "Logout"
+msgstr "લોગઆઉટ"
+
+#: .\templates\user\help.html:10
+msgid "User Help & Support"
+msgstr "યુઝર મદદ અને સપોર્ટ"
+
+#: .\templates\user\setting.html:10
+msgid "User Setting"
+msgstr "યુઝર સેટિંગ"

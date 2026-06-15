@@ -1,0 +1,64 @@
+{% load static tailwind_tags %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en" class="">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block ptitle %}
+        {% trans 'Home' %}
+      {% endblock %}- Brokly Portal
+    </title>
+    {% comment %}Web Icon Link{% endcomment %}
+    <link rel="icon" href="{% static 'images/web-icon.png' %}" type="image/png" />
+    {% comment %}Tailwind CSS{% endcomment %}
+    {% tailwind_css %}
+    <style>
+      * {
+        scrollbar-width: thin;
+        scrollbar-color: rgb(0 0 0 / 0.2) transparent;
+      }
+      
+      .dark {
+        scrollbar-color: rgb(255 255 255 / 0.2) transparent;
+      }
+      
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          z-index: auto;
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-fadeInUp {
+        animation: fadeInUp 1s ease forwards;
+      }
+      @keyframes zoom {
+        0%,
+        100% {
+          transform: scale(1.1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+      }
+    </style>
+    {% comment %}JS{% endcomment %}
+  </head>
+  <body class="bg-white text-black dark:bg-black dark:text-white">
+    {% include 'partials/portal/navbar.html' %}
+    <div class="ml-[60px]">
+      <main class="animate-fadeInUp min-h-[calc(100vh-33px)]">
+        {% block pcontent %}
+
+        {% endblock %}
+      </main>
+      {% include 'partials/portal/footer.html' %}
+    </div>
+  </body>
+</html>

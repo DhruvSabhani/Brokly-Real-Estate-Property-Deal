@@ -8,12 +8,12 @@ brokly/
 │
 ├── brokly/                         # Main project config
 │
-├── accounts/(app)                  # User + Broker system                                                    
+├── accounts/(app)                  # User + Portal system                                                    
 │   ├── models.py                   # CustomUser, countryCodes, states, citys, languages
 │   ├── views.py                    # login
 │   ├── urls.py
-│   ├── director.py                 # role based access
-│   └── signals.py                  # Auto create user and broker profile()
+│   ├── utils.py                    # role based data access
+│   └── signals.py                  # Auto create user and portal profile()
 │
 ├── properties/(app)                # Property Config
 │   ├── models.py                   # PropertyDetails, PropertyImage
@@ -26,7 +26,7 @@ brokly/
 │   ├── urls.py
 │
 ├── chats/(app)                     # Messaging only
-│   ├── models.py                   # chatroom(user,broker,property), message()
+│   ├── models.py                   # chatroom(user,portal,property), message()
 │   ├── urls.py
 │
 ├── maps/(app)                      # 📍 Google Maps Integration
@@ -45,16 +45,16 @@ brokly/
 │
 ├── templates/(folder)                      # All HTML files
 │   ├── base_user.html
-│   ├── base_broker.html
+│   ├── base_portal.html
 │   │
 │   ├── accounts/(folder)
 │   │   ├── user_login.html
-│   │   ├── broker_login.html
+│   │   ├── portal_login.html
 │   │
 │   ├── user/(folder)
 │   │   ├── dashboard.html
 │   │
-│   ├── broker/(folder)
+│   ├── portal/(folder)
 │   │   ├── dashboard.html
 │   │     
 │   ├── partials/(folder)
@@ -62,7 +62,7 @@ brokly/
 │   │   │   ├── navbar.html
 │   │   │   └── footer.html
 │   │   │
-│   │   └── broker/(folder)
+│   │   └── portal/(folder)
 │   │       ├── navbar.html
 │   │       └── footer.html
 │   │
@@ -101,6 +101,9 @@ Run project
 PostgreSQl Database
 > open pgAdmin : create database 'brokly_db'
 > pip install psycopg2-binary
+
+table data loaddata in json file
+> py manage.py loaddata app-name\folder-name\file-name.json
 
 Auto Reload Browers
 > pip install django-browser-reload

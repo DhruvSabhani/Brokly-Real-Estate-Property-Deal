@@ -1,19 +1,19 @@
-{% extends 'base_user.html' %}
+{% extends 'base_portal.html' %}
 {% load static %}
 {% load i18n %}
-{% block utitle %}
+{% block ptitle %}
   {% trans 'Home' %}
 {% endblock %}
-{% block ucontent %}
+{% block pcontent %}
   <section class="w-full h-full flex flex-col justify-center items-start px-1 py-1">
     <header class="flex justify-center items-center px-2 py-1">
       {% comment %}Location box{% endcomment %}
-      <div class="u-location-box rounded-lg flex justify-center items-center border-1 border-black/10 dark:border-white/10 px-2 py-1 gap-2">
+      <div class="p-location-box rounded-lg flex justify-center items-center border-1 border-black/10 dark:border-white/10 px-2 py-1 gap-2">
         <svg xmlns="{% static 'icons/map-pin.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin text-orange-500">
           <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
           <circle cx="12" cy="10" r="3" />
         </svg>
-        <span class="text-base">{% trans "Add Address" %}</span>
+        <span class="text-base">{% trans 'Add Address' %}</span>
       </div>
     </header>
     <main class="flex flex-col justify-center items-start">
@@ -32,14 +32,14 @@
         updateScreenInfo()
         window.addEventListener('resize', updateScreenInfo)
       </script>
-      <h1>{% trans "Welcome to Brokly Dashboard" %}</h1>
-      <h2>{{ uProfile }}</h2>
-      <h2>{% trans "name" %} : {{ uProfile.name }}</h2>
-      <h2>{% trans "state" %} : {{ uProfile.state }}</h2>
-      <h2>{% trans "city" %} : {{ uProfile.city }}</h2>
-      <h2>{% trans "created_at" %} : {{ uProfile.created_at }}</h2>
-      <h2>{% trans "updated_at" %} : {{ uProfile.updated_at }}</h2>
-      <a href="/user-logout/" class="text-blue-500 hover:text-blue-700">{% trans "Logout" %}</a>
+      <h1>{% trans 'Welcome to Brokly Protal Dashboard' %}</h1>
+      <h2>{{ pProfile }}</h2>
+      <h2>{% trans 'name' %}: {{ pProfile.name }}</h2>
+      <h2>{% trans 'state' %}: {{ pProfile.state }}</h2>
+      <h2>{% trans 'city' %}: {{ pProfile.city }}</h2>
+      <h2>{% trans 'created_at' %}: {{ pProfile.created_at }}</h2>
+      <h2>{% trans 'updated_at' %}: {{ pProfile.updated_at }}</h2>
+      <a href="/portal-logout/" class="text-blue-500 hover:text-blue-700">{% trans 'Logout' %}</a>
     </main>
   </section>
 {% endblock %}

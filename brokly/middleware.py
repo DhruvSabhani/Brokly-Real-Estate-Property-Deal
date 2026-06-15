@@ -7,8 +7,8 @@ class ultiSessionMiddleware:
 
         if host.startswith("user."):
             request.session_cookie_name = "user_session"
-        elif host.startswith("broker."):
-            request.session_cookie_name = "broker_session"
+        elif host.startswith("portal."):
+            request.session_cookie_name = "portal_session"
         elif host.startswith("admin."):
             request.session_cookie_name = "admin_session"
         else:

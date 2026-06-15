@@ -6,7 +6,9 @@
     {% load static %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% trans 'Login to │ Brokly Broker Portal' %}</title>
+    <title>{% trans 'Log in - Brokly Portal' %}</title>
+    {% comment %}Web Icon Link{% endcomment %}
+    <link rel="icon" href="{% static 'images/web-icon.png' %}" type="image/png" />
     {% comment %}CSS{% endcomment %}
     <link rel="stylesheet" href="{% static 'css/accounts/login_style.css' %}" />
     {% comment %}Tailwind CSS{% endcomment %}
@@ -18,28 +20,26 @@
     </style>
   </head>
 
-  <body class="b-login-body min-w-full h-screen bg-[#FAFAF6] lg:dark:bg-black dark:bg-black text-black dark:text-white transition-colors duration-1000 ease-in-out animate-fadeInUp lg:overflow-x-hidden">
+  <body class="p-login-body min-w-full h-screen bg-[#00000005] lg:dark:bg-black dark:bg-black text-black dark:text-white transition-colors duration-1000 ease-in-out animate-fadeInUp lg:overflow-x-hidden">
     {% comment %}header{% endcomment %}
-    <header class="b-header sticky top-0 left-0 w-full z-50 px-1 flex justify-between items-center lg:px-10 bg-white/30 dark:bg-black/30 lg:bg-white/10 lg:dark:bg-black/10">
-      <div class="b-header-left-side flex justify-start items-center">
+    <header class="p-header sticky top-0 left-0 w-full z-50 px-1 flex justify-between items-center lg:px-10 bg-white/30 dark:bg-black/30 lg:bg-white/10 lg:dark:bg-black/10">
+      <div class="p-header-left-side flex justify-start items-center">
         <div>
-          <img src="{% static 'images/logo.svg' %}" alt="Brokly Logo" class="w-20" />
+          <img src="{% static 'images/logo.svg' %}" alt="Brokly Portal Logo" class="w-18" />
         </div>
-        <div class="flex flex-row justify-center items-center leading-tight">
-          <h1 class="text-3xl font-semibold text-black dark:text-white">Brokly</h1>
-          <div class="w-px h-6 bg-gray-300 dark:bg-gray-600 ml-3 mr-3"></div>
-          <h6 class="text-base font-medium text-orange-500">Broker Portal</h6>
+        <div class="flex items-baseline">
+          <h1 class="text-[25px] font-semibold text-black dark:text-white">Brokly<span class="ml-1 text-orange-500">Portal</span></h1>
         </div>
       </div>
-      <div class="b-header-right-side flex justify-center items-center gap-3">
-        <div class="b-theme rounded-2xl border lg:border-2 border-black/10 dark:border-white/10">
-          <button id="b-theme-btn" class="relative w-12 h-12 lg:w-10 lg:h-10 rounded-2xl flex items-center justify-center overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95">
-            <svg id="b-moon-icon" xmlns="{% static 'icons/moon-star.svg' %}" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute text-orange-500 transition-all duration-500 scale-100 rotate-0 dark:scale-0 dark:rotate-90">
+      <div class="p-header-right-side flex justify-center items-center gap-3">
+        <div class="p-theme rounded-2xl border lg:border-2 border-black/10 dark:border-white/10">
+          <button id="p-theme-btn" class="relative w-12 h-12 lg:w-10 lg:h-10 rounded-2xl flex items-center justify-center overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95">
+            <svg id="p-moon-icon" xmlns="{% static 'icons/moon-star.svg' %}" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute text-orange-500 transition-all duration-500 scale-100 rotate-0 dark:scale-0 dark:rotate-90">
               <path d="M18 5h4" />
               <path d="M20 3v4" />
               <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
             </svg>
-            <svg id="b-sun-icon" xmlns="{% static 'icons/sun.svg' %}" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute text-orange-500 transition-all duration-500 scale-0 -rotate-90 dark:scale-100 dark:rotate-0">
+            <svg id="p-sun-icon" xmlns="{% static 'icons/sun.svg' %}" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute text-orange-500 transition-all duration-500 scale-0 -rotate-90 dark:scale-100 dark:rotate-0">
               <circle cx="12" cy="12" r="4" />
               <path d="M12 2v2" />
               <path d="M12 20v2" />
@@ -53,9 +53,9 @@
           </button>
           <script>
             const html = document.documentElement
-            const themeBtn = document.getElementById('b-theme-btn')
-            const savedTheme = localStorage.getItem('btheme')
-            localStorage.setItem('bthemeValue', '1')
+            const themeBtn = document.getElementById('p-theme-btn')
+            const savedTheme = localStorage.getItem('ptheme')
+            localStorage.setItem('pthemeValue', '1')
             
             if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
               html.classList.add('dark')
@@ -65,11 +65,11 @@
             themeBtn.addEventListener('click', () => {
               html.classList.toggle('dark')
               if (html.classList.contains('dark')) {
-                localStorage.setItem('btheme', 'dark')
-                localStorage.setItem('bthemeValue', '2')
+                localStorage.setItem('ptheme', 'dark')
+                localStorage.setItem('pthemeValue', '2')
               } else {
-                localStorage.setItem('btheme', 'light')
-                localStorage.setItem('bthemeValue', '1')
+                localStorage.setItem('ptheme', 'light')
+                localStorage.setItem('pthemeValue', '1')
               }
               themeBtn.animate([{ transform: 'scale(1)' }, { transform: 'scale(.85)' }, { transform: 'scale(1)' }], {
                 duration: 250
@@ -78,15 +78,15 @@
           </script>
         </div>
 
-        <div class="b-language-btn text-orange-500 lg:text-gray-600 lg:dark:text-white">
+        <div class="p-language-btn text-orange-500 lg:text-gray-600 lg:dark:text-white">
           <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
-          <button type="button" id="bLanguageBtn" class="relative w-32 h-12 lg:w-auto lg:h-10 flex justify-center items-center rounded-2xl border border-gray-200 dark:border-white/10 dark:bg-white/2 lg:border-none lg:bg-transparent lg:dark:bg-white/0 transition-all duration-300 hover:text-orange-500 hover:scale-95 active:scale-95">
+          <button type="button" id="pLanguageBtn" class="relative w-32 h-12 lg:w-auto lg:h-10 flex justify-center items-center rounded-2xl border border-gray-200 dark:border-white/10 dark:bg-white/2 lg:border-none lg:bg-transparent lg:dark:bg-white/0 transition-all duration-300 hover:text-orange-500 hover:scale-95 active:scale-95">
             <svg xmlns="{% static 'icons/globe.svg' %}" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe-icon lucide-globe">
               <circle cx="12" cy="12" r="10" />
               <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
               <path d="M2 12h20" />
             </svg>
-            <span id="bSelectedLanguage" class="font-medium font-sans px-2">
+            <span id="pSelectedLanguage" class="font-medium font-sans px-2">
               {% if request.LANGUAGE_CODE == 'gu' %}
                 ગુજરાતી
               {% else %}
@@ -112,56 +112,56 @@
     </script>
 
     {% comment %}main{% endcomment %}
-    <main class="w-full min-h-fit relative bottom-[80px] grid lg:grid-cols-2 lg:dark:bg-black dark:bg-[#000000] bg-[#ffffff] overflow-hidden">
+    <main class="w-full min-h-fit relative bottom-[80px] grid lg:grid-cols-2 overflow-hidden">
       {% comment %}left side{% endcomment %}
       <section class="relative hidden lg:flex min-h-screen">
-        <img src="{% static 'images/b_light_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 lg:w-full lg:h-[70%] object-cover object-center transition-opacity duration-700 ease-in-out dark:opacity-0 opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
-        <img src="{% static 'images/b_dark_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 lg:w-full lg:h-[70%] object-cover object-center transition-opacity duration-700 ease-in-out opacity-0 dark:opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
+        <img src="{% static 'images/p_light_wallpaper.png' %}" alt="portal ligth wallpaper" class="absolute inset-0 lg:w-full lg:h-[70%] object-cover object-center transition-opacity duration-700 ease-in-out dark:opacity-0 opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
+        <img src="{% static 'images/p_dark_wallpaper.png' %}" alt="portal dark wallpaper" class="absolute inset-0 lg:w-full lg:h-[70%] object-cover object-center transition-opacity duration-700 ease-in-out opacity-0 dark:opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
         <div class="absolute inset-0 bg-gradient-to-tr from-white/30 via-white/30 to-white/30 dark:from-black/30 dark:via-black/30 dark:to-black/30 pointer-events-none"></div>
         <div class="relative z-10 hidden lg:flex flex-col justify-end h-full px-10 pb-20">
           <h1 class="text-3xl leading-tight font-bold text-black dark:text-white">
             {% trans 'Welcome to,' %}
-            <span class="text-orange-500">{% trans 'Brokly Broker Portal' %}</span>
+            <span class="text-orange-500">{% trans 'Brokly Portal' %}</span>
           </h1>
           <p class="text-lg py-2 text-gray-700 leading-relaxed dark:text-white/70">
             {% trans 'Manage listings, track leads, connect with clients and grow your real estate business from one powerful dashboard.' %}
           </p>
           {% comment %}features{% endcomment %}
-          <div class="b-feature flex justify-start items-center gap-5 mt-2 flex-col">
-            <div class="b-verified-access flex justify-between items-center w-full gap-5">
-              <div class="b-verified-icon rounded-xl px-3 py-3 flex justify-center items-center bg-orange-50 dark:bg-[#12181f]">
+          <div class="p-feature flex justify-start items-center gap-5 mt-2 flex-col">
+            <div class="p-verified-access flex justify-between items-center w-full gap-5">
+              <div class="p-verified-icon rounded-xl px-3 py-3 flex justify-center items-center bg-[#f1f3f6] dark:bg-[#12181f]">
                 <svg xmlns="{% static 'icons/shield-check.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check-icon lucide-shield-check text-orange-500">
                   <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
                   <path d="m9 12 2 2 4-4" />
                 </svg>
               </div>
               <div class="flex-1">
-                <p class="text-base font-semibold tracking-wide text-gray-900 dark:text-neutral-100">
+                <p class="text-base font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
                   {% trans '100% Secure' %}
                 </p>
-                <p class="text-sm leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">
+                <p class="text-[15px] leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
                   {% trans 'Your data is safe and encrypted at all times.' %}
                 </p>
               </div>
             </div>
-            <div class="b-manage-properties flex justify-between items-center w-full gap-5">
-              <div class="b-properties-icon rounded-xl px-3 py-3 flex justify-center items-center bg-orange-50 dark:bg-[#12181f]">
+            <div class="p-manage-properties flex justify-between items-center w-full gap-5">
+              <div class="p-properties-icon rounded-xl px-3 py-3 flex justify-center items-center bg-[#f1f3f6] dark:bg-[#12181f]">
                 <svg xmlns="{% static 'icons/house.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house text-orange-500">
                   <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
                   <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
                 </svg>
               </div>
               <div class="flex-1">
-                <p class="text-base font-semibold tracking-wide text-gray-900 dark:text-neutral-100">
+                <p class="text-base font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
                   {% trans 'Manage Properties' %}
                 </p>
-                <p class="text-sm leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">
+                <p class="text-[15px] leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
                   {% trans 'Add, edit and manage all your properties easily.' %}
                 </p>
               </div>
             </div>
-            <div class="b-Track-leads flex justify-between items-center w-full gap-5">
-              <div class="b-trackLeads-icon rounded-xl px-3 py-3 flex justify-center items-center bg-orange-50 dark:bg-[#12181f]">
+            <div class="p-Track-leads flex justify-between items-center w-full gap-5">
+              <div class="p-trackLeads-icon rounded-xl px-3 py-3 flex justify-center items-center bg-[#f1f3f6] dark:bg-[#12181f]">
                 <svg xmlns="{% static 'icons/users.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users text-orange-500">
                   <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
                   <path d="M16 3.128a4 4 0 0 1 0 7.744" />
@@ -170,16 +170,17 @@
                 </svg>
               </div>
               <div class="flex-1">
-                <p class="text-base font-semibold tracking-wide text-gray-900 dark:text-neutral-100">
+                <p class="text-base font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
                   {% trans 'Track Clients & Leads' %}
                 </p>
-                <p class="text-sm leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">
-                  {% trans 'Keep track of your clients, leads and conversations in one place.' %}
+                <p class="text-[15px] leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
+                  {% trans 'Keep track of your clients, leads and conversations
+                  in one place.' %}
                 </p>
               </div>
             </div>
-            <div class="b-grow-business flex justify-between items-center w-full gap-5">
-              <div class="b-grow-icon rounded-xl px-3 py-3 flex justify-center items-center bg-orange-50 dark:bg-[#12181f]">
+            <div class="p-grow-business flex justify-between items-center w-full gap-5">
+              <div class="p-grow-icon rounded-xl px-3 py-3 flex justify-center items-center bg-[#f1f3f6] dark:bg-[#12181f]">
                 <svg xmlns="{% static 'icons/chart-no-axes-combined.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-no-axes-combined-icon lucide-chart-no-axes-combined text-orange-500">
                   <path d="M12 16v5" />
                   <path d="M16 14.639V21" />
@@ -190,26 +191,26 @@
                 </svg>
               </div>
               <div class="flex-1">
-                <p class="text-base font-semibold tracking-wide text-gray-900 dark:text-neutral-100">
+                <p class="text-base font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
                   {% trans 'Grow Your Business' %}
                 </p>
-                <p class="text-sm leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">
+                <p class="text-[15px] leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
                   {% trans 'Powerful tools and insights to help you close more deals.' %}
                 </p>
               </div>
             </div>
-            <div class="b-help flex justify-between items-center w-full gap-5">
-              <div class="b-help-icon rounded-xl px-3 py-3 flex justify-center items-center bg-orange-50 dark:bg-[#12181f]">
+            <div class="p-help flex justify-between items-center w-full gap-5">
+              <div class="p-help-icon rounded-xl px-3 py-3 flex justify-center items-center bg-[#f1f3f6] dark:bg-[#12181f]">
                 <svg xmlns="{% static 'icons/headset.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headset-icon lucide-headset text-orange-500">
                   <path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z" />
                   <path d="M21 16v2a4 4 0 0 1-4 4h-5" />
                 </svg>
               </div>
               <div class="flex-1">
-                <p class="text-base font-semibold tracking-wide text-gray-900 dark:text-neutral-100">
+                <p class="text-base font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
                   {% trans '24/7 Customer Support' %}
                 </p>
-                <p class="text-sm leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">
+                <p class="text-[15px] leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
                   {% trans 'Contact our support team anytime for assistance' %}
                 </p>
               </div>
@@ -221,14 +222,14 @@
       {% comment %}right side{% endcomment %}
       <section class="relative w-full min-h-screen flex flex-col justify-center items-center lg:overflow-hidden">
         <div class="absolute inset-0 lg:hidden overflow-hidden">
-          <img src="{% static 'images/b_light_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 w-full min-h-fit object-cover object-center transition-opacity duration-700 ease-in-out dark:opacity-0 opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
-          <img src="{% static 'images/b_dark_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 w-full min-h-fit object-cover object-center transition-opacity duration-700 ease-in-out opacity-0 dark:opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
+          <img src="{% static 'images/p_light_wallpaper.png' %}" alt="portal ligth wallpaper" class="absolute inset-0 w-full min-h-fit object-cover object-center transition-opacity duration-700 ease-in-out dark:opacity-0 opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
+          <img src="{% static 'images/p_dark_wallpaper.png' %}" alt="portal dark wallpaper" class="absolute inset-0 w-full min-h-fit object-cover object-center transition-opacity duration-700 ease-in-out opacity-0 dark:opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
           <div class="absolute inset-0 bg-gradient-to-br from-white/30 via-white/30 to-white/30 dark:from-black/30 dark:via-black/30 dark:to-black/30 pointer-events-none"></div>
         </div>
         <div class="relative px-5 py-6 rounded-3xl w-full min-h-screen flex flex-col justify-start items-center">
-          {% comment %}login field{% endcomment %}
-          <div id="bLogin" class="w-full max-w-[450px] flex flex-col justify-center items-center mt-[200px] lg:mt-[30px]">
-            <img src="{% static 'images/logo.svg' %}" alt="Brokly Logo" class="w-30 hidden lg:flex" />
+          {% comment %}login block{% endcomment %}
+          <div id="pLogin" class="w-full max-w-[450px] flex flex-col justify-center items-center mt-[200px] lg:mt-[30px]">
+            <img src="{% static 'images/logo.svg' %}" alt="Brokly Portal Logo" class="w-30 hidden lg:flex" />
             <h2 class="text-center text-2xl font-bold text-gray-950 dark:text-white">{% trans 'Brokly Portal Login' %}</h2>
             <p class="text-center w-[300px] text-gray-500 dark:text-white/50">
               {% trans 'Access your Brokly portal and manage your business efficiently.' %}
@@ -236,12 +237,12 @@
             {% comment %}phone input{% endcomment %}
             <label for="phone" class="mt-6 w-full text-[18px] lg:text-[15px] mr-1 py-2 font-semibold text-black/90 dark:text-white/90">{% trans 'Mobile Number' %}</label>
             <div class="flex w-full h-14 lg:h-12 overflow-hidden rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl">
-              <button type="button" id="bCountryCodeBtn" class="px-4 flex items-center justify-center gap-1 font-semibold bg-black/10 dark:bg-white/5 text-black/90 dark:text-white text-lg">
-                <span id="bSelectedCode">+91</span>
+              <button type="button" id="pCountryCodeBtn" class="px-4 flex items-center justify-center gap-1 font-semibold bg-[#f1f3f6] dark:bg-white/5 text-black/90 dark:text-white text-lg">
+                <span id="pSelectedCode">+91</span>
                 {% comment %} <svg xmlns="{% static 'icons/chevron-down.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down">
                   <path d="m6 9 6 6 6-6" />
                 </svg> {% endcomment %}
-                <input type="hidden" id="bCountryId" name="bCountryId" value="1" />
+                <input type="hidden" id="pCountryId" name="pCountryId" value="1" />
               </button>
               <input type="tel" id="phone" name="phone" value="9999999999" class="w-[350px] font-normal px-4 bg-transparent text-gray-900 placeholder:text-gray-400 dark:text-white text-xl lg:text-lg outline-0" placeholder="{% trans 'Phone number' %}" />
               <div id="phoneCheckIcon" class="hidden justify-center items-center px-3">
@@ -274,7 +275,7 @@
                   <circle cx="12" cy="12" r="10" />
                   <path d="M12 6v6l4 2" />
                 </svg>
-                <button id="resendOtpBtn" class="text-orange-500 hover:text-orange-600 dark:hover:text-orange-400 font-medium transition-all duration-300" onclick="resendOTP();">{% trans 'Resend OTP in' %}</button>
+                <button id="resendOtpBtn" class="text-orange-500 hover:text-orange-600 dark:hover:text-orange-400 font-medium transition-all duration-300" onclick="resendOTP()">{% trans 'Resend OTP in' %}</button>
                 <p id="timerText" class="text-orange-500 font-medium"></p>
                 <div id="verifyOtpLoader" class="w-5 h-5 hidden justify-center items-center border-[4px] border-black/20 border-t-black dark:border-white/20 dark:border-t-white rounded-full animate-spin"></div>
               </div>
@@ -283,12 +284,12 @@
               {% comment %}Explore Divider{% endcomment %}
               <div id="orDivider" class="mt-6 flex items-center w-full">
                 <div class="flex-1 h-[2px] bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-white/10"></div>
-                <span class="px-4 text-[11px] uppercase tracking-[0.2em] font-bold text-gray-500 dark:text-white/40 whitespace-nowrap">{% trans 'User Dashboard' %}</span>
+                <span class="px-4 text-[11px] uppercase tracking-[0.2em] font-bold text-gray-500 dark:text-white/40 whitespace-nowrap">{% trans 'Brokly Dashboard' %}</span>
                 <div class="flex-1 h-[2px] bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-white/10"></div>
               </div>
 
               {% comment %}Brokly CTA{% endcomment %}
-              <a href="/" id="broklyBtn" class="group w-full mt-5 py-3 lg:py-2 text-base rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold shadow-lg shadow-orange-500/20 transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-3">
+              <a href="/" target="_blank" id="broklyBtn" class="group w-full mt-5 py-3 lg:py-2 text-base rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold shadow-lg shadow-orange-500/20 transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-3">
                 <span>{% trans 'Continue as User' %}</span>
                 <svg xmlns="{% static 'icons/arrow-right.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:translate-x-1">
                   <path d="M5 12h14" />
@@ -297,8 +298,8 @@
               </a>
 
               {% comment %}property owner title{% endcomment %}
-              <p class="mt-2 text-center text-xs text-gray-500 dark:text-white/40">
-                {% trans 'Search properties, connect with brokers and discover your next home.' %}
+              <p class="mt-1 px-18 text-center text-[13px] text-gray-500 dark:text-white/40">
+                {% trans 'Search properties, connect with trusted brokers or owners and discover your next home.' %}
               </p>
 
               {% comment %}policy title{% endcomment %}
@@ -313,23 +314,43 @@
                   <span class="text-orange-500 hover:text-orange-600 dark:hover:text-orange-400 font-semibold transition-all duration-300 hover:underline">{% trans 'Terms & Conditions' %}</span>
                 </p>
               </div>
+
+              {% comment %}need help{% endcomment %}
+              <div class="p-needs-help w-full rounded-xl px-8 py-15 flex lg:hidden justify-center items-center bg-transparent">
+                <div class="p-help-icon flex justify-center items-center">
+                  <svg xmlns="{% static 'icons/headset.svg' %}" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headset-icon lucide-headset text-orange-500">
+                    <path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z" />
+                    <path d="M21 16v2a4 4 0 0 1-4 4h-5" />
+                  </svg>
+                </div>
+                <div class="ml-6 flex flex-row justify-between items-center w-full">
+                  <div class="flex flex-col justify-center items-start">
+                    <p class="text-[20px] font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
+                      {% trans '24/7 Customer Support' %}
+                    </p>
+                    <p class="text-[17px] leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
+                      {% trans 'Contact our support team anytime for assistance' %}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          {% comment %}profile field{% endcomment %}
-          <div id="bProfile" class="w-full max-w-[600px] hidden flex-col justify-center items-center mt-[200px] lg:mt-[100px]">
+          {% comment %}profile block{% endcomment %}
+          <div id="pProfile" class="w-full max-w-[600px] hidden flex-col justify-center items-center mt-[200px] lg:mt-[100px]">
             {% comment %}profile title{% endcomment %}
             <div class="w-full lg:max-w-[600px] flex justify-between items-center px-2 py-2">
               <div class="flex-col">
                 <h1 class="text-lg font-medium">{% trans 'Create Your Portal Profile' %}</h1>
                 <h6 class="text-sm font-normal text-gray-600 dark:text-white/50">{% trans 'Let`s get started with a few details about you.' %}</h6>
               </div>
-              <button type="button" id="bConBtn" class="text-lg font-medium rounded-lg flex justify-center items-center px-8 py-1 border-2 border-orange-400">{% trans 'Continue' %}</button>
+              <button type="button" id="pConBtn" class="text-lg font-medium rounded-lg flex justify-center items-center px-8 py-1 border-2 border-orange-400">{% trans 'Continue' %}</button>
             </div>
             <hr class="w-full lg:max-w-[600px] border-0 border-t-2 border-dashed border-black/5 dark:border-white/5 p-1 m-1" />
-            {% comment %}broker avatar{% endcomment %}
-            <div id="bImg" class="relative">
-              <img src="{% static 'images/avatar.png' %}" onerror="this.onerror=null; this.src='{% static 'images/avatar.png' %}'" alt="broker avatar" id="avatarPreview" class="w-24 h-24 border rounded-full object-cover border-black/15 dark:border-white/15 shadow-sm" />
+            {% comment %}portal avatar{% endcomment %}
+            <div id="pImg" class="relative">
+              <img src="{% static 'images/avatar.png' %}" onerror="this.onerror=null; this.src='{% static 'images/avatar.png' %}'" alt="portal user avatar" id="avatarPreview" class="w-24 h-24 border rounded-full object-cover border-black/15 dark:border-white/15 shadow-sm" />
               <label for="avatarInput" class="absolute bottom-0 right-0 w-8 h-8 bg-orange-400 text-black flex justify-center items-center rounded-full shadow-md">
                 <svg xmlns="{% static 'icons/plus.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus">
                   <path d="M5 12h14" />
@@ -347,51 +368,51 @@
                 })
               </script>
             </div>
-            {% comment %}broker name{% endcomment %}
-            <label for="bname" class="w-full max-w-[450px] text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">{% trans 'Full Name' %}</label>
+            {% comment %}portal user name{% endcomment %}
+            <label for="pname" class="w-full max-w-[450px] text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">{% trans 'Full Name' %}</label>
             <div class="w-full max-w-[450px] rounded-lg focus-within:ring-2 focus-within:ring-orange-500 border border-black/15 dark:border-white/15 bg-white/5 dark:bg-black/5 backdrop-blur-xl">
-              <input type="text" id="bname" placeholder="{% trans 'Enter your full name' %}" class="w-full font-normal px-3 py-3 lg:px-2 lg:py-2 bg-transparent rounded-lg outline-0 text-gray-900 placeholder:text-gray-400 dark:text-white text-base" />
+              <input type="text" id="pname" placeholder="{% trans 'Enter your full name' %}" class="w-full font-normal px-3 py-3 lg:px-2 lg:py-2 bg-transparent rounded-lg outline-0 text-gray-900 placeholder:text-gray-400 dark:text-white text-base" />
             </div>
-            <p id="bnrm" class="text-sm w-[450px] wrap-break-word font-normal text-red-600 px-1 py-1"></p>
+            <p id="pnrm" class="text-sm w-[450px] wrap-break-word font-normal text-red-600 px-1 py-1"></p>
             <script>
-              document.getElementById('bname').addEventListener('input', function () {
+              document.getElementById('pname').addEventListener('input', function () {
                 let name = this.value.trim()
                 if (name.length > 20) {
-                  document.getElementById('bnrm').innerText = '{% trans "Maximum 20 characters allowed" %}'
+                  document.getElementById('pnrm').innerText = '{% trans "Maximum 20 characters allowed" %}'
                 } else {
-                  document.getElementById('bnrm').innerText = ''
+                  document.getElementById('pnrm').innerText = ''
                 }
               })
             </script>
-            {% comment %}Broker State and City Select Btn{% endcomment %}
-            <div id="bStateCity" class="w-full max-w-[450px] mt-3 flex flex-row justify-between items-center gap-2">
+            {% comment %}Portal User State and City Select Btn{% endcomment %}
+            <div id="pStateCity" class="w-full max-w-[450px] mt-3 flex flex-row justify-between items-center gap-2">
               {% comment %}State{% endcomment %}
               <div class="w-full flex flex-col justify-center items-center">
-                <label for="bStateBtn" class="w-full max-w-[450px] text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">{% trans 'State' %}</label>
-                <button id="bStateBtn" class="w-full border rounded-lg focus:ring-2 focus:ring-orange-500 border-black/15 dark:border-white/15 bg-white/5 dark:bg-black/5 backdrop-blur-xl flex justify-start items-center px-3 py-3 lg:px-2 lg:py-2 gap-2">
+                <label for="pStateBtn" class="w-full max-w-[450px] text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">{% trans 'State' %}</label>
+                <button id="pStateBtn" class="w-full border rounded-lg focus:ring-2 focus:ring-orange-500 border-black/15 dark:border-white/15 bg-white/5 dark:bg-black/5 backdrop-blur-xl flex justify-start items-center px-3 py-3 lg:px-2 lg:py-2 gap-2">
                   <svg xmlns="{% static 'icons/chevron-down.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down">
                     <path d="m6 9 6 6 6-6" />
                   </svg>
-                  <span id="bSelectedState"></span>
-                  <input type="hidden" id="bStateId" name="bStateId" />
+                  <span id="pSelectedState"></span>
+                  <input type="hidden" id="pStateId" name="pStateId" />
                 </button>
               </div>
               {% comment %}City{% endcomment %}
               <div class="w-full flex flex-col justify-center items-center">
-                <label for="bCityBtn" id="bCityLabel" class="w-full max-w-[450px] text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">{% trans 'City' %}</label>
-                <button id="bCityBtn" class="w-full border rounded-lg focus:ring-2 focus:ring-orange-500 border-black/15 dark:border-white/15 bg-white/5 dark:bg-black/5 backdrop-blur-xl flex justify-start items-center px-3 py-3 lg:px-2 lg:py-2 gap-2">
+                <label for="pCityBtn" id="pCityLabel" class="w-full max-w-[450px] text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">{% trans 'City' %}</label>
+                <button id="pCityBtn" class="w-full border rounded-lg focus:ring-2 focus:ring-orange-500 border-black/15 dark:border-white/15 bg-white/5 dark:bg-black/5 backdrop-blur-xl flex justify-start items-center px-3 py-3 lg:px-2 lg:py-2 gap-2">
                   <svg xmlns="{% static 'icons/chevron-down.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down">
                     <path d="m6 9 6 6 6-6" />
                   </svg>
-                  <span id="bSelectedCity" data-select-city="{% trans 'Select City' %}"></span>
-                  <input type="hidden" id="bCityId" name="bCityId" />
+                  <span id="pSelectedCity" data-select-city="{% trans 'Select City' %}"></span>
+                  <input type="hidden" id="pCityId" name="pCityId" />
                 </button>
               </div>
             </div>
-            {% comment %}broker update profile btn{% endcomment %}
-            <button id="bUpdateBtn" class="w-full max-w-[450px] mt-6 py-3 lg:py-2 text-lg bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-all shadow flex justify-center items-center gap-3">
-              <span id="bUpbtnText">{% trans 'Update Profile' %}</span>
-              <div id="bLoaderUpdate" class="w-6 h-6 border-[4px] border-white/30 rounded-full border-t-white animate-spin"></div>
+            {% comment %}portal user update profile btn{% endcomment %}
+            <button id="pUpdateBtn" class="w-full max-w-[450px] mt-6 py-3 lg:py-2 text-lg bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-all shadow flex justify-center items-center gap-3">
+              <span id="pUpbtnText">{% trans 'Update Profile' %}</span>
+              <div id="pLoaderUpdate" class="w-6 h-6 border-[4px] border-white/30 rounded-full border-t-white animate-spin"></div>
             </button>
             <p class="text-xs px-1 py-1 text-gray-400 font-medium">
               {% trans 'You can update these details anytime later.' %}
@@ -399,10 +420,10 @@
           </div>
 
           {% comment %}mobile view features{% endcomment %}
-          <div class="lg:hidden u-m-features w-full flex flex-col justify-center items-center gap-2 mt-10">
-            <div class="b-brokly-info flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
-              <div class="b-brokly-logo flex justify-start items-center">
-                <img src="{% static 'images/logo.svg' %}" alt="Brokly Logo" class="w-28" />
+          <div class="lg:hidden p-m-features w-full flex flex-col justify-center items-center gap-2 mt-10">
+            <div class="p-brokly-info flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
+              <div class="p-brokly-logo flex justify-start items-center">
+                <img src="{% static 'images/logo.svg' %}" alt="Brokly Portal Logo" class="w-28" />
               </div>
               <div class="flex justify-center items-center w-full p-2 text-justify">
                 <p class="text-sm font-tracking-wide text-gray-900 dark:text-neutral-100">
@@ -410,8 +431,8 @@
                 </p>
               </div>
             </div>
-            <div class="b-verified-access flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
-              <div class="b-verified-icon rounded-xl p-4 m-4 flex justify-start items-center bg-orange-50 dark:bg-[#12181f]">
+            <div class="p-verified-access flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
+              <div class="p-verified-icon rounded-xl p-4 m-4 flex justify-start items-center bg-orange-50 dark:bg-[#12181f]">
                 <svg xmlns="{% static 'icons/shield-check.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check-icon lucide-shield-check text-orange-500">
                   <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
                   <path d="m9 12 2 2 4-4" />
@@ -426,8 +447,8 @@
                 </p>
               </div>
             </div>
-            <div class="b-manage-properties flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
-              <div class="b-properties-icon rounded-xl p-4 m-4 flex justify-start items-center bg-orange-50 dark:bg-[#12181f]">
+            <div class="p-manage-properties flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
+              <div class="p-properties-icon rounded-xl p-4 m-4 flex justify-start items-center bg-orange-50 dark:bg-[#12181f]">
                 <svg xmlns="{% static 'icons/house.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house text-orange-500">
                   <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
                   <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
@@ -442,8 +463,8 @@
                 </p>
               </div>
             </div>
-            <div class="b-Track-leads flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
-              <div class="b-trackLeads-icon rounded-xl p-4 m-4 flex justify-start items-center bg-orange-50 dark:bg-[#12181f]">
+            <div class="p-Track-leads flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
+              <div class="p-trackLeads-icon rounded-xl p-4 m-4 flex justify-start items-center bg-orange-50 dark:bg-[#12181f]">
                 <svg xmlns="{% static 'icons/users.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users text-orange-500">
                   <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
                   <path d="M16 3.128a4 4 0 0 1 0 7.744" />
@@ -460,8 +481,8 @@
                 </p>
               </div>
             </div>
-            <div class="b-grow-business flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
-              <div class="b-grow-icon rounded-xl p-4 m-4 flex justify-start items-center bg-orange-50 dark:bg-[#12181f]">
+            <div class="p-grow-business flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
+              <div class="p-grow-icon rounded-xl p-4 m-4 flex justify-start items-center bg-orange-50 dark:bg-[#12181f]">
                 <svg xmlns="{% static 'icons/chart-no-axes-combined.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-no-axes-combined-icon lucide-chart-no-axes-combined text-orange-500">
                   <path d="M12 16v5" />
                   <path d="M16 14.639V21" />
@@ -480,34 +501,18 @@
                 </p>
               </div>
             </div>
-            <div class="b-help flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
-              <div class="b-help-icon rounded-xl p-4 m-4 flex justify-start items-center bg-orange-50 dark:bg-[#12181f]">
-                <svg xmlns="{% static 'icons/headset.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headset-icon lucide-headset text-orange-500">
-                  <path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z" />
-                  <path d="M21 16v2a4 4 0 0 1-4 4h-5" />
-                </svg>
-              </div>
-              <div class="flex-row">
-                <p class="text-lg font-semibold tracking-wide text-gray-900 dark:text-neutral-100">
-                  {% trans '24/7 Customer Support' %}
-                </p>
-                <p class="text-base leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">
-                  {% trans 'Contact our support team anytime for assistance' %}
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
     </main>
 
     <script>
-      // variable u-login
-      const bLogin = document.getElementById('bLogin')
+      // variable p-login
+      const pLogin = document.getElementById('pLogin')
       // variable phone input
-      const countryCode = document.getElementById('bCountryCodeBtn')
+      const countryCode = document.getElementById('pCountryCodeBtn')
       countryCode.disabled = true
-      const phoneCode = document.getElementById('bCountryId')
+      const phoneCode = document.getElementById('pCountryId')
       const phoneInput = document.getElementById('phone')
       const phoneError = document.getElementById('prm')
       const phoneCheckIcon = document.getElementById('phoneCheckIcon')
@@ -528,29 +533,29 @@
       const resendOtpB = document.getElementById('resendOtpBtn')
       const timerText = document.getElementById('timerText')
       const verifyOtpLoader = document.getElementById('verifyOtpLoader')
-      // variable b profile
-      const bProfile = document.getElementById('bProfile')
-      const bAvatarPreview = document.getElementById('avatarPreview')
-      const bimg = document.getElementById('avatarInput')
-      const bname = document.getElementById('bname')
-      // variable b skip btn
-      const bConBtn = document.getElementById('bConBtn')
+      // variable p profile
+      const pProfile = document.getElementById('pProfile')
+      const pAvatarPreview = document.getElementById('avatarPreview')
+      const pimg = document.getElementById('avatarInput')
+      const pname = document.getElementById('pname')
+      // variable p skip btn
+      const pConBtn = document.getElementById('pConBtn')
       // variable state select btn
-      document.getElementById('bStateId').value = ''
-      document.getElementById('bSelectedState').innerText = '{% trans "Select State" %}'
+      document.getElementById('pStateId').value = ''
+      document.getElementById('pSelectedState').innerText = '{% trans "Select State" %}'
       // variable city select btn
-      const bcitylabel = document.getElementById('bCityLabel')
-      bcitylabel.classList.add('disabled')
-      const bcitybtn = document.getElementById('bCityBtn')
-      bcitybtn.disabled = true
-      document.getElementById('bCityId').value = ''
-      document.getElementById('bSelectedCity').innerText = '{% trans "Select City" %}'
+      const pcitylabel = document.getElementById('pCityLabel')
+      pcitylabel.classList.add('disabled')
+      const pcitybtn = document.getElementById('pCityBtn')
+      pcitybtn.disabled = true
+      document.getElementById('pCityId').value = ''
+      document.getElementById('pSelectedCity').innerText = '{% trans "Select City" %}'
       // variable update profile btn
-      const bUpdateBtn = document.getElementById('bUpdateBtn')
-      const bUpbtnText = document.getElementById('bUpbtnText')
-      bUpbtnText.innerText = '{% trans "Update profile" %}'
-      const bLoaderUpdate = document.getElementById('bLoaderUpdate')
-      bLoaderUpdate.classList.add('hidden')
+      const pUpdateBtn = document.getElementById('pUpdateBtn')
+      const pUpbtnText = document.getElementById('pUpbtnText')
+      pUpbtnText.innerText = '{% trans "Update profile" %}'
+      const pLoaderUpdate = document.getElementById('pLoaderUpdate')
+      pLoaderUpdate.classList.add('hidden')
       
       otpInputs.forEach((input) => {
         input.disabled = true
@@ -618,15 +623,15 @@
       })
       // send OTP
       function sendOTP() {
-        let codeID = bCountryId.value.trim()
-        let codeShow = document.getElementById('bSelectedCode').innerText
+        let codeID = pCountryId.value.trim()
+        let codeShow = document.getElementById('pSelectedCode').innerText
         let phone = phoneInput.value.trim()
         countryCode.disabled = true
         phoneInput.disabled = true
         btnText.innerText = '{% trans "OTP Sending..." %}'
         sendOtpLoder.classList.remove('hidden')
       
-        fetch('/broker/login/', {
+        fetch('/portal/login/', {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
@@ -745,10 +750,10 @@
       }
       // Verify OTP
       function verifyOTP() {
-        let bSelectedState = document.getElementById('bSelectedState')
-        let bStateId = document.getElementById('bStateId')
-        let bSelectedCity = document.getElementById('bSelectedCity')
-        let bCityId = document.getElementById('bCityId')
+        let pSelectedState = document.getElementById('pSelectedState')
+        let pStateId = document.getElementById('pStateId')
+        let pSelectedCity = document.getElementById('pSelectedCity')
+        let pCityId = document.getElementById('pCityId')
         otpClockIcon.classList.add('hidden')
         resendOtpB.classList.add('hidden')
         timerText.classList.add('hidden')
@@ -790,26 +795,26 @@
               verifyOtpLoader.classList.replace('flex', 'hidden')
             }
             if (data.step === 'profile') {
-              bLogin.classList.replace('flex', 'hidden')
-              bProfile.classList.remove('hidden')
-              bProfile.classList.add('flex')
+              pLogin.classList.replace('flex', 'hidden')
+              pProfile.classList.remove('hidden')
+              pProfile.classList.add('flex')
             }
             if (data.profile) {
-              bname.value = data.profile.name || ''
-              bSelectedState.innerText = data.profile.state_name || '{% trans "Select State" %}'
+              pname.value = data.profile.name || ''
+              pSelectedState.innerText = data.profile.state_name || '{% trans "Select State" %}'
               if (data.profile.state_name) {
-                bcitybtn.disabled = false
+                pcitybtn.disabled = false
               } else {
-                bcitybtn.disabled = true
+                pcitybtn.disabled = true
               }
-              bStateId.value = data.profile.state_id || ''
-              bcitylabel.classList.remove('disabled')
-              bSelectedCity.innerText = data.profile.city_name || '{% trans "Select City" %}'
-              bCityId.value = data.profile.city_id || ''
+              pStateId.value = data.profile.state_id || ''
+              pcitylabel.classList.remove('disabled')
+              pSelectedCity.innerText = data.profile.city_name || '{% trans "Select City" %}'
+              pCityId.value = data.profile.city_id || ''
               if (data.profile.img) {
-                bAvatarPreview.src = data.profile.img
+                pAvatarPreview.src = data.profile.img
               } else {
-                bAvatarPreview.src = '/static/images/avatar.png'
+                pAvatarPreview.src = '/static/images/avatar.png'
               }
             }
           })
@@ -823,16 +828,16 @@
           })
       }
       // Continue(Skip) Button
-      bConBtn.addEventListener('click', function (e) {
+      pConBtn.addEventListener('click', function (e) {
         e.preventDefault()
-        let themeValue = localStorage.getItem('bthemeValue')
-        let languageId = localStorage.getItem('blangId')
+        let themeValue = localStorage.getItem('pthemeValue')
+        let languageId = localStorage.getItem('plangId')
       
         let fd = new FormData()
-        fd.append('btheme', themeValue)
-        fd.append('blang', languageId)
+        fd.append('ptheme', themeValue)
+        fd.append('plang', languageId)
       
-        fetch('/broker-profile/', {
+        fetch('/portal-profile/', {
           method: 'POST',
           headers: {
             'X-CSRFToken': getCSRF()
@@ -845,20 +850,20 @@
               alert(data.message)
             }
             if (data.success) {
-              window.location.href = '/broker/'
+              window.location.href = '/portal/'
             }
           })
       })
-      // Broker Update Profile
-      bUpdateBtn.addEventListener('click', function (e) {
+      // Portal Update Profile
+      pUpdateBtn.addEventListener('click', function (e) {
         e.preventDefault()
-        let themeValue = localStorage.getItem('bthemeValue')
-        let languageId = localStorage.getItem('blangId')
-        let file = bimg.files[0]
-        let name = bname.value.trim()
-        let stateid = document.getElementById('bStateId').value.trim()
-        let cityid = document.getElementById('bCityId').value.trim()
-        let nameError = document.getElementById('bnrm')
+        let themeValue = localStorage.getItem('pthemeValue')
+        let languageId = localStorage.getItem('plangId')
+        let file = pimg.files[0]
+        let name = pname.value.trim()
+        let stateid = document.getElementById('pStateId').value.trim()
+        let cityid = document.getElementById('pCityId').value.trim()
+        let nameError = document.getElementById('pnrm')
         nameError.innerText = ''
       
         if (!name) {
@@ -867,18 +872,18 @@
         }
       
         let fd = new FormData()
-        fd.append('btheme', themeValue)
-        fd.append('blang', languageId)
-        if (file) fd.append('bimg', file)
-        fd.append('bname', name)
-        if (stateid) fd.append('bstateid', stateid)
-        if (cityid) fd.append('bcityid', cityid)
+        fd.append('ptheme', themeValue)
+        fd.append('plang', languageId)
+        if (file) fd.append('pimg', file)
+        fd.append('pname', name)
+        if (stateid) fd.append('pstateid', stateid)
+        if (cityid) fd.append('pcityid', cityid)
       
         if (!confirm('{% trans "Are you sure you want to update your profile?" %}')) return
-        bUpbtnText.innerText = ''
-        bLoaderUpdate.classList.remove('hidden')
+        pUpbtnText.innerText = ''
+        pLoaderUpdate.classList.remove('hidden')
       
-        fetch('/broker-profile/', {
+        fetch('/portal-profile/', {
           method: 'POST',
           headers: {
             'X-CSRFToken': getCSRF()
@@ -891,17 +896,17 @@
               alert(data.message)
             }
             if (data.success) {
-              bLoaderUpdate.classList.add('hidden')
-              bUpbtnText.innerText = data.message
+              pLoaderUpdate.classList.add('hidden')
+              pUpbtnText.innerText = data.message
               setTimeout(() => {
-                bUpbtnText.innerText = '{% trans "Update profile" %}'
+                pUpbtnText.innerText = '{% trans "Update profile" %}'
               }, 2000)
             }
           })
           .catch(() => {
             alert("{% trans 'Something went wrong. Try again.' %}")
-            bUpbtnText.innerText = '{% trans "Update profile" %}'
-            bLoaderUpdate.classList.add('hidden')
+            pUpbtnText.innerText = '{% trans "Update profile" %}'
+            pLoaderUpdate.classList.add('hidden')
           })
       })
       // CSRF token function
@@ -914,12 +919,12 @@
     </script>
 
     {% comment %}Language Selected Modal{% endcomment %}
-    <div id="bLanguageModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden justify-center items-start pt-[100px] z-100 text-xl px-2">
-      <div id="bLanguage" class="bg-white/90 dark:bg-[#111827]/90 dark:text-white w-full max-w-md p-2 rounded-2xl border border-gray-200 dark:border-white/10 backdrop-blur-2xl shadow-xl animate-scaleIn">
+    <div id="pLanguageModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden justify-center items-start pt-[100px] z-100 text-xl px-2">
+      <div id="pLanguage" class="bg-white/90 dark:bg-[#111827]/90 dark:text-white w-full max-w-md p-2 rounded-2xl border border-gray-200 dark:border-white/10 backdrop-blur-2xl shadow-xl animate-scaleIn">
         {% comment %}header{% endcomment %}
         <div class="flex justify-between items-center px-2">
           <span class="text-[18px] font-medium">{% trans 'Select Your Language' %}</span>
-          <button id="modelClose" class="min-w-[35px] h-[35px] bg-gray-100 dark:bg-[#1F2937] hover:bg-gray-200 dark:hover:bg-[#374151] flex justify-center items-center rounded-full transition-all duration-300" onclick="bCloseLanguageModal()">
+          <button id="modelClose" class="min-w-[35px] h-[35px] bg-gray-100 dark:bg-[#1F2937] hover:bg-gray-200 dark:hover:bg-[#374151] flex justify-center items-center rounded-full transition-all duration-300" onclick="pCloseLanguageModal()">
             <svg xmlns="{% static 'icons/x.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x font-bold">
               <path d="M18 6 6 18" />
               <path d="m6 6 12 12" />
@@ -930,20 +935,20 @@
         {% comment %}list language{% endcomment %}
         <div id="languageList" class="max-h-[500px] overflow-y-auto space-y-1">
           {% for l in languages %}
-            <button type="button" class="bLanguage-item w-full flex justify-between items-center px-2 py-2 rounded-xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] transition-all duration-200" onclick="bSelectedLanguage('{{ l.id }}','{{ l.name|capfirst }}','{{ l.code }}')">
+            <button type="button" class="pLanguage-item w-full flex justify-between items-center px-2 py-2 rounded-xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] transition-all duration-200" onclick="pSelectedLanguage('{{ l.id }}','{{ l.name|capfirst }}','{{ l.code }}')">
               <span class="text-[20px] font-normal">{{ l.name|capfirst }}</span>
               <span class="text-[16px] text-gray-400">{{ l.code }}</span>
             </button>
           {% endfor %}
         </div>
       </div>
-      <div id="bLangSelectLoader" class="w-10 h-10 flex justify-center items-center border-[8px] border-white/30 rounded-full border-t-white animate-spin [animation-duration:.5s]"></div>
+      <div id="pLangSelectLoader" class="w-10 h-10 flex justify-center items-center border-[8px] border-white/30 rounded-full border-t-white animate-spin [animation-duration:.5s]"></div>
     </div>
     {% comment %}Language Selected Modal JS{% endcomment %}
-    <script src="{% static 'js/accounts/broker/b_language_select_modal.js' %}"></script>
+    <script src="{% static 'js/accounts/portal/p_language_select_modal.js' %}"></script>
 
     {% comment %}Country Code Modal{% endcomment %}
-    <div id="bCountryModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden justify-center items-start pt-[100px] z-100 text-xl px-2">
+    <div id="pCountryModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden justify-center items-start pt-[100px] z-100 text-xl px-2">
       <div class="bg-white/90 dark:bg-[#111827]/90 dark:text-white w-full max-w-md p-2 rounded-3xl border border-gray-200 dark:border-white/10 backdrop-blur-2xl shadow-xl animate-scaleIn">
         {% comment %}header{% endcomment %}
         <div class="flex justify-between items-center mb-2">
@@ -954,9 +959,9 @@
                 <circle cx="11" cy="11" r="8" />
               </svg>
             </div>
-            <input type="text" class="w-full text-lg px-2 bg-transparent dark:text-white outline-none placeholder:text-gray-400" id="bSearchCountryCode" placeholder="{% trans 'Search country or code' %}" />
+            <input type="text" class="w-full text-lg px-2 bg-transparent dark:text-white outline-none placeholder:text-gray-400" id="pSearchCountryCode" placeholder="{% trans 'Search country or code' %}" />
           </div>
-          <button id="modelClose" class="min-w-[35px] h-[35px] ml-4 bg-gray-100 dark:bg-[#1F2937] hover:bg-gray-200 dark:hover:bg-[#374151] flex justify-center items-center rounded-full transition-all duration-300" onclick="bCloseCountryCodeModal()">
+          <button id="modelClose" class="min-w-[35px] h-[35px] ml-4 bg-gray-100 dark:bg-[#1F2937] hover:bg-gray-200 dark:hover:bg-[#374151] flex justify-center items-center rounded-full transition-all duration-300" onclick="pCloseCountryCodeModal()">
             <svg xmlns="{% static 'icons/x.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x font-bold">
               <path d="M18 6 6 18" />
               <path d="m6 6 12 12" />
@@ -967,12 +972,12 @@
         {% comment %}list country and code{% endcomment %}
         <div id="countryList" class="max-h-[500px] overflow-y-auto space-y-1">
           {% for c in countrycode %}
-            <div class="bCountry-item flex justify-between items-center p-3 rounded-3xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] transition-all duration-200" data-name="{{ c.country_name|lower }}" data-code="{{ c.country_code|lower }}" onclick="bSelectedCountry('{{ c.id }}','{{ c.country_code }}')">
+            <div class="pCountry-item flex justify-between items-center p-3 rounded-3xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] transition-all duration-200" data-name="{{ c.country_name|lower }}" data-code="{{ c.country_code|lower }}" onclick="pSelectedCountry('{{ c.id }}','{{ c.country_code }}')">
               <span>{{ c.country_name }}</span>
               <span class="text-gray-400">{{ c.country_code }}</span>
             </div>
           {% endfor %}
-          <div id="bNotData" class="text-center flex justify-center items-center h-24 gap-2">
+          <div id="pNotData" class="text-center flex justify-center items-center h-24 gap-2">
             <svg xmlns="{% static 'icons/database.svg' %}" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database-icon lucide-database text-gray-400">
               <ellipse cx="12" cy="5" rx="9" ry="3" />
               <path d="M3 5V19A9 3 0 0 0 21 19V5" />
@@ -984,10 +989,10 @@
       </div>
     </div>
     {% comment %}Country Code Modal JS{% endcomment %}
-    <script src="{% static 'js/accounts/broker/b_country_code_modal.js' %}"></script>
+    <script src="{% static 'js/accounts/portal/p_country_code_modal.js' %}"></script>
 
     {% comment %}State Select Modal{% endcomment %}
-    <div id="bStateModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden justify-center items-start pt-[100px] z-100 text-xl px-2">
+    <div id="pStateModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden justify-center items-start pt-[100px] z-100 text-xl px-2">
       <div class="bg-white/90 dark:bg-[#111827]/90 dark:text-white w-full max-w-md p-2 rounded-3xl border border-gray-200 dark:border-white/10 backdrop-blur-2xl shadow-xl animate-scaleIn">
         {% comment %}header{% endcomment %}
         <div class="flex justify-between items-center mb-2">
@@ -998,9 +1003,9 @@
                 <circle cx="11" cy="11" r="8" />
               </svg>
             </div>
-            <input type="text" class="w-full text-lg px-2 bg-transparent dark:text-white outline-none placeholder:text-gray-400" id="bSearchState" placeholder="{% trans 'Search state' %}" />
+            <input type="text" class="w-full text-lg px-2 bg-transparent dark:text-white outline-none placeholder:text-gray-400" id="pSearchState" placeholder="{% trans 'Search state' %}" />
           </div>
-          <button id="modelStateClose" class="min-w-[35px] h-[35px] ml-4 bg-gray-100 dark:bg-[#1F2937] hover:bg-gray-200 dark:hover:bg-[#374151] flex justify-center items-center rounded-full transition-all duration-300" onclick="bCloseStateModal()">
+          <button id="modelStateClose" class="min-w-[35px] h-[35px] ml-4 bg-gray-100 dark:bg-[#1F2937] hover:bg-gray-200 dark:hover:bg-[#374151] flex justify-center items-center rounded-full transition-all duration-300" onclick="pCloseStateModal()">
             <svg xmlns="{% static 'icons/x.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x font-bold">
               <path d="M18 6 6 18" />
               <path d="m6 6 12 12" />
@@ -1009,7 +1014,7 @@
         </div>
         <div class="w-full h-px bg-gray-300 dark:bg-white/20 my-2"></div>
         <div id="stateList" class="max-h-[500px] overflow-y-auto space-y-1"></div>
-        <div id="bStateNotData" class="text-center flex justify-center items-center h-24 gap-2">
+        <div id="pStateNotData" class="text-center flex justify-center items-center h-24 gap-2">
           <svg xmlns="{% static 'icons/database.svg' %}" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database-icon lucide-database text-gray-400">
             <ellipse cx="12" cy="5" rx="9" ry="3" />
             <path d="M3 5V19A9 3 0 0 0 21 19V5" />
@@ -1020,10 +1025,10 @@
       </div>
     </div>
     {% comment %}State Select Modal JS{% endcomment %}
-    <script src="{% static 'js/accounts/broker/b_state_select_modal.js' %}"></script>
+    <script src="{% static 'js/accounts/portal/p_state_select_modal.js' %}"></script>
 
     {% comment %}City Select Modal{% endcomment %}
-    <div id="bCityModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden justify-center items-start pt-[100px] z-100 text-xl px-2">
+    <div id="pCityModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden justify-center items-start pt-[100px] z-100 text-xl px-2">
       <div class="bg-white/90 dark:bg-[#111827]/90 dark:text-white w-full max-w-md p-2 rounded-3xl border border-gray-200 dark:border-white/10 backdrop-blur-2xl shadow-xl animate-scaleIn">
         {% comment %}header{% endcomment %}
         <div class="flex justify-between items-center mb-2">
@@ -1034,9 +1039,9 @@
                 <circle cx="11" cy="11" r="8" />
               </svg>
             </div>
-            <input type="text" class="w-full text-lg px-2 bg-transparent dark:text-white outline-none placeholder:text-gray-400" id="bSearchCity" placeholder="{% trans 'Search city' %}" />
+            <input type="text" class="w-full text-lg px-2 bg-transparent dark:text-white outline-none placeholder:text-gray-400" id="pSearchCity" placeholder="{% trans 'Search city' %}" />
           </div>
-          <button id="modelCityClose" class="min-w-[35px] h-[35px] ml-4 bg-gray-100 dark:bg-[#1F2937] hover:bg-gray-200 dark:hover:bg-[#374151] flex justify-center items-center rounded-full transition-all duration-300" onclick="bCloseCityModal()">
+          <button id="modelCityClose" class="min-w-[35px] h-[35px] ml-4 bg-gray-100 dark:bg-[#1F2937] hover:bg-gray-200 dark:hover:bg-[#374151] flex justify-center items-center rounded-full transition-all duration-300" onclick="pCloseCityModal()">
             <svg xmlns="{% static 'icons/x.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x font-bold">
               <path d="M18 6 6 18" />
               <path d="m6 6 12 12" />
@@ -1045,7 +1050,7 @@
         </div>
         <div class="w-full h-px bg-gray-300 dark:bg-white/20 my-2"></div>
         <div id="cityList" class="max-h-[500px] overflow-y-auto space-y-1"></div>
-        <div id="bCityNotData" class="text-center flex justify-center items-center h-24 gap-2">
+        <div id="pCityNotData" class="text-center flex justify-center items-center h-24 gap-2">
           <svg xmlns="{% static 'icons/database.svg' %}" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database-icon lucide-database text-gray-400">
             <ellipse cx="12" cy="5" rx="9" ry="3" />
             <path d="M3 5V19A9 3 0 0 0 21 19V5" />
@@ -1056,6 +1061,6 @@
       </div>
     </div>
     {% comment %}City Select Modal JS{% endcomment %}
-    <script src="{% static 'js/accounts/broker/b_city_select_modal.js' %}"></script>
+    <script src="{% static 'js/accounts/portal/p_city_select_modal.js' %}"></script>
   </body>
 </html>

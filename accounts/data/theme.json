@@ -1,0 +1,20 @@
+[
+    {
+        "model": "accounts.Theme",
+        "pk": 1,
+        "fields": {
+            "name": "light",
+            "is_active": true,
+            "created_at": "2026-05-02 11:24:20.387398+05:30"
+        }
+    },
+    {
+        "model": "accounts.Theme",
+        "pk": 2,
+        "fields": {
+            "name": "dark",
+            "is_active": true,
+            "created_at": "2026-05-02 11:24:20.387398+05:30"
+        }
+    }
+]

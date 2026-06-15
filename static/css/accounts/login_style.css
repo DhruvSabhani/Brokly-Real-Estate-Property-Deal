@@ -36,7 +36,7 @@ a {
 }
 
 #uCountryCodeBtn:disabled,
-#bCountryCodeBtn:disabled {
+#pCountryCodeBtn:disabled {
   color: gray;
   cursor: not-allowed;
 }
@@ -57,13 +57,13 @@ a {
 }
 
 #uCityLabel.disabled,
-#bCityLabel.disabled {
+#pCityLabel.disabled {
   color: gray;
   cursor: not-allowed;
 }
 
 #uCityBtn:disabled,
-#bCityBtn:disabled {
+#pCityBtn:disabled {
   color: gray;
   cursor: not-allowed;
 }

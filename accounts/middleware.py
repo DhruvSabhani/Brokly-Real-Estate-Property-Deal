@@ -10,9 +10,9 @@ class RoleAuthMiddleware:
 
         path = request.path
 
-        if path.startswith("broker/"):
-            if not request.session.get("broker_login"):
-                return redirect("/broker/login/")
+        if path.startswith("portal/"):
+            if not request.session.get("portal_login"):
+                return redirect("/portal/login/")
 
         elif path == "/":
             if not request.session.get("user_login"):
@@ -26,8 +26,8 @@ class PanelLanguageMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        if request.path.startswith("/broker"):
-            language = request.session.get("broker_language", "en")
+        if request.path.startswith("/portal"):
+            language = request.session.get("portal_language", "en")
         else:
             language = request.session.get("user_language", "en")
         translation.activate(language)
