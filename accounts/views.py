@@ -2,6 +2,7 @@ from urllib import request
 from django.conf import settings
 from django.shortcuts import render, redirect
 from accounts.models import *
+from common.models import *
 from django.http import JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
 import json
@@ -130,11 +131,15 @@ def verify_otp(request):
     otp = data.get("otp")
     role = request.session.get("role")
 
-    code_id = CountryCode.objects.filter(id=int(code)).first()
-    full_phone = f"{code_id.country_code}{phone}"
+    try:
+        code_id = CountryCode.objects.filter(id=int(code)).first() if code else None
+    except (TypeError, ValueError):
+        code_id = None
 
-    if not phone or not role:
+    if not phone or not role or not code_id:
         return JsonResponse({"error": True, "message": _("Session expired")})
+
+    full_phone = f"{code_id.country_code}{phone}"
     otp_record = (
         OTP.objects.filter(phone=phone, is_used=False).order_by("-created_at").first()
     )
@@ -159,37 +164,37 @@ def verify_otp(request):
         user.is_user = True
     user.is_staff = False
     user.is_active = True
-    if code and code != "null":
-        user.country_code = code_id
-    else:
-        user.country_code = CountryCode.objects.filter(id=1).first()
+    user.country_code = code_id or CountryCode.objects.filter(id=1).first()
     user.save()
+    address, created = Addresses.objects.get_or_create(profile=user)
+    address.country = code_id or CountryCode.objects.filter(id=1).first()
+    address.save()
     profile_data = {}
     # check Profile
     if role == "user":
         request.session["user_login"] = user.pk
         uProfile, created = UserProfile.objects.get_or_create(user=user)
-        if uProfile.img or uProfile.name or uProfile.state:
+        if uProfile.img or uProfile.name or address.state:
             profile_data = {
                 "img": uProfile.img.url if uProfile.img else None,
                 "name": uProfile.name if uProfile.name else None,
-                "state_id": uProfile.state.pk if uProfile.state else None,
-                "state_name": uProfile.state.name if uProfile.state else None,
-                "city_id": uProfile.city.pk if uProfile.city else None,
-                "city_name": uProfile.city.name if uProfile.city else None,
+                "state_id": address.state.pk if address.state else None,
+                "state_name": address.state.name if address.state else None,
+                "city_id": address.city.pk if address.city else None,
+                "city_name": address.city.name if address.city else None,
             }
 
     elif role == "portal":
         request.session["portal_login"] = user.pk
         pProfile, created = PortalProfile.objects.get_or_create(user=user)
-        if pProfile.img or pProfile.name or pProfile.state:
+        if pProfile.img or pProfile.name or address.state:
             profile_data = {
                 "img": pProfile.img.url if pProfile.img else None,
                 "name": pProfile.name if pProfile.name else None,
-                "state_id": pProfile.state.pk if pProfile.state else None,
-                "state_name": pProfile.state.name if pProfile.state else None,
-                "city_id": pProfile.city.pk if pProfile.city else None,
-                "city_name": pProfile.city.name if pProfile.city else None,
+                "state_id": address.state.pk if address.state else None,
+                "state_name": address.state.name if address.state else None,
+                "city_id": address.city.pk if address.city else None,
+                "city_name": address.city.name if address.city else None,
             }
 
     request.session.pop("role", None)
@@ -210,6 +215,7 @@ def user_profile(request):
     if not user:
         return JsonResponse({"error": True, "message": _("User not found")})
 
+    address, created = Addresses.objects.get_or_create(profile=user)
     uProfile, created = UserProfile.objects.get_or_create(user=user)
 
     utheme = request.POST.get("utheme")
@@ -234,18 +240,18 @@ def user_profile(request):
 
     if uname:
         uProfile.name = uname
+    uProfile.save()
 
     if ustateid:
         state = State.objects.filter(id=ustateid).first()
         if state:
-            uProfile.state = state
+            address.state = state
 
     if ucityid:
         city = City.objects.filter(id=ucityid).first()
         if city:
-            uProfile.city = city
-
-    uProfile.save()
+            address.city = city
+    address.save()
 
     return JsonResponse(
         {
@@ -268,6 +274,7 @@ def portal_profile(request):
     if not portal:
         return JsonResponse({"error": True, "message": _("Portal not found")})
 
+    address, created = Addresses.objects.get_or_create(profile=portal)
     pProfile, created = PortalProfile.objects.get_or_create(user=portal)
 
     ptheme = request.POST.get("ptheme")
@@ -292,18 +299,18 @@ def portal_profile(request):
 
     if pname:
         pProfile.name = pname
+    pProfile.save()
 
     if pstateid:
         state = State.objects.filter(id=pstateid).first()
         if state:
-            pProfile.state = state
+            address.state = state
 
     if pcityid:
         city = City.objects.filter(id=pcityid).first()
         if city:
-            pProfile.city = city
-
-    pProfile.save()
+            address.city = city
+    address.save()
 
     return JsonResponse(
         {
@@ -326,9 +333,55 @@ def user_dashboard(request):
     context = {
         "user": request.user_obj,
         "uProfile": request.uProfile,
+        "uAddress": request.uAddress,
         "active": "home",
+        "range": "123456",
     }
     return render(request, "user/dashboard.html", context)
+
+
+@user_required
+def search_property(request):
+    context = {
+        "user": request.user_obj,
+        "uProfile": request.uProfile,
+        "uAddress": request.uAddress,
+        "active": "searchProperty",
+    }
+    return render(request, "user/search_property.html", context)
+
+
+@user_required
+def near_me(request):
+    context = {
+        "user": request.user_obj,
+        "uProfile": request.uProfile,
+        "uAddress": request.uAddress,
+        "active": "nearMe",
+    }
+    return render(request, "user/near_me.html", context)
+
+
+@user_required
+def shortlisted(request):
+    context = {
+        "user": request.user_obj,
+        "uProfile": request.uProfile,
+        "uAddress": request.uAddress,
+        "active": "shortlisted",
+    }
+    return render(request, "user/messages.html", context)
+
+
+@user_required
+def messages(request):
+    context = {
+        "user": request.user_obj,
+        "uProfile": request.uProfile,
+        "uAddress": request.uAddress,
+        "active": "messages",
+    }
+    return render(request, "user/messages.html", context)
 
 
 @user_required
@@ -336,6 +389,7 @@ def user_help(request):
     context = {
         "user": request.user_obj,
         "uProfile": request.uProfile,
+        "uAddress": request.uAddress,
         "active": "help",
     }
     return render(request, "user/help.html", context)
@@ -346,6 +400,7 @@ def user_setting(request):
     context = {
         "user": request.user_obj,
         "uProfile": request.uProfile,
+        "uAddress": request.uAddress,
         "active": "setting",
     }
     return render(request, "user/setting.html", context)

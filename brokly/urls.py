@@ -26,6 +26,7 @@ urlpatterns = [
     # language change url
     path("i18n/", include("django.conf.urls.i18n")),
     path("", include("accounts.urls")),
+    path("", include("common.urls")),
     path("__reload__/", include("django_browser_reload.urls")),
     path(
         "favicon.ico",

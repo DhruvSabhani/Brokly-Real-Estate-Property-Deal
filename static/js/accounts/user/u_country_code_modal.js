@@ -3,8 +3,10 @@ const uCodeBtn = document.getElementById("uCountryCodeBtn");
 const uSelectedCode = document.getElementById("uSelectedCode");
 const uCountryId = document.getElementById("uCountryId");
 const uCountryModal = document.getElementById("uCountryModal");
+// uCountryModal.display = none;
 const uConSearchInput = document.getElementById("uSearchCountryCode");
 const uCodeNotData = document.getElementById("uNotData");
+
 
 uCodeNotData.classList.add("hidden");
 

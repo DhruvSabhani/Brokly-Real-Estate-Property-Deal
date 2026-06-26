@@ -1,6 +1,7 @@
 from django.shortcuts import redirect
 from functools import wraps
-from accounts.models import CustomUser, UserProfile, PortalProfile
+from accounts.models import *
+from common.models import *
 
 
 def user_required(view_func):
@@ -20,9 +21,11 @@ def user_required(view_func):
             return redirect("/login/")
 
         uProfile, created = UserProfile.objects.get_or_create(user=user)
+        uAddress = Addresses.objects.filter(profile=user, is_active=True).first()
 
         request.user_obj = user
         request.uProfile = uProfile
+        request.uAddress = uAddress
 
         return view_func(request, *args, **kwarge)
 

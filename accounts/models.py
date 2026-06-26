@@ -11,6 +11,8 @@ import os
 import uuid
 from datetime import timedelta
 
+# from common.models import *
+
 # Create your models here.
 
 
@@ -38,12 +40,12 @@ class CountryCode(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.country_code} ({self.country_name})"
+        return str(self.country_name)
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     country_code = models.ForeignKey(
-        "CountryCode", on_delete=models.SET_NULL, null=True, blank=True
+        CountryCode, on_delete=models.CASCADE, related_name="users"
     )
     phone = models.CharField(max_length=15, db_index=True)
     full_phone = models.CharField(
@@ -72,7 +74,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.full_phone or self.phone
+        return str(self.full_phone or self.phone)
 
 
 class OTP(models.Model):
@@ -124,7 +126,7 @@ class State(models.Model):
         ordering = ["name"]
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 class City(models.Model):
@@ -138,7 +140,7 @@ class City(models.Model):
         ordering = ["name"]
 
     def __str__(self):
-        return f"{self.name}, {self.state.name}"
+        return str(self.name)
 
 
 class Language(models.Model):
@@ -166,7 +168,7 @@ class Theme(models.Model):
         ordering = ["name"]
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 def user_image_path(instance, filename):
@@ -176,11 +178,11 @@ def user_image_path(instance, filename):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        CustomUser, on_delete=models.CASCADE, related_name="user_profile"
+    )
     img = models.ImageField(upload_to=user_image_path, blank=True, null=True)
     name = models.CharField(max_length=55, blank=True)
-    state = models.ForeignKey(State, on_delete=models.SET_NULL, null=True, blank=True)
-    city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True, blank=True)
     language = models.ForeignKey(
         Language, on_delete=models.SET_NULL, null=True, blank=True
     )
@@ -190,7 +192,7 @@ class UserProfile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"UserProfile ({self.user.phone})"
+        return str(self.user.phone)
 
     def save(self, *args, **kwargs):
         if self.pk:
@@ -211,11 +213,11 @@ def portal_image_path(instance, filename):
 
 
 class PortalProfile(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        CustomUser, on_delete=models.CASCADE, related_name="portal_profile"
+    )
     img = models.ImageField(upload_to=portal_image_path, blank=True, null=True)
     name = models.CharField(max_length=55, blank=True)
-    state = models.ForeignKey(State, on_delete=models.SET_NULL, null=True, blank=True)
-    city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True, blank=True)
     language = models.ForeignKey(
         Language, on_delete=models.SET_NULL, null=True, blank=True
     )
@@ -225,7 +227,7 @@ class PortalProfile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"PortalProfile ({self.user.phone})"
+        return str(self.user.phone)
 
     def save(self, *args, **kwargs):
         if self.pk:

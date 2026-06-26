@@ -17,12 +17,23 @@
     {% tailwind_css %}
     <style>
       * {
+        transition: all 0.1s ease;
         scrollbar-width: thin;
         scrollbar-color: rgb(0 0 0 / 0.2) transparent;
       }
       
+      .dark *,
       .dark {
         scrollbar-color: rgb(255 255 255 / 0.2) transparent;
+      }
+      
+      :disabled {
+        cursor: not-allowed;
+      }
+      
+      button,
+      a {
+        cursor: pointer;
       }
       
       @keyframes fadeInUp {
@@ -52,13 +63,28 @@
   </head>
   <body class="bg-white text-black dark:bg-black dark:text-white">
     {% include 'partials/portal/navbar.html' %}
-    <div class="ml-[60px]">
-      <main class="animate-fadeInUp min-h-[calc(100vh-33px)]">
+    <div class="lg:ml-[60px]">
+      <main id="page-content" class="animate-fadeInUp min-h-[calc(100vh-33px)]">
+        {% include 'partials/portal/header.html' %}
         {% block pcontent %}
 
         {% endblock %}
       </main>
       {% include 'partials/portal/footer.html' %}
+      <script>
+        const main = document.getElementById('page-content')
+        const pNavBtn = document.getElementById('p-menu-btn')
+        const pNav = document.getElementById('p-navbar')
+        
+        pNavBtn.addEventListener('click', (e) => {
+          e.stopPropagation()
+          pNav.classList.toggle('-translate-x-full')
+        })
+        
+        main.addEventListener('click', () => {
+          pNav.classList.add('-translate-x-full')
+        })
+      </script>
     </div>
   </body>
 </html>

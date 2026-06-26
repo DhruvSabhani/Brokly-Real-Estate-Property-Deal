@@ -1,3 +1,19 @@
+tailwind start command :
+----------------------------------------
+cd ../
+venv\Scripts\activate
+cd brokly
+py manage.py tailwind start
+
+runserver start command :
+----------------------------------------
+cd ../
+venv\Scripts\activate
+cd brokly
+py manage.py runserver
+
+
+
 Brokly-Real-Estate-Property-Deal
 --->a create Platform to Users select or search location related property(PG, Plot, Commercial) show.
 
@@ -15,7 +31,7 @@ brokly/
 │   ├── utils.py                    # role based data access
 │   └── signals.py                  # Auto create user and portal profile()
 │
-├── properties/(app)                # Property Config
+├── property/(app)                  # Property Config
 │   ├── models.py                   # PropertyDetails, PropertyImage
 │   ├── views.py                    # Add/List/Filter property
 │   ├── urls.py 
@@ -91,6 +107,9 @@ create Virual Environment
 create project
 > django-admin startproject brokly
 > cd brokly
+
+create app
+> django-admin startapp app-name
 
 Run project
 > py manage.py runserver

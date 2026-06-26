@@ -1,12 +1,9 @@
-from django.views.i18n import set_language
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from accounts import views
 
 urlpatterns = [
-    # Language
-    # path("i18n/setlang/", set_language, name="set_language"),
     path(
         "change-language/",
         views.change_panel_language,
@@ -18,6 +15,10 @@ urlpatterns = [
     path("resend-otp/", views.resend_otp, name="resend_otp"),
     path("verify-otp/", views.verify_otp, name="verify_otp"),
     path("user-profile/", views.user_profile, name="user_profile"),
+    path("search-property/", views.search_property, name="search_property"),
+    path("near-me/", views.near_me, name="near_me"),
+    path("shortlisted/", views.shortlisted, name="shortlisted"),
+    path("messages/", views.messages, name="messages"),
     path("help/", views.user_help, name="user_help"),
     path("setting/", views.user_setting, name="user_setting"),
     path("user-logout/", views.user_logout, name="user_logout"),

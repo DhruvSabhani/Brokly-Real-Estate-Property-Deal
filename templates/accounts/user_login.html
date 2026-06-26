@@ -1,4 +1,5 @@
-{% load static tailwind_tags %} {% load i18n %}
+{% load static tailwind_tags %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en" class="">
   <head>
@@ -18,7 +19,7 @@
     </style>
   </head>
 
-  <body class="u-login-body min-w-full h-screen bg-[#00000005] lg:dark:bg-black dark:bg-black text-black dark:text-white transition-colors duration-1000 ease-in-out animate-fadeInUp lg:overflow-x-hidden">
+  <body class="u-login-body min-w-full h-screen bg-white dark:bg-black text-black dark:text-white transition-colors duration-1000 ease-in-out animate-fadeInUp lg:overflow-x-hidden">
     {% comment %}header{% endcomment %}
     <header class="u-header sticky top-0 left-0 w-full z-50 px-5 flex justify-between items-center lg:px-10 bg-white/30 dark:bg-black/30 lg:bg-white/10 lg:dark:bg-black/10">
       <div class="u-header-left-side flex justify-center items-center">
@@ -87,14 +88,15 @@
                   {{ l.name|capfirst }}
                 {% endif %}
               {% endfor %}
-              {% endcomment %} {% if request.LANGUAGE_CODE == 'gu' %}
+              {% endcomment %}
+              {% if request.LANGUAGE_CODE == 'gu' %}
                 ગુજરાતી
               {% else %}
                 English
               {% endif %}
             </span>
-            <svg xmlns="{% static 'icons/chevron-down.svg' %}" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down">
-              <path d="m6 9 6 6 6-6" />
+            <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}" fill="none" viewBox="0 0 24 24" width="20" height="20">
+              <path fill="currentColor" d="m11.6 14.5999 -3.95 -3.925c-0.0333 -0.03335 -0.0625 -0.073 -0.0875 -0.119 -0.025 -0.04615 -0.0375 -0.0955 -0.0375 -0.148 0 -0.10535 0.03445 -0.1955 0.10325 -0.2705 0.0687 -0.075 0.15925 -0.1125 0.27175 -0.1125h8.2c0.1125 0 0.2032 0.03865 0.272 0.116 0.0687 0.07715 0.103 0.16725 0.103 0.27025 0 0.02585 -0.04165 0.11375 -0.125 0.26375l-3.95 3.925c-0.05 0.05 -0.1088 0.09165 -0.1765 0.125 -0.06765 0.03335 -0.14215 0.05 -0.2235 0.05 -0.08115 0 -0.15565 -0.01665 -0.2235 -0.05 -0.06765 -0.03335 -0.1265 -0.075 -0.1765 -0.125Z" stroke-width="0.5"></path>
             </svg>
           </button>
         </div>
@@ -104,9 +106,15 @@
       window.addEventListener('scroll', () => {
         const header = document.querySelector('header')
         if (window.scrollY > 50) {
-          header.classList.add('backdrop-blur-sm')
+          header.classList.replace('bg-white/30', 'bg-white')
+          header.classList.replace('dark:bg-black/30', 'dark:bg-black')
+          header.classList.replace('lg:bg-white/10', 'lg:bg-white')
+          header.classList.replace('lg:dark:bg-black/10', 'lg:dark:bg-black')
         } else {
-          header.classList.remove('backdrop-blur-sm')
+          header.classList.replace('bg-white', 'bg-white/30')
+          header.classList.replace('dark:bg-black', 'dark:bg-black/30')
+          header.classList.replace('lg:bg-white', 'lg:bg-white/10')
+          header.classList.replace('lg:dark:bg-black', 'lg:dark:bg-black/10')
         }
       })
     </script>
@@ -115,27 +123,22 @@
     <main class="w-full min-h-fit relative bottom-[80px] grid lg:grid-cols-2 overflow-hidden">
       {% comment %}left side{% endcomment %}
       <section class="relative hidden lg:flex min-h-screen">
-        <img src="{% static 'images/u_light_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 lg:w-full lg:h-[70%] object-cover object-center transition-opacity duration-700 ease-in-out dark:opacity-0 opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
-        <img src="{% static 'images/u_dark_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 lg:w-full lg:h-[70%] object-cover object-center transition-opacity duration-700 ease-in-out opacity-0 dark:opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
+        <img src="{% static 'images/u_light_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 lg:w-full lg:h-[70%] object-cover object-center transition-opacity duration-700 ease-in-out dark:opacity-0 opacity-100 [mask-image:linear-gradient(to_bottom,transparent_0%,black_20%,transparent_100%)]" />
+        <img src="{% static 'images/u_dark_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 lg:w-full lg:h-[70%] object-cover object-center transition-opacity duration-700 ease-in-out opacity-0 dark:opacity-100 [mask-image:linear-gradient(to_bottom,transparent_0%,black_20%,transparent_100%)]" />
         <div class="absolute inset-0 bg-gradient-to-tr from-white/30 via-white/30 to-white/30 dark:from-black/30 dark:via-black/30 dark:to-black/30 pointer-events-none"></div>
-        <div class="relative z-10 hidden lg:flex flex-col justify-end px-10 pb-5">
-          <h1 class="text-3xl leading-tight font-bold text-black dark:text-white w-100">
-            {% trans 'Find Homes, Flats, PGs & Commercial Properties' %}
+        <div class="relative z-10 hidden lg:flex flex-col justify-end px-6 pb-5">
+          <h1 class="text-3xl leading-8 font-bold text-black dark:text-white w-90">
+            {% trans 'Find Homes, Flats, PGs & Commercial Property' %}
             <span class="text-orange-500">{% trans 'All in One Place.' %}</span>
           </h1>
-          <p class="text-xl py-2 text-gray-700 leading-relaxed dark:text-white/70">
+          <p class="text-[19px] text-left font-normal py-2 text-[#212121b0] leading-7 dark:text-white/70">
             {% trans 'Connect with Trusted Brokers, Property Owners & Builders.' %}
           </p>
-          <p class="text-base text-justify text-black/70 mb-4 font-medium dark:text-white/80">
-            {% trans 'Brokly is a smart real estate platform, where users can
-            search for nearby PGs, houses, flats, rooms and commercial
-            properties using live location, price and distance based filters.
-            Brokers and property owners can list their properties for sale or
-            rent, while the admin panel manages and monitors all user, broker
-            and property related activities from a single dashboard.' %}
+          <p class="text-[15px] text-left text-black/60 mb-2 font-medium dark:text-white/60">
+            {% trans 'Brokly is a smart real estate platform, where users can search for nearby PGs, houses, flats, rooms and commercial property using live location, price and distance based filters. Brokers and property owners can list their property for sale or rent, while the admin panel manages and monitors all user, broker and property related activities from a single dashboard.' %}
           </p>
           {% comment %}features{% endcomment %}
-          <div class="u-feature flex items-start gap-5 flex-row">
+          <div class="u-feature flex items-start gap-2 flex-row">
             <div class="u-smart-search flex flex-col items-start gap-1 w-full">
               <div class="u-search-icon rounded-xl p-2 m-2 flex justify-start items-start bg-[#f1f3f6] dark:bg-[#12181f]">
                 <svg xmlns="{% static 'icons/search.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search text-orange-500">
@@ -144,11 +147,11 @@
                 </svg>
               </div>
               <div class="flex-row">
-                <p class="text-sm font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
+                <p class="text-[12px] font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
                   {% trans 'Smart Search' %}
                 </p>
-                <p class="text-[13px] leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
-                  {% trans 'Find the best properties near you.' %}
+                <p class="text-[11px] leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
+                  {% trans 'Find the best property near you.' %}
                 </p>
               </div>
             </div>
@@ -167,11 +170,11 @@
                 </svg>
               </div>
               <div class="flex-row">
-                <p class="text-sm font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
+                <p class="text-[12px] font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
                   {% trans 'Smart Filters' %}
                 </p>
-                <p class="text-[13px] leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
-                  {% trans 'Filter by price, distance & more.' %}
+                <p class="text-[11px] leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
+                  {% trans 'Filter by price, distance, category and more.' %}
                 </p>
               </div>
             </div>
@@ -183,11 +186,11 @@
                 </svg>
               </div>
               <div class="flex-row">
-                <p class="text-sm font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
+                <p class="text-[12px] font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
                   {% trans 'Live Location' %}
                 </p>
-                <p class="text-[13px] leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
-                  {% trans 'Search properties by location and map.' %}
+                <p class="text-[11px] leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
+                  {% trans 'Search property by location using live map.' %}
                 </p>
               </div>
             </div>
@@ -199,28 +202,46 @@
                 </svg>
               </div>
               <div class="flex-row">
-                <p class="text-sm font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
+                <p class="text-[12px] font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
                   {% trans 'Verified Listings' %}
                 </p>
-                <p class="text-[13px] leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
-                  {% trans 'Only trusted & verified properties.' %}
+                <p class="text-[11px] leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
+                  {% trans 'Only trusted & verified property for you.' %}
+                </p>
+              </div>
+            </div>
+            <div class="u-instant-alerts flex flex-col items-start gap-1 w-full">
+              <div class="u-notification-icon rounded-xl p-2 m-2 flex justify-center items-center bg-[#f1f3f6] dark:bg-[#12181f]">
+                <svg xmlns="{% static 'icons/bell.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell text-orange-500">
+                  <path d="M10.268 21a2 2 0 0 0 3.464 0" />
+                  <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
+                </svg>
+              </div>
+              <div class="flex-row">
+                <p class="text-[12px] font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
+                  {% trans 'Instant Alerts' %}
+                </p>
+                <p class="text-[11px] leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
+                  {% trans 'Get notified for new listings that match your preferences.' %}
                 </p>
               </div>
             </div>
           </div>
-          <div class="u-needs-help mt-6 w-full rounded-xl px-4 py-4 gap-3 flex justify-center items-center bg-[#f1f3f6] dark:bg-[#12181fd0]">
+          <div class="u-needs-help relative inset-0 mt-4 w-full h-20 rounded-xl px-6 gap-5 flex justify-center items-center">
+            <img src="{% static 'images/u_light_wallpaper2.png' %}" alt="wallpaper" class="absolute rounded-xl w-full h-20 object-cover object-center transition-opacity duration-700 ease-in-out opacity-100 dark:opacity-0 [mask-image:linear-gradient(to_left,transparent_0%,black_0%,transparent_100%)]" />
+            <img src="{% static 'images/u_dark_wallpaper2.png' %}" alt="wallpaper" class="absolute rounded-xl w-full h-20 object-cover object-center transition-opacity duration-700 ease-in-out opacity-0 dark:opacity-1000 [mask-image:linear-gradient(to_left,transparent_0%,black_0%,transparent_100%)]" />
             <div class="u-help-icon flex justify-center items-center">
-              <svg xmlns="{% static 'icons/headset.svg' %}" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headset-icon lucide-headset text-orange-500">
+              <svg xmlns="{% static 'icons/headset.svg' %}" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headset-icon lucide-headset text-orange-400">
                 <path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z" />
                 <path d="M21 16v2a4 4 0 0 1-4 4h-5" />
               </svg>
             </div>
             <div class="flex flex-row justify-between items-center w-full">
               <div class="flex flex-col justify-center items-start">
-                <p class="text-sm font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
+                <p class="text-base font-semibold tracking-wide text-black dark:text-white">
                   {% trans '24/7 Customer Support' %}
                 </p>
-                <p class="text-[13px] leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
+                <p class="text-[15px] leading-snug font-medium text-black/70 dark:text-white/70 w-full">
                   {% trans 'Contact our support team anytime for assistance' %}
                 </p>
               </div>
@@ -232,26 +253,26 @@
       {% comment %}right side{% endcomment %}
       <section class="relative w-full min-h-full flex flex-col justify-center items-center lg:overflow-hidden">
         <div class="absolute inset-0 lg:hidden overflow-hidden">
-          <img src="{% static 'images/u_light_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 w-full min-h-fit object-cover object-center transition-opacity duration-700 ease-in-out dark:opacity-0 opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
-          <img src="{% static 'images/u_dark_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 w-full min-h-fit object-cover object-center transition-opacity duration-700 ease-in-out opacity-0 dark:opacity-100 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
+          <img src="{% static 'images/u_light_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 w-full h-70 object-cover object-center transition-opacity duration-700 ease-in-out dark:opacity-0 opacity-100 [mask-image:linear-gradient(to_bottom,transparent_0%,black_50%,transparent_100%)]" />
+          <img src="{% static 'images/u_dark_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 w-full h-70 object-cover object-center transition-opacity duration-700 ease-in-out opacity-0 dark:opacity-100 [mask-image:linear-gradient(to_bottom,transparent_0%,black_50%,transparent_100%)]" />
           <div class="absolute inset-0 bg-gradient-to-br from-white/30 via-white/30 to-white/30 dark:from-black/30 dark:via-black/30 dark:to-black/30 pointer-events-none"></div>
-          <div class="relative z-10 flex flex-col justify-center items-center px-6 pt-52">
-            <h1 class="text-[24px] leading-none font-extrabold text-black dark:text-white max-w-[500px] text-center">
-              {% trans 'Find Homes, Flats, PGs & Commercial Properties' %}
-              <span class="text-[24px] text-orange-500">{% trans 'All in One Place.' %}</span>
+          <div class="relative z-10 flex flex-col justify-center items-center px-6 pt-42">
+            <h1 class="text-[26px] font-semibold text-black dark:text-white max-w-[500px] text-center">
+              {% trans 'Find Homes, Flats, PGs & Commercial Property' %}
+              <span class="text-orange-500">{% trans 'All in One Place.' %}</span>
             </h1>
-            <p class="mt-1 text-gray-700 leading-7 dark:text-white/70 max-w-[500px]">
-              {% trans 'Connect with Trusted Brokers, Property Owners &
-              Builders.' %}
+            <p class="mt-1 text-[#212121b0] font-medium leading-7 dark:text-white/70 w-full text-center">
+              {% trans 'Connect with Trusted Brokers, Property Owners & Builders.' %}
             </p>
           </div>
         </div>
-        <div class="relative px-5 py-6 rounded-3xl w-full min-h-screen flex flex-col justify-start items-center">
+
+        <div class="relative py-3 rounded-3xl w-full min-h-screen flex flex-col justify-start items-center">
           {% comment %}login block{% endcomment %}
-          <div id="uLogin" class="w-full max-w-[450px] hidden flex-col justify-center items-center mt-[280px] lg:mt-[30px]">
+          <div id="uLogin" class="w-full max-w-[450px] flex flex-col justify-center items-center mt-[280px] lg:mt-[30px]">
             <img src="{% static 'images/logo.svg' %}" alt="Brokly Logo" class="w-30 hidden lg:flex" />
             <h2 class="text-center text-2xl font-bold text-gray-950 dark:text-white">{% trans 'Welcome Back 👋' %}</h2>
-            <p class="text-gray-500 dark:text-white/50">
+            <p class="text-[#212121b0] font-medium dark:text-white/50">
               {% trans 'Login to continue to your account' %}
             </p>
             {% comment %}phone input{% endcomment %}
@@ -259,11 +280,9 @@
             <div class="flex w-full h-14 lg:h-12 overflow-hidden rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border border-gray-200 dark:border-white/15 bg-white dark:bg-white/5 backdrop-blur-xl">
               <button type="button" id="uCountryCodeBtn" class="px-4 flex items-center justify-center gap-1 font-semibold bg-[#f1f3f6] dark:bg-white/5 text-black/90 dark:text-white text-lg">
                 <span id="uSelectedCode">+91</span>
-                {% comment %}
-                <svg xmlns="{% static 'icons/chevron-down.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down">
-                  <path d="m6 9 6 6 6-6" />
-                </svg>
-                {% endcomment %}
+                {% comment %} <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}" fill="none" viewBox="0 0 24 24" width="22" height="22">
+                  <path fill="currentColor" d="m11.6 14.5999 -3.95 -3.925c-0.0333 -0.03335 -0.0625 -0.073 -0.0875 -0.119 -0.025 -0.04615 -0.0375 -0.0955 -0.0375 -0.148 0 -0.10535 0.03445 -0.1955 0.10325 -0.2705 0.0687 -0.075 0.15925 -0.1125 0.27175 -0.1125h8.2c0.1125 0 0.2032 0.03865 0.272 0.116 0.0687 0.07715 0.103 0.16725 0.103 0.27025 0 0.02585 -0.04165 0.11375 -0.125 0.26375l-3.95 3.925c-0.05 0.05 -0.1088 0.09165 -0.1765 0.125 -0.06765 0.03335 -0.14215 0.05 -0.2235 0.05 -0.08115 0 -0.15565 -0.01665 -0.2235 -0.05 -0.06765 -0.03335 -0.1265 -0.075 -0.1765 -0.125Z" stroke-width="0.5"></path>
+                </svg> {% endcomment %}
                 <input type="hidden" id="uCountryId" name="uCountryId" value="1" />
               </button>
               <input type="tel" id="phone" name="phone" value="9999999999" class="w-[350px] font-normal px-4 bg-transparent text-gray-900 placeholder:text-gray-400 dark:text-white text-xl lg:text-lg outline-0" placeholder="{% trans 'Phone number' %}" />
@@ -279,7 +298,7 @@
             {% comment %}send otp btn{% endcomment %}
             <button id="sendOtpBtn" class="w-full mt-6 py-3 lg:py-2 text-lg bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-all shadow flex justify-center items-center gap-3">
               <span id="btnText">{% trans 'Send OTP' %}</span>
-              <div id="loader" class="hidden w-6 h-6 border-[4px] border-white/30 rounded-full border-t-white animate-spin"></div>
+              <div id="loader" class="hidden w-6 h-6 border-[4px] border-white/30 rounded-full border-t-white animate-[spin_0.5s_linear_infinite]"></div>
             </button>
             <div id="otp-box" class="hidden w-full flex-col mt-4">
               <label for="otp1" class="w-full text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">{% trans 'Enter OTP' %}</label>
@@ -299,7 +318,7 @@
                 </svg>
                 <button id="resendOtpBtn" class="text-orange-500 hover:text-orange-600 dark:hover:text-orange-400 font-medium transition-all duration-300" onclick="resendOTP()">{% trans 'Resend OTP in' %}</button>
                 <p id="timerText" class="text-orange-500 font-medium"></p>
-                <div id="verifyOtpLoader" class="w-5 h-5 hidden justify-center items-center border-[4px] border-black/20 border-t-black dark:border-white/20 dark:border-t-white rounded-full animate-spin"></div>
+                <div id="verifyOtpLoader" class="w-5 h-5 hidden justify-center items-center border-[4px] border-black/20 border-t-black dark:border-white/20 dark:border-t-white rounded-full animate-[spin_0.5s_linear_infinite]"></div>
               </div>
             </div>
 
@@ -307,7 +326,7 @@
               {% comment %}Explore Divider{% endcomment %}
               <div id="orDivider" class="mt-6 flex items-center w-full">
                 <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-white/10"></div>
-                <span class="px-4 text-[11px] uppercase tracking-[0.2em] font-bold text-gray-500 dark:text-white/40 whitespace-nowrap">{% trans 'Brokly Portal' %}</span>
+                <span class="px-4 text-[11px] uppercase tracking-[0.2em] font-bold text-[#212121b0] dark:text-white/40 whitespace-nowrap">{% trans 'Brokly Portal' %}</span>
                 <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-white/10"></div>
               </div>
 
@@ -328,14 +347,13 @@
               </a>
 
               {% comment %}property owner title{% endcomment %}
-              <p class="mt-1 text-center text-[13px] text-gray-500 dark:text-white/40">
-                {% trans 'List properties, connect with buyers and grow your
-                business.' %}
+              <p class="mt-1 text-center text-[13px] text-[#212121b0] font-medium dark:text-white/40">
+                {% trans 'List property, connect with buyers and grow your business.' %}
               </p>
 
               {% comment %}policy title{% endcomment %}
               <div class="mt-8 lg:mt-12">
-                <p class="gap-1 text-sm text-center flex flex-wrap justify-center items-center w-[330px] text-gray-500 dark:text-white/50 leading-tight">
+                <p class="gap-1 text-sm text-center flex flex-wrap justify-center items-center w-[330px] text-[#212121b0] font-medium dark:text-white/50 leading-tight">
                   <svg xmlns="{% static 'icons/lock-keyhole.svg' %}" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock-keyhole shrink-0">
                     <circle cx="12" cy="16" r="1" />
                     <rect x="3" y="10" width="18" height="12" rx="2" />
@@ -347,49 +365,29 @@
                   <span class="text-orange-500 hover:text-orange-600 dark:hover:text-orange-400 font-semibold transition-all duration-300 hover:underline">{% trans 'Privacy Policy.' %}</span>
                 </p>
               </div>
-
-              {% comment %}need help{% endcomment %}
-              <div class="u-needs-help w-full rounded-xl px-8 py-15 flex lg:hidden justify-center items-center bg-transparent">
-                <div class="u-help-icon flex justify-center items-center">
-                  <svg xmlns="{% static 'icons/headset.svg' %}" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headset-icon lucide-headset text-orange-500">
-                    <path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z" />
-                    <path d="M21 16v2a4 4 0 0 1-4 4h-5" />
-                  </svg>
-                </div>
-                <div class="ml-6 flex flex-row justify-between items-center w-full">
-                  <div class="flex flex-col justify-center items-start">
-                    <p class="text-[20px] font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
-                      {% trans '24/7 Customer Support' %}
-                    </p>
-                    <p class="text-[17px] leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
-                      {% trans 'Contact our support team anytime for assistance' %}
-                    </p>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
           {% comment %}profile block{% endcomment %}
-          <div id="uProfile" class="w-full max-w-[600px] flex flex-col justify-center items-center mt-[300px] lg:mt-[100px]">
+          <div id="uProfile" class="w-full max-w-[600px] hidden flex-col justify-center items-center mt-[300px] lg:mt-[100px]">
             {% comment %}profile title{% endcomment %}
-            <div class="w-full lg:max-w-[600px] flex justify-between items-center px-2 py-2">
+            <div class="w-full lg:max-w-[600px] flex justify-between items-center px-4 py-2">
               <div class="flex-col">
-                <h1 class="text-lg font-medium">{% trans 'Create Your Profile' %}</h1>
-                <h6 class="text-sm font-normal text-gray-600 dark:text-white/50">{% trans 'Let`s get started with a few details about you.' %}</h6>
+                <h1 class="text-lg font-medium tracking-wide text-[#212121] dark:text-neutral-100">{% trans 'Create Your Profile' %}</h1>
+                <h6 class="text-[13px] leading-snug font-medium text-[#212121b0] dark:text-neutral-400">{% trans 'Let`s get started with a few details about you.' %}</h6>
               </div>
               <button type="button" id="uConBtn" class="text-lg font-medium rounded-lg flex justify-center items-center px-8 py-1 border-2 border-orange-400">{% trans 'Continue' %}</button>
             </div>
-            <hr class="w-full lg:max-w-[600px] border-0 border-t-2 border-dashed border-black/5 dark:border-white/5 p-1 m-1" />
+            <hr class="w-full lg:max-w-[600px] border-t-2 border-dashed border-black/5 dark:border-white/5 p-1 m-1" />
             {% comment %}user avatar{% endcomment %}
             <div id="uImg" class="relative">
-              <div class="relative w-24 h-24 border rounded-full object-cover border-black/15 dark:border-white/15 shadow">
-                <img src="{% static 'images/avatar.png' %}" onerror="this.onerror=null; this.src='{% static 'images/avatar.png' %}'" alt="user avatar" id="avatarPreview" class="rounded-full object-cover" />
-                <div id="uImgLoader" class="absolute inset-0 flex justify-center items-center">
-                  <div class="w-5 h-5 border-[4px] border-black/20 border-t-black dark:border-white/20 dark:border-t-white rounded-full animate-spin"></div>
+              <div class="w-24 h-24 rounded-full object-cover">
+                <img src="{% static 'images/avatar.png' %}" alt="user avatar" id="avatarPreview" class="w-24 h-24 rounded-full object-cover border-2 border-black/10 dark:border-white/10" />
+                <div id="uImgLoader" class="absolute inset-0 flex justify-center items-center rounded-full">
+                  <div class="w-5 h-5 border-[4px] border-black/20 border-t-black rounded-full animate-[spin_0.5s_linear_infinite]"></div>
                 </div>
               </div>
-              <label for="avatarInput" class="absolute bottom-0 right-0 w-8 h-8 bg-orange-400 text-black flex justify-center items-center rounded-full shadow-md">
+              <label for="avatarInput" class="absolute bottom-0 right-0 w-7 h-7 bg-orange-400 text-black flex justify-center items-center rounded-full">
                 <svg xmlns="{% static 'icons/plus.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus">
                   <path d="M5 12h14" />
                   <path d="M12 5v14" />
@@ -428,8 +426,8 @@
               <div class="w-full flex flex-col justify-center items-center">
                 <label for="uStateBtn" class="w-full max-w-[450px] text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">{% trans 'State' %}</label>
                 <button id="uStateBtn" class="w-full border rounded-lg focus:ring-2 focus:ring-orange-500 border-black/15 dark:border-white/15 bg-white/5 dark:bg-black/5 backdrop-blur-xl flex justify-start items-center px-3 py-3 lg:px-2 lg:py-2 gap-2">
-                  <svg xmlns="{% static 'icons/chevron-down.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down">
-                    <path d="m6 9 6 6 6-6" />
+                  <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}" fill="none" viewBox="0 0 24 24" width="22" height="22">
+                    <path fill="currentColor" d="m11.6 14.5999 -3.95 -3.925c-0.0333 -0.03335 -0.0625 -0.073 -0.0875 -0.119 -0.025 -0.04615 -0.0375 -0.0955 -0.0375 -0.148 0 -0.10535 0.03445 -0.1955 0.10325 -0.2705 0.0687 -0.075 0.15925 -0.1125 0.27175 -0.1125h8.2c0.1125 0 0.2032 0.03865 0.272 0.116 0.0687 0.07715 0.103 0.16725 0.103 0.27025 0 0.02585 -0.04165 0.11375 -0.125 0.26375l-3.95 3.925c-0.05 0.05 -0.1088 0.09165 -0.1765 0.125 -0.06765 0.03335 -0.14215 0.05 -0.2235 0.05 -0.08115 0 -0.15565 -0.01665 -0.2235 -0.05 -0.06765 -0.03335 -0.1265 -0.075 -0.1765 -0.125Z" stroke-width="0.5"></path>
                   </svg>
                   <span id="uSelectedState"></span>
                   <input type="hidden" id="uStateId" name="uStateId" />
@@ -439,8 +437,8 @@
               <div class="w-full flex flex-col justify-center items-center">
                 <label for="uCityBtn" id="uCityLabel" class="w-full max-w-[450px] text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">{% trans 'City' %}</label>
                 <button id="uCityBtn" class="w-full border rounded-lg focus:ring-2 focus:ring-orange-500 border-black/15 dark:border-white/15 bg-white/5 dark:bg-black/5 backdrop-blur-xl flex justify-start items-center px-3 py-3 lg:px-2 lg:py-2 gap-2">
-                  <svg xmlns="{% static 'icons/chevron-down.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down">
-                    <path d="m6 9 6 6 6-6" />
+                  <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}" fill="none" viewBox="0 0 24 24" width="20" height="20">
+                    <path fill="currentColor" d="m11.6 14.5999 -3.95 -3.925c-0.0333 -0.03335 -0.0625 -0.073 -0.0875 -0.119 -0.025 -0.04615 -0.0375 -0.0955 -0.0375 -0.148 0 -0.10535 0.03445 -0.1955 0.10325 -0.2705 0.0687 -0.075 0.15925 -0.1125 0.27175 -0.1125h8.2c0.1125 0 0.2032 0.03865 0.272 0.116 0.0687 0.07715 0.103 0.16725 0.103 0.27025 0 0.02585 -0.04165 0.11375 -0.125 0.26375l-3.95 3.925c-0.05 0.05 -0.1088 0.09165 -0.1765 0.125 -0.06765 0.03335 -0.14215 0.05 -0.2235 0.05 -0.08115 0 -0.15565 -0.01665 -0.2235 -0.05 -0.06765 -0.03335 -0.1265 -0.075 -0.1765 -0.125Z" stroke-width="0.5"></path>
                   </svg>
                   <span id="uSelectedCity" data-select-city="{% trans 'Select City' %}"></span>
                   <input type="hidden" id="uCityId" name="uCityId" />
@@ -450,99 +448,133 @@
             {% comment %}user update profile btn{% endcomment %}
             <button id="uUpdateBtn" class="w-full max-w-[450px] mt-6 py-3 lg:py-2 text-lg bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-all shadow flex justify-center items-center gap-3">
               <span id="uUpbtnText">{% trans 'Update Profile' %}</span>
-              <div id="uLoaderUpdate" class="w-6 h-6 border-[4px] border-white/30 rounded-full border-t-white animate-spin"></div>
+              <div id="uLoaderUpdate" class="w-6 h-6 border-[4px] border-white/30 rounded-full border-t-white animate-[animation: spin 3s linear infinite]"></div>
             </button>
-            <p class="text-xs px-1 py-1 text-gray-400 font-medium">
+            <p class="px-1 py-1 text-[13px] leading-snug font-medium text-[#212121b0] dark:text-neutral-400">
               {% trans 'You can update these details anytime later.' %}
             </p>
           </div>
 
           {% comment %}mobile view features{% endcomment %}
-          <div class="lg:hidden u-m-features w-full flex flex-col justify-center items-center gap-2 mt-10">
-            <div class="u-brokly-info flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
-              <div class="u-brokly-logo flex justify-start items-center">
-                <img src="{% static 'images/logo.svg' %}" alt="Brokly Logo" class="w-28" />
+          <div class="relative lg:hidden u-m-features w-full">
+            <div class="absolute inset-0">
+              <img src="{% static 'images/u_light_wallpaper2.png' %}" alt="wallpaper" class="absolute w-full h-100 object-cover object-center transition-opacity duration-700 ease-in-out opacity-100 dark:opacity-0 [mask-image:linear-gradient(to_bottom,transparent_0%,black_20%,transparent_100%)]" />
+              <img src="{% static 'images/u_dark_wallpaper2.png' %}" alt="wallpaper" class="absolute w-full h-100 object-cover object-center transition-opacity duration-700 ease-in-out opacity-0 dark:opacity-100 [mask-image:linear-gradient(to_bottom,transparent_0%,black_50%,transparent_100%)]" />
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-br dark:from-black/30 dark:via-black/30 dark:to-black/30 pointer-events-none"></div>
+            <div class="relative z-10 flex flex-col justify-center items-center py-10 gap-2">
+              <h1 class="text-lg font-semibold text-orange-500 uppercase">{% trans 'features' %}</h1>
+              <h1 class="text-3xl font-semibold text-[#212121] dark:text-white max-w-[400px] text-center">
+                {% trans 'Everything you need to find the' %}
+                <span class="text-orange-500">{% trans 'perfect property' %}</span>
+              </h1>
+              <p class="text-base font-medium text-[#212121b0] dark:text-white/80 max-w-[400px] text-center">
+                {% trans 'Powerful tools and smart features to make your property search simple, fast and reliable.' %}
+              </p>
+            </div>
+            <div class="relative z-10 px-5 gap-2 flex flex-col justify-center items-center">
+              <div class="u-smart-search flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
+                <div class="u-search-icon rounded-xl p-4 m-4 flex justify-start items-center bg-orange-50 dark:bg-[#12181f]">
+                  <svg xmlns="{% static 'icons/search.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search text-orange-500">
+                    <path d="m21 21-4.34-4.34" />
+                    <circle cx="11" cy="11" r="8" />
+                  </svg>
+                </div>
+                <div class="flex-row">
+                  <p class="text-lg font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
+                    {% trans 'Smart Search' %}
+                  </p>
+                  <p class="text-base leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
+                    {% trans 'Find the best property near you.' %}
+                  </p>
+                </div>
               </div>
-              <div class="flex justify-center items-center w-full p-2 text-justify">
-                <p class="text-sm font-tracking-wide text-gray-900 dark:text-neutral-100">
-                  {% trans 'Brokly is a smart real estate platform, where users
-                  can search for nearby PGs, houses, flats, rooms and commercial
-                  properties using live location, price and distance based
-                  filters. Brokers and property owners can list their properties
-                  or sale or rent, while the admin panel manages and monitors
-                  all user, broker and property related activities from a single
-                  dashboard.' %}
-                </p>
+              <div class="u-smart-filter flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
+                <div class="u-filter-icon rounded-xl p-4 m-4 flex justify-center items-center bg-orange-50 dark:bg-[#12181f]">
+                  <svg xmlns="{% static 'icons/sliders-horizontal.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sliders-horizontal-icon lucide-sliders-horizontal text-orange-500">
+                    <path d="M10 5H3" />
+                    <path d="M12 19H3" />
+                    <path d="M14 3v4" />
+                    <path d="M16 17v4" />
+                    <path d="M21 12h-9" />
+                    <path d="M21 19h-5" />
+                    <path d="M21 5h-7" />
+                    <path d="M8 10v4" />
+                    <path d="M8 12H3" />
+                  </svg>
+                </div>
+                <div class="flex-row">
+                  <p class="text-lg font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
+                    {% trans 'Smart Filters' %}
+                  </p>
+                  <p class="text-base leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
+                    {% trans 'Filter by price, distance, category and more.' %}
+                  </p>
+                </div>
+              </div>
+              <div class="u-live-location flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
+                <div class="u-location-icon rounded-xl p-4 m-4 flex justify-center items-center bg-orange-50 dark:bg-[#12181f]">
+                  <svg xmlns="{% static 'icons/map-pin.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin text-orange-500">
+                    <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                </div>
+                <div class="flex-row">
+                  <p class="text-lg font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
+                    {% trans 'Live Location' %}
+                  </p>
+                  <p class="text-base leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
+                    {% trans 'Search property by location using live map.' %}
+                  </p>
+                </div>
+              </div>
+              <div class="u-verified-listing flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
+                <div class="u-verified-icon rounded-xl p-4 m-4 flex justify-center items-center bg-orange-50 dark:bg-[#12181f]">
+                  <svg xmlns="{% static 'icons/shield-check.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check-icon lucide-shield-check text-orange-500">
+                    <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+                    <path d="m9 12 2 2 4-4" />
+                  </svg>
+                </div>
+                <div class="flex-row">
+                  <p class="text-lg font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
+                    {% trans 'Verified Listings' %}
+                  </p>
+                  <p class="text-base leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
+                    {% trans 'Only trusted & verified property for you.' %}
+                  </p>
+                </div>
+              </div>
+              <div class="u-instant-alerts flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
+                <div class="u-notification-icon rounded-xl p-4 m-4 flex justify-center items-center bg-orange-50 dark:bg-[#12181f]">
+                  <svg xmlns="{% static 'icons/bell.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell text-orange-500">
+                    <path d="M10.268 21a2 2 0 0 0 3.464 0" />
+                    <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
+                  </svg>
+                </div>
+                <div class="flex-row">
+                  <p class="text-lg font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
+                    {% trans 'Instant Alerts' %}
+                  </p>
+                  <p class="text-base leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
+                    {% trans 'Get notified for new listings that match your preferences.' %}
+                  </p>
+                </div>
               </div>
             </div>
-            <div class="u-smart-search flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
-              <div class="u-search-icon rounded-xl p-4 m-4 flex justify-start items-center bg-orange-50 dark:bg-[#12181f]">
-                <svg xmlns="{% static 'icons/search.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search text-orange-500">
-                  <path d="m21 21-4.34-4.34" />
-                  <circle cx="11" cy="11" r="8" />
+            {% comment %}need help{% endcomment %}
+            <div class="u-needs-help rounded-xl lg:hidden py-10 bg-transparent">
+              <div class="u-help-icon flex justify-center items-center">
+                <svg xmlns="{% static 'icons/headset.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headset-icon lucide-headset text-orange-300">
+                  <path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z" />
+                  <path d="M21 16v2a4 4 0 0 1-4 4h-5" />
                 </svg>
               </div>
-              <div class="flex-row">
-                <p class="text-lg font-semibold tracking-wide text-gray-900 dark:text-neutral-100">
-                  {% trans 'Smart Search' %}
+              <div class="w-full text-center mt-3">
+                <p class="text-lg font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
+                  {% trans '24/7 Customer Support' %}
                 </p>
-                <p class="text-base leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">
-                  {% trans 'Find the best properties near you.' %}
-                </p>
-              </div>
-            </div>
-            <div class="u-smart-filter flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
-              <div class="u-filter-icon rounded-xl p-4 m-4 flex justify-center items-center bg-orange-50 dark:bg-[#12181f]">
-                <svg xmlns="{% static 'icons/sliders-horizontal.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sliders-horizontal-icon lucide-sliders-horizontal text-orange-500">
-                  <path d="M10 5H3" />
-                  <path d="M12 19H3" />
-                  <path d="M14 3v4" />
-                  <path d="M16 17v4" />
-                  <path d="M21 12h-9" />
-                  <path d="M21 19h-5" />
-                  <path d="M21 5h-7" />
-                  <path d="M8 10v4" />
-                  <path d="M8 12H3" />
-                </svg>
-              </div>
-              <div class="flex-row">
-                <p class="text-lg font-semibold tracking-wide text-gray-900 dark:text-neutral-100">
-                  {% trans 'Smart Filters' %}
-                </p>
-                <p class="text-base leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">
-                  {% trans 'Filter by price, distance & more.' %}
-                </p>
-              </div>
-            </div>
-            <div class="u-live-location flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
-              <div class="u-location-icon rounded-xl p-4 m-4 flex justify-center items-center bg-orange-50 dark:bg-[#12181f]">
-                <svg xmlns="{% static 'icons/map-pin.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin text-orange-500">
-                  <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-              </div>
-              <div class="flex-row">
-                <p class="text-lg font-semibold tracking-wide text-gray-900 dark:text-neutral-100">
-                  {% trans 'Live Location' %}
-                </p>
-                <p class="text-base leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">
-                  {% trans 'Search properties by location and map.' %}
-                </p>
-              </div>
-            </div>
-            <div class="u-verified-listing flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
-              <div class="u-verified-icon rounded-xl p-4 m-4 flex justify-center items-center bg-orange-50 dark:bg-[#12181f]">
-                <svg xmlns="{% static 'icons/shield-check.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check-icon lucide-shield-check text-orange-500">
-                  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
-                  <path d="m9 12 2 2 4-4" />
-                </svg>
-              </div>
-              <div class="flex-row">
-                <p class="text-lg font-semibold tracking-wide text-gray-900 dark:text-neutral-100">
-                  {% trans 'Verified Listings' %}
-                </p>
-                <p class="text-base leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">
-                  {% trans 'Only trusted & verified properties.' %}
+                <p class="text-base leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
+                  {% trans 'Contact our support team anytime for assistance' %}
                 </p>
               </div>
             </div>
@@ -605,7 +637,16 @@
       uLoaderUpdate.classList.add('hidden')
       
       // show loader
+      function showLoader(loader) {
+        loader.classList.remove('hidden')
+        loader.classList.add('flex')
+      }
       // hide loader
+      function hideLoader(loader) {
+        loader.classList.remove('flex')
+        loader.classList.add('hidden')
+      }
+      hideLoader(uImgLoader)
       
       otpInputs.forEach((input) => {
         input.disabled = true
@@ -862,9 +903,17 @@
               uSelectedCity.innerText = data.profile.city_name || '{% trans "Select City" %}'
               uCityId.value = data.profile.city_id || ''
               if (data.profile.img) {
-                setTimeout
+                showLoader(uImgLoader)
+                uAvatarPreview.onload = function () {
+                  hideLoader(uImgLoader)
+                }
+                uAvatarPreview.onerror = function () {
+                  hideLoader(uImgLoader)
+                  uAvatarPreview.src = '/static/images/avatar.png'
+                }
                 uAvatarPreview.src = data.profile.img
               } else {
+                hideLoader(uImgLoader)
                 uAvatarPreview.src = '/static/images/avatar.png'
               }
             }
@@ -971,7 +1020,7 @@
 
     {% comment %}Language Selected Modal{% endcomment %}
     <div id="uLanguageModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden justify-center items-start pt-[100px] z-100 text-xl px-2">
-      <div class="bg-white/90 dark:bg-[#111827]/90 dark:text-white w-full max-w-md p-2 rounded-2xl border border-gray-200 dark:border-white/10 backdrop-blur-2xl shadow-xl animate-scaleIn">
+      <div id="uLanguage" class="bg-white/90 dark:bg-[#111827]/90 dark:text-white w-full max-w-md p-2 rounded-2xl border border-gray-200 dark:border-white/10 backdrop-blur-2xl shadow-xl animate-scaleIn">
         {% comment %}header{% endcomment %}
         <div class="flex justify-between items-center px-2">
           <span class="text-[18px] font-medium">{% trans 'Select Your Language' %}</span>
@@ -993,7 +1042,7 @@
           {% endfor %}
         </div>
       </div>
-      <div id="uLangSelectLoader" class="w-10 h-10 flex justify-center items-center border-[8px] border-white/30 rounded-full border-t-white animate-spin [animation-duration:.5s]"></div>
+      <div id="uLangSelectLoader" class="w-10 h-10 flex justify-center items-center border-[8px] border-white/30 rounded-full border-t-white animate-[spin_0.5s_linear_infinite] [animation-duration:.5s]"></div>
     </div>
     {% comment %}Language Selected Modal JS{% endcomment %}
     <script src="{% static 'js/accounts/user/u_language_select_modal.js' %}"></script>

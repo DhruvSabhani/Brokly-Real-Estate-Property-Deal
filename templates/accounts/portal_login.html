@@ -104,9 +104,15 @@
       window.addEventListener('scroll', () => {
         const header = document.querySelector('header')
         if (window.scrollY > 50) {
-          header.classList.add('backdrop-blur-sm')
+          header.classList.replace('bg-white/30', 'bg-white')
+          header.classList.replace('dark:bg-black/30', 'dark:bg-black')
+          header.classList.replace('lg:bg-white/10', 'lg:bg-white')
+          header.classList.replace('lg:dark:bg-black/10', 'lg:dark:bg-black')
         } else {
-          header.classList.remove('backdrop-blur-sm')
+          header.classList.replace('bg-white', 'bg-white/30')
+          header.classList.replace('dark:bg-black', 'dark:bg-black/30')
+          header.classList.replace('lg:bg-white', 'lg:bg-white/10')
+          header.classList.replace('lg:dark:bg-black', 'lg:dark:bg-black/10')
         }
       })
     </script>
@@ -144,8 +150,8 @@
                 </p>
               </div>
             </div>
-            <div class="p-manage-properties flex justify-between items-center w-full gap-5">
-              <div class="p-properties-icon rounded-xl px-3 py-3 flex justify-center items-center bg-[#f1f3f6] dark:bg-[#12181f]">
+            <div class="p-manage-property flex justify-between items-center w-full gap-5">
+              <div class="p-property-icon rounded-xl px-3 py-3 flex justify-center items-center bg-[#f1f3f6] dark:bg-[#12181f]">
                 <svg xmlns="{% static 'icons/house.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house text-orange-500">
                   <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
                   <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
@@ -153,10 +159,10 @@
               </div>
               <div class="flex-1">
                 <p class="text-base font-semibold tracking-wide text-[#212121] dark:text-neutral-100">
-                  {% trans 'Manage Properties' %}
+                  {% trans 'Manage Property' %}
                 </p>
                 <p class="text-[15px] leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
-                  {% trans 'Add, edit and manage all your properties easily.' %}
+                  {% trans 'Add, edit and manage all your property easily.' %}
                 </p>
               </div>
             </div>
@@ -257,7 +263,7 @@
             {% comment %}send otp btn{% endcomment %}
             <button id="sendOtpBtn" class="w-full mt-6 py-3 lg:py-2 text-lg bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-all shadow flex justify-center items-center gap-3">
               <span id="btnText">{% trans 'Send OTP' %}</span>
-              <div id="loader" class="hidden w-6 h-6 border-[4px] border-white/30 rounded-full border-t-white animate-spin"></div>
+              <div id="loader" class="hidden w-6 h-6 border-[4px] border-white/30 rounded-full border-t-white animate-[spin_0.5s_linear_infinite]"></div>
             </button>
             <div id="otp-box" class="hidden w-full flex-col mt-4">
               <label for="otp1" class="w-full text-[18px] lg:text-[15px] py-1 font-semibold text-black/90 dark:text-white/90">{% trans 'Enter OTP' %}</label>
@@ -277,7 +283,7 @@
                 </svg>
                 <button id="resendOtpBtn" class="text-orange-500 hover:text-orange-600 dark:hover:text-orange-400 font-medium transition-all duration-300" onclick="resendOTP()">{% trans 'Resend OTP in' %}</button>
                 <p id="timerText" class="text-orange-500 font-medium"></p>
-                <div id="verifyOtpLoader" class="w-5 h-5 hidden justify-center items-center border-[4px] border-black/20 border-t-black dark:border-white/20 dark:border-t-white rounded-full animate-spin"></div>
+                <div id="verifyOtpLoader" class="w-5 h-5 hidden justify-center items-center border-[4px] border-black/20 border-t-black dark:border-white/20 dark:border-t-white rounded-full animate-[spin_0.5s_linear_infinite]"></div>
               </div>
             </div>
             <div id="propertyRelated" class="w-full flex flex-col justify-center items-center">
@@ -299,7 +305,7 @@
 
               {% comment %}property owner title{% endcomment %}
               <p class="mt-1 px-18 text-center text-[13px] text-gray-500 dark:text-white/40">
-                {% trans 'Search properties, connect with trusted brokers or owners and discover your next home.' %}
+                {% trans 'Search property, connect with trusted brokers or owners and discover your next home.' %}
               </p>
 
               {% comment %}policy title{% endcomment %}
@@ -342,16 +348,21 @@
             {% comment %}profile title{% endcomment %}
             <div class="w-full lg:max-w-[600px] flex justify-between items-center px-2 py-2">
               <div class="flex-col">
-                <h1 class="text-lg font-medium">{% trans 'Create Your Portal Profile' %}</h1>
-                <h6 class="text-sm font-normal text-gray-600 dark:text-white/50">{% trans 'Let`s get started with a few details about you.' %}</h6>
+                <h1 class="text-lg font-medium tracking-wide text-[#212121] dark:text-neutral-100">{% trans 'Create Your Portal Profile' %}</h1>
+                <h6 class="text-[13px] leading-snug font-medium text-[#212121b0] dark:text-neutral-400">{% trans 'Let`s get started with a few details about you.' %}</h6>
               </div>
               <button type="button" id="pConBtn" class="text-lg font-medium rounded-lg flex justify-center items-center px-8 py-1 border-2 border-orange-400">{% trans 'Continue' %}</button>
             </div>
             <hr class="w-full lg:max-w-[600px] border-0 border-t-2 border-dashed border-black/5 dark:border-white/5 p-1 m-1" />
             {% comment %}portal avatar{% endcomment %}
             <div id="pImg" class="relative">
-              <img src="{% static 'images/avatar.png' %}" onerror="this.onerror=null; this.src='{% static 'images/avatar.png' %}'" alt="portal user avatar" id="avatarPreview" class="w-24 h-24 border rounded-full object-cover border-black/15 dark:border-white/15 shadow-sm" />
-              <label for="avatarInput" class="absolute bottom-0 right-0 w-8 h-8 bg-orange-400 text-black flex justify-center items-center rounded-full shadow-md">
+              <div class="w-24 h-24 rounded-full object-cover">
+                <img src="{% static 'images/avatar.png' %}" alt="user avatar" id="avatarPreview" class="w-24 h-24 rounded-full object-cover border-2 border-black/10 dark:border-white/10" />
+                <div id="pImgLoader" class="absolute inset-0 flex justify-center items-center">
+                  <div class="w-5 h-5 border-[4px] border-black/20 border-t-black dark:border-white/20 dark:border-t-white rounded-full animate-[spin_0.5s_linear_infinite]"></div>
+                </div>
+              </div>
+              <label for="avatarInput" class="absolute bottom-0 right-0 w-8 h-8 bg-orange-400 text-black flex justify-center items-center rounded-full">
                 <svg xmlns="{% static 'icons/plus.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus">
                   <path d="M5 12h14" />
                   <path d="M12 5v14" />
@@ -412,7 +423,7 @@
             {% comment %}portal user update profile btn{% endcomment %}
             <button id="pUpdateBtn" class="w-full max-w-[450px] mt-6 py-3 lg:py-2 text-lg bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-all shadow flex justify-center items-center gap-3">
               <span id="pUpbtnText">{% trans 'Update Profile' %}</span>
-              <div id="pLoaderUpdate" class="w-6 h-6 border-[4px] border-white/30 rounded-full border-t-white animate-spin"></div>
+              <div id="pLoaderUpdate" class="w-6 h-6 border-[4px] border-white/30 rounded-full border-t-white animate-[spin_0.5s_linear_infinite]"></div>
             </button>
             <p class="text-xs px-1 py-1 text-gray-400 font-medium">
               {% trans 'You can update these details anytime later.' %}
@@ -447,8 +458,8 @@
                 </p>
               </div>
             </div>
-            <div class="p-manage-properties flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
-              <div class="p-properties-icon rounded-xl p-4 m-4 flex justify-start items-center bg-orange-50 dark:bg-[#12181f]">
+            <div class="p-manage-property flex flex-row justify-start items-center gap-1 w-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl rounded-xl">
+              <div class="p-property-icon rounded-xl p-4 m-4 flex justify-start items-center bg-orange-50 dark:bg-[#12181f]">
                 <svg xmlns="{% static 'icons/house.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house text-orange-500">
                   <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
                   <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
@@ -456,10 +467,10 @@
               </div>
               <div class="flex-row">
                 <p class="text-lg font-semibold tracking-wide text-gray-900 dark:text-neutral-100">
-                  {% trans 'Manage Properties' %}
+                  {% trans 'Manage Property' %}
                 </p>
                 <p class="text-base leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">
-                  {% trans 'Add, edit and manage all your properties easily.' %}
+                  {% trans 'Add, edit and manage all your property easily.' %}
                 </p>
               </div>
             </div>
@@ -537,6 +548,8 @@
       const pProfile = document.getElementById('pProfile')
       const pAvatarPreview = document.getElementById('avatarPreview')
       const pimg = document.getElementById('avatarInput')
+      // variable img loader
+      const pImgLoader = document.getElementById('pImgLoader')
       const pname = document.getElementById('pname')
       // variable p skip btn
       const pConBtn = document.getElementById('pConBtn')
@@ -556,6 +569,18 @@
       pUpbtnText.innerText = '{% trans "Update profile" %}'
       const pLoaderUpdate = document.getElementById('pLoaderUpdate')
       pLoaderUpdate.classList.add('hidden')
+      
+      // show loader
+      function showLoader(loader) {
+        loader.classList.remove('hidden')
+        loader.classList.add('flex')
+      }
+      // hide loader
+      function hideLoader(loader) {
+        loader.classList.remove('flex')
+        loader.classList.add('hidden')
+      }
+      hideLoader(pImgLoader)
       
       otpInputs.forEach((input) => {
         input.disabled = true
@@ -812,8 +837,17 @@
               pSelectedCity.innerText = data.profile.city_name || '{% trans "Select City" %}'
               pCityId.value = data.profile.city_id || ''
               if (data.profile.img) {
+                showLoader(pImgLoader)
+                pAvatarPreview.onload = function () {
+                  hideLoader(pImgLoader)
+                }
+                pAvatarPreview.onerror = function () {
+                  hideLoader(pImgLoader)
+                  pAvatarPreview.src = '/static/images/avatar.png'
+                }
                 pAvatarPreview.src = data.profile.img
               } else {
+                hideLoader(pImgLoader)
                 pAvatarPreview.src = '/static/images/avatar.png'
               }
             }
@@ -942,7 +976,7 @@
           {% endfor %}
         </div>
       </div>
-      <div id="pLangSelectLoader" class="w-10 h-10 flex justify-center items-center border-[8px] border-white/30 rounded-full border-t-white animate-spin [animation-duration:.5s]"></div>
+      <div id="pLangSelectLoader" class="w-10 h-10 flex justify-center items-center border-[8px] border-white/30 rounded-full border-t-white animate-[spin_0.5s_linear_infinite]"></div>
     </div>
     {% comment %}Language Selected Modal JS{% endcomment %}
     <script src="{% static 'js/accounts/portal/p_language_select_modal.js' %}"></script>

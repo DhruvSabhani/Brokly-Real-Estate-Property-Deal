@@ -1,0 +1,59 @@
+{% load static %}
+{% load i18n %}
+<div class="px-2 py-2">
+  <div class="head-row flex justify-between items-center gap-3">
+    <div class="flex justify-center items-center">
+      {% comment %}menu bar button{% endcomment %}
+      <button id="u-menu-btn" title="{% trans 'Menu' %}" class="rounded-lg flex justify-center items-center w-11 h-11 border border-black/7 dark:border-white/15 bg-white dark:bg-transparent text-black dark:text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-text-align-start-icon lucide-text-align-start w-7 h-7">
+          <path d="M21 5H3" />
+          <path d="M15 12H3" />
+          <path d="M17 19H3" />
+        </svg>
+      </button>
+      <img src="{% static 'images/web-icon.png' %}" alt="Brokly Logo" class="ml-4 w-[34px] h-[32px] shrink-0" />
+      <h1 class="ml-2 text-[26px] font-medium text-black dark:text-white">Brokly</h1>
+    </div>
+
+    <div class="flex justify-center items-center gap-4">
+      {% comment %}notifications{% endcomment %}
+      <a href="/u-notifications/" title="{% trans 'Notifications' %}" id="uNotificationsBtn" class="relative w-[46px] h-[46px] rounded-full flex justify-center items-center border border-black/5 dark:border-white/3 bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-transparent dark:hover:bg-[#3B3D3E]">
+        <div class="absolute top-0 right-0 w-[18px] h-[18px] bg-orange-500 rounded-full flex justify-center items-center text-[13px] font-medium text-white">2</div>
+        <svg xmlns="{% static 'icons/bell.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell w-[22px] h-[22px] text-black/60 hover:text-black/80 dark:text-white dark:hover:text-white/80">
+          <path d="M10.268 21a2 2 0 0 0 3.464 0" />
+          <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
+        </svg>
+      </a>
+      {% comment %}search box{% endcomment %}
+      <button title="{% trans 'Search' %}" id="uSearchBtn" class="relative w-[46px] h-[46px] rounded-full flex justify-center items-center border border-black/5 dark:border-white/3 bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-transparent dark:hover:bg-[#3B3D3E]">
+        <svg xmlns="{% static 'icons/search.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search w-[22px] h-[22px] text-black/60 hover:text-black/80 dark:text-white dark:hover:text-white/80">
+          <path d="m21 21-4.34-4.34" />
+          <circle cx="11" cy="11" r="8" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="filter-list px-2 gap-2 flex overflow-x-auto whitespace-nowrap scrollbar-hide">
+  <button type="button" title="{% trans 'Filter Button' %}" class="text-base rounded-lg flex justify-center items-center border hover:border-none border-black/10 dark:border-white/10 bg-[#ffffff] hover:bg-orange-400 dark:bg-white/10 font-medium text-orange-500 hover:text-white max-w-full h-[32px] gap-2 px-2">
+    <svg xmlns="{% static 'icons/sliders-horizontal.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sliders-horizontal-icon lucide-sliders-horizontal w-[22px] h-[22px]">
+      <path d="M10 5H3" />
+      <path d="M12 19H3" />
+      <path d="M14 3v4" />
+      <path d="M16 17v4" />
+      <path d="M21 12h-9" />
+      <path d="M21 19h-5" />
+      <path d="M21 5h-7" />
+      <path d="M8 10v4" />
+      <path d="M8 12H3" />
+    </svg>
+    <span class="text-left text-black/70 hover:text-white dark:text-white">{% trans 'Apply Filters' %}</span>
+  </button>
+  <button type="button" title="{% trans 'All' %}" class="text-base rounded-lg flex justify-center items-center bg-orange-400 font-medium text-white max-w-full h-[32px] gap-2 px-2">{% trans 'All' %}</button>
+  <button type="button" title="{% trans 'PG & 1RK Room' %}" class="text-base rounded-lg flex justify-center items-center border hover:border-none border-black/10 dark:border-white/10 bg-[#ffffff] hover:bg-orange-400 dark:bg-white/5 font-medium text-black/70 hover:text-white dark:text-white max-w-full h-[32px] gap-2 px-2">{% trans 'PG & 1RK Room' %}</button> 
+  <button type="button" title="{% trans 'PG & 1RK Room' %}" class="text-base rounded-lg flex justify-center items-center border hover:border-none border-black/10 dark:border-white/10 bg-[#ffffff] hover:bg-orange-400 dark:bg-white/5 font-medium text-black/70 hover:text-white dark:text-white max-w-full h-[32px] gap-2 px-2">{% trans 'PG & 1RK Room' %}</button> 
+  <button type="button" title="{% trans 'PG & 1RK Room' %}" class="text-base rounded-lg flex justify-center items-center border hover:border-none border-black/10 dark:border-white/10 bg-[#ffffff] hover:bg-orange-400 dark:bg-white/5 font-medium text-black/70 hover:text-white dark:text-white max-w-full h-[32px] gap-2 px-2">{% trans 'PG & 1RK Room' %}</button> 
+  <button type="button" title="{% trans 'PG & 1RK Room' %}" class="text-base rounded-lg flex justify-center items-center border hover:border-none border-black/10 dark:border-white/10 bg-[#ffffff] hover:bg-orange-400 dark:bg-white/5 font-medium text-black/70 hover:text-white dark:text-white max-w-full h-[32px] gap-2 px-2">{% trans 'PG & 1RK Room' %}</button> 
+  <button type="button" title="{% trans 'PG & 1RK Room' %}" class="text-base rounded-lg flex justify-center items-center border hover:border-none border-black/10 dark:border-white/10 bg-[#ffffff] hover:bg-orange-400 dark:bg-white/5 font-medium text-black/70 hover:text-white dark:text-white max-w-full h-[32px] gap-2 px-2">{% trans 'PG & 1RK Room' %}</button> 
+</div>

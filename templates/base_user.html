@@ -15,50 +15,147 @@
     <link rel="icon" href="{% static 'images/web-icon.png' %}" type="image/png" />
     {% comment %}Tailwind CSS{% endcomment %}
     {% tailwind_css %}
-    <style>
-      * {
-        scrollbar-width: thin;
-        scrollbar-color: rgb(0 0 0 / 0.2) transparent;
-      }
-      
-      .dark {
-        scrollbar-color: rgb(255 255 255 / 0.2) transparent;
-      }
-      
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          z-index: auto;
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      .animate-fadeInUp {
-        animation: fadeInUp 1s ease forwards;
-      }
-      @keyframes zoom {
-        0%,
-        100% {
-          transform: scale(1.1);
-        }
-        50% {
-          transform: scale(1.2);
-        }
-      }
-    </style>
+    {% comment %}CSS{% endcomment %}
+    <link rel="stylesheet" as="style" href="{% static 'css/dashboard/base.css' %}" />
+    <link rel="stylesheet" as="script" crossorigin href="{% static 'js/window_scroll_chenge_color.js' %}" />
     {% comment %}JS{% endcomment %}
-  </head>
-  <body class="bg-white text-black dark:bg-black dark:text-white">
-    {% include 'partials/user/navbar.html' %}
-    <div class="ml-[60px]">
-      <main class="animate-fadeInUp min-h-[calc(100vh-33px)]">
-        {% block ucontent %}
 
-        {% endblock %}
-      </main>
+    <script src="{% static 'js/window_scroll_chenge_color.js' %}"></script>
+    <script>
+      // filter list scroll icon show
+      const leftScrollIcon = document.getElementById('leftScrollIcon')
+      leftScrollIcon
+      const scrollList = document.getElementById('scrollList')
+      const rightScrollIcon = document.getElementById('rightScrollIcon')
+    </script>
+  </head>
+  <body class="bg-[#f7f9fc] text-black dark:bg-[#121212] dark:text-[#ffffff]">
+    <div class="lg:ml-[60px]">
+      {% include 'partials/user/navbar.html' %}
+      <div class="px-1">
+        {% comment %}dasktop header view{% endcomment %}
+        <div id="dasktopHeader" class="hidden lg:block fixed top-0 left-[60px] right-0 z-40 h-23.5 bg-[#f7f9fc] dark:bg-[#121212]">
+          {% include 'partials/user/header.html' %}
+        </div>
+        {% comment %}mobile header view{% endcomment %}
+        <div id="mobileHeader" class="lg:hidden fixed top-0 left-0 z-40 w-screen h-26 bg-[#f7f9fc] dark:bg-[#121212]">
+          {% include 'partials/user/mobile_header.html' %}
+        </div>
+        {% comment %}Main page content{% endcomment %}
+        <main id="page-content" class="animate-fadeInUp min-h-[calc(100vh-33px)] pt-24 lg:pt-21 bg-[#f7f9fc] dark:bg-[#121212]">
+          {% block ucontent %}
+
+          {% endblock %}
+        </main>
+      </div>
       {% include 'partials/user/footer.html' %}
+      <script>
+        const main = document.getElementById('page-content')
+        const uNavBtn = document.getElementById('u-menu-btn')
+        const uNav = document.getElementById('u-navbar')
+        
+        uNavBtn.addEventListener('click', (e) => {
+          e.stopPropagation()
+          uNav.classList.toggle('-translate-x-full')
+        })
+        
+        main.addEventListener('click', () => {
+          uNav.classList.add('-translate-x-full')
+        })
+        
+        umNavCloesBtn.addEventListener('click', () => {
+          uNav.classList.add('-translate-x-full')
+        })
+      </script>
     </div>
+    {% comment %}logout modal{% endcomment %}
+    <div id="uLogoutModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden justify-center items-center z-50 animate-fadeInUp overflow-hidden scrollbar-hide">
+      <div class="origin-top-right bg-white dark:bg-[#111827] w-100 px-2 py-2 rounded-xl">
+        {% comment %}header{% endcomment %}
+        <div class="flex justify-end items-center">
+          <button id="modelClose" class="w-[35px] h-[35px] hover:bg-orange-50 dark:hover:bg-[#374151] flex justify-center items-center rounded-full transition-all duration-300" onclick="uCloseLogoutModal()">
+            <svg xmlns="{% static 'icons/x.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x text-black/70 dark:text-[#ffffff]/70">
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </button>
+        </div>
+        {% comment %}body{% endcomment %}
+        <div class="flex flex-col justify-center items-center">
+          <div class="w-20 h-20 rounded-full bg-orange-500/15 dark:bg-orange-100/15 flex justify-center items-center">
+            <svg xmlns="{% static 'icons/log-out.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out ml-1 w-12 h-12 text-orange-500">
+              <path d="m16 17 5-5-5-5" />
+              <path d="M21 12H9" />
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            </svg>
+          </div>
+          <h2 class="text-2xl font-semibold py-1">{% trans 'Logout' %}</h2>
+          <h4 class="text-base font-medium py-1 w-[235px] text-center text-[#282F39] dark:text-[#ffffff]/55 leading-tight">{% trans 'Are you sure you want to logout from your account?' %}</h4>
+        </div>
+        <div class="flex justify-between items-center px-4 py-1 gap-4 w-full mt-2">
+          <button id="uLogoutCancel" class="flex justify-center items-center text-[17px] font-medium text-[#75797E] w-full px-2 py-2 rounded-lg border-2 border-[#E2E4E8] dark:border-orange-100/15" onclick="uCloseLogoutModal();">{% trans 'Cancel' %}</button>
+          <button id="uLogout" class="flex justify-center items-center text-[19px] font-medium text-[#FDE7E4] w-full px-2 py-2 rounded-lg bg-[#EB5039]">{% trans 'Logout' %}</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      const uLogoutBtn = document.getElementById('uLogoutBtn')
+      const uLogoutModal = document.getElementById('uLogoutModal')
+      const uLogoutCancel = document.getElementById('uLogoutCancel')
+      const uLogout = document.getElementById('uLogout')
+      
+      uLogoutBtn.addEventListener('click', function (e) {
+        e.preventDefault()
+        uLogoutModal.classList.replace('hidden', 'flex')
+      })
+      
+      function uCloseLogoutModal() {
+        uLogoutModal.classList.replace('flex', 'hidden')
+      }
+      
+      uLogout.addEventListener('click', function (e) {
+        e.preventDefault()
+        if (uLogout) {
+          window.location.href = '/user-logout/'
+        }
+      })
+      
+      uLogoutModal.addEventListener('click', (e) => {
+        if (e.target === uLogoutModal) uCloseLogoutModal()
+      })
+    </script>
   </body>
+  <script>
+    const uimg = document.getElementById('uImg')
+    const uimgloader1 = document.getElementById('uImgLoader1')
+    const uimgloader2 = document.getElementById('uImgLoader2')
+    // show loader
+    function showLoader(loader) {
+      loader.classList.remove('hidden')
+      loader.classList.add('flex')
+    }
+    // hide loader
+    function hideLoader(loader) {
+      loader.classList.remove('flex')
+      loader.classList.add('hidden')
+    }
+    showLoader(uimgloader1)
+    showLoader(uimgloader2)
+    
+    if (uimg.complete) {
+      hideLoader(uimgloader1)
+      hideLoader(uimgloader2)
+    } else {
+      uimg.onload = () => {
+        hideLoader(uimgloader1)
+        hideLoader(uimgloader2)
+      }
+    
+      uimg.onerror = () => {
+        hideLoader(uimgloader1)
+        hideLoader(uimgloader2)
+        uimg.src = "{% static 'images/avatar.png' %}"
+      }
+    }
+  </script>
 </html>
