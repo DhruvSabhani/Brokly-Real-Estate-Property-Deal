@@ -13,7 +13,6 @@ cd brokly
 py manage.py runserver
 
 
-
 Brokly-Real-Estate-Property-Deal
 --->a create Platform to Users select or search location related property(PG, Plot, Commercial) show.
 

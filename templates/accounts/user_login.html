@@ -1,5 +1,4 @@
-{% load static tailwind_tags %}
-{% load i18n %}
+{% load static tailwind_tags %} {% load i18n %}
 <!DOCTYPE html>
 <html lang="en" class="">
   <head>
@@ -10,8 +9,11 @@
     {% comment %}Web Icon Link{% endcomment %}
     <link rel="icon" href="{% static 'images/web-icon.png' %}" type="image/png" />
     {% comment %}CSS{% endcomment %}
-    <link rel="stylesheet" href="{% static 'css/accounts/login_style.css' %}" />
-    {% comment %}Tailwind CSS{% endcomment %} {% tailwind_css %}
+    <link rel="stylesheet" href="{% static 'css/accounts/login-style.css' %}" />
+    {% comment %}Tailwind CSS{% endcomment %}
+    {% tailwind_css %}
+    {% comment %}JS{% endcomment %}
+    <script src="{% static 'js/accounts/user/u-login.js' %}" defer></script>
     <style>
       ::-webkit-scrollbar {
         width: 0;
@@ -19,7 +21,7 @@
     </style>
   </head>
 
-  <body class="u-login-body min-w-full h-screen bg-white dark:bg-black text-black dark:text-white transition-colors duration-1000 ease-in-out animate-fadeInUp lg:overflow-x-hidden">
+  <body class="u-login-body min-w-full h-screen bg-white dark:bg-black text-black dark:text-white transition-colors duration-1000 ease-in-out animate-fadeInUp lg:overflow-x-hidden tracking-wide">
     {% comment %}header{% endcomment %}
     <header class="u-header sticky top-0 left-0 w-full z-50 px-5 flex justify-between items-center lg:px-10 bg-white/30 dark:bg-black/30 lg:bg-white/10 lg:dark:bg-black/10">
       <div class="u-header-left-side flex justify-center items-center">
@@ -50,27 +52,27 @@
             const html = document.documentElement
             const themeBtn = document.getElementById('u-theme-btn')
             const savedTheme = localStorage.getItem('utheme')
-            localStorage.setItem('uthemeValue', '1')
             
             if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
               html.classList.add('dark')
+              localStorage.setItem('uthemeValue', '2')
             } else {
               html.classList.remove('dark')
+              localStorage.setItem('uthemeValue', '1')
             }
             
-            themeBtn.addEventListener('click', () => {
-              html.classList.toggle('dark')
-              if (html.classList.contains('dark')) {
-                localStorage.setItem('utheme', 'dark')
-                localStorage.setItem('uthemeValue', '2')
-              } else {
-                localStorage.setItem('utheme', 'light')
-                localStorage.setItem('uthemeValue', '1')
-              }
-              themeBtn.animate([{ transform: 'scale(1)' }, { transform: 'scale(.85)' }, { transform: 'scale(1)' }], {
-                duration: 250
+            if (themeBtn) {
+              themeBtn.addEventListener('click', () => {
+                const isDark = html.classList.toggle('dark')
+                localStorage.setItem('utheme', isDark ? 'dark' : 'light')
+                localStorage.setItem('uthemeValue', isDark ? '2' : '1')
+            
+                themeBtn.animate([{ transform: 'scale(1)' }, { transform: 'scale(.85)' }, { transform: 'scale(1)' }], {
+                  duration: 200,
+                  esasing: 'ease'
+                })
               })
-            })
+            }
           </script>
         </div>
 
@@ -88,8 +90,7 @@
                   {{ l.name|capfirst }}
                 {% endif %}
               {% endfor %}
-              {% endcomment %}
-              {% if request.LANGUAGE_CODE == 'gu' %}
+              {% endcomment %} {% if request.LANGUAGE_CODE == 'gu' %}
                 ગુજરાતી
               {% else %}
                 English
@@ -127,7 +128,7 @@
         <img src="{% static 'images/u_dark_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 lg:w-full lg:h-[70%] object-cover object-center transition-opacity duration-700 ease-in-out opacity-0 dark:opacity-100 [mask-image:linear-gradient(to_bottom,transparent_0%,black_20%,transparent_100%)]" />
         <div class="absolute inset-0 bg-gradient-to-tr from-white/30 via-white/30 to-white/30 dark:from-black/30 dark:via-black/30 dark:to-black/30 pointer-events-none"></div>
         <div class="relative z-10 hidden lg:flex flex-col justify-end px-6 pb-5">
-          <h1 class="text-3xl leading-8 font-bold text-black dark:text-white w-90">
+          <h1 class="text-[30px] leading-tight font-bold text-black dark:text-white w-90">
             {% trans 'Find Homes, Flats, PGs & Commercial Property' %}
             <span class="text-orange-500">{% trans 'All in One Place.' %}</span>
           </h1>
@@ -257,7 +258,7 @@
           <img src="{% static 'images/u_dark_wallpaper.png' %}" alt="brokly ligth wallpaper" class="absolute inset-0 w-full h-70 object-cover object-center transition-opacity duration-700 ease-in-out opacity-0 dark:opacity-100 [mask-image:linear-gradient(to_bottom,transparent_0%,black_50%,transparent_100%)]" />
           <div class="absolute inset-0 bg-gradient-to-br from-white/30 via-white/30 to-white/30 dark:from-black/30 dark:via-black/30 dark:to-black/30 pointer-events-none"></div>
           <div class="relative z-10 flex flex-col justify-center items-center px-6 pt-42">
-            <h1 class="text-[26px] font-semibold text-black dark:text-white max-w-[500px] text-center">
+            <h1 class="text-[25px] leading-tight font-semibold text-black dark:text-white max-w-[500px] text-center">
               {% trans 'Find Homes, Flats, PGs & Commercial Property' %}
               <span class="text-orange-500">{% trans 'All in One Place.' %}</span>
             </h1>
@@ -271,7 +272,7 @@
           {% comment %}login block{% endcomment %}
           <div id="uLogin" class="w-full max-w-[450px] flex flex-col justify-center items-center mt-[280px] lg:mt-[30px]">
             <img src="{% static 'images/logo.svg' %}" alt="Brokly Logo" class="w-30 hidden lg:flex" />
-            <h2 class="text-center text-2xl font-bold text-gray-950 dark:text-white">{% trans 'Welcome Back 👋' %}</h2>
+            <h2 class="text-center text-2xl font-bold text-gray-950 dark:text-white">{% trans 'Welcome Back!' %}</h2>
             <p class="text-[#212121b0] font-medium dark:text-white/50">
               {% trans 'Login to continue to your account' %}
             </p>
@@ -280,12 +281,14 @@
             <div class="flex w-full h-14 lg:h-12 overflow-hidden rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border border-gray-200 dark:border-white/15 bg-white dark:bg-white/5 backdrop-blur-xl">
               <button type="button" id="uCountryCodeBtn" class="px-4 flex items-center justify-center gap-1 font-semibold bg-[#f1f3f6] dark:bg-white/5 text-black/90 dark:text-white text-lg">
                 <span id="uSelectedCode">+91</span>
-                {% comment %} <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}" fill="none" viewBox="0 0 24 24" width="22" height="22">
+                {% comment %}
+                <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}" fill="none" viewBox="0 0 24 24" width="22" height="22">
                   <path fill="currentColor" d="m11.6 14.5999 -3.95 -3.925c-0.0333 -0.03335 -0.0625 -0.073 -0.0875 -0.119 -0.025 -0.04615 -0.0375 -0.0955 -0.0375 -0.148 0 -0.10535 0.03445 -0.1955 0.10325 -0.2705 0.0687 -0.075 0.15925 -0.1125 0.27175 -0.1125h8.2c0.1125 0 0.2032 0.03865 0.272 0.116 0.0687 0.07715 0.103 0.16725 0.103 0.27025 0 0.02585 -0.04165 0.11375 -0.125 0.26375l-3.95 3.925c-0.05 0.05 -0.1088 0.09165 -0.1765 0.125 -0.06765 0.03335 -0.14215 0.05 -0.2235 0.05 -0.08115 0 -0.15565 -0.01665 -0.2235 -0.05 -0.06765 -0.03335 -0.1265 -0.075 -0.1765 -0.125Z" stroke-width="0.5"></path>
-                </svg> {% endcomment %}
+                </svg>
+                {% endcomment %}
                 <input type="hidden" id="uCountryId" name="uCountryId" value="1" />
               </button>
-              <input type="tel" id="phone" name="phone" value="9999999999" class="w-[350px] font-normal px-4 bg-transparent text-gray-900 placeholder:text-gray-400 dark:text-white text-xl lg:text-lg outline-0" placeholder="{% trans 'Phone number' %}" />
+              <input type="tel" id="phone" name="phone" inputmode="numeric" autocomplete="tel" value="9999999999" class="w-[350px] font-normal px-4 bg-transparent text-gray-900 placeholder:text-gray-400 dark:text-white text-xl lg:text-lg outline-0" placeholder="{% trans 'Phone number' %}" />
               <div id="phoneCheckIcon" class="hidden justify-center items-center px-3">
                 <svg xmlns="{% static 'icons/check-check.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-check-icon lucide-check-check text-orange-500">
                   <path d="M18 6 7 17l-5-5" />
@@ -353,7 +356,7 @@
 
               {% comment %}policy title{% endcomment %}
               <div class="mt-8 lg:mt-12">
-                <p class="gap-1 text-sm text-center flex flex-wrap justify-center items-center w-[330px] text-[#212121b0] font-medium dark:text-white/50 leading-tight">
+                <p class="gap-1 text-sm text-center flex flex-wrap justify-center items-center w-[350px] text-[#212121b0] font-medium dark:text-white/50 leading-tight">
                   <svg xmlns="{% static 'icons/lock-keyhole.svg' %}" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock-keyhole shrink-0">
                     <circle cx="12" cy="16" r="1" />
                     <rect x="3" y="10" width="18" height="12" rx="2" />
@@ -583,441 +586,6 @@
       </section>
     </main>
 
-    <script>
-      // variable u-login
-      const uLogin = document.getElementById('uLogin')
-      // variable phone input
-      const countryCode = document.getElementById('uCountryCodeBtn')
-      countryCode.disabled = true
-      const phoneCode = document.getElementById('uCountryId')
-      const phoneInput = document.getElementById('phone')
-      const phoneError = document.getElementById('prm')
-      const phoneCheckIcon = document.getElementById('phoneCheckIcon')
-      // variable send otp btn
-      const sendOtp = document.getElementById('sendOtpBtn')
-      const btnText = document.getElementById('btnText')
-      const sendOtpLoder = document.getElementById('loader')
-      // variable property related
-      const propertyRelated = document.getElementById('propertyRelated')
-      propertyRelated.classList.remove('hidden')
-      propertyRelated.classList.add('flex')
-      // variable otp input
-      const otpBox = document.getElementById('otp-box')
-      const otpInputs = document.querySelectorAll('.otp-input')
-      const otpError = document.getElementById('orm')
-      const otpClockIcon = document.getElementById('otpClockIcon')
-      // variable resend otp
-      const resendOtpB = document.getElementById('resendOtpBtn')
-      const timerText = document.getElementById('timerText')
-      const verifyOtpLoader = document.getElementById('verifyOtpLoader')
-      // variable u profile
-      const uProfile = document.getElementById('uProfile')
-      const uAvatarPreview = document.getElementById('avatarPreview')
-      const uimg = document.getElementById('avatarInput')
-      // variable img loader
-      const uImgLoader = document.getElementById('uImgLoader')
-      const uname = document.getElementById('uname')
-      // variable u skip btn
-      const uConBtn = document.getElementById('uConBtn')
-      // variable state select btn
-      document.getElementById('uStateId').value = ''
-      document.getElementById('uSelectedState').innerText = '{% trans "Select State" %}'
-      // variable city select btn
-      const ucitylabel = document.getElementById('uCityLabel')
-      ucitylabel.classList.add('disabled')
-      const ucitybtn = document.getElementById('uCityBtn')
-      ucitybtn.disabled = true
-      document.getElementById('uCityId').value = ''
-      document.getElementById('uSelectedCity').innerText = '{% trans "Select City" %}'
-      // variable update profile btn
-      const uUpdateBtn = document.getElementById('uUpdateBtn')
-      const uUpbtnText = document.getElementById('uUpbtnText')
-      uUpbtnText.innerText = '{% trans "Update profile" %}'
-      const uLoaderUpdate = document.getElementById('uLoaderUpdate')
-      uLoaderUpdate.classList.add('hidden')
-      
-      // show loader
-      function showLoader(loader) {
-        loader.classList.remove('hidden')
-        loader.classList.add('flex')
-      }
-      // hide loader
-      function hideLoader(loader) {
-        loader.classList.remove('flex')
-        loader.classList.add('hidden')
-      }
-      hideLoader(uImgLoader)
-      
-      otpInputs.forEach((input) => {
-        input.disabled = true
-        input.value = ''
-      })
-      let senconds
-      let isPaused = false
-      // Start Timer function
-      function startTimer() {
-        senconds = 120
-        isPaused = false
-        resendOtpB.disabled = true
-        const otpTimer = setInterval(() => {
-          if (isPaused) return
-          let mins = Math.floor(senconds / 60)
-          let secs = senconds % 60
-          timerText.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`
-          if (senconds <= 0) {
-            clearInterval(otpTimer)
-            otpInputs.forEach((input) => {
-              input.disabled = true
-            })
-            resendOtpB.disabled = false
-          }
-          senconds--
-        }, 1000)
-      }
-      // Stop Timer function
-      function pausedTime() {
-        isPaused = true
-      }
-      // check Phone number input validation
-      phoneInput.addEventListener('input', function (e) {
-        e.preventDefault()
-        phoneInput.value = phoneInput.value.replace(/[^0-9]/g, '')
-        if (!phoneInput.value) {
-          phoneError.innerText = '{% trans "Phone number is required" %}'
-          phoneCheckIcon.classList.replace('flex', 'hidden')
-          return
-        }
-        if (!/^[6-9]\d{9}$/.test(phoneInput.value)) {
-          phoneError.innerText = '{% trans "Enter valid 10-digit phone number" %}'
-          phoneCheckIcon.classList.replace('flex', 'hidden')
-          return
-        }
-        phoneError.innerText = ''
-        phoneCheckIcon.classList.replace('hidden', 'flex')
-      })
-      // check OTP input validation
-      sendOtp.addEventListener('click', function (e) {
-        e.preventDefault()
-        let phone = phoneInput.value.trim()
-        if (!phone) {
-          phoneError.innerText = '{% trans "Phone number is required" %}'
-          phoneCheckIcon.classList.replace('flex', 'hidden')
-          phoneInput.focus()
-          return
-        }
-        if (!/^[6-9]\d{9}$/.test(phone)) {
-          phoneError.innerText = '{% trans "Enter valid 10-digit phone number" %}'
-          phoneCheckIcon.classList.replace('flex', 'hidden')
-          return
-        }
-        sendOTP()
-      })
-      // send OTP
-      function sendOTP() {
-        let codeID = uCountryId.value.trim()
-        let codeShow = document.getElementById('uSelectedCode').innerText
-        let phone = phoneInput.value.trim()
-        countryCode.disabled = true
-        phoneInput.disabled = true
-        btnText.innerText = '{% trans "OTP Sending..." %}'
-        sendOtpLoder.classList.remove('hidden')
-      
-        fetch('/login/', {
-          method: 'POST',
-          credentials: 'same-origin',
-          headers: {
-            'X-CSRFToken': getCSRF(),
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ phone: phone, code: codeID })
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.error) {
-              phoneError.innerText = data.message
-              countryCode.disabled = false
-              phoneInput.disabled = false
-              btnText.innerText = '{% trans "Send OTP" %}'
-              sendOtpLoder.classList.add('hidden')
-            }
-            if (data.success) {
-              phoneError.innerText = data.message
-            }
-            if (data.step === 'otp') {
-              propertyRelated.classList.remove('flex')
-              propertyRelated.classList.add('hidden')
-              sendOtp.classList.replace('flex', 'hidden')
-              otpBox.classList.remove('hidden')
-              otpInputs.forEach((input) => {
-                input.disabled = false
-              })
-              otpInputs[0].focus()
-              startTimer()
-            }
-          })
-          .catch(() => {
-            alert("{% trans 'Something went wrong. Try again.' %}")
-            sendOtp.classList.replace('flex', 'hidden')
-            window.location.reload()
-          })
-      }
-      // check OTP input validation
-      otpInputs.forEach((input, index) => {
-        input.addEventListener('input', (e) => {
-          // Allow only number
-          input.value = input.value.replace(/[^0-9]/g, '')
-          if (input.value && index < otpInputs.length - 1) {
-            otpInputs[index + 1].focus()
-          }
-          if (getOTP().length === 6) {
-            verifyOTP()
-          }
-        })
-        // Backspace and Previous
-        input.addEventListener('keydown', (e) => {
-          if (e.key === 'Backspace' && !input.value && index > 0) {
-            otpInputs[index - 1].focus()
-          }
-        })
-        // Paste OTP
-        input.addEventListener('paste', (e) => {
-          let pastedata = e.ClipboardData.getData('text').trim()
-          if (/^\d+$/.test(pastedata)) {
-            e.preventDefault()
-            pastedata.split('').forEach((char, i) => {
-              if (otpInputs[i]) {
-                otpInputs[i].value = char
-              }
-            })
-            // focus on last filled input
-            const lastInput = Math.min(pastedata.length, otpInputs.length) - 1
-            otpInputs[lastInput].focus()
-          }
-        })
-      })
-      // get OTP Function
-      function getOTP() {
-        let otp = ''
-        otpInputs.forEach((input) => {
-          otp += input.value
-        })
-        return otp
-      }
-      // Resend OTP
-      function resendOTP() {
-        otpClockIcon.classList.add('hidden')
-        resendOtpB.classList.add('hidden')
-        timerText.classList.add('hidden')
-        verifyOtpLoader.classList.remove('hidden')
-        fetch('/resend-otp/', {
-          method: 'POST',
-          headers: {
-            'X-CSRFToken': getCSRF(),
-            'Content-Type': 'application/json'
-          }
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.error) {
-              otpError.innerText = data.message
-            }
-            if (data.success) {
-              otpClockIcon.classList.remove('hidden')
-              resendOtpB.classList.remove('hidden')
-              timerText.classList.remove('hidden')
-              verifyOtpLoader.classList.add('hidden')
-              otpError.innerText = data.message
-              otpInputs.forEach((input) => {
-                input.disabled = false
-                input.value = ''
-              })
-              otpInputs[0].focus()
-              startTimer()
-            }
-          })
-          .catch(() => {
-            alert("{% trans 'Something went wrong. Try again.' %}")
-          })
-      }
-      // Verify OTP
-      function verifyOTP() {
-        let uSelectedState = document.getElementById('uSelectedState')
-        let uStateId = document.getElementById('uStateId')
-        let uSelectedCity = document.getElementById('uSelectedCity')
-        let uCityId = document.getElementById('uCityId')
-        otpClockIcon.classList.add('hidden')
-        resendOtpB.classList.add('hidden')
-        timerText.classList.add('hidden')
-        verifyOtpLoader.classList.replace('hidden', 'flex')
-        let otp = getOTP()
-        if (otp.length !== 6) {
-          otpError.innerText = '{% trans "Enter complete 6-digit OTP" %}'
-          return
-        }
-        fetch('/verify-otp/', {
-          method: 'POST',
-          credentials: 'same-origin',
-          headers: {
-            'X-CSRFToken': getCSRF(),
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ otp: otp })
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.error) {
-              otpError.innerText = data.message
-              otpClockIcon.classList.remove('hidden')
-              resendOtpB.classList.remove('hidden')
-              timerText.classList.remove('hidden')
-              verifyOtpLoader.classList.replace('flex', 'hidden')
-              otpInputs.forEach((input) => {
-                input.value = ''
-              })
-              otpInputs[0].focus()
-              return
-            }
-            if (data.success) {
-              otpError.innerText = ''
-              pausedTime()
-              otpClockIcon.classList.add('hidden')
-              resendOtpB.classList.add('hidden')
-              timerText.classList.add('hidden')
-              verifyOtpLoader.classList.replace('flex', 'hidden')
-            }
-            if (data.step === 'profile') {
-              uLogin.classList.replace('flex', 'hidden')
-              uProfile.classList.remove('hidden')
-              uProfile.classList.add('flex')
-            }
-            if (data.profile) {
-              uname.value = data.profile.name || ''
-              uSelectedState.innerText = data.profile.state_name || '{% trans "Select State" %}'
-              if (data.profile.state_name) {
-                ucitybtn.disabled = false
-              } else {
-                ucitybtn.disabled = true
-              }
-              uStateId.value = data.profile.state_id || ''
-              ucitylabel.classList.remove('disabled')
-              uSelectedCity.innerText = data.profile.city_name || '{% trans "Select City" %}'
-              uCityId.value = data.profile.city_id || ''
-              if (data.profile.img) {
-                showLoader(uImgLoader)
-                uAvatarPreview.onload = function () {
-                  hideLoader(uImgLoader)
-                }
-                uAvatarPreview.onerror = function () {
-                  hideLoader(uImgLoader)
-                  uAvatarPreview.src = '/static/images/avatar.png'
-                }
-                uAvatarPreview.src = data.profile.img
-              } else {
-                hideLoader(uImgLoader)
-                uAvatarPreview.src = '/static/images/avatar.png'
-              }
-            }
-          })
-          .catch(() => {
-            verifyOtpLoader.classList.replace('flex', 'hidden')
-            resendOtpB.classList.remove('hidden')
-            timerText.classList.remove('hidden')
-            otpClockIcon.classList.remove('hidden')
-            pausedTime()
-            alert("{% trans 'Something went wrong. Try again.' %}")
-          })
-      }
-      // Continue(Skip) Button
-      uConBtn.addEventListener('click', function (e) {
-        e.preventDefault()
-        let themeValue = localStorage.getItem('uthemeValue')
-        let languageId = localStorage.getItem('ulangId')
-      
-        let fd = new FormData()
-        fd.append('utheme', themeValue)
-        fd.append('ulang', languageId)
-      
-        fetch('/user-profile/', {
-          method: 'POST',
-          headers: {
-            'X-CSRFToken': getCSRF()
-          },
-          body: fd
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.error) {
-              alert(data.message)
-            }
-            if (data.success) {
-              window.location.href = '/'
-            }
-          })
-      })
-      // User Update Profile
-      uUpdateBtn.addEventListener('click', function (e) {
-        e.preventDefault()
-        let themeValue = localStorage.getItem('uthemeValue')
-        let languageId = localStorage.getItem('ulangId')
-        let file = uimg.files[0]
-        let name = uname.value.trim()
-        let stateid = document.getElementById('uStateId').value.trim()
-        let cityid = document.getElementById('uCityId').value.trim()
-        let nameError = document.getElementById('unrm')
-        nameError.innerText = ''
-      
-        if (!name) {
-          nameError.innerText = '{% trans "Username is required" %}'
-          return
-        }
-      
-        let fd = new FormData()
-        fd.append('utheme', themeValue)
-        fd.append('ulang', languageId)
-        if (file) fd.append('uimg', file)
-        fd.append('uname', name)
-        if (stateid) fd.append('ustateid', stateid)
-        if (cityid) fd.append('ucityid', cityid)
-      
-        if (!confirm('{% trans "Are you sure you want to update your profile?" %}')) return
-        uUpbtnText.innerText = ''
-        uLoaderUpdate.classList.remove('hidden')
-      
-        fetch('/user-profile/', {
-          method: 'POST',
-          headers: {
-            'X-CSRFToken': getCSRF()
-          },
-          body: fd
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.error) {
-              alert(data.message)
-            }
-            if (data.success) {
-              uLoaderUpdate.classList.add('hidden')
-              uUpbtnText.innerText = data.message
-              setTimeout(() => {
-                uUpbtnText.innerText = '{% trans "Update profile" %}'
-              }, 2000)
-            }
-          })
-          .catch(() => {
-            alert("{% trans 'Something went wrong. Try again.' %}")
-            uUpbtnText.innerText = '{% trans "Update profile" %}'
-            uLoaderUpdate.classList.add('hidden')
-          })
-      })
-      // CSRF token function
-      function getCSRF() {
-        return document.cookie
-          .split('; ')
-          .find((row) => row.startsWith('csrftoken='))
-          ?.split('=')[1]
-      }
-    </script>
-
     {% comment %}Language Selected Modal{% endcomment %}
     <div id="uLanguageModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden justify-center items-start pt-[100px] z-100 text-xl px-2">
       <div id="uLanguage" class="bg-white/90 dark:bg-[#111827]/90 dark:text-white w-full max-w-md p-2 rounded-2xl border border-gray-200 dark:border-white/10 backdrop-blur-2xl shadow-xl animate-scaleIn">
@@ -1045,7 +613,7 @@
       <div id="uLangSelectLoader" class="w-10 h-10 flex justify-center items-center border-[8px] border-white/30 rounded-full border-t-white animate-[spin_0.5s_linear_infinite] [animation-duration:.5s]"></div>
     </div>
     {% comment %}Language Selected Modal JS{% endcomment %}
-    <script src="{% static 'js/accounts/user/u_language_select_modal.js' %}"></script>
+    <script src="{% static 'js/accounts/user/u-language-select-modal.js' %}" defer></script>
 
     {% comment %}Country Code Modal{% endcomment %}
     <div id="uCountryModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden justify-center items-start pt-[100px] z-100 text-xl px-2">
@@ -1089,7 +657,7 @@
       </div>
     </div>
     {% comment %}Country Code Modal JS{% endcomment %}
-    <script src="{% static 'js/accounts/user/u_country_code_modal.js' %}"></script>
+    <script src="{% static 'js/accounts/user/u-country-code-modal.js' %}" defer></script>
 
     {% comment %}State Select Modal{% endcomment %}
     <div id="uStateModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden justify-center items-start pt-[100px] z-100 text-xl px-2">
@@ -1125,7 +693,7 @@
       </div>
     </div>
     {% comment %}State Select Modal JS{% endcomment %}
-    <script src="{% static 'js/accounts/user/u_state_select_modal.js' %}"></script>
+    <script src="{% static 'js/accounts/user/u-state-select-modal.js' %}" defer></script>
 
     {% comment %}City Select Modal{% endcomment %}
     <div id="uCityModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden justify-center items-start pt-[100px] z-100 text-xl px-2">
@@ -1161,6 +729,6 @@
       </div>
     </div>
     {% comment %}City Select Modal JS{% endcomment %}
-    <script src="{% static 'js/accounts/user/u_city_select_modal.js' %}"></script>
+    <script src="{% static 'js/accounts/user/u-city-select-modal.js' %}" defer></script>
   </body>
 </html>

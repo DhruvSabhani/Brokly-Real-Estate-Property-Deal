@@ -9,25 +9,71 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('accounts', '0003_alter_customuser_country_code_alter_userprofile_user'),
+        ("accounts", "0003_alter_customuser_country_code_alter_userprofile_user"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Addresses',
+            name="Addresses",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('area', models.CharField(blank=True, max_length=150)),
-                ('pincode', models.CharField(blank=True, max_length=10)),
-                ('latitude', models.DecimalField(blank=True, decimal_places=7, max_digits=10, null=True)),
-                ('longitued', models.DecimalField(blank=True, decimal_places=7, max_digits=10, null=True)),
-                ('is_active', models.BooleanField(default=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('upadted_at', models.DateTimeField(auto_now=True)),
-                ('city', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='accounts.city')),
-                ('country', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='accounts.countrycode')),
-                ('profile_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='addresses', to='accounts.userprofile')),
-                ('state', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='accounts.state')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("area", models.CharField(blank=True, max_length=150)),
+                ("pincode", models.CharField(blank=True, max_length=10)),
+                (
+                    "latitude",
+                    models.DecimalField(
+                        blank=True, decimal_places=7, max_digits=10, null=True
+                    ),
+                ),
+                (
+                    "longitued",
+                    models.DecimalField(
+                        blank=True, decimal_places=7, max_digits=10, null=True
+                    ),
+                ),
+                ("is_active", models.BooleanField(default=True)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("upadted_at", models.DateTimeField(auto_now=True)),
+                (
+                    "city",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="accounts.city",
+                    ),
+                ),
+                (
+                    "country",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="accounts.countrycode",
+                    ),
+                ),
+                (
+                    "profile_id",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="addresses",
+                        to="accounts.userprofile",
+                    ),
+                ),
+                (
+                    "state",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="accounts.state",
+                    ),
+                ),
             ],
         ),
     ]

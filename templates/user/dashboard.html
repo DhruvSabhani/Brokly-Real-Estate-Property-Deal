@@ -10,54 +10,68 @@
     <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-x-3 gap-y-3">
       {% for i in range %}
         {% comment %}p box{% endcomment %}
-        <div class="cursor-pointer rounded-[10px] bg-transparent hover:bg-black/[0.03] dark:hover:bg-white/[0.06] overflow-hidden">
+        <div class="cursor-pointer rounded-xl transition-all duration-300 bg-white hover:bg-transparent dark:bg-transparent dark:hover:bg-black overflow-hidden">
           {% comment %}p image{% endcomment %}
-          <div class="relative flex justify-center items-center w-full aspect-[4/3] overflow-hidden rounded-[10px] bg-gray-200 dark:bg-white/10">
-            <img src="{% static 'images/property-default-img.png' %}" alt="Property image" class="w-full h-full object-cover" />
-            {% comment %}unlike{% endcomment %}
-            <div class="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/20 backdrop-blur-md flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" class="text-white/80">
+          <div class="relative flex justify-center items-center w-full h-40 overflow-hidden rounded-[10px] bg-gray-100 dark:bg-white/5">
+            <img src="{% static 'images/property-default-img.png' %}" alt="Property image" class="w-full h-full object-cover hover:scale-[1.1] transition-all duration-200" />
+            {% comment %}category{% endcomment %}
+            <span class="absolute top-2 left-2 tracking-normal flex justify-center items-center text-xs font-medium px-1 py-0.4 rounded bg-blue-500 dark:bg-[#0000ff] text-white truncate" style="font-family: monospace;">Boys</span>
+            {% comment %}wishlist{% endcomment %}
+            <button id="wishlist-btn" type="button" class="absolute top-1 right-1 flex items-center justify-center w-8 h-8 rounded-full bg-white dark:bg-black/80 backdrop-blur shadow">
+              {% comment %}unlike{% endcomment %}
+              <svg class="text-red-500 flex justify-center items-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />
               </svg>
-            </div>
-            {% comment %}like{% endcomment %}
-            <div class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 dark:bg-black/50 backdrop-blur-md hidden items-center justify-center shadow-md">
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" class="text-red-500">
+              {% comment %}like{% endcomment %}
+              <svg class="text-red-500 hidden justify-center items-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />
               </svg>
-            </div>
+            </button>
           </div>
-
           {% comment %}p details{% endcomment %}
           <div class="px-1 py-2">
             {% comment %}Price Badge{% endcomment %}
             <div class="flex justify-start items-center gap-2">
-              <span class="text-[18px] font-semibold text-black dark:text-white">₹10,000</span>
-              <span class="text-[18px] font-semibold text-black dark:text-white">-</span>
-              <span class="text-[14px] font-normal text-black/80 dark:text-white/50">₹12,000</span>
-              <span class="text-[14px] font-normal text-black/80 dark:text-white/50">/</span>
-              <span class="text-[14px] font-normal text-black/80 dark:text-white/50">bed</span>
+              <span class="text-xl font-semibold text-orange-500">₹10,000</span>
+              <span class="text-xl font-semibold text-black dark:text-white">-</span>
+              <span class="text-[15px] text-gray-600 dark:text-white/50">₹12,000</span>
+              <span class="text-[15px] text-gray-600 dark:text-white/50">/</span>
+              <span class="text-[15px] text-gray-600 dark:text-white/50">bed</span>
             </div>
 
-            <h1 class="line-clamp-2 text-[16px] font-semibold text-black/90 dark:text-white/90 leading-tight tracking-[-0.01em]">2 BHK Flat Available Near City Center</h1>
+            {% comment %}title{% endcomment %}
+            <h3 class="line-clamp-2 text-base font-semibold text-gray-900 dark:text-gray-100 mb-1 tracking-normal">2 BHK Flat Available Near City Center</h3>
 
-            <div class="flex flex-wrap items-center gap-1.5">
-              <span class="text-[12px] font-medium px-1 py-0.2 rounded bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-300">Boys</span>
+            {% comment %}tags{% endcomment %}
+            <div class="flex justify-start items-center gap-2 mb-1 overflow-x-auto scrollbar-hide lg:scrollbar-x-show whitespace-nowrap">
+              <div class="flex justify-start items-center gap-2 text-xs font-medium px-1 py-0.5 rounded-md border border-black/20 dark:border-white/20 text-black/70 dark:text-white/70 w-fit">
+                <svg xmlns="{% static 'icons/users.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users w-[15px] h-[15px] shrink-0">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                  <path d="M16 3.128a4 4 0 0 1 0 7.744" />
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                  <circle cx="9" cy="7" r="4" />
+                </svg>
+                <span class="truncate">1/2/3 Sharing</span>
+              </div>
+
+              <div class="flex justify-start items-center gap-2 text-xs font-medium px-1 py-0.5 rounded-md border border-black/20 dark:border-white/20 text-green-700 dark:text-green-500 w-fit">
+                <svg xmlns="{% static 'icons/wifi.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wifi-icon lucide-wifi w-[15px] h-[15px] shrink-0">
+                  <path d="M12 20h.01" />
+                  <path d="M2 8.82a15 15 0 0 1 20 0" />
+                  <path d="M5 12.859a10 10 0 0 1 14 0" />
+                  <path d="M8.5 16.429a5 5 0 0 1 7 0" />
+                </svg>
+                <span class="truncate">Free WiFi</span>
+              </div>
             </div>
 
-            <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-gray-100 text-gray-700 dark:bg-white/10 dark:text-white/70 text-[11px] font-medium mt-1">1 / 2 / 3 Sharing</span>
-
-            <div class="flex justify-start items-center gap-1 text-[14px] font-normal text-gray-400">
-              <svg xmlns="{% static 'icons/map-pin.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down w-4 h-4 shrink-0">
+            {% comment %}p location{% endcomment %}
+            <div class="flex justify-start items-center gap-1 text-sm font-normal text-gray-400">
+              <svg xmlns="{% static 'icons/map-pin.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down w-[18px] h-[18px] shrink-0 text-orange-600">
                 <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
                 <circle cx="12" cy="10" r="3" />
               </svg>
-
               <span class="line-clamp-2">{{ uAddress }}</span>
-            </div>
-
-            <div class="flex flex-wrap items-center mt-1">
-              <span class="text-[12px] font-medium px-1 py-0.2 rounded bg-green-100 text-green-700 dark:bg-green-500/15 dark:text-green-200">Free WiFi</span>
             </div>
           </div>
         </div>

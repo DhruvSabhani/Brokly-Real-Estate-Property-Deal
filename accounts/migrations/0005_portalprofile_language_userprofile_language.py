@@ -7,18 +7,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('accounts', '0004_remove_portalprofile_city_and_more'),
+        ("accounts", "0004_remove_portalprofile_city_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='portalprofile',
-            name='language',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='accounts.language'),
+            model_name="portalprofile",
+            name="language",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="accounts.language",
+            ),
         ),
         migrations.AddField(
-            model_name='userprofile',
-            name='language',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='accounts.language'),
+            model_name="userprofile",
+            name="language",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="accounts.language",
+            ),
         ),
     ]

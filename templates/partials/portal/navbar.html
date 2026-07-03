@@ -13,9 +13,13 @@
     <a href="{% url 'portal_dashboard' %}"
       title="{% trans 'Home' %}"
       class="flex h-8 items-center text-[18px] lg:text-[15px] lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-300 {% if active == 'home' %}
+        
          bg-orange-500 rounded-lg text-[#ffffff]
+
       {% else %}
+        
          text-black/80 hover:bg-black/5 dark:text-[#ffffff]/90 dark:hover:bg-[#ffffff]/5 rounded-lg
+
       {% endif %}">
       <svg xmlns="{% static 'icons/house.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 lg:w-5 lg:h-5 w-6 h-6">
         <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
@@ -27,9 +31,13 @@
     <a href="{% url 'portal_help' %}"
       title="{% trans 'Help & Support' %}"
       class="flex h-8 items-center text-[18px] lg:text-[15px] lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-300 {% if active == 'help' %}
+        
          bg-orange-500 rounded-lg text-[#ffffff]
+
       {% else %}
+        
          text-black/80 hover:bg-black/5 dark:text-[#ffffff]/90 dark:hover:bg-[#ffffff]/5 rounded-lg
+
       {% endif %}">
       <svg xmlns="{% static 'icons/headset.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 lg:w-5 lg:h-5 w-6 h-6">
         <path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z" />
@@ -41,9 +49,13 @@
     <a href="{% url 'portal_setting' %}"
       title="{% trans 'Setting' %}"
       class="flex h-8 items-center text-[18px] lg:text-[15px] lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-300 {% if active == 'setting' %}
+        
          bg-orange-500 rounded-lg text-[#ffffff]
+
       {% else %}
+        
          text-black/80 hover:bg-black/5 dark:text-[#ffffff]/90 dark:hover:bg-[#ffffff]/5 rounded-lg
+
       {% endif %}">
       <svg xmlns="{% static 'icons/settings.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 lg:w-5 lg:h-5 w-6 h-6">
         <path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" />

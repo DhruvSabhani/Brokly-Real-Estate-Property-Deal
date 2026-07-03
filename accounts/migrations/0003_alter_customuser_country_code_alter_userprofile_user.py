@@ -8,19 +8,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('accounts', '0002_customuser_full_phone_alter_customuser_phone_and_more'),
+        ("accounts", "0002_customuser_full_phone_alter_customuser_phone_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='customuser',
-            name='country_code',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, related_name='users', to='accounts.countrycode'),
+            model_name="customuser",
+            name="country_code",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="users",
+                to="accounts.countrycode",
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='userprofile',
-            name='user',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='user_profile', to=settings.AUTH_USER_MODEL),
+            model_name="userprofile",
+            name="user",
+            field=models.OneToOneField(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="user_profile",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

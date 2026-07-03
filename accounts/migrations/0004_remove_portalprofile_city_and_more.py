@@ -8,37 +8,41 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('accounts', '0003_alter_customuser_country_code_alter_userprofile_user'),
+        ("accounts", "0003_alter_customuser_country_code_alter_userprofile_user"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='portalprofile',
-            name='city',
+            model_name="portalprofile",
+            name="city",
         ),
         migrations.RemoveField(
-            model_name='portalprofile',
-            name='language',
+            model_name="portalprofile",
+            name="language",
         ),
         migrations.RemoveField(
-            model_name='portalprofile',
-            name='state',
+            model_name="portalprofile",
+            name="state",
         ),
         migrations.RemoveField(
-            model_name='userprofile',
-            name='city',
+            model_name="userprofile",
+            name="city",
         ),
         migrations.RemoveField(
-            model_name='userprofile',
-            name='language',
+            model_name="userprofile",
+            name="language",
         ),
         migrations.RemoveField(
-            model_name='userprofile',
-            name='state',
+            model_name="userprofile",
+            name="state",
         ),
         migrations.AlterField(
-            model_name='portalprofile',
-            name='user',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='portal_profile', to=settings.AUTH_USER_MODEL),
+            model_name="portalprofile",
+            name="user",
+            field=models.OneToOneField(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="portal_profile",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]
