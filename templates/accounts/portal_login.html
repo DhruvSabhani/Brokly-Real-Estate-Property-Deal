@@ -1,5 +1,4 @@
-{% load static tailwind_tags %}
-{% load i18n %}
+{% load static tailwind_tags %} {% load i18n %}
 <!DOCTYPE html>
 <html lang="en" class="">
   <head>
@@ -11,8 +10,7 @@
     <link rel="icon" href="{% static 'images/web-icon.png' %}" type="image/png" />
     {% comment %}CSS{% endcomment %}
     <link rel="stylesheet" href="{% static 'css/accounts/login_style.css' %}" />
-    {% comment %}Tailwind CSS{% endcomment %}
-    {% tailwind_css %}
+    {% comment %}Tailwind CSS{% endcomment %} {% tailwind_css %}
     <style>
       ::-webkit-scrollbar {
         width: 0;
@@ -88,7 +86,7 @@
             </svg>
             <span id="pSelectedLanguage" class="font-medium font-sans px-2">
               {% if request.LANGUAGE_CODE == 'gu' %}
-                ગુજરાતી
+                 ગુજરાતી
               {% else %}
                 English
               {% endif %}
@@ -130,7 +128,8 @@
             <span class="text-orange-500">{% trans 'Brokly Portal' %}</span>
           </h1>
           <p class="text-lg py-2 text-gray-700 leading-relaxed dark:text-white/70">
-            {% trans 'Manage listings, track leads, connect with clients and grow your real estate business from one powerful dashboard.' %}
+            {% trans 'Manage listings, track leads, connect with clients and
+            grow your real estate business from one powerful dashboard.' %}
           </p>
           {% comment %}features{% endcomment %}
           <div class="p-feature flex justify-start items-center gap-5 mt-2 flex-col">
@@ -201,7 +200,8 @@
                   {% trans 'Grow Your Business' %}
                 </p>
                 <p class="text-[15px] leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
-                  {% trans 'Powerful tools and insights to help you close more deals.' %}
+                  {% trans 'Powerful tools and insights to help you close more
+                  deals.' %}
                 </p>
               </div>
             </div>
@@ -238,16 +238,19 @@
             <img src="{% static 'images/logo.svg' %}" alt="Brokly Portal Logo" class="w-30 hidden lg:flex" />
             <h2 class="text-center text-2xl font-bold text-gray-950 dark:text-white">{% trans 'Brokly Portal Login' %}</h2>
             <p class="text-center w-[300px] text-gray-500 dark:text-white/50">
-              {% trans 'Access your Brokly portal and manage your business efficiently.' %}
+              {% trans 'Access your Brokly portal and manage your business
+              efficiently.' %}
             </p>
             {% comment %}phone input{% endcomment %}
             <label for="phone" class="mt-6 w-full text-[18px] lg:text-[15px] mr-1 py-2 font-semibold text-black/90 dark:text-white/90">{% trans 'Mobile Number' %}</label>
             <div class="flex w-full h-14 lg:h-12 overflow-hidden rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl">
               <button type="button" id="pCountryCodeBtn" class="px-4 flex items-center justify-center gap-1 font-semibold bg-[#f1f3f6] dark:bg-white/5 text-black/90 dark:text-white text-lg">
                 <span id="pSelectedCode">+91</span>
-                {% comment %} <svg xmlns="{% static 'icons/chevron-down.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down">
+                {% comment %}
+                <svg xmlns="{% static 'icons/chevron-down.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down">
                   <path d="m6 9 6 6 6-6" />
-                </svg> {% endcomment %}
+                </svg>
+                {% endcomment %}
                 <input type="hidden" id="pCountryId" name="pCountryId" value="1" />
               </button>
               <input type="tel" id="phone" name="phone" value="9999999999" class="w-[350px] font-normal px-4 bg-transparent text-gray-900 placeholder:text-gray-400 dark:text-white text-xl lg:text-lg outline-0" placeholder="{% trans 'Phone number' %}" />
@@ -305,7 +308,8 @@
 
               {% comment %}property owner title{% endcomment %}
               <p class="mt-1 px-18 text-center text-[13px] text-gray-500 dark:text-white/40">
-                {% trans 'Search property, connect with trusted brokers or owners and discover your next home.' %}
+                {% trans 'Search property, connect with trusted brokers or
+                owners and discover your next home.' %}
               </p>
 
               {% comment %}policy title{% endcomment %}
@@ -438,7 +442,9 @@
               </div>
               <div class="flex justify-center items-center w-full p-2 text-justify">
                 <p class="text-sm font-tracking-wide text-gray-900 dark:text-neutral-100">
-                  {% trans 'Manage listings, track leads, connect with clients and grow your real estate business from one powerful dashboard.' %}
+                  {% trans 'Manage listings, track leads, connect with clients
+                  and grow your real estate business from one powerful
+                  dashboard.' %}
                 </p>
               </div>
             </div>
@@ -488,7 +494,8 @@
                   {% trans 'Track Clients & Leads' %}
                 </p>
                 <p class="text-base leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">
-                  {% trans 'Keep track of your clients, leads and conversations in one place.' %}
+                  {% trans 'Keep track of your clients, leads and conversations
+                  in one place.' %}
                 </p>
               </div>
             </div>
@@ -508,7 +515,8 @@
                   {% trans 'Grow Your Business' %}
                 </p>
                 <p class="text-base leading-snug font-medium text-gray-600 dark:text-neutral-500 w-full">
-                  {% trans 'Powerful tools and insights to help you close more deals.' %}
+                  {% trans 'Powerful tools and insights to help you close more
+                  deals.' %}
                 </p>
               </div>
             </div>

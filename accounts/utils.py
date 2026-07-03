@@ -56,3 +56,4 @@ def portal_required(view_func):
         return view_func(request, *args, **kwarge)
 
     return wrapper
+

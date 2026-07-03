@@ -335,7 +335,7 @@ def user_dashboard(request):
         "uProfile": request.uProfile,
         "uAddress": request.uAddress,
         "active": "home",
-        "range": "123456",
+        "range": "1111111111111111111",
     }
     return render(request, "user/dashboard.html", context)
 

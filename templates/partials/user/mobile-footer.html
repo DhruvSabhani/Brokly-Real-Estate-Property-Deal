@@ -1,0 +1,25 @@
+{% load static %}
+{% load i18n %}
+<div class="fixed bottom-0 left-0 z-40 w-full px-4 py-3 bg-[#f7f9fc] dark:bg-[#121212] shadow-lg">
+  <div class="flex justify-between items-center gap-3">
+    {% comment %}home{% endcomment %}
+    <a href="{% url 'user_dashboard' %}" title="{% trans 'Home' %}" class="flex flex-col justify-center items-center gap-1 transition-all duration-100">
+      <div class="flex justify-center items-center w-14 h-6 rounded-lg {% if active == 'home' %}
+          
+           bg-orange-500 text-white
+
+        {% else %}
+          
+           text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5
+
+        {% endif %}">
+        <svg xmlns="{% static 'icons/home.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home-icon lucide-home w-[18px] h-[18px]">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+      </div>
+      <span class="whitespace-nowrap truncate text-base font-medium text-black dark:text-white">{% trans 'Home' %}</span>
+    </a>
+    {% comment %}search{% endcomment %} {% comment %}near me{% endcomment %} {% comment %}chat{% endcomment %} {% comment %}profile{% endcomment %}
+  </div>
+</div>

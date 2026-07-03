@@ -1,10 +1,10 @@
 {% load static %} {% load i18n %}
-<aside id="u-navbar" class="group fixed inset-0 bg-black/50 backdrop-blur-sm left-0 top-0 z-50 h-full lg:h-screen w-96 lg:w-[60px] lg:hover:w-72 flex flex-col overflow-hidden border-r-0 border-[#e5e7eb] dark:border-[#1A1A1A] bg-white lg:bg-transparent hover:bg-white dark:bg-[#0e0d0d] lg:dark:bg-transparent dark:hover:bg-[#0e0d0d] text-black dark:text-white -translate-x-0 lg:translate-x-0 transition-all duration-100">
+<aside id="u-navbar" class="group fixed inset-0 left-0 top-0 z-50 h-screen w-96 lg:w-[60px] lg:hover:w-72 flex flex-col overflow-hidden bg-white lg:bg-transparent hover:bg-white dark:bg-[#0e0d0d] lg:dark:bg-transparent dark:hover:bg-[#0e0d0d] text-black dark:text-white -translate-x-full lg:translate-x-0 transition-all duration-100">
   {% comment %}Logo{% endcomment %}
-  <div class="lg:h-12 flex justify-between items-center px-3 py-1 lg:py-4 lg:p-3">
-    <img src="{% static 'images/web-icon.png' %}" alt="Brokly Logo" class="w-11 h-11 lg:h-8 lg:w-8 shrink-0" />
+  <div class="lg:h-12 flex justify-between items-center px-3 py-1 lg:py-4">
+    <img src="{% static 'images/web-icon.png' %}" alt="Brokly Logo" class="w-11 h-11 lg:h-[35px] lg:w-[35px] shrink-0" />
     <h1 class="flex-1 ml-3 whitespace-nowrap text-3xl lg:text-2xl text-black dark:text-white font-semibold lg:opacity-0 lg:transition-all lg:duration-100 lg:group-hover:opacity-100">Brokly</h1>
-    <button id="umNavCloesBtn" title="{% trans 'Close' %}" class="w-11 h-11 p-1 m-1 flex lg:hidden justify-center items-center rounded-full bg-[#e2e5e988] hover:bg-orange-100 dark:bg-white/10 dark:hover:bg-[#3B3D3E] text-black/90 hover:text-black dark:text-white/90 dark:hover:text-white">
+    <button id="u-m-nav-close-btn" title="{% trans 'Close' %}" class="w-11 h-11 p-1 m-1 flex lg:hidden justify-center items-center rounded-full bg-[#e2e5e988] hover:bg-orange-100 dark:bg-white/10 dark:hover:bg-[#3B3D3E] text-black/90 hover:text-black dark:text-white/90 dark:hover:text-white">
       <svg xmlns="{% static 'icons/x.svg' %}" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x">
         <path d="M18 6 6 18" />
         <path d="m6 6 12 12" />
@@ -12,33 +12,31 @@
     </button>
   </div>
   <div class="px-3 py-3 flex lg:hidden justify-center items-center">
-    <button class="u-place-box flex justify-between items-center rounded-lg border border-black/10 dark:border-white/10 px-5 h-20 w-full">
+    <button title="{{ uAddress }}" class="u-place-box flex justify-between items-center rounded-xl border border-black/10 hover:border-orange-500 dark:border-white/15 bg-black/2 dark:bg-white/1 px-5 h-20 w-full">
       <div class="flex justify-center items-start">
         <svg xmlns="{% static 'icons/map-pin.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin text-orange-500 w-7 h-7">
           <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
           <circle cx="12" cy="10" r="3" />
         </svg>
       </div>
-      <div class="flex flex-1 flex-col justify-center items-start ml-5">
+      <div class="flex flex-1 flex-col justify-center items-start ml-5 gap-0.5">
         <div class="flex justify-center items-center">
-          <a href="#" class="flex justify-center items-center gap-1">
-            <span class="text-lg font-medium flex justify-center items-center text-black/90 hover:text-black dark:text-white/90 dark:hover:text-white">
+          <a href="#" class="flex justify-center items-center gap-1 text-black/80 hover:text-black dark:text-white/90 dark:hover:text-white">
+            <span class="text-xl font-medium flex justify-center items-center">
               {% trans 'Select Place' %}
-              <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}" fill="none" viewBox="0 0 24 24" width="26" height="26">
+              <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}" fill="none" viewBox="0 0 24 24" width="24" height="24">
                 <path fill="currentColor" d="m11.6 14.5999 -3.95 -3.925c-0.0333 -0.03335 -0.0625 -0.073 -0.0875 -0.119 -0.025 -0.04615 -0.0375 -0.0955 -0.0375 -0.148 0 -0.10535 0.03445 -0.1955 0.10325 -0.2705 0.0687 -0.075 0.15925 -0.1125 0.27175 -0.1125h8.2c0.1125 0 0.2032 0.03865 0.272 0.116 0.0687 0.07715 0.103 0.16725 0.103 0.27025 0 0.02585 -0.04165 0.11375 -0.125 0.26375l-3.95 3.925c-0.05 0.05 -0.1088 0.09165 -0.1765 0.125 -0.06765 0.03335 -0.14215 0.05 -0.2235 0.05 -0.08115 0 -0.15565 -0.01665 -0.2235 -0.05 -0.06765 -0.03335 -0.1265 -0.075 -0.1765 -0.125Z" stroke-width="0.5"></path>
               </svg>
             </span>
           </a>
         </div>
-        <div>
-          <span class="truncate text-base text-black/60 font-normal">{{ uAddress }}</span>
-        </div>
+        <span class="truncate text-base text-left text-black/50 dark:text-white/50 font-normal w-65">{{ uAddress }}</span>
       </div>
-      {% comment %} <div class="rounded-full bg-[#e2e5e988] hover:bg-orange-100 dark:bg-white/10 dark:hover:bg-[#3B3D3E] text-black/90 hover:text-black dark:text-white/90 dark:hover:text-white">
-        <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}" fill="none" viewBox="0 0 24 24" width="26" height="26" class="text-black/50 dark:text-white/50">
-          <path fill="currentColor" d="m11.6 14.5999 -3.95 -3.925c-0.0333 -0.03335 -0.0625 -0.073 -0.0875 -0.119 -0.025 -0.04615 -0.0375 -0.0955 -0.0375 -0.148 0 -0.10535 0.03445 -0.1955 0.10325 -0.2705 0.0687 -0.075 0.15925 -0.1125 0.27175 -0.1125h8.2c0.1125 0 0.2032 0.03865 0.272 0.116 0.0687 0.07715 0.103 0.16725 0.103 0.27025 0 0.02585 -0.04165 0.11375 -0.125 0.26375l-3.95 3.925c-0.05 0.05 -0.1088 0.09165 -0.1765 0.125 -0.06765 0.03335 -0.14215 0.05 -0.2235 0.05 -0.08115 0 -0.15565 -0.01665 -0.2235 -0.05 -0.06765 -0.03335 -0.1265 -0.075 -0.1765 -0.125Z" stroke-width="0.5"></path>
+      <div class="flex justify-center items-center">
+        <svg xmlns="{% static 'icons/chevron-right.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right-icon lucide-chevron-right text-black dark:text-white w-6 h-6">
+          <path d="m9 18 6-6-6-6" />
         </svg>
-      </div> {% endcomment %}
+      </div>
     </button>
   </div>
   {% comment %}Menu{% endcomment %}
@@ -46,80 +44,7 @@
     {% comment %}Home{% endcomment %}
     <a href="{% url 'user_dashboard' %}"
       title="{% trans 'Home' %}"
-      class="flex h-8 items-center text-[18px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'home' %}
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-          
-          
-        
-        
-        
+      class="flex h-12 lg:h-9 items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'home' %}
         
         
         
@@ -129,231 +54,12 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       {% else %}
         
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-          
-          
-        
-        
-        
-        
-        
-        
-        
          text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -368,80 +74,7 @@
     {% comment %}search property{% endcomment %}
     <a href="{% url 'search_property' %}"
       title="{% trans 'Search Property' %}"
-      class="flex h-8 items-center text-[18px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'searchProperty' %}
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-          
-          
-        
-        
-        
+      class="flex h-12 lg:h-9 items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'searchProperty' %}
         
         
         
@@ -451,231 +84,12 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       {% else %}
         
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-          
-          
-        
-        
-        
-        
-        
-        
-        
          text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -690,80 +104,7 @@
     {% comment %}near me{% endcomment %}
     <a href="{% url 'near_me' %}"
       title="{% trans 'Near Me' %}"
-      class="flex h-8 items-center text-[18px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'nearMe' %}
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-          
-          
-        
-        
-        
+      class="flex h-12 lg:h-9 items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'nearMe' %}
         
         
         
@@ -773,231 +114,12 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       {% else %}
         
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-          
-          
-        
-        
-        
-        
-        
-        
-        
          text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1013,80 +135,7 @@
     {% comment %}shortlisted{% endcomment %}
     <a href="{% url 'shortlisted' %}"
       title="{% trans 'Shortlisted' %}"
-      class="flex h-8 items-center text-[18px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'shortlisted' %}
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-          
-          
-        
-        
-        
+      class="flex h-12 lg:h-9 items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'shortlisted' %}
         
         
         
@@ -1096,231 +145,12 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       {% else %}
         
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-          
-          
-        
-        
-        
-        
-        
-        
-        
          text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1334,80 +164,7 @@
     {% comment %}messages{% endcomment %}
     <a href="{% url 'messages' %}"
       title="{% trans 'Messages' %}"
-      class="flex h-8 items-center text-[18px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'messages' %}
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-          
-          
-        
-        
-        
+      class="flex h-12 lg:h-9 items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'messages' %}
         
         
         
@@ -1417,231 +174,12 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       {% else %}
         
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-          
-          
-        
-        
-        
-        
-        
-        
-        
          text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1656,80 +194,7 @@
     {% comment %}Help{% endcomment %}
     <a href="{% url 'user_help' %}"
       title="{% trans 'Help & Support' %}"
-      class="flex h-8 items-center text-[18px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'help' %}
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-          
-          
-        
-        
-        
+      class="flex h-12 lg:h-9 items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'help' %}
         
         
         
@@ -1739,231 +204,12 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       {% else %}
         
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-          
-          
-        
-        
-        
-        
-        
-        
-        
          text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1978,80 +224,7 @@
     {% comment %}Setting{% endcomment %}
     <a href="{% url 'user_setting' %}"
       title="{% trans 'Settings' %}"
-      class="flex h-8 items-center text-[18px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all duration-100 {% if active == 'setting' %}
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-          
-          
-        
-        
-        
+      class="flex h-12 lg:h-9 items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all duration-100 {% if active == 'setting' %}
         
         
         
@@ -2061,231 +234,12 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       {% else %}
         
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-          
-          
-        
-        
-        
-        
-        
-        
-        
          text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2302,7 +256,7 @@
   <div class="flex flex-col">
     {% comment %}Theme Button{% endcomment %}
     <div class="p-5 lg:p-2">
-      <button id="u-theme-btn" title="{% trans 'Theme' %}" class="shadow-black dark:shadow-white shrink-0 flex h-8 w-full items-center lg:p-[11px] p-[13px] rounded-lg lg:transition-all lg:duration-100 active:scale-95 hover:bg-black/5 dark:hover:bg-white/5">
+      <button id="u-theme-btn" title="{% trans 'Theme' %}" class="shadow-black dark:shadow-white shrink-0 flex h-12 w-full items-center lg:p-[11px] p-[13px] rounded-lg lg:transition-all lg:duration-100 active:scale-95 hover:bg-black/5 dark:hover:bg-white/5">
         {% comment %}Moon{% endcomment %}
         <svg id="u-moon-icon" xmlns="{% static 'icons/moon-star.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute text-orange-600 lg:transition-all duration-100 scale-100 rotate-0 dark:scale-0 dark:rotate-90 lg:w-5 lg:h-5 w-6 h-6">
           <path d="M18 5h4" />
@@ -2332,27 +286,27 @@
         const html = document.documentElement
         const themeBtn = document.getElementById('u-theme-btn')
         const savedTheme = localStorage.getItem('utheme')
-        localStorage.setItem('uthemeValue', '1')
         
         if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
           html.classList.add('dark')
+          localStorage.setItem('uthemeValue', '2')
         } else {
           html.classList.remove('dark')
+          localStorage.setItem('uthemeValue', '1')
         }
         
-        themeBtn.addEventListener('click', () => {
-          html.classList.toggle('dark')
-          if (html.classList.contains('dark')) {
-            localStorage.setItem('utheme', 'dark')
-            localStorage.setItem('uthemeValue', '2')
-          } else {
-            localStorage.setItem('utheme', 'light')
-            localStorage.setItem('uthemeValue', '1')
-          }
-          themeBtn.animate([{ transform: 'scale(1)' }, { transform: 'scale(.85)' }, { transform: 'scale(1)' }], {
-            duration: 1250
+        if (themeBtn) {
+          themeBtn.addEventListener('click', () => {
+            const isDark = html.classList.toggle('dark')
+            localStorage.setItem('utheme', isDark ? 'dark' : 'light')
+            localStorage.setItem('uthemeValue', isDark ? '2' : '1')
+        
+            themeBtn.animate([{ transform: 'scale(1)' }, { transform: 'scale(.85)' }, { transform: 'scale(1)' }], {
+              duration: 200,
+              easing: 'ease'
+            })
           })
-        })
+        }
       </script>
     </div>
     {% comment %}Profile{% endcomment %}
@@ -2364,8 +318,7 @@
             <div class="w-5 h-5 border-[4px] border-black/20 border-t-black dark:border-white/20 dark:border-t-white rounded-full animate-[spin_0.5s_linear_infinite]"></div>
           </div>
         </div>
-
-        <div class="flex lg:hidden lg:group-hover:flex justify-between w-full lg:w-[263px] border border-black/10 dark:border-white/10 rounded-xl px-2 py-2">
+        <div class="flex lg:hidden lg:group-hover:flex justify-between w-full lg:w-[263px] border border-black/10 hover:border-orange-500 dark:border-white/15 bg-black/2 dark:bg-white/1 rounded-xl px-2 py-2">
           <div class="relative flex justify-center items-center w-16 h-16 lg:w-10 lg:h-10">
             <img src="/media/{{ uProfile.img }}" alt="User avatar" id="uImg" onerror="this.onerror=null; this.src='{% static 'images/avatar.png' %}'" class="w-full h-full object-cover border border-black/20 dark:border-white/20 rounded-full" />
             <div id="uImgLoader2" class="absolute inset-0 flex justify-center items-center backdrop-blur rounded-full">
