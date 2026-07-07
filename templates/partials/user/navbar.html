@@ -1,5 +1,8 @@
-{% load static %} {% load i18n %}
-<aside id="u-navbar" class="group fixed inset-0 left-0 top-0 z-50 h-screen w-96 lg:w-[60px] lg:hover:w-72 flex flex-col overflow-hidden bg-white lg:bg-transparent hover:bg-white dark:bg-[#0e0d0d] lg:dark:bg-transparent dark:hover:bg-[#0e0d0d] text-black dark:text-white -translate-x-full lg:translate-x-0 transition-all duration-100">
+{% load static %}
+{% load i18n %}
+{% comment %} <div id="navbarBox" class="lg:hidden z-50 w-screen h-screen bg-black/20 dark:bg-white/20 backdrop-blur-3xl"></div> {% endcomment %}
+{% comment %} <aside id="navbar" class="group fixed inset-0 left-0 top-0 z-50 h-screen w-96 lg:w-[60px] lg:hover:w-72 flex flex-col overflow-hidden bg-[#ffffff] lg:bg-transparent hover:bg-[#ffffff] dark:bg-[#0e0d0d] dark:lg:bg-transparent dark:hover:bg-[#0e0d0d] text-black dark:text-white -translate-x-full lg:translate-x-0 transition-all duration-100">
+  {% endcomment %}
   {% comment %}Logo{% endcomment %}
   <div class="lg:h-12 flex justify-between items-center px-3 py-1 lg:py-4">
     <img src="{% static 'images/web-icon.png' %}" alt="Brokly Logo" class="w-11 h-11 lg:h-[35px] lg:w-[35px] shrink-0" />
@@ -44,10 +47,50 @@
     {% comment %}Home{% endcomment %}
     <a href="{% url 'user_dashboard' %}"
       title="{% trans 'Home' %}"
-      class="flex h-12 lg:h-9 items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'home' %}
+      class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'home' %}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
          bg-orange-500 rounded-lg text-white
+
+
+
+
+
+
+
+
+
+
       {% else %}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
          text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg
+
+
+
+
+
+
+
+
+
+
       {% endif %}">
       <svg xmlns="{% static 'icons/house.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 lg:w-5 lg:h-5 w-6 h-6">
         <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
@@ -55,27 +98,53 @@
       </svg>
       <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{% trans 'Home' %}</span>
     </a>
-    {% comment %}search property{% endcomment %}
-    <a href="{% url 'search_property' %}"
-      title="{% trans 'Search Property' %}"
-      class="flex h-12 lg:h-9 items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'searchProperty' %}
-         bg-orange-500 rounded-lg text-white
-      {% else %}
-         text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg
-      {% endif %}">
-      <svg xmlns="{% static 'icons/search.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search shrink-0 lg:w-5 lg:h-5 w-6 h-6">
-        <path d="m21 21-4.34-4.34" />
-        <circle cx="11" cy="11" r="8" />
-      </svg>
-      <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{% trans 'Search Property' %}</span>
-    </a>
     {% comment %}near me{% endcomment %}
     <a href="{% url 'near_me' %}"
       title="{% trans 'Near Me' %}"
-      class="flex h-12 lg:h-9 items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'nearMe' %}
+      class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'nearMe' %}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
          bg-orange-500 rounded-lg text-white
+
+
+
+
+
+
+
+
+
+
       {% else %}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
          text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg
+
+
+
+
+
+
+
+
+
+
       {% endif %}">
       <svg xmlns="{% static 'icons/map-pinned.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pinned-icon lucide-map-pinned shrink-0 lg:w-5 lg:h-5 w-6 h-6">
         <path d="M18 8c0 3.613-3.869 7.429-5.393 8.795a1 1 0 0 1-1.214 0C9.87 15.429 6 11.613 6 8a6 6 0 0 1 12 0" />
@@ -87,10 +156,50 @@
     {% comment %}shortlisted{% endcomment %}
     <a href="{% url 'shortlisted' %}"
       title="{% trans 'Shortlisted' %}"
-      class="flex h-12 lg:h-9 items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'shortlisted' %}
+      class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'shortlisted' %}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
          bg-orange-500 rounded-lg text-white
+
+
+
+
+
+
+
+
+
+
       {% else %}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
          text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg
+
+
+
+
+
+
+
+
+
+
       {% endif %}">
       <svg xmlns="{% static 'icons/heart.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart-icon lucide-heart shrink-0 lg:w-5 lg:h-5 w-6 h-6">
         <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />
@@ -100,10 +209,50 @@
     {% comment %}messages{% endcomment %}
     <a href="{% url 'messages' %}"
       title="{% trans 'Messages' %}"
-      class="flex h-12 lg:h-9 items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'messages' %}
+      class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'messages' %}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
          bg-orange-500 rounded-lg text-white
+
+
+
+
+
+
+
+
+
+
       {% else %}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
          text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg
+
+
+
+
+
+
+
+
+
+
       {% endif %}">
       <svg xmlns="{% static 'icons/messages-square.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-messages-square-icon lucide-messages-square shrink-0 lg:w-5 lg:h-5 w-6 h-6">
         <path d="M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
@@ -114,10 +263,50 @@
     {% comment %}Help{% endcomment %}
     <a href="{% url 'user_help' %}"
       title="{% trans 'Help & Support' %}"
-      class="flex h-12 lg:h-9 items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'help' %}
+      class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'help' %}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
          bg-orange-500 rounded-lg text-white
+
+
+
+
+
+
+
+
+
+
       {% else %}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
          text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg
+
+
+
+
+
+
+
+
+
+
       {% endif %}">
       <svg xmlns="{% static 'icons/headset.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 lg:w-5 lg:h-5 w-6 h-6">
         <path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z" />
@@ -128,10 +317,50 @@
     {% comment %}Setting{% endcomment %}
     <a href="{% url 'user_setting' %}"
       title="{% trans 'Settings' %}"
-      class="flex h-12 lg:h-9 items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all duration-100 {% if active == 'setting' %}
+      class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all duration-100 {% if active == 'setting' %}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
          bg-orange-500 rounded-lg text-white
+
+
+
+
+
+
+
+
+
+
       {% else %}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
          text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg
+
+
+
+
+
+
+
+
+
+
       {% endif %}">
       <svg xmlns="{% static 'icons/settings.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 lg:w-5 lg:h-5 w-6 h-6">
         <path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" />
@@ -144,16 +373,16 @@
   <div class="flex flex-col">
     {% comment %}Theme Button{% endcomment %}
     <div class="p-5 lg:p-2">
-      <button id="u-theme-btn" title="{% trans 'Theme' %}" class="shadow-black dark:shadow-white shrink-0 flex h-12 w-full items-center lg:p-[11px] p-[13px] rounded-lg lg:transition-all lg:duration-100 active:scale-95 hover:bg-black/5 dark:hover:bg-white/5">
+      <button id="u-theme-btn" title="{% trans 'Theme' %}" class="relative shadow-black dark:shadow-white shrink-0 flex h-12 w-full items-center lg:p-[11px] p-[13px] rounded-lg lg:transition-all lg:duration-300 hover:bg-black/7 dark:hover:bg-white/5">
         {% comment %}Moon{% endcomment %}
-        <svg id="u-moon-icon" xmlns="{% static 'icons/moon-star.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute text-orange-600 lg:transition-all duration-100 scale-100 rotate-0 dark:scale-0 dark:rotate-90 lg:w-5 lg:h-5 w-6 h-6">
+        <svg id="u-moon-icon" xmlns="{% static 'icons/moon-star.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute text-orange-600 lg:transition-all duration-300 scale-100 rotate-0 dark:scale-0 dark:rotate-100 lg:w-5 lg:h-5 w-6 h-6">
           <path d="M18 5h4" />
           <path d="M20 3v4" />
           <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
         </svg>
 
         {% comment %}Sun{% endcomment %}
-        <svg id="u-sun-icon" xmlns="{% static 'icons/sun.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute text-orange-600 lg:transition-all duration-100 scale-0 -rotate-90 dark:scale-100 dark:rotate-0 lg:w-5 lg:h-5 w-6 h-6">
+        <svg id="u-sun-icon" xmlns="{% static 'icons/sun.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute text-orange-600 lg:transition-all duration-300 scale-0 -rotate-100 dark:scale-100 dark:rotate-0 lg:w-5 lg:h-5 w-6 h-6">
           <circle cx="12" cy="12" r="4" />
           <path d="M12 2v2" />
           <path d="M12 20v2" />
@@ -165,9 +394,9 @@
           <path d="m19.07 4.93-1.41 1.41" />
         </svg>
 
-        <span class="ml-10 lg:ml-8 text-[16px] lg:text-[14px] whitespace-nowrap font-medium text-orange-600 lg:hidden lg:transition-all lg:duration-100 lg:group-hover:block">
-          <span class="lg:transition-all lg:duration-100 scale-100 dark:scale-90 block dark:hidden">{% trans 'Dark Mode' %}</span>
-          <span class="lg:transition-all lg:duration-100 scale-90 dark:scale-100 hidden dark:block">{% trans 'Light Mode' %}</span>
+        <span class="ml-10 lg:ml-8 text-[16px] lg:text-[14px] whitespace-nowrap font-medium text-orange-600 lg:hidden lg:transition-all lg:duration-300 lg:group-hover:block">
+          <span class="lg:transition-all lg:duration-300 scale-100 dark:scale-90 block dark:hidden">{% trans 'Dark Mode' %}</span>
+          <span class="lg:transition-all lg:duration-300 scale-90 dark:scale-100 hidden dark:block">{% trans 'Light Mode' %}</span>
         </span>
       </button>
       <script>
@@ -188,10 +417,10 @@
             const isDark = html.classList.toggle('dark')
             localStorage.setItem('utheme', isDark ? 'dark' : 'light')
             localStorage.setItem('uthemeValue', isDark ? '2' : '1')
-        
-            themeBtn.animate([{ transform: 'scale(1)' }, { transform: 'scale(.85)' }, { transform: 'scale(1)' }], {
-              duration: 200,
-              easing: 'ease'
+            window.location.href = window.location.href
+            themeBtn.animate([{ transform: 'scale(1)' }, { transform: 'scale(.93)' }, { transform: 'scale(1)' }], {
+              duration: 250,
+              esasing: 'ease-in-out'
             })
           })
         }
@@ -226,4 +455,5 @@
       </a>
     </div>
   </div>
-</aside>
+  {% comment %}
+</aside> {% endcomment %}

@@ -1,4 +1,5 @@
 {% load static tailwind_tags %} {% load i18n %}
+
 <!DOCTYPE html>
 <html lang="en" class="">
   <head>
@@ -14,40 +15,87 @@
     <link rel="icon" href="{% static 'images/web-icon.png' %}" type="image/png" />
     {% comment %}Tailwind CSS{% endcomment %} {% tailwind_css %} {% comment %}CSS{% endcomment %}
     <link rel="stylesheet" as="style" href="{% static 'css/dashboard/base.css' %}" />
-    {% comment %}JS{% endcomment %}
+    {% comment %}JS{% endcomment %} {% comment %}
     <script src="{% static 'js/user/window-scroll-chenge-color.js' %}" defer></script>
+    {% endcomment %}
   </head>
-  <body class="bg-[#f7f9fc] text-black dark:bg-[#121212] dark:text-[#ffffff] tracking-wide">
-    {% comment %}Navbar{% endcomment %} {% include 'partials/user/navbar.html' %}
+  <body id="u-dashboard" class="w-full bg-[#fdfdfd] text-black dark:bg-[#0e0d0d] dark:text-white tracking-wide">
+    <div id="screen-fix" class="w-screen h-screen hidden fixed inset-0 bg-black/90 backdrop-blur-0 z-50 overflow-hidden scrollbar-hide"></div>
 
-    <div class="lg:ml-[60px]">
-      {% comment %}dasktop header view{% endcomment %}
-      <div id="dasktopHeader" class="hidden lg:block fixed top-0 left-[60px] right-0 z-40 h-23.5 bg-[#f7f9fc] dark:bg-[#121212]">
-        {% include 'partials/user/header.html' %}
+    {% comment %}navbar{% endcomment %}
+    <aside id="navbar" class="group fixed inset-y-0 left-0 max-h-screen z-50 w-96 lg:w-[60px] lg:hover:w-72 flex flex-col overflow-hidden bg-[#ffffff] lg:bg-[#fdfdfd] hover:bg-[#ffffff] dark:bg-[#0e0d0d] dark:lg:bg-[#0e0d0d] dark:hover:bg-[#0e0d0d] text-black dark:text-white -translate-x-full lg:translate-x-0 transition-all duration-300">
+      {% include 'partials/user/navbar.html' %}
+    </aside>
+
+    {% comment %}dasktop header view{% endcomment %}
+    <header class="hidden lg:block z-40 fixed top-0 left-[60px] right-0">
+      {% block u_d_header %}
+
+      {% endblock %}
+    </header>
+
+    {% comment %}mobile header view{% endcomment %}
+    <header class="lg:hidden fixed top-0 left-0 z-40">
+      {% block u_m_header %}
+
+      {% endblock %}
+    </header>
+    <script>
+      const ubody = document.getElementById('u-dashboard')
+      const usfix = document.getElementById('screen-fix')
+      const uNavBtn = document.getElementById('u-menu-btn')
+      const navbar = document.getElementById('navbar')
+      const umNavCloseBtn = document.getElementById('u-m-nav-close-btn')
+      
+      function openNav() {
+        ubody.classList.add('overflow-hidden', 'scrollbar-hide')
+        usfix.classList.remove('hidden')
+        navbar.classList.remove('-translate-x-full')
+      }
+      
+      function closeNav() {
+        ubody.classList.remove('overflow-hidden', 'scrollbar-hide')
+        usfix.classList.add('hidden')
+        navbar.classList.add('-translate-x-full')
+      }
+      
+      uNavBtn?.addEventListener('click', openNav)
+      umNavCloseBtn?.addEventListener('click', closeNav)
+      usfix?.addEventListener('click', closeNav)
+    </script>
+
+    {% comment %}main content{% endcomment %}
+    <main class="lg:ml-[60px] mb-20 min-h-screen bg-[#fdfdfd] dark:bg-[#0e0d0d] px-1">
+      {% block ucontent %}
+
+      {% endblock %}
+    </main>
+
+    {% comment %}desktop bottom near me button{% endcomment %}
+    {% if active == 'home' %}
+      <div class="fixed bottom-5 left-1/2 hidden lg:flex justify-center items-center z-40">
+        <a href="{% url 'near_me' %}" id="nearMeBtn" title="{% trans 'Near Me' %}" class="flex justify-center items-center gap-2 px-4 h-10 rounded-full bg-orange-500 text-white shadow-[0_0_5px_rgba(0,0,0,0.6)] dark:shadow-[0_0_50px_rgba(255,255,255,0.2)] active:scale-95 transition-all duration-1000">
+          <div class="flex justify-center items-center">
+            <svg xmlns="{% static 'icons/map-pinned.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pinned-icon lucide-map-pinned w-5 h-5">
+              <path d="M18 8c0 3.613-3.869 7.429-5.393 8.795a1 1 0 0 1-1.214 0C9.87 15.429 6 11.613 6 8a6 6 0 0 1 12 0" />
+              <circle cx="12" cy="8" r="2" />
+              <path d="M8.714 14h-3.71a1 1 0 0 0-.948.683l-2.004 6A1 1 0 0 0 3 22h18a1 1 0 0 0 .948-1.316l-2-6a1 1 0 0 0-.949-.684h-3.712" />
+            </svg>
+          </div>
+          <span id="nearMeText" class="text-base overflow-hidden whitespace-nowrap transition-all duration-1000 max-w-[90px] opacity-100">{% trans 'Near Me' %}</span>
+        </a>
       </div>
+    {% endif %}
 
-      {% comment %}mobile header view{% endcomment %}
-      <div id="mobileHeader" class="lg:hidden fixed top-0 left-0 z-40 w-screen h-26 bg-[#f7f9fc] dark:bg-[#121212]">
-        {% include 'partials/user/mobile-header.html' %}
-      </div>
-
-      {% comment %}Main page content{% endcomment %}
-      <main id="page-content" class="animate-fadeInUp min-h-[calc(100vh-33px)] px-1 pt-24 pb-24 lg:pt-21 bg-[#f7f9fc] dark:bg-[#121212]">
-        {% block ucontent %}
-
-        {% endblock %}
-      </main>
-
-      <div id="mobileFooter" class="lg:hidden">
-        {% include 'partials/user/mobile-footer.html' %}
-      </div>
+    <div class="lg:hidden fixed bottom-0 right-0 z-40 w-full px-1 bg-[#fafafa] dark:bg-[#111010] shadow-lg">
+      {% include 'partials/user/mobile-footer.html' %}
     </div>
 
     {% include 'user/modals.html' %}
 
     <script src="{% static 'js/user/image-loader.js' %}" defer></script>
     <script src="{% static 'js/user/modals.js' %}" defer></script>
-    <script src="{% static 'js/user/nav-open-close.js' %}" defer></script>
+    {% comment %} <script src="{% static 'js/user/nav-open-close.js' %}" defer></script> {% endcomment %}
     <script src="{% static 'js/user/filter-lists-scroll.js' %}" defer></script>
   </body>
 </html>

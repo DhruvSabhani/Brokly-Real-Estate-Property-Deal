@@ -9,3 +9,13 @@
   */
 @source "../../../**/*.{html,py,js}";
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* Your custom CSS below */
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  scrollbar-width: none;
+}

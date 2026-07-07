@@ -1,0 +1,9 @@
+{
+  "files.autoSave": "afterDelay",
+  "editor.formatOnSave": true,
+  "editor.fontSize": 17,
+  "editor.wordWrap": "on",
+  "workbench.colorTheme": "Dark Modern",
+  "editor.mouseWheelZoom": true,
+  "editor.fastScrollSensitivity": 1
+}

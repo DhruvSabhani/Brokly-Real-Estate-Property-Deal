@@ -10,11 +10,11 @@ class RoleAuthMiddleware:
 
         path = request.path
 
-        if path.startswith("portal/"):
+        if path.startswith("portal/home/"):
             if not request.session.get("portal_login"):
                 return redirect("/portal/login/")
 
-        elif path == "/":
+        elif path == "/home/":
             if not request.session.get("user_login"):
                 return redirect("/login/")
 

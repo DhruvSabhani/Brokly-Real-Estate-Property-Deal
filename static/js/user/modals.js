@@ -1,4 +1,4 @@
-const uModal = document.getElementById("uModal");
+const uModal = document.getElementById("u-modal");
 
 // open modal
 function uOpenModal({
@@ -23,11 +23,13 @@ function uOpenModal({
             btnAction();
         }
     });
+    ubody.classList.add("overflow-hidden", "scrollbar-hide");
     uModal.classList.replace("hidden", "flex");
 }
 
 // close modal
 function uCloseModal() {
+    ubody.classList.remove("overflow-hidden", "scrollbar-hide");
     uModal.classList.replace("flex", "hidden");
 }
 

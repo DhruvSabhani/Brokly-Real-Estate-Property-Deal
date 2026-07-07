@@ -1,8 +1,8 @@
 // filter list scroll icon show
-const filterList = document.getElementById("filterList");
-const leftScrollIcon = document.getElementById("leftScrollIcon");
-const scrollFilterList = document.getElementById("scrollFilterList");
-const rightScrollIcon = document.getElementById("rightScrollIcon");
+const filterList = document.getElementById("filter-lists");
+const leftScrollIcon = document.getElementById("left-scroll-icon");
+const scrollFilterList = document.getElementById("f-lists");
+const rightScrollIcon = document.getElementById("right-scroll-icon");
 // -------------------------------------------------------------------------------
 // left side icon action
 leftScrollIcon.addEventListener("click", (e) => {

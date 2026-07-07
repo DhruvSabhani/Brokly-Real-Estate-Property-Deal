@@ -4,6 +4,10 @@
   scrollbar-color: rgb(0 0 0 / 0.2) transparent;
 }
 
+/* .shrollbar-hide::-webkit-scrollbar {
+  width: 0;
+} */
+
 .scrollbar-hide::-webkit-scrollbar,
 .scrollbar-x-hide::-webkit-scrollbar,
 .scrollbar-y-hide::-webkit-scrollbar {

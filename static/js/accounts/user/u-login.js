@@ -407,7 +407,7 @@ uConBtn.addEventListener('click', function (e) {
                 alert(data.message || "{% trans 'Something went wrong.' %}");
             }
             if (data.success) {
-                window.location.replace('/');
+                window.location.href = '/home/';
                 return;
             }
         })

@@ -67,9 +67,9 @@ def generate_otp(phone):
 @ensure_csrf_cookie
 def login_with_otp(request, role):
     if role == "user" and request.session.get("user_login"):
-        return redirect("/")
+        return redirect("/home/")
     if role == "portal" and request.session.get("portal_login"):
-        return redirect("/portal/")
+        return redirect("/portal/home/")
 
     if request.method == "POST":
         try:
@@ -335,20 +335,9 @@ def user_dashboard(request):
         "uProfile": request.uProfile,
         "uAddress": request.uAddress,
         "active": "home",
-        "range": "1111111111111111111",
+        "range": "1111111111111",
     }
     return render(request, "user/dashboard.html", context)
-
-
-@user_required
-def search_property(request):
-    context = {
-        "user": request.user_obj,
-        "uProfile": request.uProfile,
-        "uAddress": request.uAddress,
-        "active": "searchProperty",
-    }
-    return render(request, "user/search_property.html", context)
 
 
 @user_required
