@@ -11,10 +11,14 @@
     <div class="head-row flex justify-between items-center gap-3">
       <div class="flex flex-1 justify-start items-center gap-3">
         {% comment %}place box{% endcomment %}
-        <button type="button" title="{{ uAddress }}" class="u-place-box text-[15px] rounded-lg flex justify-between items-center px-1 h-9 gap-1 w-44 border border-black/8 bg-[#ffffff] dark:bg-white/10 hover:bg-[#f7f9fc] dark:hover:bg-[#3B3D3E]">
-          <svg xmlns="{% static 'icons/map-pin.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin w-[20px] h-[20px] text-orange-500">
-            <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
-            <circle cx="12" cy="10" r="3" />
+        <button type="button" title="{{ uAddress }}" class="u-place-box text-[15px] rounded-lg flex justify-between items-center px-1 h-9 gap-1 w-60 border border-black/8 bg-[#ffffff] dark:bg-white/10 hover:bg-[#f7f9fc] dark:hover:bg-[#3B3D3E]">
+          <svg xmlns="{% static 'icons/locate-fixed.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-locate-fixed-icon lucide-locate-fixed w-5 h-5 text-orange-500">
+            <line x1="2" x2="5" y1="12" y2="12" />
+            <line x1="19" x2="22" y1="12" y2="12" />
+            <line x1="12" x2="12" y1="2" y2="5" />
+            <line x1="12" x2="12" y1="19" y2="22" />
+            <circle cx="12" cy="12" r="7" />
+            <circle cx="12" cy="12" r="3" />
           </svg>
           <span class="flex-1 text-left truncate">{{ uAddress }}</span>
           <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}" fill="none" viewBox="0 0 24 24" width="22" height="22" class="text-black/50 dark:text-white/50">
@@ -28,8 +32,8 @@
             <circle cx="11" cy="11" r="8" />
           </svg>
           <input id="searchInput" type="search" class="w-full truncate px-3 pr-8 bg-transparent outline-none font-normal text-[15px] placeholder:text-black/50 dark:placeholder:text-white/50" placeholder="{% trans 'Search property, place or project...' %}" />
-          <button type="button" id="clearSearch" class="absolute right-3 hidden text-black/40 hover:text-orange-500 dark:text-white/40 dark:hover:text-orange-500">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <button type="button" id="clearSearch" class="absolute right-3 hidden text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white">
+            <svg xmlns="{% static 'icons/x.svg' %}" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x">
               <path d="M18 6 6 18" />
               <path d="m6 6 12 12" />
             </svg>
@@ -88,7 +92,7 @@
               <div class="w-4 h-4 border-[3px] border-black/20 border-t-black dark:border-white/20 dark:border-t-white rounded-full animate-[spin_0.5s_linear_infinite]"></div>
             </div>
             <div class="absolute -bottom-0.5 -right-0.5 w-[18px] h-[18px] bg-orange-500 rounded-full border-2 border-white dark:border-black/80 flex justify-center items-center">
-              <svg xmlns="{% static 'icons/Arrow-Drop-Down--Streamline-Rounded-Material-Symbols.svg' %}" fill="none" stroke-width="2.5" viewBox="0 0 24 24" class="w-[18px] h-[18px] text-white">
+              <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}" fill="none" stroke-width="2.5" viewBox="0 0 24 24" class="w-[18px] h-[18px] text-white">
                 <path fill="currentColor" d="m11.6 14.5999 -3.95 -3.925c-0.0333 -0.03335 -0.0625 -0.073 -0.0875 -0.119 -0.025 -0.04615 -0.0375 -0.0955 -0.0375 -0.148 0 -0.10535 0.03445 -0.1955 0.10325 -0.2705 0.0687 -0.075 0.15925 -0.1125 0.27175 -0.1125h8.2c0.1125 0 0.2032 0.03865 0.272 0.116 0.0687 0.07715 0.103 0.16725 0.103 0.27025 0 0.02585 -0.04165 0.11375 -0.125 0.26375l-3.95 3.925c-0.05 0.05 -0.1088 0.09165 -0.1765 0.125 -0.06765 0.03335 -0.14215 0.05 -0.2235 0.05 -0.08115 0 -0.15565 -0.01665 -0.2235 -0.05 -0.06765 -0.03335 -0.1265 -0.075 -0.1765 -0.125Z" />
               </svg>
             </div>
@@ -152,7 +156,6 @@
         {% comment %} <img src="{% static 'images/web-icon.png' %}" alt="Brokly Logo" class="ml-4 w-[34px] h-[34px] shrink-0" /> {% endcomment %}
         <h1 class="ml-4 text-[26px] font-medium text-black/90 dark:text-white">Brokly</h1>
       </div>
-
       <div class="flex justify-center items-center gap-4">
         {% comment %}notifications{% endcomment %}
         <a href="/u-notifications/" title="{% trans 'Notifications' %}" id="uNotificationsBtn" class="relative w-[46px] h-[46px] rounded-full flex justify-center items-center border border-black/5 dark:border-white/3 bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-transparent dark:hover:bg-[#3B3D3E]">
@@ -218,7 +221,7 @@
           <div class="relative flex justify-center items-center w-full h-40 overflow-hidden rounded-[10px] bg-gray-100 dark:bg-white/5">
             <img src="{% static 'images/property-default-img.png' %}" alt="Property image" class="w-full h-full object-cover group-hover:scale-[1.04] transition-all duration-200" />
             {% comment %}category{% endcomment %}
-            <span class="absolute top-3 left-3 tracking-normal flex justify-center items-center text-xs font-medium px-1 py-0.4 rounded bg-blue-500 dark:bg-[#0000ff] text-white truncate" style="font-family: monospace">Boys</span>
+            <span class="absolute top-3 left-3 tracking-normal flex justify-center items-center text-[11px] font-medium px-1 py-0.4 rounded bg-blue-500 dark:bg-[#0000ff] text-white truncate" style="font-family: monospace">Boys</span>
             {% comment %}wishlist{% endcomment %}
             <button id="wishlist-btn" type="button" class="absolute top-2 right-2 flex items-center justify-center w-8 h-8 rounded-full bg-white backdrop-blur shadow">
               {% comment %}unlike{% endcomment %}
@@ -235,19 +238,19 @@
           <div class="px-1 py-2">
             {% comment %}Price Badge{% endcomment %}
             <div class="flex justify-start items-center gap-2">
-              <span class="text-xl font-semibold text-orange-500">₹10,000</span>
-              <span class="text-xl font-semibold text-black dark:text-white">-</span>
-              <span class="text-[15px] text-gray-600 dark:text-white/50">₹12,000</span>
-              <span class="text-[15px] text-gray-600 dark:text-white/50">/</span>
-              <span class="text-[15px] text-gray-600 dark:text-white/50">bed</span>
+              <span class="text-[19px] font-semibold text-orange-500">₹10,000</span>
+              <span class="text-[19px] font-semibold text-black dark:text-white">-</span>
+              <span class="text-[14px] text-gray-600 dark:text-white/50">₹12,000</span>
+              <span class="text-[14px] text-gray-600 dark:text-white/50">/</span>
+              <span class="text-[14px] text-gray-600 dark:text-white/50">bed</span>
             </div>
 
             {% comment %}title{% endcomment %}
-            <h3 class="line-clamp-2 text-base font-semibold text-gray-900 dark:text-gray-100 mb-1 tracking-normal">2 BHK Flat Available Near City Center</h3>
+            <h3 class="line-clamp-2 text-[15px] font-semibold text-gray-900 dark:text-gray-100 mb-1 tracking-normal">2 BHK Flat Available Near City Center</h3>
 
             {% comment %}tags{% endcomment %}
             <div class="flex justify-start items-center gap-2 mb-1 overflow-x-auto scrollbar-hide lg:scrollbar-x-show whitespace-nowrap">
-              <div class="flex justify-start items-center gap-2 text-xs font-medium px-1 py-0.5 rounded-md border border-black/20 dark:border-white/20 text-black/70 dark:text-white/70 w-fit">
+              <div class="flex justify-start items-center gap-2 text-[11px] font-medium px-1 py-0.5 rounded-md border border-black/20 dark:border-white/20 text-black/70 dark:text-white/70 w-fit">
                 <svg xmlns="{% static 'icons/users.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users w-[15px] h-[15px] shrink-0">
                   <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
                   <path d="M16 3.128a4 4 0 0 1 0 7.744" />
@@ -257,7 +260,7 @@
                 <span class="truncate">1/2/3 Sharing</span>
               </div>
 
-              <div class="flex justify-start items-center gap-2 text-xs font-medium px-1 py-0.5 rounded-md border border-black/20 dark:border-white/20 text-green-700 dark:text-green-500 w-fit">
+              <div class="flex justify-start items-center gap-2 text-[11px] font-medium px-1 py-0.5 rounded-md border border-black/20 dark:border-white/20 text-green-700 dark:text-green-500 w-fit">
                 <svg xmlns="{% static 'icons/wifi.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wifi-icon lucide-wifi w-[15px] h-[15px] shrink-0">
                   <path d="M12 20h.01" />
                   <path d="M2 8.82a15 15 0 0 1 20 0" />
@@ -269,12 +272,12 @@
             </div>
 
             {% comment %}p location{% endcomment %}
-            <div class="flex justify-start items-center gap-1 text-base font-normal text-gray-400">
+            <div class="flex justify-start items-center gap-1 text-[15px] font-normal text-gray-400">
               <svg xmlns="{% static 'icons/map-pin.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down w-[18px] h-[18px] shrink-0 text-orange-600">
                 <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
                 <circle cx="12" cy="10" r="3" />
               </svg>
-              <span class="line-clamp-2">{{ uAddress }}</span>
+              <span class="line-clamp-1">{{ uAddress }}</span>
             </div>
           </div>
         </div>

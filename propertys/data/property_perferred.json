@@ -1,0 +1,90 @@
+[
+  {
+    "model": "propertys.PropertyPerferred",
+    "pk": 1,
+    "fields": {
+      "perferred_name": "Only Boys",
+      "perferred_name_gu": "ફક્ત છોકરાઓ માટે",
+      "is_active": true,
+      "update_at": "2026-05-11 11:25:55.811441+05:30",
+      "create_at": "2026-05-11 11:25:55.811441+05:30"
+    }
+  },
+  {
+    "model": "propertys.PropertyPerferred",
+    "pk": 2,
+    "fields": {
+      "perferred_name": "Only Girls",
+      "perferred_name_gu": "ફક્ત છોકરીઓ માટે",
+      "is_active": true,
+      "update_at": "2026-05-11 11:25:55.811441+05:30",
+      "create_at": "2026-05-11 11:25:55.811441+05:30"
+    }
+  },
+  {
+    "model": "propertys.PropertyPerferred",
+    "pk": 3,
+    "fields": {
+      "perferred_name": "Family",
+      "perferred_name_gu": "પરિવાર માટે",
+      "is_active": true,
+      "update_at": "2026-05-11 11:25:55.811441+05:30",
+      "create_at": "2026-05-11 11:25:55.811441+05:30"
+    }
+  },
+  {
+    "model": "propertys.PropertyPerferred",
+    "pk": 4,
+    "fields": {
+      "perferred_name": "Bachelor",
+      "perferred_name_gu": "બેચલર માટે",
+      "is_active": true,
+      "update_at": "2026-05-11 11:25:55.811441+05:30",
+      "create_at": "2026-05-11 11:25:55.811441+05:30"
+    }
+  },
+  {
+    "model": "propertys.PropertyPerferred",
+    "pk": 5,
+    "fields": {
+      "perferred_name": "Students",
+      "perferred_name_gu": "વિદ્યાર્થીઓ માટે",
+      "is_active": true,
+      "update_at": "2026-05-11 11:25:55.811441+05:30",
+      "create_at": "2026-05-11 11:25:55.811441+05:30"
+    }
+  },
+  {
+    "model": "propertys.PropertyPerferred",
+    "pk": 6,
+    "fields": {
+      "perferred_name": "Working Professionals",
+      "perferred_name_gu": "નોકરી કરતા લોકો માટે",
+      "is_active": true,
+      "update_at": "2026-05-11 11:25:55.811441+05:30",
+      "create_at": "2026-05-11 11:25:55.811441+05:30"
+    }
+  },
+  {
+    "model": "propertys.PropertyPerferred",
+    "pk": 7,
+    "fields": {
+      "perferred_name": "Couples",
+      "perferred_name_gu": "દંપતી માટે",
+      "is_active": true,
+      "update_at": "2026-05-11 11:25:55.811441+05:30",
+      "create_at": "2026-05-11 11:25:55.811441+05:30"
+    }
+  },
+  {
+    "model": "propertys.PropertyPerferred",
+    "pk": 8,
+    "fields": {
+      "perferred_name": "Any Tenant",
+      "perferred_name_gu": "દરેક માટે ખુલ્લું",
+      "is_active": true,
+      "update_at": "2026-05-11 11:25:55.811441+05:30",
+      "create_at": "2026-05-11 11:25:55.811441+05:30"
+    }
+  }
+]

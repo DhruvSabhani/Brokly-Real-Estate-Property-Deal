@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     # app register
     "accounts.apps.AccountsConfig",
     "common.apps.CommonConfig",
+    "propertys.apps.PropertysConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

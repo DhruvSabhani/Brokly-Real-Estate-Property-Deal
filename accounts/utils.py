@@ -21,7 +21,9 @@ def user_required(view_func):
             return redirect("/login/")
 
         uProfile, created = UserProfile.objects.get_or_create(user=user)
-        uAddress = Addresses.objects.filter(profile=user, is_active=True).first()
+        uAddress = ProfileAddresses.objects.filter(
+            profile_role="user", profile_id=uProfile.pk, is_default=True, is_active=True
+        ).first()
 
         request.user_obj = user
         request.uProfile = uProfile
@@ -49,9 +51,16 @@ def portal_required(view_func):
             return redirect("/portal/login/")
 
         pProfile, created = PortalProfile.objects.get_or_create(user=user)
+        pAddress = ProfileAddresses.objects.filter(
+            profile_role="portal",
+            profile_id=pProfile.pk,
+            is_default=True,
+            is_active=True,
+        ).first()
 
         request.user_obj = user
         request.pProfile = pProfile
+        request.pAddress = pAddress
 
         return view_func(request, *args, **kwarge)
 

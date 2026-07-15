@@ -1,112 +1,112 @@
 [
-    {
-        "model": "accounts.City",
-        "pk": 1,
-        "fields": {
-            "name": "Ahmedabad",
-            "is_active": true,
-            "created_at": "2026-05-11 11:25:55.811441+05:30",
-            "state_id": "7"
-        }
-    },
-    {
-        "model": "accounts.City",
-        "pk": 2,
-        "fields": {
-            "name": "Surat",
-            "is_active": true,
-            "created_at": "2026-05-11 11:25:55.811441+05:30",
-            "state_id": "7"
-        }
-    },
-    {
-        "model": "accounts.City",
-        "pk": 3,
-        "fields": {
-            "name": "Vadodara (Baroda)",
-            "is_active": true,
-            "created_at": "2026-05-11 11:25:55.811441+05:30",
-            "state_id": "7"
-        }
-    },
-    {
-        "model": "accounts.City",
-        "pk": 4,
-        "fields": {
-            "name": "Rajkot",
-            "is_active": true,
-            "created_at": "2026-05-11 11:25:55.811441+05:30",
-            "state_id": "7"
-        }
-    },
-    {
-        "model": "accounts.City",
-        "pk": 5,
-        "fields": {
-            "name": "Panaji (Panjim)",
-            "is_active": true,
-            "created_at": "2026-05-11 11:25:55.811441+05:30",
-            "state_id": "6"
-        }
-    },
-    {
-        "model": "accounts.City",
-        "pk": 6,
-        "fields": {
-            "name": "Vasco da Gama",
-            "is_active": true,
-            "created_at": "2026-05-11 11:25:55.811441+05:30",
-            "state_id": "6"
-        }
-    },
-    {
-        "model": "accounts.City",
-        "pk": 7,
-        "fields": {
-            "name": "Margao (Madgaon)",
-            "is_active": true,
-            "created_at": "2026-05-11 11:25:55.811441+05:30",
-            "state_id": "6"
-        }
-    },
-    {
-        "model": "accounts.City",
-        "pk": 8,
-        "fields": {
-            "name": "Huntsville",
-            "is_active": true,
-            "created_at": "2026-05-11 11:25:55.811441+05:30",
-            "state_id": "8"
-        }
-    },
-    {
-        "model": "accounts.City",
-        "pk": 9,
-        "fields": {
-            "name": "Birmingham",
-            "is_active": true,
-            "created_at": "2026-05-11 11:25:55.811441+05:30",
-            "state_id": "8"
-        }
-    },
-    {
-        "model": "accounts.City",
-        "pk": 10,
-        "fields": {
-            "name": "Anchorage",
-            "is_active": true,
-            "created_at": "2026-05-11 11:25:55.811441+05:30",
-            "state_id": "9"
-        }
-    },
-    {
-        "model": "accounts.City",
-        "pk": 11,
-        "fields": {
-            "name": "Fairbanks",
-            "is_active": true,
-            "created_at": "2026-05-11 11:25:55.811441+05:30",
-            "state_id": "9"
-        }
+  {
+    "model": "accounts.City",
+    "pk": 1,
+    "fields": {
+      "name": "Ahmedabad",
+      "is_active": true,
+      "created_at": "2026-05-11 11:25:55.811441+05:30",
+      "state_id": "7"
     }
+  },
+  {
+    "model": "accounts.City",
+    "pk": 2,
+    "fields": {
+      "name": "Surat",
+      "is_active": true,
+      "created_at": "2026-05-11 11:25:55.811441+05:30",
+      "state_id": "7"
+    }
+  },
+  {
+    "model": "accounts.City",
+    "pk": 3,
+    "fields": {
+      "name": "Vadodara (Baroda)",
+      "is_active": true,
+      "created_at": "2026-05-11 11:25:55.811441+05:30",
+      "state_id": "7"
+    }
+  },
+  {
+    "model": "accounts.City",
+    "pk": 4,
+    "fields": {
+      "name": "Rajkot",
+      "is_active": true,
+      "created_at": "2026-05-11 11:25:55.811441+05:30",
+      "state_id": "7"
+    }
+  },
+  {
+    "model": "accounts.City",
+    "pk": 5,
+    "fields": {
+      "name": "Panaji (Panjim)",
+      "is_active": true,
+      "created_at": "2026-05-11 11:25:55.811441+05:30",
+      "state_id": "6"
+    }
+  },
+  {
+    "model": "accounts.City",
+    "pk": 6,
+    "fields": {
+      "name": "Vasco da Gama",
+      "is_active": true,
+      "created_at": "2026-05-11 11:25:55.811441+05:30",
+      "state_id": "6"
+    }
+  },
+  {
+    "model": "accounts.City",
+    "pk": 7,
+    "fields": {
+      "name": "Margao (Madgaon)",
+      "is_active": true,
+      "created_at": "2026-05-11 11:25:55.811441+05:30",
+      "state_id": "6"
+    }
+  },
+  {
+    "model": "accounts.City",
+    "pk": 8,
+    "fields": {
+      "name": "Huntsville",
+      "is_active": true,
+      "created_at": "2026-05-11 11:25:55.811441+05:30",
+      "state_id": "8"
+    }
+  },
+  {
+    "model": "accounts.City",
+    "pk": 9,
+    "fields": {
+      "name": "Birmingham",
+      "is_active": true,
+      "created_at": "2026-05-11 11:25:55.811441+05:30",
+      "state_id": "8"
+    }
+  },
+  {
+    "model": "accounts.City",
+    "pk": 10,
+    "fields": {
+      "name": "Anchorage",
+      "is_active": true,
+      "created_at": "2026-05-11 11:25:55.811441+05:30",
+      "state_id": "9"
+    }
+  },
+  {
+    "model": "accounts.City",
+    "pk": 11,
+    "fields": {
+      "name": "Fairbanks",
+      "is_active": true,
+      "created_at": "2026-05-11 11:25:55.811441+05:30",
+      "state_id": "9"
+    }
+  }
 ]

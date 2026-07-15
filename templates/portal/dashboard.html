@@ -2,44 +2,80 @@
 {% load static %}
 {% load i18n %}
 {% block ptitle %}
-  {% trans 'Home' %}
+  {% trans 'Dashboard' %}
 {% endblock %}
-{% block pcontent %}
-  <section class="w-full h-full flex flex-col justify-center items-start px-1 py-1">
-    <header class="flex justify-center items-center px-2 py-1">
-      {% comment %}Location box{% endcomment %}
-      <div class="p-location-box rounded-lg flex justify-center items-center border-1 border-black/10 dark:border-white/10 px-2 py-1 gap-2">
-        <svg xmlns="{% static 'icons/map-pin.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin text-orange-500">
-          <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
-          <circle cx="12" cy="10" r="3" />
-        </svg>
-        <span class="text-base">{% trans 'Add Address' %}</span>
+
+{% block portal_dasktop_header %}
+  {% comment %}place box{% endcomment %}
+  <button type="button" title="{{ pAddress }}" class="p-place-box text-[15px] rounded-lg flex justify-between items-center px-1 h-9 gap-1 w-60 border border-black/8 bg-[#ffffff] dark:bg-white/10 hover:bg-[#f7f9fc] dark:hover:bg-[#3B3D3E]">
+    <svg xmlns="{% static 'icons/locate-fixed.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-locate-fixed-icon lucide-locate-fixed w-5 h-5 text-orange-500">
+      <line x1="2" x2="5" y1="12" y2="12" />
+      <line x1="19" x2="22" y1="12" y2="12" />
+      <line x1="12" x2="12" y1="2" y2="5" />
+      <line x1="12" x2="12" y1="19" y2="22" />
+      <circle cx="12" cy="12" r="7" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+    <span class="flex-1 text-left truncate">{{ pAddress }}</span>
+    <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}" fill="none" viewBox="0 0 24 24" width="22" height="22" class="text-black/50 dark:text-white/50">
+      <path fill="currentColor" d="m11.6 14.5999 -3.95 -3.925c-0.0333 -0.03335 -0.0625 -0.073 -0.0875 -0.119 -0.025 -0.04615 -0.0375 -0.0955 -0.0375 -0.148 0 -0.10535 0.03445 -0.1955 0.10325 -0.2705 0.0687 -0.075 0.15925 -0.1125 0.27175 -0.1125h8.2c0.1125 0 0.2032 0.03865 0.272 0.116 0.0687 0.07715 0.103 0.16725 0.103 0.27025 0 0.02585 -0.04165 0.11375 -0.125 0.26375l-3.95 3.925c-0.05 0.05 -0.1088 0.09165 -0.1765 0.125 -0.06765 0.03335 -0.14215 0.05 -0.2235 0.05 -0.08115 0 -0.15565 -0.01665 -0.2235 -0.05 -0.06765 -0.03335 -0.1265 -0.075 -0.1765 -0.125Z" stroke-width="0.5"></path>
+    </svg>
+  </button>
+  {% comment %}search box{% endcomment %}
+  <div class="relative search-wrapper flex justify-center items-center w-full h-9 rounded-lg border border-black/8 bg-[#ffffff] dark:bg-white/10 hover:bg-[#f7f9fc] dark:hover:bg-[#3B3D3E] focus-within:ring-2 focus-within:ring-orange-500 transition-all duration-200">
+    <svg xmlns="{% static 'icons/search.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search w-[17px] h-[17px] ml-3 text-black/80 dark:text-white/80 shrink-0">
+      <path d="m21 21-4.34-4.34" />
+      <circle cx="11" cy="11" r="8" />
+    </svg>
+    <input type="search" class="search-input w-full truncate px-3 pr-8 bg-transparent outline-none font-normal text-[15px] placeholder:text-black/50 dark:placeholder:text-white/50" placeholder="{% trans 'Search propertyes, leads, location...' %}" />
+    <button type="button" class="clear-search-btn absolute right-3 hidden text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white">
+      <svg xmlns="{% static 'icons/x.svg' %}" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </svg>
+    </button>
+  </div>
+{% endblock %}
+
+{% block portal_mobile_header %}
+  <div class="w-screen h-15 px-2 py-2 bg-[#fdfdfd] dark:bg-[#121212]">
+    <div class="flex justify-between items-center gap-3">
+      <div class="flex justify-center items-center">
+        {% comment %}menu bar button{% endcomment %}
+        <button id="protal-menu-btn" title="{% trans 'Menu' %}" class="rounded-lg flex justify-center items-center w-11 h-11 border border-black/7 dark:border-white/15 bg-white dark:bg-transparent text-black dark:text-white">
+          <svg xmlns="{% static 'icons/text-align-start.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-text-align-start-icon lucide-text-align-start w-6 h-6">
+            <path d="M21 5H3" />
+            <path d="M15 12H3" />
+            <path d="M17 19H3" />
+          </svg>
+        </button>
+        <h1 class="ml-4 text-[26px] font-medium text-black/90 dark:text-white">Brokly<span class="ml-1 text-orange-600">Portal</span></h1>
       </div>
-    </header>
-    <main class="flex flex-col justify-center items-start">
-      <div id="screenInfo">Loading...</div>
-      <script>
-        const screenInfo = document.getElementById('screenInfo')
-        
-        function updateScreenInfo() {
-          const width = window.innerWidth
-          const height = window.innerHeight
-          const zoom = Math.round(window.devicePixelRatio * 100)
-        
-          screenInfo.innerHTML = `Width: ${width}px<br>Height: ${height}px<br>Zoom: ${zoom}%`
-        }
-        
-        updateScreenInfo()
-        window.addEventListener('resize', updateScreenInfo)
-      </script>
+      <div class="flex justify-center items-center gap-4">
+        {% comment %}notifications{% endcomment %}
+        <a href="#" title="{% trans 'Notifications' %}" id="pNotificationsBtn" class="relative w-[46px] h-[46px] rounded-full flex justify-center items-center border border-black/5 dark:border-white/3 bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-transparent dark:hover:bg-[#3B3D3E]">
+          <div class="absolute top-0 right-0 w-[18px] h-[18px] bg-orange-500 rounded-full flex justify-center items-center text-[13px] font-medium text-white">2</div>
+          <svg xmlns="{% static 'icons/bell.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell w-[22px] h-[22px] text-black/60 hover:text-black/80 dark:text-white dark:hover:text-white/80">
+            <path d="M10.268 21a2 2 0 0 0 3.464 0" />
+            <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
+          </svg>
+        </a>
+        {% comment %}search box{% endcomment %}
+        <button title="{% trans 'Search' %}" id="pSearchBtn" class="relative w-[46px] h-[46px] rounded-full flex justify-center items-center border border-black/5 dark:border-white/3 bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-transparent dark:hover:bg-[#3B3D3E]">
+          <svg xmlns="{% static 'icons/search.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search w-[22px] h-[22px] text-black/60 hover:text-black/80 dark:text-white dark:hover:text-white/80">
+            <path d="m21 21-4.34-4.34" />
+            <circle cx="11" cy="11" r="8" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block pcontent %}
+  <section class="pt-15 lg:pt-13 w-full h-full">
+    <div class="flex justify-center items-center">
       <h1>{% trans 'Welcome to Brokly Protal Dashboard' %}</h1>
-      <h2>{{ pProfile }}</h2>
-      <h2>{% trans 'name' %}: {{ pProfile.name }}</h2>
-      <h2>{% trans 'state' %}: {{ pProfile.state }}</h2>
-      <h2>{% trans 'city' %}: {{ pProfile.city }}</h2>
-      <h2>{% trans 'created_at' %}: {{ pProfile.created_at }}</h2>
-      <h2>{% trans 'updated_at' %}: {{ pProfile.updated_at }}</h2>
-      <a href="/portal-logout/" class="text-blue-500 hover:text-blue-700">{% trans 'Logout' %}</a>
-    </main>
+    </div>
   </section>
 {% endblock %}

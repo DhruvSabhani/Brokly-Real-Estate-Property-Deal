@@ -28,14 +28,17 @@ pCityBtn.addEventListener("click", () => {
       pCityList.innerHTML = html;
     });
 });
+
 function pCloseCityModal() {
   pCityModal.classList.replace("flex", "hidden");
 }
+
 function pCitySelected(id, name) {
   pCityId.value = id;
   pSelectedCity.innerText = name;
   pCloseCityModal();
 }
+
 pCitySeaI.addEventListener("keyup", () => {
   let pCvalue = pCitySeaI.value.toLowerCase();
   let pCitems = document.querySelectorAll(".pCity-item");
@@ -57,6 +60,7 @@ pCitySeaI.addEventListener("keyup", () => {
     pCityND.classList.add("hidden");
   }
 });
+
 pCityModal.addEventListener("click", (e) => {
   if (e.target === pCityModal) pCloseCityModal();
 });

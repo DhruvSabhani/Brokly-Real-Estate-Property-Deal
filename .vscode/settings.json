@@ -5,5 +5,7 @@
   "editor.wordWrap": "on",
   "workbench.colorTheme": "Dark Modern",
   "editor.mouseWheelZoom": true,
-  "editor.fastScrollSensitivity": 1
+  "editor.fastScrollSensitivity": 1,
+  "editor.scrollbar.verticalScrollbarSize": 10,
+  "workbench.editor.splitInGroupLayout": "vertical"
 }

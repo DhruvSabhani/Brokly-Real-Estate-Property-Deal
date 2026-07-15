@@ -4,9 +4,29 @@
   scrollbar-color: rgb(0 0 0 / 0.2) transparent;
 }
 
-/* .shrollbar-hide::-webkit-scrollbar {
-  width: 0;
-} */
+/* light theme */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.7) inset !important;
+  box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.7) inset !important;
+  -webkit-text-fill-color: #000000 !important;
+  caret-color: #000000;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+/* dark theme */
+.dark input:-webkit-autofill,
+.dark input:-webkit-autofill:hover,
+.dark input:-webkit-autofill:focus,
+.dark input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px rgb(255 255 255 / 0) inset !important;
+  box-shadow: 0 0 0 1000px rgb(255 255 255 / 0) inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff;
+  transition: background-color 9999s ease-in-out 0s;
+}
 
 .scrollbar-hide::-webkit-scrollbar,
 .scrollbar-x-hide::-webkit-scrollbar,
@@ -26,6 +46,11 @@
   scrollbar-color: rgb(255 255 255 / 0.2) transparent;
 }
 
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
 :disabled {
   cursor: not-allowed;
 }
@@ -39,9 +64,6 @@ a {
   display: -webkit-box;
   text-overflow: ellipsis;
   line-clamp: 2;
-  /* -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-    overflow: hidden; */
 }
 
 @keyframes fadeInUp {

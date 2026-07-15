@@ -10,6 +10,7 @@ urlpatterns = [
         name="change_language",
     ),
     # User
+    path("", views.user_dashboard, name="user_dashboard"),
     path("home/", views.user_dashboard, name="user_dashboard"),
     path("login/", views.login_user, name="brokly_login"),
     path("resend-otp/", views.resend_otp, name="resend_otp"),
@@ -22,7 +23,8 @@ urlpatterns = [
     path("setting/", views.user_setting, name="user_setting"),
     path("user-logout/", views.user_logout, name="user_logout"),
     # Portal
-    path("portal/home/", views.portal_dashboard, name="portal_dashboard"),
+    path("portal/", views.portal_dashboard, name="portal_dashboard"),
+    path("portal/dashboard/", views.portal_dashboard, name="portal_dashboard"),
     path("portal/login/", views.login_portal, name="portal_login"),
     path("portal-profile/", views.portal_profile, name="portal_profile"),
     path("portal/help/", views.portal_help, name="portal_help"),

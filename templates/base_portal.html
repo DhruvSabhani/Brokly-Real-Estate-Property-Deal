@@ -8,83 +8,190 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
       {% block ptitle %}
-        {% trans 'Home' %}
+        {% trans 'Dashboard' %}
       {% endblock %}- Brokly Portal
     </title>
     {% comment %}Web Icon Link{% endcomment %}
     <link rel="icon" href="{% static 'images/web-icon.png' %}" type="image/png" />
     {% comment %}Tailwind CSS{% endcomment %}
     {% tailwind_css %}
-    <style>
-      * {
-        transition: all 0.1s ease;
-        scrollbar-width: thin;
-        scrollbar-color: rgb(0 0 0 / 0.2) transparent;
-      }
-      
-      .dark *,
-      .dark {
-        scrollbar-color: rgb(255 255 255 / 0.2) transparent;
-      }
-      
-      :disabled {
-        cursor: not-allowed;
-      }
-      
-      button,
-      a {
-        cursor: pointer;
-      }
-      
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          z-index: auto;
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      .animate-fadeInUp {
-        animation: fadeInUp 1s ease forwards;
-      }
-      @keyframes zoom {
-        0%,
-        100% {
-          transform: scale(1.1);
-        }
-        50% {
-          transform: scale(1.2);
-        }
-      }
-    </style>
+    {% comment %}CSS{% endcomment %}
+    <link rel="stylesheet" as="style" href="{% static 'css/dashboard/base.css' %}" />
     {% comment %}JS{% endcomment %}
   </head>
-  <body class="bg-white text-black dark:bg-black dark:text-white">
-    {% include 'partials/portal/navbar.html' %}
-    <div class="lg:ml-[60px]">
-      <main id="page-content" class="animate-fadeInUp min-h-[calc(100vh-33px)]">
-        {% include 'partials/portal/header.html' %}
-        {% block pcontent %}
+  <body id="p-dashboard" class="w-full bg-[#fdfdfd] text-black dark:bg-[#121212] dark:text-white tracking-wide">
+    <div id="screen-fix" class="w-screen h-screen hidden fixed inset-0 bg-black/90 backdrop-blur-0 z-50 overflow-hidden scrollbar-hide"></div>
 
-        {% endblock %}
-      </main>
-      {% include 'partials/portal/footer.html' %}
-      <script>
-        const main = document.getElementById('page-content')
-        const pNavBtn = document.getElementById('p-menu-btn')
-        const pNav = document.getElementById('p-navbar')
-        
-        pNavBtn.addEventListener('click', (e) => {
-          e.stopPropagation()
-          pNav.classList.toggle('-translate-x-full')
-        })
-        
-        main.addEventListener('click', () => {
-          pNav.classList.add('-translate-x-full')
-        })
-      </script>
+    {% comment %}navbar{% endcomment %}
+    <aside id="p-navbar" class="group fixed inset-y-0 left-0 max-h-screen z-50 w-96 lg:w-[60px] lg:hover:w-72 flex flex-col overflow-hidden bg-[#ffffff] lg:bg-[#fdfdfd] hover:bg-[#ffffff] dark:bg-[#121212] dark:lg:bg-[#121212] dark:hover:bg-[#121212] text-black dark:text-white -translate-x-full lg:translate-x-0 transition-all duration-300">
+      {% include 'partials/portal/portal_navbar.html' %}
+    </aside>
+
+    {% comment %}dasktop header view{% endcomment %}
+    <header class="hidden lg:block z-40 fixed top-0 left-[56px] right-0 px-1">
+      <div class="px-1 py-1.5 w-full h-13 bg-[#fdfdfd] dark:bg-[#121212]">
+        <div class="flex justify-between items-center gap-3">
+          <div class="flex flex-1 justify-start items-center gap-3">
+            {% block portal_dasktop_header %}
+
+            {% endblock %}
+          </div>
+          <div class="flex justify-end items-center gap-4">
+            {% comment %}messaging{% endcomment %}
+            <a href="#" title="{% trans 'Messaging' %}" id="pMessagingBtn" class="relative w-9 h-9 rounded-full flex justify-center items-center bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-white/10 dark:hover:bg-[#3B3D3E]">
+              <div class="absolute top-0 right-0 w-[14px] h-[14px] bg-orange-500 rounded-full flex items-center justify-center text-[10px] font-medium text-white">9</div>
+              <svg xmlns="{% static 'icons/messages-square.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-messages-square-icon lucide-messages-square w-[19px] h-[19px] text-black/60 hover:text-black/80 dark:text-white/60 dark:hover:text-white/80">
+                <path d="M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                <path d="M20 9a2 2 0 0 1 2 2v10.286a.71.71 0 0 1-1.212.502l-2.202-2.202A2 2 0 0 0 17.172 19H10a2 2 0 0 1-2-2v-1" />
+              </svg>
+            </a>
+            {% comment %}notifications{% endcomment %}
+            <a href="#" title="{% trans 'Notifications' %}" id="pNotificationsBtn" class="relative w-9 h-9 rounded-full flex justify-center items-center bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-white/10 dark:hover:bg-[#3B3D3E]">
+              <div class="absolute top-0 right-0 w-[14px] h-[14px] bg-orange-500 rounded-full flex justify-center items-center text-[10px] font-medium text-white">2</div>
+              <svg xmlns="{% static 'icons/bell.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell w-[19px] h-[19px] text-black/60 hover:text-black/80 dark:text-white/60 dark:hover:text-white/80">
+                <path d="M10.268 21a2 2 0 0 0 3.464 0" />
+                <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
+              </svg>
+            </a>
+            {% comment %}you profile{% endcomment %}
+            <div class="relative group flex justify-center items-center gap-1" title="{% trans 'You Profile' %}">
+              <button type="button" id="pProfileBtn" class="relative flex justify-center items-center w-9 h-9">
+                <img src="/media/{{ pProfile.img }}" alt="User avatar" id="pImgHead" onerror="this.onerror=null; this.src='{% static 'images/avatar.png' %}'" class="w-full h-full object-cover border border-black/10 dark:border-white/10 rounded-full" />
+                <div id="pImgHeadLoader" class="absolute inset-0 flex justify-center items-center backdrop-blur rounded-full">
+                  <div class="w-4 h-4 border-[3px] border-black/20 border-t-black dark:border-white/20 dark:border-t-white rounded-full animate-[spin_0.5s_linear_infinite]"></div>
+                </div>
+                <div class="absolute -bottom-0.5 -right-0.5 w-[18px] h-[18px] bg-orange-500 rounded-full border-2 border-white dark:border-black/80 flex justify-center items-center">
+                  <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}" fill="none" stroke-width="2.5" viewBox="0 0 24 24" class="w-[18px] h-[18px] text-white">
+                    <path fill="currentColor" d="m11.6 14.5999 -3.95 -3.925c-0.0333 -0.03335 -0.0625 -0.073 -0.0875 -0.119 -0.025 -0.04615 -0.0375 -0.0955 -0.0375 -0.148 0 -0.10535 0.03445 -0.1955 0.10325 -0.2705 0.0687 -0.075 0.15925 -0.1125 0.27175 -0.1125h8.2c0.1125 0 0.2032 0.03865 0.272 0.116 0.0687 0.07715 0.103 0.16725 0.103 0.27025 0 0.02585 -0.04165 0.11375 -0.125 0.26375l-3.95 3.925c-0.05 0.05 -0.1088 0.09165 -0.1765 0.125 -0.06765 0.03335 -0.14215 0.05 -0.2235 0.05 -0.08115 0 -0.15565 -0.01665 -0.2235 -0.05 -0.06765 -0.03335 -0.1265 -0.075 -0.1765 -0.125Z" />
+                  </svg>
+                </div>
+              </button>
+
+              <div id="pProfileMenu" class="absolute z-50 top-11 right-0 w-44 origin-top-right opacity-0 scale-95 invisible group-hover:opacity-100 group-hover:scale-100 group-hover:visible transition-all duration-200 bg-white dark:bg-[#111111] border border-black/10 dark:border-white/10 rounded-xl shadow-lg overflow-hidden">
+                <a href="#" class="p-2 px-3 rounded-t-xl hover:bg-black/5 dark:hover:bg-white/5 flex justify-start items-center gap-3 text-base">
+                  <svg xmlns="{% static 'icons/user.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-icon lucide-user">
+                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                  <span>{% trans 'My Profile' %}</span>
+                </a>
+                <a href="#" class="p-2 px-3 hover:bg-black/5 dark:hover:bg-white/5 flex justify-start items-center gap-3 text-base">
+                  <svg xmlns="{% static 'icons/bolt.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bolt-icon lucide-bolt">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                    <circle cx="12" cy="12" r="4" />
+                  </svg>
+                  <span>{% trans 'Settings' %}</span>
+                </a>
+                <button id="pModalLogoutBtn" class="w-full p-2 px-3 rounded-b-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 flex justify-start items-center gap-3 text-base">
+                  <svg xmlns="{% static 'icons/log-out.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out">
+                    <path d="m16 17 5-5-5-5" />
+                    <path d="M21 12H9" />
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                  </svg>
+                  <span>{% trans 'Logout' %}</span>
+                </button>
+                <script>
+                  document.getElementById('pModalLogoutBtn').addEventListener('click', () => {
+                    pOpenModal({
+                      icon: `<svg xmlns="{% static 'icons/log-out.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out ml-1 w-12 h-12 text-orange-500"><path d="m16 17 5-5-5-5" /><path d="M21 12H9" /><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /></svg>`,
+                      title: "{% trans 'Logout' %}",
+                      message: "{% trans 'Are you sure you want to logout from your account?' %}",
+                      btnText: "{% trans 'Logout' %}",
+                      btnAction: () => {
+                        window.location.href = '/portal-logout/'
+                      }
+                    })
+                  })
+                </script>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    {% comment %}mobile header view{% endcomment %}
+    <header class="lg:hidden fixed top-0 left-0 z-40">
+      {% block portal_mobile_header %}
+
+      {% endblock %}
+    </header>
+    <script>
+      const pbody = document.getElementById('p-dashboard')
+      const psfix = document.getElementById('screen-fix')
+      const pNavBtn = document.getElementById('protal-menu-btn')
+      const navbar = document.getElementById('p-navbar')
+      const pmNavCloseBtn = document.getElementById('p-m-nav-close-btn')
+      
+      function openNav() {
+        pbody.classList.add('overflow-hidden', 'scrollbar-hide')
+        psfix.classList.remove('hidden')
+        navbar.classList.remove('-translate-x-full')
+      }
+      
+      function closeNav() {
+        pbody.classList.remove('overflow-hidden', 'scrollbar-hide')
+        psfix.classList.add('hidden')
+        navbar.classList.add('-translate-x-full')
+      }
+      
+      pNavBtn?.addEventListener('click', openNav)
+      pmNavCloseBtn?.addEventListener('click', closeNav)
+      psfix?.addEventListener('click', closeNav)
+    </script>
+
+    {% comment %}main content{% endcomment %}
+    <main class="lg:ml-[60px] mb-20 min-h-full bg-[#fdfdfd] dark:bg-[#121212] px-1">
+      {% block pcontent %}
+
+      {% endblock %}
+    </main>
+
+    {% comment %}desktop bottom add propertys button{% endcomment %}
+    {% if active == 'portal-dashboard' %}
+      <div class="fixed bottom-10 left-[45%] hidden lg:flex justify-center items-center z-40">
+        <a href="{% url 'portal_property_create' %}" id="PropertyCreateBtn" title="{% trans 'Add Property' %}" class="flex justify-center items-center gap-2 px-4 h-10 rounded-full bg-orange-500 text-white shadow-[0_0_5px_rgba(0,0,0,0.6)] dark:shadow-[0_0_50px_rgba(255,255,255,0.2)] active:scale-95 transition-all duration-1000">
+          <div class="flex justify-center items-center">
+            <svg xmlns="{% static 'icons/circle-plus.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus-icon lucide-circle-plus w-5 h-5">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M8 12h8" />
+              <path d="M12 8v8" />
+            </svg>
+          </div>
+          <span id="addPropertysText" class="text-base overflow-hidden whitespace-nowrap transition-all duration-1000 max-w-28 opacity-100">{% trans 'Add Property' %}</span>
+        </a>
+      </div>
+    {% endif %}
+
+    <div class="lg:hidden fixed bottom-0 right-0 z-40 w-full px-1 bg-[#fafafa] dark:bg-[#111010] shadow-lg">
+      {% include 'partials/portal/portal_mobile_footer.html' %}
     </div>
+
+    {% include 'portal/modals.html' %}
+
+    <script src="{% static 'js/portal/portal-image-loader.js' %}" defer></script>
+    <script src="{% static 'js/portal/portal-modals.js' %}" defer></script>
+    <script src="{% static 'js/portal/portal-pro-create-modals.js' %}" defer></script>
+    <script defer>
+      document.querySelectorAll('.search-wrapper').forEach((wrapper) => {
+        const searchInput = wrapper.querySelector('.search-input')
+        const searchClearBtn = wrapper.querySelector('.clear-search-btn')
+      
+        if (!searchInput || !searchClearBtn) return
+      
+        function toggleSeatchClearBtn() {
+          searchClearBtn.classList.toggle('hidden', searchInput.value.trim() === '')
+        }
+      
+        searchInput.addEventListener('input', toggleSeatchClearBtn)
+      
+        searchClearBtn.addEventListener('click', () => {
+          searchInput.value = ''
+          searchInput.focus()
+          toggleSeatchClearBtn()
+        })
+        toggleSeatchClearBtn()
+      })
+    </script>
   </body>
 </html>

@@ -66,12 +66,12 @@ otpInputs.forEach((input) => {
     input.disabled = true;
     input.value = "";
 });
-let senconds
+let senconds;
 let isPaused = false;
 
 // Start Timer function
 function startTimer() {
-    senconds = 120
+    senconds = 120;
     isPaused = false;
     resendOtpB.disabled = true;
     const otpTimer = setInterval(() => {
@@ -99,7 +99,6 @@ function pausedTime() {
 phoneInput.addEventListener('input', function () {
     this.value = this.value.replace(/\D/g, "").slice(0, 10);
     const phoneInput = this.value;
-    // phoneInput.value = phoneInput.value.replace(/[^0-9]/g, "");
     if (phoneInput.length === 0) {
         phoneError.innerText = '{% trans "Phone number is required" %}';
         phoneCheckIcon.classList.remove('flex');
@@ -217,7 +216,7 @@ otpInputs.forEach((input, index) => {
         if (e.key === 'Backspace' && !input.value && index > 0) {
             otpInputs[index - 1].focus();
         }
-    })
+    });
     // Paste OTP
     input.addEventListener('paste', (e) => {
         e.preventDefault();
@@ -246,7 +245,7 @@ function getOTP() {
     let otp = "";
     otpInputs.forEach((input) => {
         otp += input.value;
-    })
+    });
     return otp;
 }
 

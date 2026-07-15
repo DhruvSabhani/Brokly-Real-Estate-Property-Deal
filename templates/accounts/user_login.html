@@ -1,4 +1,5 @@
-{% load static tailwind_tags %} {% load i18n %}
+{% load static tailwind_tags %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en" class="">
   <head>
@@ -85,12 +86,7 @@
               <path d="M2 12h20" />
             </svg>
             <span id="uSelectedLanguage" class="font-medium font-sans px-2">
-              {% comment %} {% for l in languages %}
-                {% if l.code == current_language %}
-                  {{ l.name|capfirst }}
-                {% endif %}
-              {% endfor %}
-              {% endcomment %} {% if request.LANGUAGE_CODE == 'gu' %}
+              {% if request.LANGUAGE_CODE == 'gu' %}
                 ગુજરાતી
               {% else %}
                 English
@@ -136,7 +132,8 @@
             {% trans 'Connect with Trusted Brokers, Property Owners & Builders.' %}
           </p>
           <p class="text-[15px] text-left text-black/60 mb-2 font-medium dark:text-white/60">
-            {% trans 'Brokly is a smart real estate platform, where users can search for nearby PGs, houses, flats, rooms and commercial property using live location, price and distance based filters. Brokers and property owners can list their property for sale or rent, while the admin panel manages and monitors all user, broker and property related activities from a single dashboard.' %}
+            {% trans 'Brokly is a smart real estate platform, where users can search for nearby PGs, houses, flats, rooms and commercial property using live location, price and distance based filters. Brokers and property owners can list their property for sale or rent, while the admin panel manages and monitors all user, broker and property
+            related activities from a single dashboard.' %}
           </p>
           {% comment %}features{% endcomment %}
           <div class="u-feature flex items-start gap-2 flex-row">
@@ -223,7 +220,8 @@
                   {% trans 'Instant Alerts' %}
                 </p>
                 <p class="text-[11px] leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
-                  {% trans 'Get notified for new listings that match your preferences.' %}
+                  {% trans 'Get notified for new listings that match your
+                  preferences.' %}
                 </p>
               </div>
             </div>
@@ -319,7 +317,7 @@
                   <circle cx="12" cy="12" r="10" />
                   <path d="M12 6v6l4 2" />
                 </svg>
-                <button id="resendOtpBtn" class="text-orange-500 hover:text-orange-600 dark:hover:text-orange-400 font-medium transition-all duration-300" onclick="resendOTP()">{% trans 'Resend OTP in' %}</button>
+                <button id="resendOtpBtn" class="text-orange-500 hover:text-orange-600 dark:hover:text-orange-400 font-medium transition-all duration-300" onclick="resendOTP();">{% trans 'Resend OTP in' %}</button>
                 <p id="timerText" class="text-orange-500 font-medium"></p>
                 <div id="verifyOtpLoader" class="w-5 h-5 hidden justify-center items-center border-[4px] border-black/20 border-t-black dark:border-white/20 dark:border-t-white rounded-full animate-[spin_0.5s_linear_infinite]"></div>
               </div>
@@ -341,7 +339,7 @@
               </div>
 
               {% comment %}Portal CTA{% endcomment %}
-              <a href="/portal" target="_blank" id="PortalBtn" class="group w-full mt-5 py-3 lg:py-2 text-base rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold shadow-lg shadow-orange-500/20 transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-3">
+              <a href="/portal/dashboard" target="_blank" id="portalBtn" class="group w-full mt-5 py-3 lg:py-2 text-base rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold shadow-lg shadow-orange-500/20 transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-3">
                 <span>{% trans 'Partner with Brokly' %}</span>
                 <svg xmlns="{% static 'icons/arrow-right.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:translate-x-1">
                   <path d="M5 12h14" />
@@ -390,7 +388,7 @@
                   <div class="w-5 h-5 border-[4px] border-black/20 border-t-black rounded-full animate-[spin_0.5s_linear_infinite]"></div>
                 </div>
               </div>
-              <label for="avatarInput" class="absolute bottom-0 right-0 w-7 h-7 bg-orange-400 text-black flex justify-center items-center rounded-full">
+              <label for="avatarInput" class="absolute bottom-0 right-0 w-7 h-7 bg-orange-400 text-black flex justify-center items-center rounded-full cursor-pointer">
                 <svg xmlns="{% static 'icons/plus.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus">
                   <path d="M5 12h14" />
                   <path d="M12 5v14" />
@@ -472,7 +470,8 @@
                 <span class="text-orange-500">{% trans 'perfect property' %}</span>
               </h1>
               <p class="text-base font-medium text-[#212121b0] dark:text-white/80 max-w-[400px] text-center">
-                {% trans 'Powerful tools and smart features to make your property search simple, fast and reliable.' %}
+                {% trans 'Powerful tools and smart features to make your
+                property search simple, fast and reliable.' %}
               </p>
             </div>
             <div class="relative z-10 px-5 gap-2 flex flex-col justify-center items-center">
@@ -559,14 +558,15 @@
                     {% trans 'Instant Alerts' %}
                   </p>
                   <p class="text-base leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
-                    {% trans 'Get notified for new listings that match your preferences.' %}
+                    {% trans 'Get notified for new listings that match your
+                    preferences.' %}
                   </p>
                 </div>
               </div>
             </div>
             {% comment %}need help{% endcomment %}
-            <div class="u-needs-help rounded-xl lg:hidden py-10 bg-transparent">
-              <div class="u-help-icon flex justify-center items-center">
+            <div class="rounded-xl lg:hidden py-10 bg-transparent">
+              <div class="flex justify-center items-center">
                 <svg xmlns="{% static 'icons/headset.svg' %}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headset-icon lucide-headset text-orange-300">
                   <path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z" />
                   <path d="M21 16v2a4 4 0 0 1-4 4h-5" />

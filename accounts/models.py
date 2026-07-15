@@ -36,6 +36,7 @@ class CustomUserManager(BaseUserManager):
 class CountryCode(models.Model):
     country_code = models.CharField(max_length=10, unique=True)
     country_name = models.CharField(max_length=255, unique=True)
+    country_name_gu = models.CharField(max_length=255, blank=True, null=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

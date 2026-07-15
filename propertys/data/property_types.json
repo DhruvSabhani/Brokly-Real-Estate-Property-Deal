@@ -1,0 +1,134 @@
+[
+  {
+    "model": "propertys.PropertyTypes",
+    "pk": 1,
+    "fields": {
+      "type_name": "Flat",
+      "type_name_gu": "ફ્લેટ",
+      "is_active": false,
+      "update_at": "2026-05-11 11:25:55.811441+05:30",
+      "create_at": "2026-05-11 11:25:55.811441+05:30"
+    }
+  },
+  {
+    "model": "propertys.PropertyTypes",
+    "pk": 2,
+    "fields": {
+      "type_name": "House",
+      "type_name_gu": "ઘર",
+      "is_active": false,
+      "update_at": "2026-05-11 11:25:55.811441+05:30",
+      "create_at": "2026-05-11 11:25:55.811441+05:30"
+    }
+  },
+  {
+    "model": "propertys.PropertyTypes",
+    "pk": 3,
+    "fields": {
+      "type_name": "Villa",
+      "type_name_gu": "વિલા",
+      "is_active": false,
+      "update_at": "2026-05-11 11:25:55.811441+05:30",
+      "create_at": "2026-05-11 11:25:55.811441+05:30"
+    }
+  },
+  {
+    "model": "propertys.PropertyTypes",
+    "pk": 4,
+    "fields": {
+      "type_name": "PG",
+      "type_name_gu": "પીજી",
+      "is_active": true,
+      "update_at": "2026-05-11 11:25:55.811441+05:30",
+      "create_at": "2026-05-11 11:25:55.811441+05:30"
+    }
+  },
+  {
+    "model": "propertys.PropertyTypes",
+    "pk": 5,
+    "fields": {
+      "type_name": "Room",
+      "type_name_gu": "રૂમ",
+      "is_active": false,
+      "update_at": "2026-05-11 11:25:55.811441+05:30",
+      "create_at": "2026-05-11 11:25:55.811441+05:30"
+    }
+  },
+  {
+    "model": "propertys.PropertyTypes",
+    "pk": 6,
+    "fields": {
+      "type_name": "Office",
+      "type_name_gu": "ઓફિસ",
+      "is_active": false,
+      "update_at": "2026-05-11 11:25:55.811441+05:30",
+      "create_at": "2026-05-11 11:25:55.811441+05:30"
+    }
+  },
+  {
+    "model": "propertys.PropertyTypes",
+    "pk": 7,
+    "fields": {
+      "type_name": "Shop",
+      "type_name_gu": "દુકાન",
+      "is_active": false,
+      "update_at": "2026-05-11 11:25:55.811441+05:30",
+      "create_at": "2026-05-11 11:25:55.811441+05:30"
+    }
+  },
+  {
+    "model": "propertys.PropertyTypes",
+    "pk": 8,
+    "fields": {
+      "type_name": "Showroom",
+      "type_name_gu": "શોરૂમ",
+      "is_active": false,
+      "update_at": "2026-05-11 11:25:55.811441+05:30",
+      "create_at": "2026-05-11 11:25:55.811441+05:30"
+    }
+  },
+  {
+    "model": "propertys.PropertyTypes",
+    "pk": 9,
+    "fields": {
+      "type_name": "Warehouse",
+      "type_name_gu": "વેરહાઉસ",
+      "is_active": false,
+      "update_at": "2026-05-11 11:25:55.811441+05:30",
+      "create_at": "2026-05-11 11:25:55.811441+05:30"
+    }
+  },
+  {
+    "model": "propertys.PropertyTypes",
+    "pk": 10,
+    "fields": {
+      "type_name": "Land / Plot",
+      "type_name_gu": "જમીન / પ્લોટ",
+      "is_active": false,
+      "update_at": "2026-05-11 11:25:55.811441+05:30",
+      "create_at": "2026-05-11 11:25:55.811441+05:30"
+    }
+  },
+  {
+    "model": "propertys.PropertyTypes",
+    "pk": 11,
+    "fields": {
+      "type_name": "Farm House",
+      "type_name_gu": "ફાર્મ હાઉસ",
+      "is_active": false,
+      "update_at": "2026-05-11 11:25:55.811441+05:30",
+      "create_at": "2026-05-11 11:25:55.811441+05:30"
+    }
+  },
+  {
+    "model": "propertys.PropertyTypes",
+    "pk": 12,
+    "fields": {
+      "type_name": "Commercial Space",
+      "type_name_gu": "કોમર્શિયલ જગ્યા",
+      "is_active": false,
+      "update_at": "2026-05-11 11:25:55.811441+05:30",
+      "create_at": "2026-05-11 11:25:55.811441+05:30"
+    }
+  }
+]

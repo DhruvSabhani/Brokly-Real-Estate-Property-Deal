@@ -69,7 +69,7 @@ def login_with_otp(request, role):
     if role == "user" and request.session.get("user_login"):
         return redirect("/home/")
     if role == "portal" and request.session.get("portal_login"):
-        return redirect("/portal/home/")
+        return redirect("/portal/dashboard/")
 
     if request.method == "POST":
         try:
@@ -166,35 +166,40 @@ def verify_otp(request):
     user.is_active = True
     user.country_code = code_id or CountryCode.objects.filter(id=1).first()
     user.save()
-    address, created = Addresses.objects.get_or_create(profile=user)
-    address.country = code_id or CountryCode.objects.filter(id=1).first()
-    address.save()
+    country = code_id or CountryCode.objects.filter(id=1).first()
+
     profile_data = {}
     # check Profile
     if role == "user":
         request.session["user_login"] = user.pk
         uProfile, created = UserProfile.objects.get_or_create(user=user)
-        if uProfile.img or uProfile.name or address.state:
+        uAddress, created = ProfileAddresses.objects.get_or_create(
+            profile_role=role, profile_id=uProfile.pk, country=country
+        )
+        if uProfile.img or uProfile.name or uAddress.state:
             profile_data = {
                 "img": uProfile.img.url if uProfile.img else None,
                 "name": uProfile.name if uProfile.name else None,
-                "state_id": address.state.pk if address.state else None,
-                "state_name": address.state.name if address.state else None,
-                "city_id": address.city.pk if address.city else None,
-                "city_name": address.city.name if address.city else None,
+                "state_id": uAddress.state.pk if uAddress.state else None,
+                "state_name": uAddress.state.name if uAddress.state else None,
+                "city_id": uAddress.city.pk if uAddress.city else None,
+                "city_name": uAddress.city.name if uAddress.city else None,
             }
 
     elif role == "portal":
         request.session["portal_login"] = user.pk
         pProfile, created = PortalProfile.objects.get_or_create(user=user)
-        if pProfile.img or pProfile.name or address.state:
+        pAddress, created = ProfileAddresses.objects.get_or_create(
+            profile_role=role, profile_id=pProfile.pk, country=country
+        )
+        if pProfile.img or pProfile.name or pAddress.state:
             profile_data = {
                 "img": pProfile.img.url if pProfile.img else None,
                 "name": pProfile.name if pProfile.name else None,
-                "state_id": address.state.pk if address.state else None,
-                "state_name": address.state.name if address.state else None,
-                "city_id": address.city.pk if address.city else None,
-                "city_name": address.city.name if address.city else None,
+                "state_id": pAddress.state.pk if pAddress.state else None,
+                "state_name": pAddress.state.name if pAddress.state else None,
+                "city_id": pAddress.city.pk if pAddress.city else None,
+                "city_name": pAddress.city.name if pAddress.city else None,
             }
 
     request.session.pop("role", None)
@@ -215,8 +220,10 @@ def user_profile(request):
     if not user:
         return JsonResponse({"error": True, "message": _("User not found")})
 
-    address, created = Addresses.objects.get_or_create(profile=user)
     uProfile, created = UserProfile.objects.get_or_create(user=user)
+    uAddress, created = ProfileAddresses.objects.get_or_create(
+        profile_role="user", profile_id=uProfile.pk
+    )
 
     utheme = request.POST.get("utheme")
     ulang = request.POST.get("ulang")
@@ -245,13 +252,17 @@ def user_profile(request):
     if ustateid:
         state = State.objects.filter(id=ustateid).first()
         if state:
-            address.state = state
+            uAddress.state = state
 
     if ucityid:
         city = City.objects.filter(id=ucityid).first()
         if city:
-            address.city = city
-    address.save()
+            uAddress.city = city
+
+    uAddress.is_default = True
+    uAddress.is_active = True
+
+    uAddress.save()
 
     return JsonResponse(
         {
@@ -274,8 +285,10 @@ def portal_profile(request):
     if not portal:
         return JsonResponse({"error": True, "message": _("Portal not found")})
 
-    address, created = Addresses.objects.get_or_create(profile=portal)
     pProfile, created = PortalProfile.objects.get_or_create(user=portal)
+    pAddress, created = ProfileAddresses.objects.get_or_create(
+        profile_role="portal", profile_id=pProfile.pk
+    )
 
     ptheme = request.POST.get("ptheme")
     plang = request.POST.get("plang")
@@ -304,13 +317,17 @@ def portal_profile(request):
     if pstateid:
         state = State.objects.filter(id=pstateid).first()
         if state:
-            address.state = state
+            pAddress.state = state
 
     if pcityid:
         city = City.objects.filter(id=pcityid).first()
         if city:
-            address.city = city
-    address.save()
+            pAddress.city = city
+
+    pAddress.is_default = True
+    pAddress.is_active = True
+
+    pAddress.save()
 
     return JsonResponse(
         {
@@ -395,12 +412,17 @@ def user_setting(request):
     return render(request, "user/setting.html", context)
 
 
+# @portal_required
+# def base_protal(request):
+
+
 @portal_required
 def portal_dashboard(request):
     context = {
         "portal": request.user_obj,
         "pProfile": request.pProfile,
-        "active": "home",
+        "pAddress": request.pAddress,
+        "active": "portal-dashboard",
     }
     return render(request, "portal/dashboard.html", context)
 
@@ -410,7 +432,8 @@ def portal_help(request):
     context = {
         "portal": request.user_obj,
         "pProfile": request.pProfile,
-        "active": "help",
+        "pAddress": request.pAddress,
+        "active": "portal-help",
     }
     return render(request, "portal/help.html", context)
 
@@ -420,7 +443,8 @@ def portal_setting(request):
     context = {
         "portal": request.user_obj,
         "pProfile": request.pProfile,
-        "active": "setting",
+        "pAddress": request.pAddress,
+        "active": "portal-settings",
     }
     return render(request, "portal/setting.html", context)
 
