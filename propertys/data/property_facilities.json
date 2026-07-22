@@ -1,6 +1,6 @@
 [
   {
-    "model": "propertys.PropertyFacilities",
+    "model": "propertys.PropertyFacility",
     "pk": 1,
     "fields": {
       "facilities_name": "Free WiFi",
@@ -11,7 +11,7 @@
     }
   },
   {
-    "model": "propertys.PropertyFacilities",
+    "model": "propertys.PropertyFacility",
     "pk": 2,
     "fields": {
       "facilities_name": "Parking",
@@ -22,7 +22,7 @@
     }
   },
   {
-    "model": "propertys.PropertyFacilities",
+    "model": "propertys.PropertyFacility",
     "pk": 3,
     "fields": {
       "facilities_name": "CCTV Security",
@@ -33,7 +33,7 @@
     }
   },
   {
-    "model": "propertys.PropertyFacilities",
+    "model": "propertys.PropertyFacility",
     "pk": 4,
     "fields": {
       "facilities_name": "Security Guard",
@@ -44,7 +44,7 @@
     }
   },
   {
-    "model": "propertys.PropertyFacilities",
+    "model": "propertys.PropertyFacility",
     "pk": 5,
     "fields": {
       "facilities_name": "Furnished",
@@ -55,7 +55,7 @@
     }
   },
   {
-    "model": "propertys.PropertyFacilities",
+    "model": "propertys.PropertyFacility",
     "pk": 6,
     "fields": {
       "facilities_name": "Semi Furnished",
@@ -66,7 +66,7 @@
     }
   },
   {
-    "model": "propertys.PropertyFacilities",
+    "model": "propertys.PropertyFacility",
     "pk": 7,
     "fields": {
       "facilities_name": "Unfurnished",
@@ -77,7 +77,7 @@
     }
   },
   {
-    "model": "propertys.PropertyFacilities",
+    "model": "propertys.PropertyFacility",
     "pk": 8,
     "fields": {
       "facilities_name": "1 Sharing",
@@ -88,7 +88,7 @@
     }
   },
   {
-    "model": "propertys.PropertyFacilities",
+    "model": "propertys.PropertyFacility",
     "pk": 9,
     "fields": {
       "facilities_name": "1/2 Sharing",
@@ -99,7 +99,7 @@
     }
   },
   {
-    "model": "propertys.PropertyFacilities",
+    "model": "propertys.PropertyFacility",
     "pk": 10,
     "fields": {
       "facilities_name": "1/2/3 Sharing",
@@ -110,7 +110,7 @@
     }
   },
   {
-    "model": "propertys.PropertyFacilities",
+    "model": "propertys.PropertyFacility",
     "pk": 11,
     "fields": {
       "facilities_name": "1/2/3/4 Sharing",

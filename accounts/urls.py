@@ -4,11 +4,11 @@ from django.conf.urls.static import static
 from accounts import views
 
 urlpatterns = [
-    path(
-        "change-language/",
-        views.change_panel_language,
-        name="change_language",
-    ),
+    # path(
+    #     "change-language/",
+    #     views.change_panel_language,
+    #     name="change_language",
+    # ),
     # User
     path("", views.user_dashboard, name="user_dashboard"),
     path("home/", views.user_dashboard, name="user_dashboard"),

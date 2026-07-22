@@ -79,6 +79,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "brokly.context.context_processors.user_context",
+                "brokly.context.context_processors.portal_context",
             ],
         },
     },

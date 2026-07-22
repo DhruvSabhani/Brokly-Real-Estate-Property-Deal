@@ -19,7 +19,7 @@
     <link rel="stylesheet" as="style" href="{% static 'css/dashboard/base.css' %}" />
     {% comment %}JS{% endcomment %}
   </head>
-  <body id="p-dashboard" class="w-full bg-[#fdfdfd] text-black dark:bg-[#121212] dark:text-white tracking-wide">
+  <body id="portal" class="w-full bg-[#fdfdfd] text-black dark:bg-[#121212] dark:text-white tracking-wide">
     <div id="screen-fix" class="w-screen h-screen hidden fixed inset-0 bg-black/90 backdrop-blur-0 z-50 overflow-hidden scrollbar-hide"></div>
 
     {% comment %}navbar{% endcomment %}
@@ -82,7 +82,7 @@
                   </svg>
                   <span>{% trans 'Settings' %}</span>
                 </a>
-                <button id="pModalLogoutBtn" class="w-full p-2 px-3 rounded-b-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 flex justify-start items-center gap-3 text-base">
+                <button id="p-modal-logout-btn" class="w-full p-2 px-3 rounded-b-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 flex justify-start items-center gap-3 text-base">
                   <svg xmlns="{% static 'icons/log-out.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out">
                     <path d="m16 17 5-5-5-5" />
                     <path d="M21 12H9" />
@@ -91,13 +91,9 @@
                   <span>{% trans 'Logout' %}</span>
                 </button>
                 <script>
-                  document.getElementById('pModalLogoutBtn').addEventListener('click', () => {
-                    pOpenModal({
-                      icon: `<svg xmlns="{% static 'icons/log-out.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out ml-1 w-12 h-12 text-orange-500"><path d="m16 17 5-5-5-5" /><path d="M21 12H9" /><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /></svg>`,
-                      title: "{% trans 'Logout' %}",
-                      message: "{% trans 'Are you sure you want to logout from your account?' %}",
-                      btnText: "{% trans 'Logout' %}",
-                      btnAction: () => {
+                  document.getElementById('p-modal-logout-btn').addEventListener('click', () => {
+                    openlogoutmodal({
+                      logbtnaction: () => {
                         window.location.href = '/portal-logout/'
                       }
                     })
@@ -117,7 +113,7 @@
       {% endblock %}
     </header>
     <script>
-      const pbody = document.getElementById('p-dashboard')
+      const pbody = document.getElementById('portal')
       const psfix = document.getElementById('screen-fix')
       const pNavBtn = document.getElementById('protal-menu-btn')
       const navbar = document.getElementById('p-navbar')
@@ -141,7 +137,7 @@
     </script>
 
     {% comment %}main content{% endcomment %}
-    <main class="lg:ml-[60px] mb-20 min-h-full bg-[#fdfdfd] dark:bg-[#121212] px-1">
+    <main class="lg:ml-[60px] mb-18 min-h-full bg-[#fdfdfd] dark:bg-[#121212] text-black dark:text-white px-1">
       {% block pcontent %}
 
       {% endblock %}
@@ -167,10 +163,41 @@
       {% include 'partials/portal/portal_mobile_footer.html' %}
     </div>
 
-    {% include 'portal/modals.html' %}
+    {% include 'logout_modal.html' %}
+    {% include 'message_modal.html' %}
+
+    {% comment %}Language Selected Modal{% endcomment %}
+    <div id="portal-lang-modal" class="w-screen h-screen hidden justify-center pt-[100px] px-10 fixed z-50 inset-0 bg-black/90 backdrop-blur-0">
+      <div id="portal-lang" class="w-full max-w-[30rem] h-[160px] origin-bottom-left bg-[#f7f9fc] dark:bg-[#121212] px-2 py-2 rounded-2xl overflow-hidden animate-scaleIn">
+        {% comment %}header{% endcomment %}
+        <div class="flex justify-between items-center px-2">
+          <span class="text-lg font-medium">{% trans 'Select Your Language' %}</span>
+          <button id="lang-modal-close" class="min-w-8 h-8 ml-4 bg-white dark:bg-[#1A1A1A] hover:bg-gray-100 dark:hover:bg-[#252525] flex justify-center items-center rounded-full transition-all duration-300" onclick="langModalClose();">
+            <svg xmlns="{% static 'icons/x.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x w-6 h-6">
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="w-full h-px bg-gray-300 dark:bg-white/20 my-2"></div>
+        {% comment %}list language{% endcomment %}
+        <div id="lang-list" class="h-[calc(300px-68px)] lg:h-[calc(400px-68px)] overflow-y-auto space-y-1">
+          {% for l in languages %}
+            <button type="button" class="portal-lang-item w-full flex justify-between items-center px-2 py-2 rounded-xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] transition-all duration-200" onclick="portalLangSelected('{{ l.id }}','{{ l.name|capfirst }}','{{ l.code }}')">
+              <span class="text-[20px] font-medium">{{ l.name|capfirst }}</span>
+              <span class="text-[16px] text-black/60 dark:text-white/70">{{ l.code }}</span>
+            </button>
+          {% endfor %}
+        </div>
+      </div>
+      <div id="portal-lang-select-loader" class="w-8 h-8 flex justify-center items-center border-[6px] border-white/30 rounded-full border-t-white animate-[spin_0.5s_linear_infinite] [animation-duration:.5s]"></div>
+    </div>
+    {% comment %}Language Selected Modal JS{% endcomment %}
+    <script src="{% static 'js/accounts/portal/language-select-modal.js' %}" defer></script>
 
     <script src="{% static 'js/portal/portal-image-loader.js' %}" defer></script>
-    <script src="{% static 'js/portal/portal-modals.js' %}" defer></script>
+    <script src="{% static 'js/logout-modal.js' %}" defer></script>
+    <script src="{% static 'js/message-modal.js' %}" defer></script>
     <script src="{% static 'js/portal/portal-pro-create-modals.js' %}" defer></script>
     <script defer>
       document.querySelectorAll('.search-wrapper').forEach((wrapper) => {

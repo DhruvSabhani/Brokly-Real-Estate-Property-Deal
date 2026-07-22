@@ -11,15 +11,13 @@ import os
 import uuid
 from datetime import timedelta
 
-# from common.models import *
-
 # Create your models here.
 
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, phone, password=None, **extra_fields):
         if not phone:
-            raise ValueError("The phone number must be set")
+            raise ValueError("Phone number is required.")
         user = self.model(phone=phone, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
@@ -46,9 +44,13 @@ class CountryCode(models.Model):
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     country_code = models.ForeignKey(
-        CountryCode, on_delete=models.CASCADE, related_name="users"
+        CountryCode,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="users",
     )
-    phone = models.CharField(max_length=15, db_index=True)
+    phone = models.CharField(max_length=15, unique=True, db_index=True)
     full_phone = models.CharField(
         max_length=30, db_index=True, unique=True, null=True, blank=True
     )
@@ -59,8 +61,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    USERNAME_FIELD = "full_phone"
     objects = CustomUserManager()
+    USERNAME_FIELD = "phone"
+    REQUIRED_FIELDS = []
 
     class Meta:
         constraints = [
@@ -70,12 +73,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         ]
 
     def save(self, *args, **kwargs):
-        code = self.country_code.country_code if self.country_code else ""
-        self.full_phone = f"{code}{self.phone}"
+        if self.country_code and self.phone:
+            self.full_phone = f"{self.country_code.country_code}{self.phone}"
+        else:
+            self.full_phone = None
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return str(self.full_phone or self.phone)
+        return self.full_phone or self.phone
 
 
 class OTP(models.Model):

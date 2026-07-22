@@ -20,10 +20,16 @@ from django.urls import path, include
 from django.views.generic.base import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
+from accounts import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     # language change url
+    path(
+        "change-language/",
+        views.change_panel_language,
+        name="change_language",
+    ),
     path("i18n/", include("django.conf.urls.i18n")),
     path("", include("accounts.urls")),
     path("", include("common.urls")),

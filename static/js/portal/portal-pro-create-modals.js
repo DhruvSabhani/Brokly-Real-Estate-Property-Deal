@@ -1,3 +1,5 @@
+// add property form
+const addpropertyform = document.getElementById("add-property-form");
 // property type btn
 const proSelectTypeBtn = document.getElementById("proc-select-type-btn");
 const proSelectedType = document.getElementById("proc-selected-type");
@@ -9,20 +11,21 @@ const proTypeND = document.getElementById("pro-type-no-data");
 // property name
 const proName = document.getElementById("proc-name");
 const proNameError = document.getElementById("proc-name-error");
-// property amount
-const proAmount = document.getElementById("proc-amount");
-const proAmountError = document.getElementById("proc-amount-error");
-// perferred btn
-const proSelectPerferredBtn = document.getElementById("proc-select-preferred-btn");
-const proSelectedPerferredNames = document.getElementById("proc-selected-preferred-names");
-const proSelectedPerferredIds = document.getElementById("proc-selected-preferred-ids");
-// perferred modal
-const proSelectPerferredModal = document.getElementById("proc-select-preferred-modal");
-const proPerferredSearchInput = document.getElementById("perferred-search");
-const proPerferredND = document.getElementById("pro-perferred-no-data");
-const proPerferredLabel = document.querySelectorAll(".pro-perferred-label");
-const proPerferredItem = document.querySelectorAll(".pro-perferred-item");
-const proPerferredItemSaveBtn = document.getElementById("pro-perferred-item-save-btn");
+// property price
+const proPrice = document.getElementById("proc-price");
+const propriceError = document.getElementById("proc-price-error");
+// preferred btn
+const proSelectPreferredBtn = document.getElementById("proc-select-preferred-btn");
+const proSelectedPreferredNames = document.getElementById("proc-selected-preferred-names");
+const proSelectedPreferredIds = document.getElementById("proc-selected-preferred-ids");
+// preferred modal
+const proSelectPreferredModal = document.getElementById("proc-select-preferred-modal");
+const proPreferredSearchInput = document.getElementById("preferred-search");
+const proPreferredND = document.getElementById("pro-preferred-no-data");
+const proPreferredLabel = document.querySelectorAll(".pro-preferred-label");
+const proPreferredItem = document.querySelectorAll(".pro-preferred-item");
+const proPreferredItemClearBtn = document.getElementById("pro-preferred-item-clear-btn");
+const proPreferredItemSaveBtn = document.getElementById("pro-preferred-item-save-btn");
 // facilities btn
 const proSelectFacilitiesBtn = document.getElementById("proc-select-facilities-btn");
 const proSelectedFacilitiesNames = document.getElementById("proc-selected-facilities-names");
@@ -33,10 +36,10 @@ const proFacilitiesSearchInput = document.getElementById("facilities-search");
 const proFacilitiesND = document.getElementById("pro-facilities-no-data");
 const proFacilitiesLabel = document.querySelectorAll(".pro-facilities-label");
 const proFacilitiesItem = document.querySelectorAll(".pro-facilities-item");
+const proFacilitiesItemClearBtn = document.getElementById("pro-facilities-item-clear-btn");
 const proFacilitiesItemSaveBtn = document.getElementById("pro-facilities-item-save-btn");
 // property phone number 1
 const proCountryCode1 = document.getElementById("proc-country-code1");
-// proCountryCode1.disabled = true;
 const proPhoneNumber1 = document.getElementById("proc-phone-number1");
 const proPhoneNumber1Error = document.getElementById("proc-phone-number1-error");
 const proPhone2BoxCheck = document.getElementById("proc-phone2-box-check");
@@ -45,21 +48,6 @@ const proCountryCode2Box = document.getElementById("proc-country-code2-select-bo
 const proCountryCode2 = document.getElementById("proc-country-code2");
 const proPhoneNumber2 = document.getElementById("proc-phone-number2");
 const proPhoneNumber2Error = document.getElementById("proc-phone-number2-error");
-
-proCountryCode1.disabled = proCountryCode2.disabled = true;
-
-const togglePhone2 = (disabled) => {
-    proPhoneNumber2.disabled = disabled;
-    proCountryCode2Box.classList.toggle("text-gray-400", disabled);
-    proPhoneNumber2.classList.toggle("text-gray-400", disabled);
-    proPhoneNumber2.value = "";
-};
-
-togglePhone2(true);
-
-proPhone2BoxCheck.addEventListener("change", (e) => {
-    togglePhone2(!e.target.checked);
-});
 
 proSelectTypeBtn.addEventListener("click", () => {
     pbody.classList.add('overflow-hidden', 'scrollbar-hide')
@@ -104,80 +92,82 @@ proName.addEventListener("input", function () {
     }
 });
 
-proAmount.addEventListener("input", function () {
-    this.value = this.value.replace(/\D/g, "");
-
-    let pro_amount = this.value.trim();
-    if (pro_amount.length === 0) {
-        proAmountError.innerText = '{% trans "Property amount is required." %}';
-    } else {
-        proAmountError.innerText = '';
-    }
+proPrice.addEventListener("input", function () {
+    this.value = this.value.replace(/\D/g, "").slice(0, 10);
+    let pro_price = this.value.trim();
+    proPriceError.innerText = pro_price <= 0 ? '{% trans "Please enter the correct property price." %}' : '';
 });
 
-proSelectPerferredBtn.addEventListener("click", () => {
+proSelectPreferredBtn.addEventListener("click", () => {
     pbody.classList.add('overflow-hidden', 'scrollbar-hide');
-    proSelectPerferredModal.classList.replace("hidden", "flex");
-    proPerferredND.classList.add("hidden");
+    proSelectPreferredModal.classList.replace("hidden", "flex");
+    proPreferredND.classList.add("hidden");
 });
 
-function perferredModalClose() {
+function preferredModalClose() {
     pbody.classList.remove('overflow-hidden', 'scrollbar-hide');
-    proSelectPerferredModal.classList.replace("flex", "hidden");
+    proSelectPreferredModal.classList.replace("flex", "hidden");
 };
 
-proSelectPerferredModal.addEventListener("click", (e) => {
-    if (e.target === proSelectPerferredModal) perferredModalClose();
+proSelectPreferredModal.addEventListener("click", (e) => {
+    if (e.target === proSelectPreferredModal) preferredModalClose();
 });
 
-proPerferredSearchInput.addEventListener("input", () => {
-    const perferred_value = proPerferredSearchInput.value.trim().toLowerCase();
-    let perferred_found = false;
-    proPerferredLabel.forEach(label => {
-        const perferred_name = label.getAttribute("data-perferred-label-name").toLowerCase();
-        const perferred_match = perferred_name.includes(perferred_value);
+proPreferredSearchInput.addEventListener("input", () => {
+    const preferred_value = proPreferredSearchInput.value.trim().toLowerCase();
+    let preferred_found = false;
+    proPreferredLabel.forEach(label => {
+        const preferred_name = label.getAttribute("data-preferred-label-name").toLowerCase();
+        const preferred_match = preferred_name.includes(preferred_value);
 
-        label.classList.toggle("hidden", !perferred_match);
-        if (perferred_match) perferred_found = true;
+        label.classList.toggle("hidden", !preferred_match);
+        if (preferred_match) preferred_found = true;
     });
-    proPerferredND.classList.toggle("hidden", perferred_found);
+    proPreferredND.classList.toggle("hidden", preferred_found);
 });
 
-function savePerferred() {
-    const checkedPerferredItem = document.querySelectorAll(".pro-perferred-item:checked");
-    const selectedPerferredItemNames = [];
-    const selectedPerferredItemIds = [];
+proPreferredItemClearBtn.addEventListener("click", () => {
+    document.querySelectorAll(".pro-preferred-item:checked").forEach(item => {
+        item.checked = false;
+    });
+    savePreferred();
+});
 
-    checkedPerferredItem.forEach(item => {
-        selectedPerferredItemNames.push(item.getAttribute("data-perferred-name").toLowerCase());
-        selectedPerferredItemIds.push(item.value);
+function savePreferred() {
+    const checkedPreferredItem = document.querySelectorAll(".pro-preferred-item:checked");
+    const selectedPreferredItemNames = [];
+    const selectedPreferredItemIds = [];
+
+    checkedPreferredItem.forEach(item => {
+        selectedPreferredItemNames.push(item.getAttribute("data-preferred-name").toLowerCase());
+        selectedPreferredItemIds.push(item.value);
     });
 
-    if (checkedPerferredItem.length > 0) {
-        proSelectedPerferredNames.innerText = "{% trans 'Select Preferred' %}";
-        proSelectedPerferredIds.value = "";
+    if (checkedPreferredItem.length > 0) {
+        proSelectedPreferredNames.innerText = proSelectedPreferredNames.dataset.propertyPreferred;
+        proSelectedPreferredIds.value = null;
 
     } else {
-        proSelectedPerferredNames.innerText = "{% trans 'Select Preferred' %}";
-        proSelectedPerferredIds.value = "";
+        proSelectedPreferredNames.innerText = proSelectedPreferredNames.dataset.propertyPreferred;
+        proSelectedPreferredIds.value = null;
     }
 
-    proPerferredItemSaveBtn.addEventListener("click", function () {
-        if (checkedPerferredItem.length > 0) {
-            proSelectedPerferredNames.innerText = selectedPerferredItemNames.join(", ");
-            proSelectedPerferredIds.value = selectedPerferredItemIds;
+    proPreferredItemSaveBtn.addEventListener("click", function () {
+        if (checkedPreferredItem.length > 0) {
+            proSelectedPreferredNames.innerText = selectedPreferredItemNames.join(", ");
+            proSelectedPreferredIds.value = selectedPreferredItemIds;
         } else {
-            proSelectedPerferredNames.innerText = "{% trans 'Select Preferred' %}";
-            proSelectedPerferredIds.value = "";
+            proSelectedPreferredNames.innerText = proSelectedPreferredNames.dataset.propertyPreferred;
+            proSelectedPreferredIds.value = null;
         }
-        perferredModalClose();
+        preferredModalClose();
     });
 };
 
-proPerferredItem.forEach(item => {
-    item.addEventListener("change", savePerferred);
+proPreferredItem.forEach(item => {
+    item.addEventListener("change", savePreferred);
 });
-savePerferred();
+savePreferred();
 
 proSelectFacilitiesBtn.addEventListener("click", () => {
     pbody.classList.add('overflow-hidden', 'scrollbar-hide');
@@ -207,6 +197,13 @@ proFacilitiesSearchInput.addEventListener("input", () => {
     proFacilitiesND.classList.toggle("hidden", facilities_found);
 });
 
+proFacilitiesItemClearBtn.addEventListener("click", () => {
+    document.querySelectorAll(".pro-facilities-item:checked").forEach(item => {
+        item.checked = false;
+    });
+    saveFacilities();
+});
+
 function saveFacilities() {
     const checkedFacilitiesItem = document.querySelectorAll(".pro-facilities-item:checked");
     const selectedFacilitiesItemNames = [];
@@ -218,12 +215,12 @@ function saveFacilities() {
     });
 
     if (checkedFacilitiesItem.length > 0) {
-        proSelectedFacilitiesNames.innerText = "{% trans 'Select Facilities' %}";
-        proSelectedFacilitiesIds.value = "";
+        proSelectedFacilitiesNames.innerText = proSelectedFacilitiesNames.dataset.propertyFacilities;
+        proSelectedFacilitiesIds.value = null;
 
     } else {
-        proSelectedFacilitiesNames.innerText = "{% trans 'Select Facilities' %}";
-        proSelectedFacilitiesIds.value = "";
+        proSelectedFacilitiesNames.innerText = proSelectedFacilitiesNames.dataset.propertyFacilities;
+        proSelectedFacilitiesIds.value = null;
     }
 
     proFacilitiesItemSaveBtn.addEventListener("click", function () {
@@ -231,8 +228,8 @@ function saveFacilities() {
             proSelectedFacilitiesNames.innerText = selectedFacilitiesItemNames.join(", ");
             proSelectedFacilitiesIds.value = selectedFacilitiesItemIds;
         } else {
-            proSelectedFacilitiesNames.innerText = "{% trans 'Select Facilities' %}";
-            proSelectedFacilitiesIds.value = "";
+            proSelectedFacilitiesNames.innerText = proSelectedFacilitiesNames.dataset.propertyFacilities;
+            proSelectedFacilitiesIds.value = null;
         }
         facilitiesModalClose();
     });
@@ -243,25 +240,45 @@ proFacilitiesItem.forEach(item => {
 });
 saveFacilities();
 
+[proCountryCode1, proCountryCode2].forEach(countrycodebox => {
+    countrycodebox.disabled = true;
+});
+
+const togglePhone2 = (disabled) => {
+    proPhoneNumber2.disabled = disabled;
+    proCountryCode2Box.classList.toggle("text-gray-400", disabled);
+    proPhoneNumber2.classList.toggle("text-gray-400", disabled);
+    proPhoneNumber2.value = "";
+};
+togglePhone2(true);
+
+proPhone2BoxCheck.addEventListener("change", (e) => {
+    togglePhone2(!e.target.checked);
+});
+
 proPhoneNumber1.addEventListener("input", function () {
     this.value = this.value.replace(/\D/g, "").slice(0, 10);
-
     let pro_phone_number1 = this.value.trim();
-    if (pro_phone_number1.length === 0) {
-        proPhoneNumber1Error.innerText = '{% trans "Property phone number is required." %}';
-    } else {
-        proPhoneNumber1Error.innerText = '';
-    }
+    let pro_phone_number2 = proPhoneNumber2.value.trim();
+    proPhoneNumber1Error.innerText = pro_phone_number1.length < 10 ? '{% trans "Phone number must be at least 10 digits." %}' : '';
+    proPhoneNumber1Error.innerText = pro_phone_number1 === pro_phone_number2 ? '{% Please enter a unique phone number. %}' : '';
 });
 
 proPhoneNumber2.addEventListener("input", function () {
     this.value = this.value.replace(/\D/g, "").slice(0, 10);
-
+    let pro_phone_number1 = proPhoneNumber1.value.trim();
     let pro_phone_number2 = this.value.trim();
-    if (pro_phone_number2.length === 0) {
-        proPhoneNumber2Error.innerText = '{% trans "Property phone number is required." %}';
-    } else {
-        proPhoneNumber2Error.innerText = '';
-    }
+    proPhoneNumber2Error.innerText = proPhoneNumber2Error.length < 10 ? '{% trans "Phone number must be at least 10 digits." %}' : '';
+    proPhoneNumber2Error.innerText = pro_phone_number2 === pro_phone_number1 ? '{% Please enter a unique phone number. %}' : '';
 });
 
+function clearformfield() {
+    addpropertyform.reset();
+    togglePhone2(true);
+    proSelectedType.innerText = proSelectedType.dataset.propertyType;
+    proSelectedTypeId.value = null;
+    proSelectedPreferredNames.innerText = proSelectedPreferredNames.dataset.propertyPreferred;
+    proSelectedPreferredIds.value = null;
+    proSelectedFacilitiesNames.innerText = proSelectedFacilitiesNames.dataset.propertyFacilities;
+    proSelectedFacilitiesIds.value = null;
+};

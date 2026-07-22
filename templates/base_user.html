@@ -18,9 +18,8 @@
     {% comment %}CSS{% endcomment %}
     <link rel="stylesheet" as="style" href="{% static 'css/dashboard/base.css' %}" />
   </head>
-  <body id="u-dashboard" class="w-full bg-[#fdfdfd] text-black dark:bg-[#0e0d0d] dark:text-white tracking-wide">
+  <body id="u-dashboard" class="w-full bg-[#fdfdfd] text-black dark:bg-[#0e0d0d] dark:text-white tracking-wide transition-all duration-300">
     <div id="screen-fix" class="w-screen h-screen hidden fixed inset-0 bg-black/90 backdrop-blur-0 z-50 overflow-hidden scrollbar-hide"></div>
-
     {% comment %}navbar{% endcomment %}
     <aside id="navbar" class="group fixed inset-y-0 left-0 max-h-screen z-50 w-96 lg:w-[60px] lg:hover:w-72 flex flex-col overflow-hidden bg-[#ffffff] lg:bg-[#fdfdfd] hover:bg-[#ffffff] dark:bg-[#0e0d0d] dark:lg:bg-[#0e0d0d] dark:hover:bg-[#0e0d0d] text-black dark:text-white -translate-x-full lg:translate-x-0 transition-all duration-300">
       {% include 'partials/user/navbar.html' %}
@@ -89,10 +88,31 @@
       {% include 'partials/user/mobile_footer.html' %}
     </div>
 
-    {% include 'user/modals.html' %}
+    {% include 'logout_modal.html' %}
 
     <script src="{% static 'js/user/image-loader.js' %}" defer></script>
-    <script src="{% static 'js/user/modals.js' %}" defer></script>
+    <script src="{% static 'js/logout-modal.js' %}" defer></script>
     <script src="{% static 'js/user/filter-lists-scroll.js' %}" defer></script>
+    <script defer>
+      document.querySelectorAll('.search-wrapper').forEach((wrapper) => {
+        const searchInput = wrapper.querySelector('.search-input')
+        const searchClearBtn = wrapper.querySelector('.clear-search-btn')
+      
+        if (!searchInput || !searchClearBtn) return
+      
+        function toggleSeatchClearBtn() {
+          searchClearBtn.classList.toggle('hidden', searchInput.value.trim() === '')
+        }
+      
+        searchInput.addEventListener('input', toggleSeatchClearBtn)
+      
+        searchClearBtn.addEventListener('click', () => {
+          searchInput.value = ''
+          searchInput.focus()
+          toggleSeatchClearBtn()
+        })
+        toggleSeatchClearBtn()
+      })
+    </script>
   </body>
 </html>

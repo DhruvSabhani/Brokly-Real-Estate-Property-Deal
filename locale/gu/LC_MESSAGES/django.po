@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-12 17:01+0530\n"
+"POT-Creation-Date: 2026-07-21 11:17+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,501 +16,847 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .\accounts\views.py:15 .\accounts\views.py:77 .\accounts\views.py:124
-#: .\accounts\views.py:195 .\accounts\views.py:253
+#: .\accounts\views.py:16 .\accounts\views.py:78 .\accounts\views.py:124
+#: .\accounts\views.py:212 .\accounts\views.py:277
 msgid "Invalid request"
-msgstr "અમાન્ય વિનંતી"
+msgstr ""
 
-#: .\accounts\views.py:23
+#: .\accounts\views.py:24
 msgid "Invalid language"
-msgstr "અમાન્ય ભાષા"
+msgstr ""
 
-#: .\accounts\views.py:33
+#: .\accounts\views.py:34
 msgid "Invalid panel"
-msgstr "અમાન્ય પેનલ"
+msgstr ""
 
-#: .\accounts\views.py:39
+#: .\accounts\views.py:40
 msgid "Language changed successfully"
-msgstr "ભાષા સફળતાપૂર્વક બદલાઈ ગઈ"
+msgstr ""
 
-#: .\accounts\views.py:87
+#: .\accounts\views.py:88
 msgid "Not valid number"
-msgstr "માન્ય નંબર નથી"
+msgstr ""
 
-#: .\accounts\views.py:117 .\accounts\views.py:134 .\accounts\views.py:199
-#: .\accounts\views.py:257
+#: .\accounts\views.py:117 .\accounts\views.py:140 .\accounts\views.py:216
+#: .\accounts\views.py:281
 msgid "Session expired"
-msgstr "સેશન સમાપ્ત થયું"
+msgstr ""
 
 #: .\accounts\views.py:128
 msgid "Invalid JSON"
-msgstr "અમાન્ય JSON"
+msgstr ""
 
-#: .\accounts\views.py:139
+#: .\accounts\views.py:147
 msgid "No OTP found"
-msgstr "OTP મળ્યો નથી"
+msgstr ""
 
-#: .\accounts\views.py:141
+#: .\accounts\views.py:149
 msgid "Invalid OTP"
-msgstr "અમાન્ય OTP"
+msgstr ""
 
-#: .\accounts\views.py:143
+#: .\accounts\views.py:151
 msgid "OTP expired"
-msgstr "OTP સમાપ્ત થયો"
+msgstr ""
 
-#: .\accounts\views.py:204
+#: .\accounts\views.py:221
 msgid "User not found"
-msgstr "વપરાશકર્તા મળ્યો નથી"
+msgstr ""
 
-#: .\accounts\views.py:246 .\accounts\views.py:304
+#: .\accounts\views.py:270 .\accounts\views.py:335
 msgid "Profile updated successfully"
-msgstr "પ્રોફાઇલ સફળતાપૂર્વક અપડેટ થઈ"
+msgstr ""
 
-#: .\accounts\views.py:262
-msgid "Broker not found"
-msgstr "બ્રોકર મળ્યો નથી"
+#: .\accounts\views.py:286
+msgid "Portal not found"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:9
+#: .\templates\accounts\portal_login.html:9
 msgid "Log in - Brokly Portal"
-msgstr "લોગ ઇન - બ્રોકલી પોર્ટલ"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:128
+#: .\templates\accounts\portal_login.html:135
 msgid "Welcome to,"
-msgstr "સ્વાગત છે,"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:129
-msgid "Brokly Broker Portal"
-msgstr "બ્રોકલી બ્રોકર પોર્ટલ"
+#: .\templates\accounts\portal_login.html:136
+#: .\templates\accounts\user_login.html:345
+msgid "Brokly Portal"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:147
-#: .\templates\accounts\broker_login.html:456
+#: .\templates\accounts\portal_login.html:139
+msgid ""
+"Manage listings, track leads, connect with clients and grow your real estate "
+"business from one powerful dashboard."
+msgstr ""
+
+#: .\templates\accounts\portal_login.html:153
+#: .\templates\accounts\portal_login.html:459
 #, python-format
-msgid "100% Secure"
-msgstr "100% સુરક્ષિત"
+msgid "100%% Secure"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:150
-#: .\templates\accounts\broker_login.html:459
+#: .\templates\accounts\portal_login.html:156
+#: .\templates\accounts\portal_login.html:462
 msgid "Your data is safe and encrypted at all times."
-msgstr "તમારો ડેટા હંમેશા સુરક્ષિત અને એન્ક્રિપ્ટેડ છે."
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:163
-#: .\templates\accounts\broker_login.html:472
-msgid "Manage Properties"
-msgstr "મિલકતો મેનેજ કરો"
+#: .\templates\accounts\portal_login.html:169
+#: .\templates\accounts\portal_login.html:475
+msgid "Manage Property"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:166
-#: .\templates\accounts\broker_login.html:475
-msgid "Add, edit and manage all your properties easily."
-msgstr "તમારી બધી મિલકતો સરળતાથી ઉમેરો, સંપાદિત કરો અને મેનેજ કરો."
+#: .\templates\accounts\portal_login.html:172
+#: .\templates\accounts\portal_login.html:478
+msgid "Add, edit and manage all your property easily."
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:181
-#: .\templates\accounts\broker_login.html:490
+#: .\templates\accounts\portal_login.html:187
+#: .\templates\accounts\portal_login.html:493
 msgid "Track Clients & Leads"
-msgstr "ક્લાયન્ટ્સ અને લીડ્સ ટ્રેક કરો"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:202
-#: .\templates\accounts\broker_login.html:511
+#: .\templates\accounts\portal_login.html:208
+#: .\templates\accounts\portal_login.html:513
 msgid "Grow Your Business"
-msgstr "તમારો બિઝનેસ વધારો"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:219
-#: .\templates\accounts\broker_login.html:528
-#: .\templates\accounts\user_login.html:223
+#: .\templates\accounts\portal_login.html:225
+#: .\templates\accounts\portal_login.html:533
+#: .\templates\accounts\user_login.html:249
+#: .\templates\accounts\user_login.html:606
 msgid "24/7 Customer Support"
-msgstr "24/7 ગ્રાહક સહાય"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:222
-#: .\templates\accounts\broker_login.html:531
-#: .\templates\accounts\user_login.html:226
+#: .\templates\accounts\portal_login.html:228
+#: .\templates\accounts\portal_login.html:536
+#: .\templates\accounts\user_login.html:252
+#: .\templates\accounts\user_login.html:609
 msgid "Contact our support team anytime for assistance"
-msgstr "સહાય માટે અમારી સપોર્ટ ટીમનો ક્યારેય પણ સંપર્ક કરો"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:243
+#: .\templates\accounts\portal_login.html:250
 msgid "Brokly Portal Login"
-msgstr "બ્રોકલી પોર્ટલ લોગિન"
+msgstr "બ્રોકલી પોર્ટલ લૉગિન"
 
-#: .\templates\accounts\broker_login.html:250
-#: .\templates\accounts\user_login.html:262
+#: .\templates\accounts\portal_login.html:252
+msgid "Access your Brokly portal and manage your business efficiently."
+msgstr ""
+
+#: .\templates\accounts\portal_login.html:256
+#: .\templates\accounts\user_login.html:289
 msgid "Mobile Number"
-msgstr "મોબાઇલ નંબર"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:262
-#: .\templates\accounts\user_login.html:274
+#: .\templates\accounts\portal_login.html:267
+#: .\templates\accounts\user_login.html:301
+#: .\templates\portal\propertys\property_create.html:240
 msgid "Phone number"
 msgstr "ફોન નંબર"
 
-#: .\templates\accounts\broker_login.html:276
-#: .\templates\accounts\broker_login.html:680
-#: .\templates\accounts\user_login.html:288
-#: .\templates\accounts\user_login.html:689
+#: .\templates\accounts\portal_login.html:281
+#: .\templates\accounts\user_login.html:315
 msgid "Send OTP"
-msgstr "OTP મોકલો"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:280
-#: .\templates\accounts\user_login.html:292
+#: .\templates\accounts\portal_login.html:285
+#: .\templates\accounts\user_login.html:319
 msgid "Enter OTP"
-msgstr "OTP દાખલ કરો"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:295
-#: .\templates\accounts\user_login.html:307
+#: .\templates\accounts\portal_login.html:300
+#: .\templates\accounts\user_login.html:334
 msgid "Resend OTP in"
-msgstr "OTP ફરી મોકલો"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:305
-msgid "User Dashboard"
-msgstr "વપરાશકર્તા ડેશબોર્ડ"
+#: .\templates\accounts\portal_login.html:311
+msgid "Brokly Dashboard"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:312
+#: .\templates\accounts\portal_login.html:318
 msgid "Continue as User"
-msgstr "વપરાશકર્તા તરીકે ચાલુ રાખો"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:335
-#: .\templates\accounts\user_login.html:355
+#: .\templates\accounts\portal_login.html:328
+msgid ""
+"Search property, connect with trusted brokers or owners and discover your "
+"next home."
+msgstr ""
+
+#: .\templates\accounts\portal_login.html:340
+#: .\templates\accounts\user_login.html:382
 msgid "By continuing, you agree to our"
-msgstr "ચાલુ રાખવાથી, તમે અમારી સાથે સંમત થાઓ છો"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:336
+#: .\templates\accounts\portal_login.html:341
 msgid "Terms & Conditions"
-msgstr "નિયમો અને શરતો"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:349
+#: .\templates\accounts\portal_login.html:354
 msgid "Create Your Portal Profile"
-msgstr "તમારી પોર્ટલ પ્રોફાઇલ બનાવો"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:350
-#: .\templates\accounts\user_login.html:372
+#: .\templates\accounts\portal_login.html:355
+#: .\templates\accounts\user_login.html:399
 msgid "Let`s get started with a few details about you."
-msgstr "તમારી કેટલીક વિગતો સાથે શરૂઆત કરીએ."
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:352
-#: .\templates\accounts\user_login.html:374
+#: .\templates\accounts\portal_login.html:357
+#: .\templates\accounts\user_login.html:401
 msgid "Continue"
-msgstr "ચાલુ રાખો"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:378
-#: .\templates\accounts\user_login.html:400
+#: .\templates\accounts\portal_login.html:388
+#: .\templates\accounts\user_login.html:432
 msgid "Full Name"
-msgstr "પૂર્ણ નામ"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:380
-#: .\templates\accounts\user_login.html:402
+#: .\templates\accounts\portal_login.html:390
+#: .\templates\accounts\user_login.html:434
 msgid "Enter your full name"
-msgstr "તમારું પૂર્ણ નામ દાખલ કરો"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:387
-#: .\templates\accounts\user_login.html:409
+#: .\templates\accounts\portal_login.html:397
+#: .\templates\accounts\user_login.html:441
 msgid "Maximum 20 characters allowed"
-msgstr "મહત્તમ 20 અક્ષરોની મંજૂરી છે"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:399
-#: .\templates\accounts\user_login.html:421
+#: .\templates\accounts\portal_login.html:409
+#: .\templates\accounts\user_login.html:453
 msgid "State"
-msgstr "રાજ્ય"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:411
-#: .\templates\accounts\user_login.html:433
+#: .\templates\accounts\portal_login.html:421
+#: .\templates\accounts\user_login.html:465
 msgid "City"
-msgstr "શહેર"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:416
-#: .\templates\accounts\broker_login.html:583
-#: .\templates\accounts\broker_login.html:843
-#: .\templates\accounts\user_login.html:438
-#: .\templates\accounts\user_login.html:592
-#: .\templates\accounts\user_login.html:852
+#: .\templates\accounts\portal_login.html:426
+#: .\templates\accounts\user_login.html:470
 msgid "Select City"
-msgstr "શહેર પસંદ કરો"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:424
-#: .\templates\accounts\user_login.html:446
+#: .\templates\accounts\portal_login.html:434
+#: .\templates\accounts\user_login.html:478
 msgid "Update Profile"
-msgstr "પ્રોફાઇલ અપડેટ કરો"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:428
-#: .\templates\accounts\user_login.html:450
+#: .\templates\accounts\portal_login.html:438
+#: .\templates\accounts\user_login.html:482
 msgid "You can update these details anytime later."
-msgstr "તમે આ વિગતો પછી ક્યારે પણ અપડેટ કરી શકો છો."
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:576
-#: .\templates\accounts\broker_login.html:835
-#: .\templates\accounts\user_login.html:585
-#: .\templates\accounts\user_login.html:844
-msgid "Select State"
-msgstr "રાજ્ય પસંદ કરો"
+#: .\templates\accounts\portal_login.html:446
+#: .\templates\accounts\user_login.html:495
+msgid "features"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:587
-#: .\templates\accounts\broker_login.html:933
-#: .\templates\accounts\broker_login.html:939
-#: .\templates\accounts\user_login.html:596
-#: .\templates\accounts\user_login.html:942
-#: .\templates\accounts\user_login.html:948
-msgid "Update profile"
-msgstr "પ્રોફાઇલ અપડેટ કરો"
+#: .\templates\accounts\portal_login.html:496
+msgid "Keep track of your clients, leads and conversations in one place."
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:626
-#: .\templates\accounts\broker_login.html:643
-#: .\templates\accounts\user_login.html:635
-#: .\templates\accounts\user_login.html:652
-msgid "Phone number is required"
-msgstr "ફોન નંબર જરૂરી છે"
+#: .\templates\accounts\portal_login.html:516
+msgid "Powerful tools and insights to help you close more deals."
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:631
-#: .\templates\accounts\broker_login.html:649
-#: .\templates\accounts\user_login.html:640
-#: .\templates\accounts\user_login.html:658
-msgid "Enter valid 10-digit phone number"
-msgstr "માન્ય 10 અંકનો ફોન નંબર દાખલ કરો"
-
-#: .\templates\accounts\broker_login.html:662
-#: .\templates\accounts\user_login.html:671
-msgid "OTP Sending..."
-msgstr "OTP મોકલાઈ રહ્યો છે..."
-
-#: .\templates\accounts\broker_login.html:699
-#: .\templates\accounts\broker_login.html:779
-#: .\templates\accounts\broker_login.html:858
-#: .\templates\accounts\broker_login.html:938
-#: .\templates\accounts\user_login.html:708
-#: .\templates\accounts\user_login.html:788
-#: .\templates\accounts\user_login.html:867
-#: .\templates\accounts\user_login.html:947
-msgid "Something went wrong. Try again."
-msgstr "કંઈક ખોટું થયું. ફરી પ્રયાસ કરો."
-
-#: .\templates\accounts\broker_login.html:794
-#: .\templates\accounts\user_login.html:803
-msgid "Enter complete 6-digit OTP"
-msgstr "પૂર્ણ 6 અંકનો OTP દાખલ કરો"
-
-#: .\templates\accounts\broker_login.html:901
-#: .\templates\accounts\user_login.html:910
-msgid "Username is required"
-msgstr "વપરાશકર્તા નામ જરૂરી છે"
-
-#: .\templates\accounts\broker_login.html:913
-#: .\templates\accounts\user_login.html:922
-msgid "Are you sure you want to update your profile?"
-msgstr "શું તમે ખરેખર તમારી પ્રોફાઇલ અપડેટ કરવા માંગો છો?"
-
-#: .\templates\accounts\broker_login.html:959
-#: .\templates\accounts\user_login.html:968
+#: .\templates\accounts\portal_login.html:552
+#: .\templates\accounts\user_login.html:625
 msgid "Select Your Language"
-msgstr "તમારી ભાષા પસંદ કરો"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:999
-#: .\templates\accounts\user_login.html:1008
+#: .\templates\accounts\portal_login.html:592
+#: .\templates\accounts\user_login.html:665
 msgid "Search country or code"
-msgstr "દેશ અથવા કોડ શોધો"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:1024
-#: .\templates\accounts\broker_login.html:1064
-#: .\templates\accounts\broker_login.html:1103
-#: .\templates\accounts\user_login.html:1033
-#: .\templates\accounts\user_login.html:1073
-#: .\templates\accounts\user_login.html:1112
+#: .\templates\accounts\portal_login.html:617
+#: .\templates\accounts\portal_login.html:657
+#: .\templates\accounts\portal_login.html:696
+#: .\templates\accounts\user_login.html:690
+#: .\templates\accounts\user_login.html:730
+#: .\templates\accounts\user_login.html:769 .\templates\no_data_found.html:11
 msgid "No results found"
-msgstr "કોઈ પરિણામ મળ્યું નથી"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:1047
-#: .\templates\accounts\user_login.html:1056
+#: .\templates\accounts\portal_login.html:640
+#: .\templates\accounts\user_login.html:713
 msgid "Search state"
-msgstr "રાજ્ય શોધો"
+msgstr ""
 
-#: .\templates\accounts\broker_login.html:1086
-#: .\templates\accounts\user_login.html:1095
+#: .\templates\accounts\portal_login.html:679
+#: .\templates\accounts\user_login.html:752
 msgid "Search city"
-msgstr "શહેર શોધો"
+msgstr ""
 
 #: .\templates\accounts\user_login.html:9
 msgid "Log in - Brokly"
-msgstr "લૉગ ઇન - બ્રોકલી"
+msgstr ""
 
-#: .\templates\accounts\user_login.html:129
-#: .\templates\accounts\user_login.html:243
-msgid "Find Homes, Flats, PGs & Commercial Properties"
-msgstr "ઘરો, ફ્લેટ્સ, PG અને કોમર્શિયલ પ્રોપર્ટી શોધો"
-
-#: .\templates\accounts\user_login.html:130
-#: .\templates\accounts\user_login.html:244
-msgid "All in One Place."
-msgstr "બધું એક જ જગ્યાએ."
-
-#: .\templates\accounts\user_login.html:133
-#: .\templates\accounts\user_login.html:247
-msgid "Connect with Trusted Brokers, Property Owners & Builders."
-msgstr "વિશ્વસનીય બ્રોકરો, પ્રોપર્ટી માલિકો અને બિલ્ડરો સાથે જોડાઓ."
+#: .\templates\accounts\user_login.html:135
+#: .\templates\accounts\user_login.html:269
+msgid "Find Homes, Flats, PGs & Commercial Property"
+msgstr ""
 
 #: .\templates\accounts\user_login.html:136
-msgid ""
-"Brokly is a smart real estate platform, where users can search for nearby "
-"PGs, houses, flats, rooms and commercial properties using live location, "
-"price and distance based filters. Brokers and property owners can list their "
-"properties for sale or rent, while the admin panel manages and monitors all "
-"user, broker and property related activities from a single dashboard."
+#: .\templates\accounts\user_login.html:270
+msgid "All in One Place."
 msgstr ""
-"બ્રોકલી એક સ્માર્ટ રિયલ એસ્ટેટ પ્લેટફોર્મ છે, જ્યાં વપરાશકર્તાઓ લાઇવ લોકેશન, "
-"કિંમત અને અંતર આધારિત ફિલ્ટર્સનો ઉપયોગ કરીને નજીકના PG, ઘરો, ફ્લેટ્સ, રૂમ "
-"અને કોમર્શિયલ પ્રોપર્ટી શોધી શકે છે. બ્રોકરો અને પ્રોપર્ટી માલિકો વેચાણ અથવા "
-"ભાડા માટે પોતાની પ્રોપર્ટી લિસ્ટ કરી શકે છે, જ્યારે એડમિન પેનલ એક જ "
-"ડેશબોર્ડમાંથી બધા વપરાશકર્તા, બ્રોકર અને પ્રોપર્ટી સંબંધિત પ્રવૃત્તિઓનું "
-"સંચાલન અને મોનિટરિંગ કરે છે."
 
-#: .\templates\accounts\user_login.html:150
-#: .\templates\accounts\user_login.html:482
+#: .\templates\accounts\user_login.html:139
+#: .\templates\accounts\user_login.html:273
+msgid "Connect with Trusted Brokers, Property Owners & Builders."
+msgstr ""
+
+#: .\templates\accounts\user_login.html:157
+#: .\templates\accounts\user_login.html:515
 msgid "Smart Search"
-msgstr "સ્માર્ટ શોધ"
+msgstr ""
 
-#: .\templates\accounts\user_login.html:153
-#: .\templates\accounts\user_login.html:485
-msgid "Find the best properties near you."
-msgstr "તમારી નજીકની શ્રેષ્ઠ પ્રોપર્ટી શોધો."
+#: .\templates\accounts\user_login.html:160
+#: .\templates\accounts\user_login.html:518
+msgid "Find the best property near you."
+msgstr ""
 
-#: .\templates\accounts\user_login.html:173
-#: .\templates\accounts\user_login.html:505
+#: .\templates\accounts\user_login.html:180
+#: .\templates\accounts\user_login.html:538
 msgid "Smart Filters"
-msgstr "સ્માર્ટ ફિલ્ટર્સ"
+msgstr ""
 
-#: .\templates\accounts\user_login.html:176
-#: .\templates\accounts\user_login.html:508
-msgid "Filter by price, distance & more."
-msgstr "કિંમત, અંતર અને વધુના આધારે ફિલ્ટર કરો."
+#: .\templates\accounts\user_login.html:183
+#: .\templates\accounts\user_login.html:541
+msgid "Filter by price, distance, category and more."
+msgstr ""
 
-#: .\templates\accounts\user_login.html:189
-#: .\templates\accounts\user_login.html:521
+#: .\templates\accounts\user_login.html:196
+#: .\templates\accounts\user_login.html:554
 msgid "Live Location"
-msgstr "લાઇવ લોકેશન"
+msgstr ""
 
-#: .\templates\accounts\user_login.html:192
-#: .\templates\accounts\user_login.html:524
-msgid "Search properties by location and map."
-msgstr "લોકેશન અને મેપ દ્વારા પ્રોપર્ટી શોધો."
+#: .\templates\accounts\user_login.html:199
+#: .\templates\accounts\user_login.html:557
+msgid "Search property by location using live map."
+msgstr ""
 
-#: .\templates\accounts\user_login.html:205
-#: .\templates\accounts\user_login.html:537
+#: .\templates\accounts\user_login.html:212
+#: .\templates\accounts\user_login.html:570
 msgid "Verified Listings"
-msgstr "વેરિફાઇડ લિસ્ટિંગ્સ"
+msgstr ""
 
-#: .\templates\accounts\user_login.html:208
-#: .\templates\accounts\user_login.html:540
-msgid "Only trusted & verified properties."
-msgstr "ફક્ત વિશ્વસનીય અને વેરિફાઇડ પ્રોપર્ટી."
+#: .\templates\accounts\user_login.html:215
+#: .\templates\accounts\user_login.html:573
+msgid "Only trusted & verified property for you."
+msgstr ""
 
-#: .\templates\accounts\user_login.html:256
-msgid "Welcome Back 👋"
-msgstr "ફરી સ્વાગત છે 👋"
+#: .\templates\accounts\user_login.html:228
+#: .\templates\accounts\user_login.html:586
+msgid "Instant Alerts"
+msgstr ""
 
-#: .\templates\accounts\user_login.html:258
+#: .\templates\accounts\user_login.html:283
+msgid "Welcome Back!"
+msgstr ""
+
+#: .\templates\accounts\user_login.html:285
 msgid "Login to continue to your account"
-msgstr "તમારા એકાઉન્ટમાં આગળ વધવા માટે લૉગ ઇન કરો"
+msgstr ""
 
-#: .\templates\accounts\user_login.html:318 .\templates\base_broker.html:11
-msgid "Brokly Portal"
-msgstr "બ્રોકલી પોર્ટલ"
-
-#: .\templates\accounts\user_login.html:325
+#: .\templates\accounts\user_login.html:352
 msgid "Buy"
-msgstr "ખરીદો"
+msgstr ""
 
-#: .\templates\accounts\user_login.html:326
+#: .\templates\accounts\user_login.html:353
 msgid "Sell"
-msgstr "વેચો"
+msgstr ""
 
-#: .\templates\accounts\user_login.html:327
+#: .\templates\accounts\user_login.html:354
 msgid "Rent"
-msgstr "ભાડે લો"
+msgstr ""
 
-#: .\templates\accounts\user_login.html:333
+#: .\templates\accounts\user_login.html:360
 msgid "Partner with Brokly"
-msgstr "બ્રોકલી સાથે ભાગીદાર બનો"
+msgstr ""
 
-#: .\templates\accounts\user_login.html:343
-msgid "List properties, connect with buyers and grow your business."
-msgstr "પ્રોપર્ટી લિસ્ટ કરો, ખરીદદારો સાથે જોડાઓ અને તમારો બિઝનેસ વધારો."
+#: .\templates\accounts\user_login.html:370
+msgid "List property, connect with buyers and grow your business."
+msgstr ""
 
-#: .\templates\accounts\user_login.html:356
+#: .\templates\accounts\user_login.html:383
 msgid "Terms of Service"
-msgstr "સેવાની શરતો"
+msgstr ""
 
-#: .\templates\accounts\user_login.html:357
+#: .\templates\accounts\user_login.html:384
 msgid "and"
-msgstr "અને"
+msgstr ""
 
-#: .\templates\accounts\user_login.html:358
+#: .\templates\accounts\user_login.html:385
 msgid "Privacy Policy."
-msgstr "ગોપનીયતા નીતિ."
+msgstr ""
 
-#: .\templates\accounts\user_login.html:371
+#: .\templates\accounts\user_login.html:398
 msgid "Create Your Profile"
-msgstr "તમારી પ્રોફાઇલ બનાવો"
+msgstr ""
 
-#: .\templates\base_user.html:11 .\templates\partials\user\navbar.html:18
-#: .\templates\partials\user\navbar.html:28 .\templates\user\dashboard.html:4
-msgid "Home"
-msgstr "હોમ"
+#: .\templates\accounts\user_login.html:497
+msgid "Everything you need to find the"
+msgstr ""
 
-#: .\templates\partials\user\navbar.html:33
-#: .\templates\partials\user\navbar.html:43 .\templates\user\help.html:5
-msgid "Help & Support"
-msgstr "મદદ અને સપોર્ટ"
+#: .\templates\accounts\user_login.html:498
+msgid "perfect property"
+msgstr ""
 
-#: .\templates\partials\user\navbar.html:48
-#: .\templates\partials\user\navbar.html:58 .\templates\user\setting.html:5
-msgid "Setting"
-msgstr "સેટિંગ"
+#: .\templates\base_portal.html:11
+#: .\templates\partials\portal\portal_mobile_footer.html:6
+#: .\templates\partials\portal\portal_mobile_footer.html:23
+#: .\templates\partials\portal\portal_navbar.html:55
+#: .\templates\partials\portal\portal_navbar.html:83
+#: .\templates\portal\dashboard.html:5
+msgid "Dashboard"
+msgstr ""
 
-#: .\templates\partials\user\navbar.html:68
-msgid "Theme"
-msgstr "થીમ"
+#: .\templates\base_portal.html:48 .\templates\user\dashboard.html:48
+msgid "Messaging"
+msgstr ""
 
-#: .\templates\partials\user\navbar.html:92
-msgid "Dark Mode"
-msgstr "ડાર્ક મોડ"
+#: .\templates\base_portal.html:57 .\templates\portal\dashboard.html:60
+#: .\templates\portal\propertys\property_create.html:33
+#: .\templates\user\dashboard.html:65 .\templates\user\dashboard.html:146
+msgid "Notifications"
+msgstr ""
 
-#: .\templates\partials\user\navbar.html:93
-msgid "Light Mode"
-msgstr "લાઇટ મોડ"
+#: .\templates\base_portal.html:66 .\templates\user\dashboard.html:74
+msgid "You Profile"
+msgstr ""
 
-#: .\templates\partials\user\navbar.html:126
-#: .\templates\partials\user\navbar.html:135
-msgid "View Profile"
-msgstr "પ્રોફાઇલ જુઓ"
+#: .\templates\base_portal.html:85 .\templates\user\dashboard.html:93
+msgid "My Profile"
+msgstr ""
 
-#: .\templates\user\dashboard.html:16
-msgid "Add Address"
-msgstr "સરનામું ઉમેરો"
+#: .\templates\base_portal.html:92
+#: .\templates\partials\portal\portal_navbar.html:213
+#: .\templates\partials\portal\portal_navbar.html:239
+#: .\templates\partials\user\navbar.html:249
+#: .\templates\partials\user\navbar.html:283
+#: .\templates\user\dashboard.html:100
+msgid "Settings"
+msgstr ""
 
-#: .\templates\user\dashboard.html:35
-msgid "Welcome to Brokly Dashboard"
-msgstr "Brokly ડેશબોર્ડમાં આપનું સ્વાગત છે"
-
-#: .\templates\user\dashboard.html:37
-msgid "name"
-msgstr "નામ"
-
-#: .\templates\user\dashboard.html:38
-msgid "state"
-msgstr "રાજ્ય"
-
-#: .\templates\user\dashboard.html:39
-msgid "city"
-msgstr "શહેર"
-
-#: .\templates\user\dashboard.html:40
-msgid "created_at"
-msgstr "બનાવેલ તારીખ"
-
-#: .\templates\user\dashboard.html:41
-msgid "updated_at"
-msgstr "અપડેટ કરેલ તારીખ"
-
-#: .\templates\user\dashboard.html:42
+#: .\templates\base_portal.html:100 .\templates\logout_modal.html:29
+#: .\templates\logout_modal.html:35 .\templates\user\dashboard.html:108
 msgid "Logout"
-msgstr "લોગઆઉટ"
+msgstr ""
+
+#: .\templates\base_portal.html:161 .\templates\base_portal.html:169
+#: .\templates\partials\portal\portal_mobile_footer.html:46
+#: .\templates\partials\portal\portal_mobile_footer.html:54
+#: .\templates\partials\portal\portal_navbar.html:88
+#: .\templates\partials\portal\portal_navbar.html:115
+#: .\templates\portal\propertys\property_create.html:6
+msgid "Add Property"
+msgstr ""
+
+#: .\templates\base_user.html:11 .\templates\partials\user\mobile_footer.html:6
+#: .\templates\partials\user\mobile_footer.html:17
+#: .\templates\partials\user\navbar.html:55
+#: .\templates\partials\user\navbar.html:89 .\templates\user\dashboard.html:6
+msgid "Home"
+msgstr ""
+
+#: .\templates\base_user.html:83 .\templates\base_user.html:90
+#: .\templates\partials\user\mobile_footer.html:35
+#: .\templates\partials\user\mobile_footer.html:42
+#: .\templates\partials\user\navbar.html:94
+#: .\templates\partials\user\navbar.html:128
+msgid "Near Me"
+msgstr ""
+
+#: .\templates\logout_modal.html:30
+msgid "Are you sure you want to logout from your account?"
+msgstr ""
+
+#: .\templates\logout_modal.html:33
+#: .\templates\partials\portal\portal_navbar.html:8
+#: .\templates\partials\user\navbar.html:8
+msgid "Close"
+msgstr ""
+
+#: .\templates\message_modal.html:20
+msgid "No"
+msgstr "ના"
+
+#: .\templates\no_data_found.html:13
+msgid "Try searching with a different keyword."
+msgstr ""
+
+#: .\templates\partials\portal\portal_mobile_footer.html:27
+#: .\templates\partials\portal\portal_mobile_footer.html:42
+#: .\templates\partials\portal\portal_navbar.html:120
+#: .\templates\partials\portal\portal_navbar.html:146
+msgid "Propertys"
+msgstr ""
+
+#: .\templates\partials\portal\portal_mobile_footer.html:58
+#: .\templates\partials\portal\portal_mobile_footer.html:73
+#: .\templates\partials\portal\portal_navbar.html:151
+#: .\templates\partials\portal\portal_navbar.html:177
+#: .\templates\partials\user\mobile_footer.html:46
+#: .\templates\partials\user\mobile_footer.html:57
+#: .\templates\partials\user\navbar.html:171
+#: .\templates\partials\user\navbar.html:205
+msgid "Messages"
+msgstr ""
+
+#: .\templates\partials\portal\portal_mobile_footer.html:77
+#: .\templates\partials\portal\portal_mobile_footer.html:92
+#: .\templates\partials\portal\portal_navbar.html:307
+#: .\templates\partials\user\mobile_footer.html:61
+#: .\templates\partials\user\mobile_footer.html:72
+#: .\templates\partials\user\navbar.html:351
+msgid "Profile"
+msgstr ""
+
+#: .\templates\partials\portal\portal_navbar.html:32
+#: .\templates\partials\user\navbar.html:32
+msgid "Select Place"
+msgstr ""
+
+#: .\templates\partials\portal\portal_navbar.html:182
+#: .\templates\partials\portal\portal_navbar.html:208
+#: .\templates\partials\user\navbar.html:210
+#: .\templates\partials\user\navbar.html:244 .\templates\portal\help.html:5
+#: .\templates\user\help.html:5
+msgid "Help & Support"
+msgstr ""
+
+#: .\templates\partials\portal\portal_navbar.html:249
+#: .\templates\partials\user\navbar.html:293
+msgid "Theme"
+msgstr ""
+
+#: .\templates\partials\portal\portal_navbar.html:273
+#: .\templates\partials\user\navbar.html:317
+msgid "Dark Mode"
+msgstr ""
+
+#: .\templates\partials\portal\portal_navbar.html:274
+#: .\templates\partials\user\navbar.html:318
+msgid "Light Mode"
+msgstr ""
+
+#: .\templates\partials\portal\portal_navbar.html:323
+#: .\templates\partials\user\navbar.html:367
+msgid "View Profile"
+msgstr ""
+
+#: .\templates\partials\user\mobile_footer.html:21
+#: .\templates\partials\user\mobile_footer.html:31
+#: .\templates\partials\user\navbar.html:133
+#: .\templates\partials\user\navbar.html:166 .\templates\user\dashboard.html:57
+msgid "Shortlisted"
+msgstr ""
+
+#: .\templates\portal\dashboard.html:32
+msgid "Search propertyes, leads, location..."
+msgstr ""
+
+#: .\templates\portal\dashboard.html:48
+#: .\templates\portal\propertys\property_create.html:42
+#: .\templates\user\dashboard.html:132
+msgid "Menu"
+msgstr ""
+
+#: .\templates\portal\dashboard.html:69 .\templates\user\dashboard.html:155
+msgid "Search"
+msgstr ""
+
+#: .\templates\portal\dashboard.html:83
+msgid "Welcome to Brokly Protal Dashboard"
+msgstr ""
+
+#: .\templates\portal\help.html:10
+msgid "Portal Help & Support"
+msgstr ""
+
+#: .\templates\portal\propertys\property_create.html:11
+#: .\templates\portal\propertys\property_create.html:27
+msgid "Add New Property"
+msgstr "નવી મિલકત ઉમેરો"
+
+#: .\templates\portal\propertys\property_create.html:21
+msgid "Back"
+msgstr "પાછળ"
+
+#: .\templates\portal\propertys\property_create.html:66
+msgid "Basic Details"
+msgstr "મૂળભૂત વિગતો"
+
+#: .\templates\portal\propertys\property_create.html:68
+msgid "Provide basic information about your property"
+msgstr "તમારી મિલકત વિશેની મૂળભૂત માહિતી આપો"
+
+#: .\templates\portal\propertys\property_create.html:83
+msgid "Property Type"
+msgstr "મિલકતનો પ્રકાર"
+
+#: .\templates\portal\propertys\property_create.html:85
+msgid "Select Property Type"
+msgstr "મિલકતનો પ્રકાર પસંદ કરો"
+
+#: .\templates\portal\propertys\property_create.html:96
+msgid "Property Name"
+msgstr "મિલકતનું નામ"
+
+#: .\templates\portal\propertys\property_create.html:97
+msgid "Property name"
+msgstr "મિલકતનું નામ"
+
+#: .\templates\portal\propertys\property_create.html:107
+msgid "Property Price"
+msgstr "મિલકતની કિંમત"
+
+#: .\templates\portal\propertys\property_create.html:123
+msgid "Per Day"
+msgstr "પ્રતિ દિવસ"
+
+#: .\templates\portal\propertys\property_create.html:126
+msgid "Per Month"
+msgstr "પ્રતિ મહિનો"
+
+#: .\templates\portal\propertys\property_create.html:129
+msgid "Per Year"
+msgstr "પ્રતિ વર્ષ"
+
+#: .\templates\portal\propertys\property_create.html:139
+msgid "BHK Type"
+msgstr "BHK પ્રકાર"
+
+#: .\templates\portal\propertys\property_create.html:143
+msgid "Select BHK Type"
+msgstr "BHK પ્રકાર પસંદ કરો"
+
+#: .\templates\portal\propertys\property_create.html:146
+msgid "1 RK/Room"
+msgstr "1 RK / રૂમ"
+
+#: .\templates\portal\propertys\property_create.html:149
+msgid "1 BHK"
+msgstr "1 BHK"
+
+#: .\templates\portal\propertys\property_create.html:152
+msgid "2 BHK"
+msgstr "2 BHK"
+
+#: .\templates\portal\propertys\property_create.html:155
+msgid "3 BHK"
+msgstr "3 BHK"
+
+#: .\templates\portal\propertys\property_create.html:158
+msgid "4 BHK"
+msgstr "4 BHK"
+
+#: .\templates\portal\propertys\property_create.html:161
+msgid "5 BHK"
+msgstr "5 BHK"
+
+#: .\templates\portal\propertys\property_create.html:164
+msgid "5+ BHK"
+msgstr "5+ BHK"
+
+#: .\templates\portal\propertys\property_create.html:177
+msgid "Select Purpose"
+msgstr "હેતુ પસંદ કરો"
+
+#: .\templates\portal\propertys\property_create.html:184
+msgid "For Rent"
+msgstr "ભાડે આપવા માટે"
+
+#: .\templates\portal\propertys\property_create.html:192
+msgid "For Sale"
+msgstr "વેચાણ માટે"
+
+#: .\templates\portal\propertys\property_create.html:200
+msgid "PG / Hostel"
+msgstr "પીજી / હોસ્ટેલ"
+
+#: .\templates\portal\propertys\property_create.html:209
+msgid "Preferred For"
+msgstr "કોના માટે યોગ્ય"
+
+#: .\templates\portal\propertys\property_create.html:211
+msgid "Select Preferred For"
+msgstr "કોના માટે યોગ્ય પસંદ કરો"
+
+#: .\templates\portal\propertys\property_create.html:222
+msgid "Facilities"
+msgstr "સુવિધાઓ"
+
+#: .\templates\portal\propertys\property_create.html:224
+msgid "Select Facilities"
+msgstr "સુવિધાઓ પસંદ કરો"
+
+#: .\templates\portal\propertys\property_create.html:262
+msgid "add another phone number"
+msgstr "નવો ફોન નંબર ઉમેરો"
+
+#: .\templates\portal\propertys\property_create.html:292
+msgid "Description"
+msgstr "વર્ણન"
+
+#: .\templates\portal\propertys\property_create.html:293
+msgid "Describe your property, its features, amenities, and other details."
+msgstr "તમારી મિલકત, તેની વિશેષતાઓ, સુવિધાઓ અને અન્ય વિગતોનું વર્ણન કરો."
+
+#: .\templates\portal\propertys\property_create.html:299
+msgid "Clear"
+msgstr "સાફ કરો"
+
+#: .\templates\portal\propertys\property_create.html:303
+msgid "Clear Form?"
+msgstr "ફોર્મ સાફ કરવું છે?"
+
+#: .\templates\portal\propertys\property_create.html:304
+msgid ""
+"Are you sure you want to clear this form? All entered details will be "
+"permanently removed."
+msgstr ""
+"શું તમે ખરેખર આ ફોર્મ સાફ કરવા માંગો છો? દાખલ કરેલી તમામ વિગતો કાયમ માટે દૂર થઈ જશે."
+
+#: .\templates\portal\propertys\property_create.html:305
+msgid "Yes"
+msgstr "હા"
+
+#: .\templates\portal\propertys\property_create.html:312
+msgid "Save & Continue"
+msgstr "સાચવો અને આગળ વધો"
+
+#: .\templates\portal\propertys\property_create.html:333
+msgid "Quick Tips"
+msgstr "ઝડપી સૂચનો"
+
+#: .\templates\portal\propertys\property_create.html:339
+msgid "Fill in the required fields (*) accurately to continue."
+msgstr "આગળ વધવા માટે જરૂરી (*) ક્ષેત્રો યોગ્ય રીતે ભરો."
+
+#: .\templates\portal\propertys\property_create.html:345
+msgid "Choose the correct property type and purpose."
+msgstr "યોગ્ય મિલકતનો પ્રકાર અને હેતુ પસંદ કરો."
+
+#: .\templates\portal\propertys\property_create.html:351
+msgid "Use a clear, searchable property name."
+msgstr "સ્પષ્ટ અને સરળતાથી શોધી શકાય તેવું મિલકતનું નામ લખો."
+
+#: .\templates\portal\propertys\property_create.html:357
+msgid "Enter the actual rent or selling price."
+msgstr "વાસ્તવિક ભાડું અથવા વેચાણ કિંમત દાખલ કરો."
+
+#: .\templates\portal\propertys\property_create.html:363
+msgid "Add at least one valid phone number."
+msgstr "ઓછામાં ઓછો એક માન્ય ફોન નંબર ઉમેરો."
+
+#: .\templates\portal\propertys\property_create.html:369
+msgid "Write a short, accurate property description."
+msgstr "મિલકતનું ટૂંકું અને સચોટ વર્ણન લખો."
+
+#: .\templates\portal\propertys\property_create.html:388
+msgid "Search Property Type"
+msgstr "મિલકતનો પ્રકાર શોધો"
+
+#: .\templates\portal\propertys\property_create.html:434
+msgid "Search Preferred For"
+msgstr "પસંદગી શોધો"
+
+#: .\templates\portal\propertys\property_create.html:476
+#: .\templates\portal\propertys\property_create.html:536
+msgid "Clear Selection"
+msgstr "પસંદગી દૂર કરો"
+
+#: .\templates\portal\propertys\property_create.html:477
+#: .\templates\portal\propertys\property_create.html:537
+msgid "Save"
+msgstr "સાચવો"
+
+#: .\templates\portal\propertys\property_create.html:494
+msgid "Search Facilities"
+msgstr "સુવિધાઓ શોધો"
+
+#: .\templates\portal\setting.html:5 .\templates\user\setting.html:5
+msgid "Setting"
+msgstr ""
+
+#: .\templates\portal\setting.html:10
+msgid "Portal Setting"
+msgstr ""
+
+#: .\templates\user\dashboard.html:36
+msgid "Search property, place or project..."
+msgstr ""
+
+#: .\templates\user\dashboard.html:179
+msgid "Filter Button"
+msgstr ""
+
+#: .\templates\user\dashboard.html:191
+msgid "Apply Filters"
+msgstr ""
+
+#: .\templates\user\dashboard.html:193
+msgid "All"
+msgstr ""
+
+#: .\templates\user\dashboard.html:194
+msgid "PG & 1RK Room"
+msgstr ""
 
 #: .\templates\user\help.html:10
 msgid "User Help & Support"
-msgstr "યુઝર મદદ અને સપોર્ટ"
+msgstr ""
 
 #: .\templates\user\setting.html:10
 msgid "User Setting"
-msgstr "યુઝર સેટિંગ"
+msgstr ""
+
+#~ msgid "Select Type"
+#~ msgstr "પ્રકાર પસંદ કરો"
+
+#~ msgid "0"
+#~ msgstr "0"
+
+#~ msgid "day"
+#~ msgstr "દિવસ"
+
+#~ msgid "month"
+#~ msgstr "મહિનો"
+
+#~ msgid "year"
+#~ msgstr "વર્ષ"
+
+#~ msgid "1_rk"
+#~ msgstr "1_rk"
+
+#~ msgid "1_bhk"
+#~ msgstr "1_bhk"
+
+#~ msgid "2_bhk"
+#~ msgstr "2_bhk"
+
+#~ msgid "3_bhk"
+#~ msgstr "3_bhk"
+
+#~ msgid "4_bhk"
+#~ msgstr "4_bhk"
+
+#~ msgid "5_bhk"
+#~ msgstr "5_bhk"
+
+#~ msgid "5_plus_bhk"
+#~ msgstr "5_plus_bhk"
+
+#~ msgid "rent"
+#~ msgstr "ભાડે"
+
+#~ msgid "sale"
+#~ msgstr "વેચાણ"
+
+#~ msgid "pg/hostel"
+#~ msgstr "પીજી/હોસ્ટેલ"
+
+#~ msgid "Cancel"
+#~ msgstr "રદ કરો"

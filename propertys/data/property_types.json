@@ -1,6 +1,6 @@
 [
   {
-    "model": "propertys.PropertyTypes",
+    "model": "propertys.PropertyType",
     "pk": 1,
     "fields": {
       "type_name": "Flat",
@@ -11,7 +11,7 @@
     }
   },
   {
-    "model": "propertys.PropertyTypes",
+    "model": "propertys.PropertyType",
     "pk": 2,
     "fields": {
       "type_name": "House",
@@ -22,7 +22,7 @@
     }
   },
   {
-    "model": "propertys.PropertyTypes",
+    "model": "propertys.PropertyType",
     "pk": 3,
     "fields": {
       "type_name": "Villa",
@@ -33,7 +33,7 @@
     }
   },
   {
-    "model": "propertys.PropertyTypes",
+    "model": "propertys.PropertyType",
     "pk": 4,
     "fields": {
       "type_name": "PG",
@@ -44,7 +44,7 @@
     }
   },
   {
-    "model": "propertys.PropertyTypes",
+    "model": "propertys.PropertyType",
     "pk": 5,
     "fields": {
       "type_name": "Room",
@@ -55,7 +55,7 @@
     }
   },
   {
-    "model": "propertys.PropertyTypes",
+    "model": "propertys.PropertyType",
     "pk": 6,
     "fields": {
       "type_name": "Office",
@@ -66,7 +66,7 @@
     }
   },
   {
-    "model": "propertys.PropertyTypes",
+    "model": "propertys.PropertyType",
     "pk": 7,
     "fields": {
       "type_name": "Shop",
@@ -77,7 +77,7 @@
     }
   },
   {
-    "model": "propertys.PropertyTypes",
+    "model": "propertys.PropertyType",
     "pk": 8,
     "fields": {
       "type_name": "Showroom",
@@ -88,7 +88,7 @@
     }
   },
   {
-    "model": "propertys.PropertyTypes",
+    "model": "propertys.PropertyType",
     "pk": 9,
     "fields": {
       "type_name": "Warehouse",
@@ -99,7 +99,7 @@
     }
   },
   {
-    "model": "propertys.PropertyTypes",
+    "model": "propertys.PropertyType",
     "pk": 10,
     "fields": {
       "type_name": "Land / Plot",
@@ -110,7 +110,7 @@
     }
   },
   {
-    "model": "propertys.PropertyTypes",
+    "model": "propertys.PropertyType",
     "pk": 11,
     "fields": {
       "type_name": "Farm House",
@@ -121,7 +121,7 @@
     }
   },
   {
-    "model": "propertys.PropertyTypes",
+    "model": "propertys.PropertyType",
     "pk": 12,
     "fields": {
       "type_name": "Commercial Space",

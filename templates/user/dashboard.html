@@ -26,38 +26,18 @@
           </svg>
         </button>
         {% comment %}search box{% endcomment %}
-        <div class="relative flex justify-center items-center w-full h-9 rounded-lg border border-black/8 bg-[#ffffff] dark:bg-white/10 hover:bg-[#f7f9fc] dark:hover:bg-[#3B3D3E] focus-within:ring-2 focus-within:ring-orange-500 transition-all duration-200">
+        <div class="relative search-wrapper flex justify-center items-center w-full h-9 rounded-lg border border-black/8 bg-[#ffffff] dark:bg-white/10 hover:bg-[#f7f9fc] dark:hover:bg-[#3B3D3E] focus-within:ring-2 focus-within:ring-orange-500 transition-all duration-200">
           <svg xmlns="{% static 'icons/search.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search w-[17px] h-[17px] ml-3 text-black/80 dark:text-white/80 shrink-0">
             <path d="m21 21-4.34-4.34" />
             <circle cx="11" cy="11" r="8" />
           </svg>
-          <input id="searchInput" type="search" class="w-full truncate px-3 pr-8 bg-transparent outline-none font-normal text-[15px] placeholder:text-black/50 dark:placeholder:text-white/50" placeholder="{% trans 'Search property, place or project...' %}" />
-          <button type="button" id="clearSearch" class="absolute right-3 hidden text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white">
+          <input type="search" class="search-input w-full truncate px-3 pr-8 bg-transparent outline-none font-normal text-[15px] placeholder:text-black/50 dark:placeholder:text-white/50" placeholder="{% trans 'Search property, place or project...' %}" />
+          <button type="button" class="clear-search-btn absolute right-3 hidden text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white">
             <svg xmlns="{% static 'icons/x.svg' %}" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x">
               <path d="M18 6 6 18" />
               <path d="m6 6 12 12" />
             </svg>
           </button>
-          <style>
-            input[type='search']::-webkit-search-cancel-button {
-              -webkit-appearance: none;
-              appearance: none;
-            }
-          </style>
-          <script>
-            const searchInput = document.getElementById('searchInput')
-            const clearSearch = document.getElementById('clearSearch')
-            
-            searchInput.addEventListener('input', () => {
-              clearSearch.classList.toggle('hidden', !searchInput.value)
-            })
-            
-            clearSearch.addEventListener('click', () => {
-              searchInput.value = ''
-              clearSearch.classList.add('hidden')
-              searchInput.focus()
-            })
-          </script>
         </div>
       </div>
       <div class="flex justify-center items-center gap-3">
@@ -113,7 +93,7 @@
               </svg>
               <span>{% trans 'Settings' %}</span>
             </a>
-            <button id="uModalLogoutBtn" class="w-full p-2 px-3 rounded-b-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 flex justify-start items-center gap-3 text-base">
+            <button id="u-modal-logout-btn" class="w-full p-2 px-3 rounded-b-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 flex justify-start items-center gap-3 text-base">
               <svg xmlns="{% static 'icons/log-out.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out">
                 <path d="m16 17 5-5-5-5" />
                 <path d="M21 12H9" />
@@ -122,13 +102,9 @@
               <span>{% trans 'Logout' %}</span>
             </button>
             <script>
-              document.getElementById('uModalLogoutBtn').addEventListener('click', () => {
-                uOpenModal({
-                  icon: `<svg xmlns="{% static 'icons/log-out.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out ml-1 w-12 h-12 text-orange-500"><path d="m16 17 5-5-5-5" /><path d="M21 12H9" /><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /></svg>`,
-                  title: "{% trans 'Logout' %}",
-                  message: "{% trans 'Are you sure you want to logout from your account?' %}",
-                  btnText: "{% trans 'Logout' %}",
-                  btnAction: () => {
+              document.getElementById('u-modal-logout-btn').addEventListener('click', () => {
+                openlogoutmodal({
+                  logbtnaction: () => {
                     window.location.href = '/user-logout/'
                   }
                 })

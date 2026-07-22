@@ -58,7 +58,7 @@ def portal_required(view_func):
             is_active=True,
         ).first()
 
-        request.user_obj = user
+        request.portal_obj = user
         request.pProfile = pProfile
         request.pAddress = pAddress
 

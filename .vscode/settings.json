@@ -7,5 +7,6 @@
   "editor.mouseWheelZoom": true,
   "editor.fastScrollSensitivity": 1,
   "editor.scrollbar.verticalScrollbarSize": 10,
-  "workbench.editor.splitInGroupLayout": "vertical"
+  "workbench.editor.splitInGroupLayout": "vertical",
+  "djlint.showInstallError": false
 }

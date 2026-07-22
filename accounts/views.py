@@ -347,106 +347,102 @@ def login_portal(request):
 
 @user_required
 def user_dashboard(request):
-    context = {
-        "user": request.user_obj,
-        "uProfile": request.uProfile,
-        "uAddress": request.uAddress,
-        "active": "home",
-        "range": "1111111111111",
-    }
-    return render(request, "user/dashboard.html", context)
+    return render(
+        request,
+        "user/dashboard.html",
+        {
+            "active": "home",
+            "range": "1111111111111",
+        },
+    )
 
 
 @user_required
 def near_me(request):
-    context = {
-        "user": request.user_obj,
-        "uProfile": request.uProfile,
-        "uAddress": request.uAddress,
-        "active": "nearMe",
-    }
-    return render(request, "user/near_me.html", context)
+    return render(
+        request,
+        "user/near_me.html",
+        {
+            "active": "nearMe",
+        },
+    )
 
 
 @user_required
 def shortlisted(request):
-    context = {
-        "user": request.user_obj,
-        "uProfile": request.uProfile,
-        "uAddress": request.uAddress,
-        "active": "shortlisted",
-    }
-    return render(request, "user/messages.html", context)
+    return render(
+        request,
+        "user/messages.html",
+        {
+            "active": "shortlisted",
+        },
+    )
 
 
 @user_required
 def messages(request):
-    context = {
-        "user": request.user_obj,
-        "uProfile": request.uProfile,
-        "uAddress": request.uAddress,
-        "active": "messages",
-    }
-    return render(request, "user/messages.html", context)
+    return render(
+        request,
+        "user/messages.html",
+        {
+            "active": "messages",
+        },
+    )
 
 
 @user_required
 def user_help(request):
-    context = {
-        "user": request.user_obj,
-        "uProfile": request.uProfile,
-        "uAddress": request.uAddress,
-        "active": "help",
-    }
-    return render(request, "user/help.html", context)
+    return render(
+        request,
+        "user/help.html",
+        {
+            "active": "help",
+        },
+    )
 
 
 @user_required
 def user_setting(request):
-    context = {
-        "user": request.user_obj,
-        "uProfile": request.uProfile,
-        "uAddress": request.uAddress,
-        "active": "setting",
-    }
-    return render(request, "user/setting.html", context)
-
-
-# @portal_required
-# def base_protal(request):
+    return render(
+        request,
+        "user/setting.html",
+        {
+            "active": "setting",
+        },
+    )
 
 
 @portal_required
 def portal_dashboard(request):
-    context = {
-        "portal": request.user_obj,
-        "pProfile": request.pProfile,
-        "pAddress": request.pAddress,
-        "active": "portal-dashboard",
-    }
-    return render(request, "portal/dashboard.html", context)
+    return render(
+        request,
+        "portal/dashboard.html",
+        {
+            "active": "portal-dashboard",
+        },
+    )
 
 
 @portal_required
 def portal_help(request):
-    context = {
-        "portal": request.user_obj,
-        "pProfile": request.pProfile,
-        "pAddress": request.pAddress,
-        "active": "portal-help",
-    }
-    return render(request, "portal/help.html", context)
+    return render(
+        request,
+        "portal/help.html",
+        {
+            "active": "portal-help",
+        },
+    )
 
 
 @portal_required
 def portal_setting(request):
-    context = {
-        "portal": request.user_obj,
-        "pProfile": request.pProfile,
-        "pAddress": request.pAddress,
-        "active": "portal-settings",
-    }
-    return render(request, "portal/setting.html", context)
+    return render(
+        request,
+        "portal/setting.html",
+        {
+            "active": "portal-settings",
+        },
+    )
 
 
 def user_logout(request):

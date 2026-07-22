@@ -114,7 +114,7 @@ Run project
 > py manage.py runserver
 
 > py manage.py makemigrations
-> py maage.py migrate
+> py manage.py migrate
 
 PostgreSQl Database
 > open pgAdmin : create database 'brokly_db'

@@ -22,7 +22,7 @@
     </style>
   </head>
 
-  <body class="p-login-body min-w-full h-screen bg-white dark:bg-black text-black dark:text-white transition-colors duration-5000 ease-in-out animate-fadeInUp lg:overflow-x-hidden tracking-wide">
+  <body id="portal" class="p-login-body min-w-full h-screen bg-white dark:bg-black text-black dark:text-white transition-colors duration-5000 ease-in-out animate-fadeInUp lg:overflow-x-hidden tracking-wide">
     {% comment %}header{% endcomment %}
     <header class="p-header sticky top-0 left-0 w-full z-50 px-3 flex justify-between items-center lg:px-10 bg-white/30 dark:bg-black/30 lg:bg-white/10 lg:dark:bg-black/10">
       <div class="p-header-left-side flex justify-center items-center">
@@ -77,15 +77,15 @@
           </script>
         </div>
 
-        <div class="p-language-btn text-orange-500 lg:text-gray-600 lg:dark:text-white">
+        <div class="portal-lang-btn text-orange-500 lg:text-gray-600 lg:dark:text-white">
           <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
-          <button type="button" id="pLanguageBtn" class="relative w-32 h-12 lg:w-auto lg:h-10 flex justify-center items-center rounded-2xl border border-gray-200 dark:border-white/10 dark:bg-white/2 lg:border-none lg:bg-transparent lg:dark:bg-white/0 transition-all duration-300 hover:text-orange-500 hover:scale-95 active:scale-95">
+          <button type="button" id="portal-lang-btn" class="relative w-32 h-12 lg:w-auto lg:h-10 flex justify-center items-center rounded-2xl border border-gray-200 dark:border-white/10 dark:bg-white/2 lg:border-none lg:bg-transparent lg:dark:bg-white/0 transition-all duration-300 hover:text-orange-500 hover:scale-95 active:scale-95">
             <svg xmlns="{% static 'icons/globe.svg' %}" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe-icon lucide-globe">
               <circle cx="12" cy="12" r="10" />
               <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
               <path d="M2 12h20" />
             </svg>
-            <span id="pSelectedLanguage" class="font-medium font-sans px-2">
+            <span id="portal-selected-lang" class="font-medium font-sans px-2">
               {% if request.LANGUAGE_CODE == 'gu' %}
                 ગુજરાતી
               {% else %}
@@ -515,13 +515,13 @@
     </main>
 
     {% comment %}Language Selected Modal{% endcomment %}
-    <div id="pLanguageModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden justify-center items-start pt-[100px] z-100 text-xl px-2">
-      <div id="pLanguage" class="bg-white/90 dark:bg-[#111827]/90 dark:text-white w-full max-w-md p-2 rounded-2xl border border-gray-200 dark:border-white/10 backdrop-blur-2xl shadow-xl animate-scaleIn">
+    <div id="portal-lang-modal" class="hidden justify-center pt-[100px] px-10 fixed z-50 inset-0 bg-black/90 backdrop-blur-0">
+      <div id="portal-lang" class="w-full max-w-[30rem] h-[160px] origin-top-right bg-[#f7f9fc] dark:bg-[#121212] px-2 py-2 rounded-2xl overflow-hidden animate-scaleIn">
         {% comment %}header{% endcomment %}
         <div class="flex justify-between items-center px-2">
-          <span class="text-[18px] font-medium">{% trans 'Select Your Language' %}</span>
-          <button id="modelClose" class="min-w-[35px] h-[35px] bg-gray-100 dark:bg-[#1F2937] hover:bg-gray-200 dark:hover:bg-[#374151] flex justify-center items-center rounded-full transition-all duration-300" onclick="pCloseLanguageModal()">
-            <svg xmlns="{% static 'icons/x.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x font-bold">
+          <span class="text-lg font-medium">{% trans 'Select Your Language' %}</span>
+          <button id="lang-modal-close" class="min-w-8 h-8 ml-4 bg-white dark:bg-[#1A1A1A] hover:bg-gray-100 dark:hover:bg-[#252525] flex justify-center items-center rounded-full transition-all duration-300" onclick="langModalClose();">
+            <svg xmlns="{% static 'icons/x.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x w-6 h-6">
               <path d="M18 6 6 18" />
               <path d="m6 6 12 12" />
             </svg>
@@ -529,19 +529,19 @@
         </div>
         <div class="w-full h-px bg-gray-300 dark:bg-white/20 my-2"></div>
         {% comment %}list language{% endcomment %}
-        <div id="languageList" class="max-h-[500px] overflow-y-auto space-y-1">
+        <div id="lang-list" class="h-[calc(300px-68px)] lg:h-[calc(400px-68px)] overflow-y-auto space-y-1">
           {% for l in languages %}
-            <button type="button" class="pLanguage-item w-full flex justify-between items-center px-2 py-2 rounded-xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] transition-all duration-200" onclick="pSelectedLanguage('{{ l.id }}','{{ l.name|capfirst }}','{{ l.code }}')">
-              <span class="text-[20px] font-normal">{{ l.name|capfirst }}</span>
-              <span class="text-[16px] text-gray-400">{{ l.code }}</span>
+            <button type="button" class="portal-lang-item w-full flex justify-between items-center px-2 py-2 rounded-xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] transition-all duration-200" onclick="portalLangSelected('{{ l.id }}','{{ l.name|capfirst }}','{{ l.code }}')">
+              <span class="text-[20px] font-medium">{{ l.name|capfirst }}</span>
+              <span class="text-[16px] text-black/60 dark:text-white/70">{{ l.code }}</span>
             </button>
           {% endfor %}
         </div>
       </div>
-      <div id="pLangSelectLoader" class="w-10 h-10 flex justify-center items-center border-[8px] border-white/30 rounded-full border-t-white animate-[spin_0.5s_linear_infinite] [animation-duration:.5s]"></div>
+      <div id="portal-lang-select-loader" class="w-8 h-8 flex justify-center items-center border-[6px] border-white/30 rounded-full border-t-white animate-[spin_0.5s_linear_infinite] [animation-duration:.5s]"></div>
     </div>
     {% comment %}Language Selected Modal JS{% endcomment %}
-    <script src="{% static 'js/accounts/portal/p-language-select-modal.js' %}" defer></script>
+    <script src="{% static 'js/accounts/portal/language-select-modal.js' %}" defer></script>
 
     {% comment %}Country Code Modal{% endcomment %}
     <div id="pCountryModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden justify-center items-start pt-[100px] z-100 text-xl px-2">
