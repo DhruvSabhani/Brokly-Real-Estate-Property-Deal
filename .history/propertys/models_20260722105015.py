@@ -21,7 +21,7 @@ class PropertyPreferred(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.preferred_name or ""
+        return self.preferred_name
 
 
 class PropertyFacility(models.Model):
@@ -32,7 +32,7 @@ class PropertyFacility(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.facilities_name or ""
+        return self.facilities_name
 
 
 class Property(models.Model):
@@ -85,4 +85,4 @@ class Property(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.property_name or str(self.pk)
+        return self.property_name or f"{self.pk}"

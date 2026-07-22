@@ -85,4 +85,4 @@ class Property(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.property_name or str(self.pk)
+        return self.property_name or f"{self.pk)
