@@ -1,0 +1,42 @@
+{% load static tailwind_tags %} {% load i18n %}
+
+<script defer>
+  window.allError = {
+    tryAgain: "{% trans 'Something went wrong. Try again.' %}",
+    networkEr: "{% trans 'Network error. Please try again.' %}",
+    upDate: "{% trans 'Are you sure you want to update your data?' %}",
+    profileUpdate: "{% trans 'Update profile' %}",
+  };
+  window.languageEr = {
+    checkLang: "{% trans 'Language change failed. Please try again.' %}",
+  };
+  window.otpEr = {
+    btnText: "{% trans 'Send OTP' %}",
+    sendOtp: "{% trans 'OTP Sending...' %}",
+    required: "{% trans 'Please enter a complete 6-digit OTP.' %}",
+  };
+  window.stateEr = {
+    selectState: "{% trans 'Select State' %}",
+  };
+  window.cityEr = {
+    selectCity: "{% trans 'Select City' %}",
+  };
+  window.userNameEr = {
+    required: "{% trans 'Please enter a username.' %}",
+  };
+  window.fieldProTypeEr = {
+    required: "{% trans 'Please select a property type.' %}",
+  };
+  window.fieldProNameEr = {
+    required: "{% trans 'Please enter a property name.' %}",
+  };
+  window.fieldProPriceEr = {
+    required: "{% trans 'Please enter a valid property price and select a price period.' %}",
+  };
+  window.fieldProPhNumEr = {
+    min10Digit: "{% trans 'Phone number must be at least 10 digits.' %}",
+    validPn: "{% trans 'Enter a valid phone number.' %}",
+    uniquePn: "{% trans 'Please enter a unique phone number.' %}",
+    required: "{% trans 'Please enter the correct phone number.' %}",
+  };
+</script>

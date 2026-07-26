@@ -1,12 +1,72 @@
 {
   "files.autoSave": "afterDelay",
   "editor.formatOnSave": true,
-  "editor.fontSize": 17,
+
+  "editor.fontSize": 14,
   "editor.wordWrap": "on",
   "workbench.colorTheme": "Dark Modern",
   "editor.mouseWheelZoom": true,
   "editor.fastScrollSensitivity": 1,
+
   "editor.scrollbar.verticalScrollbarSize": 10,
   "workbench.editor.splitInGroupLayout": "vertical",
-  "djlint.showInstallError": false
+
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": true
+  },
+
+  "editor.suggestOnTriggerCharacters": true,
+  "editor.snippetSuggestions": "top",
+
+  "emmet.includeLanguages": {
+    "django-html": "html"
+  },
+
+  "emmet.triggerExpansionOnTab": true,
+
+  // Python → Black
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true
+  },
+
+  // Django Template → DjLint (only lint)
+  "[django-html]": {
+    "editor.formatOnSave": false
+  },
+
+  // Normal HTML → Prettier
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+
+  // JS → Prettier
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+
+  // CSS / Tailwind → Prettier
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+
+  // Python analysis
+  "python.analysis.typeCheckingMode": "basic",
+
+  // DjLint
+  "djlint.showInstallError": false,
+  "djlint.enable": true,
+
+  // Python environment
+  "python-envs.defaultEnvManager": "ms-python.python:system"
 }

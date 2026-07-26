@@ -1,4 +1,5 @@
 from django.db import models
+from accounts.models import PortalProfile
 
 
 # Create your models here.
@@ -59,9 +60,10 @@ class Property(models.Model):
         ("pg/hostel", "PG/Hostel"),
     ]
 
-    type_id = models.ForeignKey(
-        PropertyType, on_delete=models.SET_NULL, null=True, blank=True
+    profile = models.ForeignKey(
+        PortalProfile, on_delete=models.CASCADE, null=True, blank=True
     )
+    type = models.CharField(max_length=55, null=True, blank=True)
     property_name = models.CharField(max_length=500, null=True, blank=True)
     property_price = models.DecimalField(
         max_digits=20, decimal_places=2, null=True, blank=True
@@ -77,12 +79,18 @@ class Property(models.Model):
     )
     property_preferred = models.ManyToManyField(PropertyPreferred, blank=True)
     property_facilities = models.ManyToManyField(PropertyFacility, blank=True)
-    property_contact = models.JSONField(default=list, null=True, blank=True)
+    property_contact = models.JSONField(default=list, blank=True)
     property_description = models.TextField(null=True, blank=True)
 
     is_active = models.BooleanField(default=True)
     update_at = models.DateTimeField(auto_now=True)
     create_at = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def formatted_property_price(self):
+        if self.property_price is None:
+            return "0"
+        return f"{self.property_price:,}"
 
     def __str__(self):
         return self.property_name or str(self.pk)

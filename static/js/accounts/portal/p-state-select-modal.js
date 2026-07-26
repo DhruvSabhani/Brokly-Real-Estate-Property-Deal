@@ -1,26 +1,26 @@
 // ---------- State Modal ------------
-const pStateBtn = document.getElementById("pStateBtn");
-const pSelectedState = document.getElementById("pSelectedState");
-const pStateId = document.getElementById("pStateId");
-const pStateModal = document.getElementById("pStateModal");
-const pStateSeaI = document.getElementById("pSearchState");
-const pStateList = document.getElementById("stateList");
-const pStateND = document.getElementById("pStateNotData");
+const pStateBtn = document.getElementById('pStateBtn');
+const pSelectedState = document.getElementById('pSelectedState');
+const pStateId = document.getElementById('pStateId');
+const pStateModal = document.getElementById('pStateModal');
+const pStateSeaI = document.getElementById('pSearchState');
+const pStateList = document.getElementById('stateList');
+const pStateND = document.getElementById('pStateNotData');
 
-pStateBtn.addEventListener("click", () => {
-  pStateModal.classList.replace("hidden", "flex");
-  pStateND.classList.add("hidden");
+pStateBtn.addEventListener('click', () => {
+  pStateModal.classList.replace('hidden', 'flex');
+  pStateND.classList.add('hidden');
   setTimeout(() => pStateSeaI.focus(), 100);
 
-  let pCountry_ID = document.getElementById("pCountryId").value;
+  let pCountry_ID = document.getElementById('pCountryId').value;
 
   fetch(`/get-states/?country_id=${pCountry_ID}`)
     .then((res) => res.json())
     .then((data) => {
-      let html = "";
+      let html = '';
       if (!data.states || data.states.length === 0) {
-        pStateList.innerHTML = "";
-        pStateND.classList.remove("hidden");
+        pStateList.innerHTML = '';
+        pStateND.classList.remove('hidden');
         return;
       }
       data.states.forEach((s) => {
@@ -31,38 +31,38 @@ pStateBtn.addEventListener("click", () => {
     });
 });
 function pCloseStateModal() {
-  pStateModal.classList.replace("flex", "hidden");
+  pStateModal.classList.replace('flex', 'hidden');
 }
 function pStateSelected(id, name) {
   pStateId.value = id;
   pSelectedState.innerText = name;
-  pcitylabel.classList.remove("disabled");
+  pcitylabel.classList.remove('disabled');
   pcitybtn.disabled = false;
-  pCityId.value = "";
-  pSelectedCity.innerText = pSelectedCity.getAttribute("data-select-city");
+  pCityId.value = '';
+  pSelectedCity.innerText = pSelectedCity.getAttribute('data-select-city');
   pCloseStateModal();
 }
-pStateSeaI.addEventListener("keyup", () => {
+pStateSeaI.addEventListener('keyup', () => {
   let pSvalue = pStateSeaI.value.toLowerCase();
-  let pSitems = document.querySelectorAll(".pState-item");
+  let pSitems = document.querySelectorAll('.pState-item');
   let visibleCount = 0;
 
   pSitems.forEach((item) => {
-    let state_name = item.getAttribute("data-name");
+    let state_name = item.getAttribute('data-name');
 
     if (state_name.includes(pSvalue)) {
-      item.style.display = "flex";
+      item.style.display = 'flex';
       visibleCount++;
     } else {
-      item.style.display = "none";
+      item.style.display = 'none';
     }
   });
   if (visibleCount === 0) {
-    pStateND.classList.remove("hidden");
+    pStateND.classList.remove('hidden');
   } else {
-    pStateND.classList.add("hidden");
+    pStateND.classList.add('hidden');
   }
 });
-pStateModal.addEventListener("click", (e) => {
+pStateModal.addEventListener('click', (e) => {
   if (e.target === pStateModal) pCloseStateModal();
 });

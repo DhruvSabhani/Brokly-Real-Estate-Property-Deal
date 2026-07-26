@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "<h2>Brokly Real Estate Property Deal\r <h4>a arceate platform to Users select or search location related property(PG, Plot, Commercial) show.</h4>",
   "main": "index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "prettier": "^3.9.6",
+    "prettier-plugin-tailwindcss": "^0.8.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

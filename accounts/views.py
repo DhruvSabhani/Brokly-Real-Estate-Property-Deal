@@ -70,25 +70,36 @@ def login_with_otp(request, role):
         return redirect("/home/")
     if role == "portal" and request.session.get("portal_login"):
         return redirect("/portal/dashboard/")
+    if role == "admin" and request.session.get("admin_login"):
+        return redirect("/admin/")
 
     if request.method == "POST":
         try:
             data = json.loads(request.body)
         except:
             return JsonResponse({"error": True, "message": _("Invalid request")})
+
         code = data.get("code")
         phone = data.get("phone")
         otp = data.get("otp")
+
         request.session["role"] = role
-
-        admin_user = CustomUser.objects.filter(
-            phone=phone, is_superuser=True, is_staff=True
-        ).exists()
-        if admin_user:
-            return JsonResponse({"error": True, "message": _("Not valid number")})
-
-        request.session["code"] = code
         request.session["phone"] = phone
+        request.session["code"] = code
+
+        user = CustomUser.objects.filter(phone=phone).first()
+
+        if role == "admin":
+            if not user:
+                return JsonResponse({"error": True, "message": _("Admin not found")})
+            if not (user.is_superuser and user.is_staff):
+                return JsonResponse({"error": True, "message": _("Not admin accounts")})
+        else:
+            if user and user.is_superuser:
+                return JsonResponse(
+                    {"error": True, "message": _("Admin accounts cannot login here")}
+                )
+
         if not otp:
             otp = generate_otp(phone)
 
@@ -104,11 +115,13 @@ def login_with_otp(request, role):
         "statemodal": statemodal,
     }
 
-    return render(
-        request,
-        "accounts/user_login.html" if role == "user" else "accounts/portal_login.html",
-        context,
-    )
+    template = {
+        "user": "accounts/user_login.html",
+        "portal": "accounts/portal_login.html",
+        "admin": "accounts/admin_login.html",
+    }
+
+    return render(request, template[role], context)
 
 
 def resend_otp(request):
@@ -126,9 +139,10 @@ def verify_otp(request):
         data = json.loads(request.body)
     except:
         return JsonResponse({"error": True, "message": _("Invalid JSON")})
+    otp = data.get("otp")
+
     code = request.session.get("code")
     phone = request.session.get("phone")
-    otp = data.get("otp")
     role = request.session.get("role")
 
     try:
@@ -156,39 +170,29 @@ def verify_otp(request):
         full_phone=full_phone,
         defaults={"phone": phone, "country_code": code_id},
     )
-    user.set_password(str(otp))
+
     user.last_login = timezone.now()
-    if role == "portal":
-        user.is_portal = True
-    else:
-        user.is_user = True
-    user.is_staff = False
     user.is_active = True
-    user.country_code = code_id or CountryCode.objects.filter(id=1).first()
-    user.save()
     country = code_id or CountryCode.objects.filter(id=1).first()
-
     profile_data = {}
-    # check Profile
-    if role == "user":
-        request.session["user_login"] = user.pk
-        uProfile, created = UserProfile.objects.get_or_create(user=user)
-        uAddress, created = ProfileAddresses.objects.get_or_create(
-            profile_role=role, profile_id=uProfile.pk, country=country
-        )
-        if uProfile.img or uProfile.name or uAddress.state:
-            profile_data = {
-                "img": uProfile.img.url if uProfile.img else None,
-                "name": uProfile.name if uProfile.name else None,
-                "state_id": uAddress.state.pk if uAddress.state else None,
-                "state_name": uAddress.state.name if uAddress.state else None,
-                "city_id": uAddress.city.pk if uAddress.city else None,
-                "city_name": uAddress.city.name if uAddress.city else None,
-            }
 
+    # admin login
+    if role == "admin":
+        if not user.is_superuser:
+            return JsonResponse({"error": True, "message": _("Not admin accouuts")})
+        request.session["admin_login"] = user.pk
+
+    # portal login
     elif role == "portal":
+        if user.is_superuser:
+            return JsonResponse(
+                {"error": True, "message": _("Admin canton login portal")}
+            )
+        user.is_portal = True
         request.session["portal_login"] = user.pk
+
         pProfile, created = PortalProfile.objects.get_or_create(user=user)
+        request.session["portal_profile"] = pProfile.pk
         pAddress, created = ProfileAddresses.objects.get_or_create(
             profile_role=role, profile_id=pProfile.pk, country=country
         )
@@ -202,7 +206,39 @@ def verify_otp(request):
                 "city_name": pAddress.city.name if pAddress.city else None,
             }
 
+    # user login
+    elif role == "user":
+        if user.is_superuser:
+            return JsonResponse(
+                {"error": True, "message": _("Admin canton login user")}
+            )
+        user.is_user = True
+        request.session["user_login"] = user.pk
+
+        uProfile, created = UserProfile.objects.get_or_create(user=user)
+        request.session["user_profile"] = uProfile.pk
+        uAddress, created = ProfileAddresses.objects.get_or_create(
+            profile_role=role, profile_id=uProfile.pk, country=country
+        )
+        if uProfile.img or uProfile.name or uAddress.state:
+            profile_data = {
+                "img": uProfile.img.url if uProfile.img else None,
+                "name": uProfile.name if uProfile.name else None,
+                "state_id": uAddress.state.pk if uAddress.state else None,
+                "state_name": uAddress.state.name if uAddress.state else None,
+                "city_id": uAddress.city.pk if uAddress.city else None,
+                "city_name": uAddress.city.name if uAddress.city else None,
+            }
+
+    else:
+        return JsonResponse({"error": True, "message": _("Invalid role")})
+
+    user.country_code = country
+    user.save()
+
     request.session.pop("role", None)
+    request.session.pop("code", None)
+    request.session.pop("phone", None)
 
     return JsonResponse({"success": True, "step": "profile", "profile": profile_data})
 
@@ -274,7 +310,7 @@ def user_profile(request):
 
 def portal_profile(request):
     if request.method != "POST":
-        return JsonResponse({"success": False, "message": _("Invalid request")})
+        return JsonResponse({"error": True, "message": _("Invalid request")})
 
     portal_id = request.session.get("portal_login")
     if not portal_id:
@@ -447,13 +483,13 @@ def portal_setting(request):
 
 def user_logout(request):
     request.session.pop("user_login", None)
-    request.session.pop("code", None)
-    request.session.pop("phone", None)
+    # request.session.pop("code", None)
+    # request.session.pop("phone", None)
     return redirect("/login/")
 
 
 def portal_logout(request):
     request.session.pop("portal_login", None)
-    request.session.pop("code", None)
-    request.session.pop("phone", None)
+    # request.session.pop("code", None)
+    # request.session.pop("phone", None)
     return redirect("/portal/login/")

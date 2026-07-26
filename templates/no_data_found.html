@@ -1,15 +1,24 @@
 {% load static %}
 {% load i18n %}
 <div class="flex flex-col items-center justify-center gap-3 py-10">
-  <div class="flex h-20 w-20 items-center justify-center rounded-full bg-gray-100 dark:bg-white/5">
-    <svg xmlns="{% static 'icons/database.svg' %}" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database-icon lucide-database text-gray-400">
-      <ellipse cx="12" cy="5" rx="9" ry="3" />
-      <path d="M3 5V19A9 3 0 0 0 21 19V5" />
-      <path d="M3 12A9 3 0 0 0 21 12" />
-    </svg>
-  </div>
-  <h3 class="text-base font-semibold text-gray-700 dark:text-gray-300">{% trans 'No results found' %}</h3>
-  <p class="max-w-xs text-center text-sm text-gray-500 dark:text-gray-500">
-    {% trans 'Try searching with a different keyword.' %}
-  </p>
+    <div class="flex h-20 w-20 items-center justify-center rounded-full bg-gray-100 dark:bg-white/5">
+        <svg xmlns="{% static 'icons/database.svg' %}"
+             width="40"
+             height="40"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="1.8"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             class="lucide lucide-database-icon lucide-database text-gray-400">
+            <ellipse cx="12" cy="5" rx="9" ry="3" />
+            <path d="M3 5V19A9 3 0 0 0 21 19V5" />
+            <path d="M3 12A9 3 0 0 0 21 12" />
+        </svg>
+    </div>
+    <h3 class="text-base font-semibold text-gray-700 dark:text-gray-300">{% trans 'No results found' %}</h3>
+    <p class="max-w-xs text-center text-sm text-gray-500 dark:text-gray-500">
+        {% trans 'Try searching with a different keyword.' %}
+    </p>
 </div>

@@ -2,363 +2,305 @@
 {% load i18n %}
 {% comment %}Logo{% endcomment %}
 <div class="lg:h-12 flex justify-between items-center px-6 py-2 lg:px-3 lg:py-4">
-  <img src="{% static 'images/web-icon.png' %}" alt="Brokly Logo" class="w-11 h-[42px] lg:w-[35px] lg:h-[34px] shrink-0" />
-  <h1 class="flex-1 ml-3 whitespace-nowrap text-3xl lg:text-2xl text-black dark:text-white font-semibold lg:opacity-0 lg:transition-all lg:duration-100 lg:group-hover:opacity-100">Brokly</h1>
-  <button id="u-m-nav-close-btn" title="{% trans 'Close' %}" class="w-11 h-11 p-1 m-1 flex lg:hidden justify-center items-center rounded-full bg-[#e2e5e988] hover:bg-orange-100 dark:bg-white/10 dark:hover:bg-[#3B3D3E] text-black/90 hover:text-black dark:text-white/90 dark:hover:text-white">
-    <svg xmlns="{% static 'icons/x.svg' %}" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x">
-      <path d="M18 6 6 18" />
-      <path d="m6 6 12 12" />
-    </svg>
-  </button>
-</div>
-
-<div class="px-3 py-2 flex lg:hidden justify-center items-center">
-  <button title="{{ uAddress }}" class="u-place-box flex justify-between items-center rounded-xl border border-black/10 hover:border-orange-500 dark:border-white/15 bg-black/2 dark:bg-white/1 px-5 h-20 w-full">
-    <div class="flex justify-center items-start">
-      <svg xmlns="{% static 'icons/locate-fixed.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-locate-fixed-icon lucide-locate-fixed w-7 h-7 text-orange-500">
-        <line x1="2" x2="5" y1="12" y2="12" />
-        <line x1="19" x2="22" y1="12" y2="12" />
-        <line x1="12" x2="12" y1="2" y2="5" />
-        <line x1="12" x2="12" y1="19" y2="22" />
-        <circle cx="12" cy="12" r="7" />
-        <circle cx="12" cy="12" r="3" />
-      </svg>
-    </div>
-    <div class="flex flex-1 flex-col justify-center items-start ml-5 gap-0.5">
-      <div class="flex justify-center items-center">
-        <a href="#" class="flex justify-center items-center gap-1 text-black/80 hover:text-black dark:text-white/90 dark:hover:text-white">
-          <span class="text-xl font-medium flex justify-center items-center">
-            {% trans 'Select Place' %}
-            <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}" fill="none" viewBox="0 0 24 24" width="24" height="24">
-              <path fill="currentColor" d="m11.6 14.5999 -3.95 -3.925c-0.0333 -0.03335 -0.0625 -0.073 -0.0875 -0.119 -0.025 -0.04615 -0.0375 -0.0955 -0.0375 -0.148 0 -0.10535 0.03445 -0.1955 0.10325 -0.2705 0.0687 -0.075 0.15925 -0.1125 0.27175 -0.1125h8.2c0.1125 0 0.2032 0.03865 0.272 0.116 0.0687 0.07715 0.103 0.16725 0.103 0.27025 0 0.02585 -0.04165 0.11375 -0.125 0.26375l-3.95 3.925c-0.05 0.05 -0.1088 0.09165 -0.1765 0.125 -0.06765 0.03335 -0.14215 0.05 -0.2235 0.05 -0.08115 0 -0.15565 -0.01665 -0.2235 -0.05 -0.06765 -0.03335 -0.1265 -0.075 -0.1765 -0.125Z" stroke-width="0.5"></path>
-            </svg>
-          </span>
-        </a>
-      </div>
-      <span class="truncate text-base text-left text-black/50 dark:text-white/50 font-normal w-65">{{ uAddress }}</span>
-    </div>
-    <div class="flex justify-center items-center">
-      <svg xmlns="{% static 'icons/chevron-right.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right-icon lucide-chevron-right text-black dark:text-white w-6 h-6">
-        <path d="m9 18 6-6-6-6" />
-      </svg>
-    </div>
-  </button>
-</div>
-
-{% comment %}Menu{% endcomment %}
-<nav class="flex flex-1 flex-col p-3 lg:p-2 gap-2 overflow-y-auto scrollbar-hide">
-  {% comment %}Home{% endcomment %}
-  <a href="{% url 'user_dashboard' %}"
-    title="{% trans 'Home' %}"
-    class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'home' %}
-      
-      
-      
-      
-      
-      
-       bg-orange-500 rounded-lg text-white
-
-
-
-
-
-
-    {% else %}
-      
-      
-      
-      
-      
-      
-       text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg
-
-
-
-
-
-
-    {% endif %}">
-    <svg xmlns="{% static 'icons/house.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 lg:w-5 lg:h-5 w-6 h-6">
-      <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
-      <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-    </svg>
-    <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{% trans 'Home' %}</span>
-  </a>
-  {% comment %}near me{% endcomment %}
-  <a href="{% url 'near_me' %}"
-    title="{% trans 'Near Me' %}"
-    class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'nearMe' %}
-      
-      
-      
-      
-      
-      
-       bg-orange-500 rounded-lg text-white
-
-
-
-
-
-
-    {% else %}
-      
-      
-      
-      
-      
-      
-       text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg
-
-
-
-
-
-
-    {% endif %}">
-    <svg xmlns="{% static 'icons/map-pin.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin shrink-0 lg:w-5 lg:h-5 w-6 h-6">
-      <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
-      <circle cx="12" cy="10" r="3" />
-    </svg>
-    <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{% trans 'Near Me' %}</span>
-  </a>
-  {% comment %}shortlisted{% endcomment %}
-  <a href="{% url 'shortlisted' %}"
-    title="{% trans 'Shortlisted' %}"
-    class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'shortlisted' %}
-      
-      
-      
-      
-      
-      
-       bg-orange-500 rounded-lg text-white
-
-
-
-
-
-
-    {% else %}
-      
-      
-      
-      
-      
-      
-       text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg
-
-
-
-
-
-
-    {% endif %}">
-    <svg xmlns="{% static 'icons/heart.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart-icon lucide-heart shrink-0 lg:w-5 lg:h-5 w-6 h-6">
-      <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />
-    </svg>
-    <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{% trans 'Shortlisted' %}</span>
-  </a>
-  {% comment %}messages{% endcomment %}
-  <a href="{% url 'messages' %}"
-    title="{% trans 'Messages' %}"
-    class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'messages' %}
-      
-      
-      
-      
-      
-      
-       bg-orange-500 rounded-lg text-white
-
-
-
-
-
-
-    {% else %}
-      
-      
-      
-      
-      
-      
-       text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg
-
-
-
-
-
-
-    {% endif %}">
-    <svg xmlns="{% static 'icons/messages-square.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-messages-square-icon lucide-messages-square shrink-0 lg:w-5 lg:h-5 w-6 h-6">
-      <path d="M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
-      <path d="M20 9a2 2 0 0 1 2 2v10.286a.71.71 0 0 1-1.212.502l-2.202-2.202A2 2 0 0 0 17.172 19H10a2 2 0 0 1-2-2v-1" />
-    </svg>
-    <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{% trans 'Messages' %}</span>
-  </a>
-  {% comment %}Help{% endcomment %}
-  <a href="{% url 'user_help' %}"
-    title="{% trans 'Help & Support' %}"
-    class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'help' %}
-      
-      
-      
-      
-      
-      
-       bg-orange-500 rounded-lg text-white
-
-
-
-
-
-
-    {% else %}
-      
-      
-      
-      
-      
-      
-       text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg
-
-
-
-
-
-
-    {% endif %}">
-    <svg xmlns="{% static 'icons/headset.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 lg:w-5 lg:h-5 w-6 h-6">
-      <path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z" />
-      <path d="M21 16v2a4 4 0 0 1-4 4h-5" />
-    </svg>
-    <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{% trans 'Help & Support' %}</span>
-  </a>
-  {% comment %}Setting{% endcomment %}
-  <a href="{% url 'user_setting' %}"
-    title="{% trans 'Settings' %}"
-    class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all duration-100 {% if active == 'setting' %}
-      
-      
-      
-      
-      
-      
-       bg-orange-500 rounded-lg text-white
-
-
-
-
-
-
-    {% else %}
-      
-      
-      
-      
-      
-      
-       text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg
-
-
-
-
-
-
-    {% endif %}">
-    <svg xmlns="{% static 'icons/settings.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 lg:w-5 lg:h-5 w-6 h-6">
-      <path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" />
-      <circle cx="12" cy="12" r="3" />
-    </svg>
-    <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{% trans 'Settings' %}</span>
-  </a>
-</nav>
-
-{% comment %}Bottom{% endcomment %}
-<div class="flex flex-col">
-  {% comment %}Theme Button{% endcomment %}
-  <div class="p-5 lg:p-2">
-    <button id="u-theme-btn" title="{% trans 'Theme' %}" class="relative shadow-black dark:shadow-white shrink-0 flex h-12 w-full items-center lg:p-[11px] p-[13px] rounded-lg lg:transition-all lg:duration-300 hover:bg-black/7 dark:hover:bg-white/5">
-      {% comment %}Moon{% endcomment %}
-      <svg id="u-moon-icon" xmlns="{% static 'icons/moon-star.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute text-orange-600 lg:transition-all duration-300 scale-100 rotate-0 dark:scale-0 dark:rotate-100 lg:w-5 lg:h-5 w-6 h-6">
-        <path d="M18 5h4" />
-        <path d="M20 3v4" />
-        <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
-      </svg>
-
-      {% comment %}Sun{% endcomment %}
-      <svg id="u-sun-icon" xmlns="{% static 'icons/sun.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute text-orange-600 lg:transition-all duration-300 scale-0 -rotate-100 dark:scale-100 dark:rotate-0 lg:w-5 lg:h-5 w-6 h-6">
-        <circle cx="12" cy="12" r="4" />
-        <path d="M12 2v2" />
-        <path d="M12 20v2" />
-        <path d="m4.93 4.93 1.41 1.41" />
-        <path d="m17.66 17.66 1.41 1.41" />
-        <path d="M2 12h2" />
-        <path d="M20 12h2" />
-        <path d="m6.34 17.66-1.41 1.41" />
-        <path d="m19.07 4.93-1.41 1.41" />
-      </svg>
-
-      <span class="ml-10 lg:ml-8 text-[16px] lg:text-[14px] whitespace-nowrap font-medium text-orange-600 lg:hidden lg:transition-all lg:duration-300 lg:group-hover:block">
-        <span class="lg:transition-all lg:duration-300 scale-100 dark:scale-90 block dark:hidden">{% trans 'Dark Mode' %}</span>
-        <span class="lg:transition-all lg:duration-300 scale-90 dark:scale-100 hidden dark:block">{% trans 'Light Mode' %}</span>
-      </span>
+    <img src="{% static 'images/web-icon.png' %}"
+         alt="Brokly Logo"
+         class="w-11 h-[42px] lg:w-[35px] lg:h-[34px] shrink-0" />
+    <h1 class="flex-1 ml-3 whitespace-nowrap text-3xl lg:text-2xl text-black dark:text-white font-semibold lg:opacity-0 lg:transition-all lg:duration-100 lg:group-hover:opacity-100">Brokly</h1>
+    <button id="u-m-nav-close-btn"
+            title="{% trans 'Close' %}"
+            class="w-11 h-11 p-1 m-1 flex lg:hidden justify-center items-center rounded-full bg-[#e2e5e988] hover:bg-orange-100 dark:bg-white/10 dark:hover:bg-[#3B3D3E] text-black/90 hover:text-black dark:text-white/90 dark:hover:text-white">
+        <svg xmlns="{% static 'icons/x.svg' %}"
+             width="26"
+             height="26"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             class="lucide lucide-x-icon lucide-x">
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+        </svg>
     </button>
-    <script>
-      const html = document.documentElement
-      const themeBtn = document.getElementById('u-theme-btn')
-      const savedTheme = localStorage.getItem('utheme')
-      
-      if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        html.classList.add('dark')
-        localStorage.setItem('uthemeValue', '2')
-      } else {
-        html.classList.remove('dark')
-        localStorage.setItem('uthemeValue', '1')
-      }
-      
-      if (themeBtn) {
-        themeBtn.addEventListener('click', () => {
-          const isDark = html.classList.toggle('dark')
-          localStorage.setItem('utheme', isDark ? 'dark' : 'light')
-          localStorage.setItem('uthemeValue', isDark ? '2' : '1')
-          window.location.href = window.location.href
-          themeBtn.animate([{ transform: 'scale(1)' }, { transform: 'scale(.93)' }, { transform: 'scale(1)' }], {
-            duration: 250,
-            esasing: 'ease-in-out'
-          })
-        })
-      }
-    </script>
-  </div>
-  {% comment %}Profile{% endcomment %}
-  <div class="p-3">
-    <a href="/profile/" title="{{ uProfile.name|default:'User'|capfirst }} {% trans 'Profile' %}" class="flex items-center rounded-full lg:transition-all lg:duration-100">
-      <div class="relative hidden lg:flex justify-center items-center lg:group-hover:hidden w-9 h-9">
-        <img src="/media/{{ uProfile.img }}" alt="User avatar" id="uImg" onerror="this.onerror=null; this.src='{% static 'images/avatar.png' %}'" class="w-full h-full object-cover border border-black/20 dark:border-white/20 rounded-full" />
-        <div id="uImgLoader1" class="absolute inset-0 flex justify-center items-center backdrop-blur rounded-full">
-          <div class="w-5 h-5 border-[4px] border-black/20 border-t-black dark:border-white/20 dark:border-t-white rounded-full animate-[spin_0.5s_linear_infinite]"></div>
+</div>
+<div class="px-3 py-2 flex lg:hidden justify-center items-center">
+    <button title="{{ uAddress }}"
+            class="u-place-box flex justify-between items-center rounded-xl border border-black/10 hover:border-orange-500 dark:border-white/15 bg-black/2 dark:bg-white/1 px-5 h-20 w-full">
+        <div class="flex justify-center items-start">
+            <svg xmlns="{% static 'icons/locate-fixed.svg' %}"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round"
+                 class="lucide lucide-locate-fixed-icon lucide-locate-fixed w-7 h-7 text-orange-500">
+                <line x1="2" x2="5" y1="12" y2="12" />
+                <line x1="19" x2="22" y1="12" y2="12" />
+                <line x1="12" x2="12" y1="2" y2="5" />
+                <line x1="12" x2="12" y1="19" y2="22" />
+                <circle cx="12" cy="12" r="7" />
+                <circle cx="12" cy="12" r="3" />
+            </svg>
         </div>
-      </div>
-      <div class="flex lg:hidden lg:group-hover:flex justify-between w-full lg:w-[263px] border border-black/10 hover:border-orange-500 dark:border-white/15 bg-black/2 dark:bg-white/1 rounded-xl px-2 py-2">
-        <div class="relative flex justify-center items-center w-16 h-16 lg:w-10 lg:h-10">
-          <img src="/media/{{ uProfile.img }}" alt="User avatar" id="uImg" onerror="this.onerror=null; this.src='{% static 'images/avatar.png' %}'" class="w-full h-full object-cover border border-black/20 dark:border-white/20 rounded-full" />
-          <div id="uImgLoader2" class="absolute inset-0 flex justify-center items-center backdrop-blur rounded-full">
-            <div class="w-5 h-5 border-[4px] border-black/20 border-t-black dark:border-white/20 dark:border-t-white rounded-full animate-[spin_0.5s_linear_infinite]"></div>
-          </div>
-        </div>
-        <div class="flex flex-1 flex-col justify-center items-start px-4 lg:px-3">
-          <h1 class="truncate w-50 lg:w-38 lg:opacity-0 lg:transition-all lg:duration-100 lg:group-hover:opacity-100 text-[18px] lg:text-[14px] font-medium dark:text-white">{{ uProfile.name|default:'User'|capfirst }}</h1>
-          <h1 class="lg:opacity-0 lg:transition-all lg:duration-100 lg:group-hover:opacity-100 text-[17px] lg:text-[14px] font-medium text-black/50 dark:text-white/50">{% trans 'View Profile' %}</h1>
+        <div class="flex flex-1 flex-col justify-center items-start ml-5 gap-0.5">
+            <div class="flex justify-center items-center">
+                <a href="#"
+                   class="flex justify-center items-center gap-1 text-black/80 hover:text-black dark:text-white/90 dark:hover:text-white">
+                    <span class="text-xl font-medium flex justify-center items-center">
+                        {% trans 'Select Place' %}
+                        <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}"
+                             fill="none"
+                             viewBox="0 0 24 24"
+                             width="24"
+                             height="24">
+                            <path fill="currentColor" d="m11.6 14.5999 -3.95 -3.925c-0.0333 -0.03335 -0.0625 -0.073 -0.0875 -0.119 -0.025 -0.04615 -0.0375 -0.0955 -0.0375 -0.148 0 -0.10535 0.03445 -0.1955 0.10325 -0.2705 0.0687 -0.075 0.15925 -0.1125 0.27175 -0.1125h8.2c0.1125 0 0.2032 0.03865 0.272 0.116 0.0687 0.07715 0.103 0.16725 0.103 0.27025 0 0.02585 -0.04165 0.11375 -0.125 0.26375l-3.95 3.925c-0.05 0.05 -0.1088 0.09165 -0.1765 0.125 -0.06765 0.03335 -0.14215 0.05 -0.2235 0.05 -0.08115 0 -0.15565 -0.01665 -0.2235 -0.05 -0.06765 -0.03335 -0.1265 -0.075 -0.1765 -0.125Z" stroke-width="0.5">
+                            </path>
+                        </svg>
+                    </span>
+                </a>
+            </div>
+            <span class="truncate text-base text-left text-black/50 dark:text-white/50 font-normal w-65">{{ uAddress }}</span>
         </div>
         <div class="flex justify-center items-center">
-          <svg xmlns="{% static 'icons/chevron-right.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right-icon lucide-chevron-right text-black/80 dark:text-white/80 w-6 h-6 lg:w-7 lg:h-7">
-            <path d="m9 18 6-6-6-6" />
-          </svg>
+            <svg xmlns="{% static 'icons/chevron-right.svg' %}"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round"
+                 class="lucide lucide-chevron-right-icon lucide-chevron-right text-black dark:text-white w-6 h-6">
+                <path d="m9 18 6-6-6-6" />
+            </svg>
         </div>
-      </div>
+    </button>
+</div>
+{% comment %}Menu{% endcomment %}
+<nav class="flex flex-1 flex-col p-3 lg:p-2 gap-2 overflow-y-auto scrollbar-hide">
+    {% comment %}Home{% endcomment %}
+    <a href="{% url 'user_dashboard' %}"
+       title="{% trans 'Home' %}"
+       class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'home' %}       bg-orange-500 rounded-lg text-white       {% else %}       text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg       {% endif %}">
+        <svg xmlns="{% static 'icons/house.svg' %}"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             class="shrink-0 lg:w-5 lg:h-5 w-6 h-6">
+            <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+            <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        </svg>
+        <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{% trans 'Home' %}</span>
     </a>
-  </div>
+    {% comment %}near me{% endcomment %}
+    <a href="{% url 'near_me' %}"
+       title="{% trans 'Near Me' %}"
+       class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'nearMe' %}       bg-orange-500 rounded-lg text-white       {% else %}       text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg       {% endif %}">
+        <svg xmlns="{% static 'icons/map-pin.svg' %}"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             class="lucide lucide-map-pin-icon lucide-map-pin shrink-0 lg:w-5 lg:h-5 w-6 h-6">
+            <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+            <circle cx="12" cy="10" r="3" />
+        </svg>
+        <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{% trans 'Near Me' %}</span>
+    </a>
+    {% comment %}shortlisted{% endcomment %}
+    <a href="{% url 'shortlisted' %}"
+       title="{% trans 'Shortlisted' %}"
+       class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'shortlisted' %}       bg-orange-500 rounded-lg text-white       {% else %}       text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg       {% endif %}">
+        <svg xmlns="{% static 'icons/heart.svg' %}"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             class="lucide lucide-heart-icon lucide-heart shrink-0 lg:w-5 lg:h-5 w-6 h-6">
+            <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />
+        </svg>
+        <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{% trans 'Shortlisted' %}</span>
+    </a>
+    {% comment %}messages{% endcomment %}
+    <a href="{% url 'messages' %}"
+       title="{% trans 'Messages' %}"
+       class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'messages' %}       bg-orange-500 rounded-lg text-white       {% else %}       text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg       {% endif %}">
+        <svg xmlns="{% static 'icons/messages-square.svg' %}"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             class="lucide lucide-messages-square-icon lucide-messages-square shrink-0 lg:w-5 lg:h-5 w-6 h-6">
+            <path d="M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+            <path d="M20 9a2 2 0 0 1 2 2v10.286a.71.71 0 0 1-1.212.502l-2.202-2.202A2 2 0 0 0 17.172 19H10a2 2 0 0 1-2-2v-1" />
+        </svg>
+        <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{% trans 'Messages' %}</span>
+    </a>
+    {% comment %}Help{% endcomment %}
+    <a href="{% url 'user_help' %}"
+       title="{% trans 'Help & Support' %}"
+       class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all lg:duration-100 {% if active == 'help' %}       bg-orange-500 rounded-lg text-white       {% else %}       text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg       {% endif %}">
+        <svg xmlns="{% static 'icons/headset.svg' %}"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             class="shrink-0 lg:w-5 lg:h-5 w-6 h-6">
+            <path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z" />
+            <path d="M21 16v2a4 4 0 0 1-4 4h-5" />
+        </svg>
+        <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{% trans 'Help & Support' %}</span>
+    </a>
+    {% comment %}Setting{% endcomment %}
+    <a href="{% url 'user_setting' %}"
+       title="{% trans 'Settings' %}"
+       class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-medium lg:transition-all duration-100 {% if active == 'setting' %}       bg-orange-500 rounded-lg text-white       {% else %}       text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg       {% endif %}">
+        <svg xmlns="{% static 'icons/settings.svg' %}"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             class="shrink-0 lg:w-5 lg:h-5 w-6 h-6">
+            <path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" />
+            <circle cx="12" cy="12" r="3" />
+        </svg>
+        <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{% trans 'Settings' %}</span>
+    </a>
+</nav>
+{% comment %}Bottom{% endcomment %}
+<div class="flex flex-col">
+    {% comment %}Theme Button{% endcomment %}
+    <div class="p-5 lg:p-2">
+        <button id="u-theme-btn"
+                title="{% trans 'Theme' %}"
+                class="relative shadow-black dark:shadow-white shrink-0 flex h-12 w-full items-center lg:p-[11px] p-[13px] rounded-lg lg:transition-all lg:duration-300 hover:bg-black/7 dark:hover:bg-white/5">
+            {% comment %}Moon{% endcomment %}
+            <svg id="u-moon-icon"
+                 xmlns="{% static 'icons/moon-star.svg' %}"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round"
+                 class="absolute text-orange-600 lg:transition-all duration-300 scale-100 rotate-0 dark:scale-0 dark:rotate-100 lg:w-5 lg:h-5 w-6 h-6">
+                <path d="M18 5h4" />
+                <path d="M20 3v4" />
+                <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
+            </svg>
+            {% comment %}Sun{% endcomment %}
+            <svg id="u-sun-icon"
+                 xmlns="{% static 'icons/sun.svg' %}"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round"
+                 class="absolute text-orange-600 lg:transition-all duration-300 scale-0 -rotate-100 dark:scale-100 dark:rotate-0 lg:w-5 lg:h-5 w-6 h-6">
+                <circle cx="12" cy="12" r="4" />
+                <path d="M12 2v2" />
+                <path d="M12 20v2" />
+                <path d="m4.93 4.93 1.41 1.41" />
+                <path d="m17.66 17.66 1.41 1.41" />
+                <path d="M2 12h2" />
+                <path d="M20 12h2" />
+                <path d="m6.34 17.66-1.41 1.41" />
+                <path d="m19.07 4.93-1.41 1.41" />
+            </svg>
+            <span class="ml-10 lg:ml-8 text-[16px] lg:text-[14px] whitespace-nowrap font-medium text-orange-600 lg:hidden lg:transition-all lg:duration-300 lg:group-hover:block">
+                <span class="lg:transition-all lg:duration-300 scale-100 dark:scale-90 block dark:hidden">{% trans 'Dark Mode' %}</span>
+                <span class="lg:transition-all lg:duration-300 scale-90 dark:scale-100 hidden dark:block">{% trans 'Light Mode' %}</span>
+            </span>
+        </button>
+        <script>
+            const html = document.documentElement
+            const themeBtn = document.getElementById('u-theme-btn')
+            const savedTheme = localStorage.getItem('utheme')
+            
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                html.classList.add('dark')
+                localStorage.setItem('uthemeValue', '2')
+            } else {
+                html.classList.remove('dark')
+                localStorage.setItem('uthemeValue', '1')
+            }
+            
+            if (themeBtn) {
+                themeBtn.addEventListener('click', () => {
+                const isDark = html.classList.toggle('dark')
+                localStorage.setItem('utheme', isDark ? 'dark' : 'light')
+                localStorage.setItem('uthemeValue', isDark ? '2' : '1')
+                window.location.href = window.location.href
+                    themeBtn.animate([{ transform: 'scale(1)' }, { transform: 'scale(.93)' }, { transform: 'scale(1)' }], {
+                        duration: 250,
+                        esasing: 'ease-in-out'
+                    })
+                })
+            }
+        </script>
+    </div>
+    {% comment %}Profile{% endcomment %}
+    <div class="p-3">
+        <a href="/profile/"
+           title="{{ uProfile.name|default:'User'|capfirst }} {% trans 'Profile' %}"
+           class="flex items-center rounded-full lg:transition-all lg:duration-100">
+            <div class="relative hidden lg:flex justify-center items-center lg:group-hover:hidden w-9 h-9">
+                <img src="/media/{{ uProfile.img }}"
+                     alt="User avatar"
+                     id="uImg"
+                     onerror="this.onerror=null; this.src='{% static 'images/avatar.png' %}'"
+                     class="w-full h-full object-cover border border-black/20 dark:border-white/20 rounded-full" />
+                <div id="uImgLoader1"
+                     class="absolute inset-0 flex justify-center items-center backdrop-blur rounded-full">
+                    <div class="w-5 h-5 border-[4px] border-black/20 border-t-black dark:border-white/20 dark:border-t-white rounded-full animate-[spin_0.5s_linear_infinite]">
+                    </div>
+                </div>
+            </div>
+            <div class="flex lg:hidden lg:group-hover:flex justify-between w-full lg:w-[263px] border border-black/10 hover:border-orange-500 dark:border-white/15 bg-black/2 dark:bg-white/1 rounded-xl px-2 py-2">
+                <div class="relative flex justify-center items-center w-16 h-16 lg:w-10 lg:h-10">
+                    <img src="/media/{{ uProfile.img }}"
+                         alt="User avatar"
+                         id="uImg"
+                         onerror="this.onerror=null; this.src='{% static 'images/avatar.png' %}'"
+                         class="w-full h-full object-cover border border-black/20 dark:border-white/20 rounded-full" />
+                    <div id="uImgLoader2"
+                         class="absolute inset-0 flex justify-center items-center backdrop-blur rounded-full">
+                        <div class="w-5 h-5 border-[4px] border-black/20 border-t-black dark:border-white/20 dark:border-t-white rounded-full animate-[spin_0.5s_linear_infinite]">
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-1 flex-col justify-center items-start px-4 lg:px-3">
+                    <h1 class="truncate w-50 lg:w-38 lg:opacity-0 lg:transition-all lg:duration-100 lg:group-hover:opacity-100 text-[18px] lg:text-[14px] font-medium dark:text-white">{{ uProfile.name|default:'User'|capfirst }}</h1>
+                    <h1 class="lg:opacity-0 lg:transition-all lg:duration-100 lg:group-hover:opacity-100 text-[17px] lg:text-[14px] font-medium text-black/50 dark:text-white/50">{% trans 'View Profile' %}</h1>
+                </div>
+                <div class="flex justify-center items-center">
+                    <svg xmlns="{% static 'icons/chevron-right.svg' %}"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         class="lucide lucide-chevron-right-icon lucide-chevron-right text-black/80 dark:text-white/80 w-6 h-6 lg:w-7 lg:h-7">
+                        <path d="m9 18 6-6-6-6" />
+                    </svg>
+                </div>
+            </div>
+        </a>
+    </div>
 </div>

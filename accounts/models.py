@@ -18,10 +18,10 @@ class CustomUserManager(BaseUserManager):
     def create_user(self, phone, password=None, **extra_fields):
         if not phone:
             raise ValueError("Phone number is required.")
-        user = self.model(phone=phone, **extra_fields)
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
+        user_admin = self.model(phone=phone, **extra_fields)
+        user_admin.set_password(password)
+        user_admin.save(using=self._db)
+        return user_admin
 
     def create_superuser(self, phone, password=None, **extra_fields):
         extra_fields.setdefault("is_staff", True)
@@ -50,6 +50,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         blank=True,
         related_name="users",
     )
+    password = models.CharField(max_length=255, null=True, blank=True)
+    is_superuser = models.BooleanField(default=False)
     phone = models.CharField(max_length=15, unique=True, db_index=True)
     full_phone = models.CharField(
         max_length=30, db_index=True, unique=True, null=True, blank=True

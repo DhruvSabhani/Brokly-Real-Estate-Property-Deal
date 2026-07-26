@@ -1,5 +1,6 @@
-from accounts.models import *
-from propertys.models import *
+from django.core.cache import cache
+from accounts.models import Language, CountryCode
+from propertys.models import PropertyType, PropertyPreferred, PropertyFacility, Property
 
 
 def user_context(request):
@@ -13,8 +14,10 @@ def user_context(request):
 
 
 def portal_context(request):
+    pProfileId = request.session.get("portal_profile")
     if not hasattr(request, "portal_obj"):
         return {}
+
     return {
         "languages": Language.objects.filter(is_active=True),
         "portal": getattr(request, "portal_obj", None),
@@ -24,4 +27,5 @@ def portal_context(request):
         "property_types": PropertyType.objects.filter(is_active=True),
         "property_preferred": PropertyPreferred.objects.filter(is_active=True),
         "property_facilities": PropertyFacility.objects.filter(is_active=True),
+        "propertys": Property.objects.filter(profile=pProfileId),
     }

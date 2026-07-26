@@ -21,7 +21,9 @@ Brokly Project Fully Structure -----
 ------------------------------------------------
 brokly/
 │
-├── brokly/                         # Main project config
+├── brokly/(main app)                         # Main project config
+│   ├── context/context_processors.py         # user_context, portal_context
+│   └── urls.py                               # all apps urls add
 │
 ├── accounts/(app)                  # User + Portal system                                                    
 │   ├── models.py                   # CustomUser, countryCodes, states, citys, languages
@@ -55,8 +57,12 @@ brokly/
 ├── common/(app)                    # Common Items
 │   ├── __init__.py
 │   ├── models.py                   # Address, Notification, Search Hishory
-│   ├── context_processors.py
-│   └── utils.py
+│   ├── utils.py
+│   └── urls.py
+│
+├── adminpanel/(app)                # admin side(built-in admin panel)                   
+│   ├── utils.py                    # role base support
+│   └── urls.py                     
 │
 ├── templates/(folder)                      # All HTML files
 │   ├── base_user.html

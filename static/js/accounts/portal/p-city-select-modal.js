@@ -1,24 +1,24 @@
 // ---------- City Modal ------------
-const pCityBtn = document.getElementById("pCityBtn");
-const pSelectedCity = document.getElementById("pSelectedCity");
-const pCityId = document.getElementById("pCityId");
-const pCityModal = document.getElementById("pCityModal");
-const pCitySeaI = document.getElementById("pSearchCity");
-const pCityList = document.getElementById("cityList");
-const pCityND = document.getElementById("pCityNotData");
+const pCityBtn = document.getElementById('pCityBtn');
+const pSelectedCity = document.getElementById('pSelectedCity');
+const pCityId = document.getElementById('pCityId');
+const pCityModal = document.getElementById('pCityModal');
+const pCitySeaI = document.getElementById('pSearchCity');
+const pCityList = document.getElementById('cityList');
+const pCityND = document.getElementById('pCityNotData');
 
-pCityBtn.addEventListener("click", () => {
-  pCityModal.classList.replace("hidden", "flex");
-  pCityND.classList.add("hidden");
+pCityBtn.addEventListener('click', () => {
+  pCityModal.classList.replace('hidden', 'flex');
+  pCityND.classList.add('hidden');
   setTimeout(() => pCitySeaI.focus(), 100);
-  let pState_ID = document.getElementById("pStateId").value;
+  let pState_ID = document.getElementById('pStateId').value;
   fetch(`/get-cities/?state_id=${pState_ID}`)
     .then((res) => res.json())
     .then((data) => {
-      let html = "";
+      let html = '';
       if (!data.cities || data.cities.length === 0) {
-        pCityList.innerHTML = "";
-        pCityND.classList.remove("hidden");
+        pCityList.innerHTML = '';
+        pCityND.classList.remove('hidden');
         return;
       }
       data.cities.forEach((c) => {
@@ -30,7 +30,7 @@ pCityBtn.addEventListener("click", () => {
 });
 
 function pCloseCityModal() {
-  pCityModal.classList.replace("flex", "hidden");
+  pCityModal.classList.replace('flex', 'hidden');
 }
 
 function pCitySelected(id, name) {
@@ -39,28 +39,28 @@ function pCitySelected(id, name) {
   pCloseCityModal();
 }
 
-pCitySeaI.addEventListener("keyup", () => {
+pCitySeaI.addEventListener('keyup', () => {
   let pCvalue = pCitySeaI.value.toLowerCase();
-  let pCitems = document.querySelectorAll(".pCity-item");
+  let pCitems = document.querySelectorAll('.pCity-item');
   let visibleCount = 0;
 
   pCitems.forEach((item) => {
-    let city_name = item.getAttribute("data-name");
+    let city_name = item.getAttribute('data-name');
 
     if (city_name.includes(pCvalue)) {
-      item.style.display = "flex";
+      item.style.display = 'flex';
       visibleCount++;
     } else {
-      item.style.display = "none";
+      item.style.display = 'none';
     }
   });
   if (visibleCount === 0) {
-    pCityND.classList.remove("hidden");
+    pCityND.classList.remove('hidden');
   } else {
-    pCityND.classList.add("hidden");
+    pCityND.classList.add('hidden');
   }
 });
 
-pCityModal.addEventListener("click", (e) => {
+pCityModal.addEventListener('click', (e) => {
   if (e.target === pCityModal) pCloseCityModal();
 });

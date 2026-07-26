@@ -38,11 +38,13 @@ INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
     "common.apps.CommonConfig",
     "propertys.apps.PropertysConfig",
+    "adminpanel.apps.AdminpanelConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "django.contrib.postgres",
     "tailwind",
     "theme",
     "django_browser_reload",
@@ -56,6 +58,7 @@ NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -139,6 +142,10 @@ USE_TZ = True
 LOCALE_PATHS = [
     BASE_DIR / "locale",
 ]
+
+USER_SESSION_KEY = "user_login"
+PORTAL_SESSION_KEY = "portal_login"
+ADMIN_SESSION_KEY = "admin_login"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/

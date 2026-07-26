@@ -34,6 +34,7 @@ urlpatterns = [
     path("", include("accounts.urls")),
     path("", include("common.urls")),
     path("", include("propertys.urls")),
+    path("", include("adminpanel.urls")),
     path("__reload__/", include("django_browser_reload.urls")),
     path(
         "favicon.ico",

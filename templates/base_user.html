@@ -71,7 +71,7 @@
 
     {% comment %}desktop bottom near me button{% endcomment %}
     {% if active == 'home' %}
-      <div class="fixed bottom-10 left-[45%] hidden lg:flex justify-center items-center z-40">
+      <div class="fixed bottom-10 left-[50%] hidden lg:flex justify-center items-center z-40">
         <a href="{% url 'near_me' %}" id="nearMeBtn" title="{% trans 'Near Me' %}" class="flex justify-center items-center gap-2 px-4 h-10 rounded-full bg-orange-500 text-white shadow-[0_0_5px_rgba(0,0,0,0.6)] dark:shadow-[0_0_50px_rgba(255,255,255,0.2)] active:scale-95 transition-all duration-1000">
           <div class="flex justify-center items-center">
             <svg xmlns="{% static 'icons/map-pin.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin w-5 h-5">
@@ -114,5 +114,6 @@
         toggleSeatchClearBtn()
       })
     </script>
+    {% include "error_message.html" %}
   </body>
 </html>
