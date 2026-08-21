@@ -3,12 +3,12 @@
 {% load i18n %}
 
 {% block ptitle %}
-  {% trans 'Propertys' %}
+  {% trans 'Active Listings' %}
 {% endblock %}
 
 {% block portal_dasktop_header %}
   <div class="flex justify-center items-center leading-tight px-2">
-    <h1 class="text-[22px] font-semibold text-black dark:text-white">{% trans 'Propertys' %}</h1>
+    <h1 class="text-[22px] font-semibold text-black dark:text-white">{% trans 'Active Listings' %}</h1>
   </div>
 {% endblock %}
 
@@ -17,13 +17,13 @@
     <div class="flex justify-between items-center gap-3 px-1">
       <div class="flex justify-center items-center">
         {% comment %}back btn{% endcomment %}
-        <button title="{% trans 'Back' %}" id="backPageBtn" onclick="history.back()" class="w-[44px] h-[44px] rounded-full flex justify-center items-center border-0 border-black/5 dark:border-white/5 bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-transparent dark:hover:bg-[#3B3D3E]">
+        <button type="button" title="{% trans 'Back' %}" id="backPageBtn" onclick="history.back()" class="w-[44px] h-[44px] rounded-full flex justify-center items-center border-0 border-black/5 dark:border-white/5 bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-transparent dark:hover:bg-[#3B3D3E]">
           <svg xmlns="{% static 'icons/chevron-left.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left w-7 h-7 text-black/60 hover:text-black/80 dark:text-white dark:hover:text-white/80">
             <path d="m15 18-6-6 6-6" />
           </svg>
         </button>
         <div class="ml-3 flex justify-center items-center leading-tight">
-          <h1 class="truncate text-xl font-semibold text-black dark:text-white">{% trans 'Add New Property' %}</h1>
+          <h1 class="truncate text-xl font-semibold text-black dark:text-white">{% trans 'Active Listings' %}</h1>
         </div>
       </div>
       <div class="flex justify-center items-center gap-4">
@@ -54,16 +54,12 @@
       {% for plist in propertys %}
         <div class="group cursor-pointer rounded-xl transition-all duration-300 bg-white hover:bg-black/2 dark:bg-transparent dark:hover:bg-white/4 border border-black/3 dark:border-white/3 overflow-hidden">
           <div class="relative flex justify-center items-center w-full h-40 overflow-hidden rounded-[10px] bg-gray-100 dark:bg-white/5">
-            <img src="{% static 'images/property-default-img.png' %}" alt="Property image" class="w-full h-full object-cover group-hover:scale-[1.04] transition-all duration-200" />
-
+            <img src="{{ plist.image.url }}" alt="Property image" class="w-full h-full object-cover group-hover:scale-[1.04] transition-all duration-200" />
             <span class="absolute top-3 left-3 tracking-normal flex justify-center items-center text-[11px] font-medium px-1 py-0.4 rounded bg-blue-500 dark:bg-[#0000ff] text-white truncate" style="font-family: monospace">{{ plist.property_purpose }}</span>
-
             <button id="wishlist-btn" type="button" class="absolute top-2 right-2 flex items-center justify-center w-8 h-8 rounded-full bg-white backdrop-blur shadow">
-
                 <svg class="text-red-500 flex justify-center items-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />
               </svg>
-
               <svg class="text-red-500 hidden justify-center items-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />
               </svg>
@@ -75,23 +71,19 @@
               <span class="text-[14px] text-gray-600 dark:text-white/50">/</span>
               <span class="text-[14px] text-gray-600 dark:text-white/50">{{ plist.property_price_period }}</span>
             </div>
-
             <h3 class="line-clamp-2 text-[15px] font-semibold text-gray-900 dark:text-gray-100 mb-1 tracking-normal">{{ plist.property_name }}</h3>
-            
             <div class="flex justify-start items-center gap-2 mb-1 overflow-x-auto scrollbar-hide lg:scrollbar-x-show whitespace-nowrap cursor-w-resize">
                 {% for all_preferred in plist.property_preferred.all %}
-                <div class="flex justify-start items-center gap-2 text-[11px] font-medium px-1 py-0.5 rounded-md border border-black/20 dark:border-white/20 text-black/70 dark:text-white/70 w-fit">
-                  <span class="truncate">{{ all_preferred.preferred_name }}</span>
-                </div>
+                  <div class="flex justify-start items-center gap-2 text-[11px] font-medium px-1 py-0.5 rounded-md border border-black/20 dark:border-white/20 text-black/70 dark:text-white/70 w-fit">
+                    <span class="truncate">{{ all_preferred.preferred_name }}</span>
+                  </div>
                 {% endfor %}
-
                 {% for all_facilities in plist.property_facilities.all %}
-                <div class="flex justify-start items-center gap-2 text-[11px] font-medium px-1 py-0.5 rounded-md border border-black/20 dark:border-white/20 text-black/70 dark:text-white/70 w-fit">
-                  <span class="truncate">{{ all_facilities.facilities_name }}</span>
-                </div>
+                  <div class="flex justify-start items-center gap-2 text-[11px] font-medium px-1 py-0.5 rounded-md border border-black/20 dark:border-white/20 text-black/70 dark:text-white/70 w-fit">
+                    <span class="truncate">{{ all_facilities.facilities_name }}</span>
+                  </div>
                 {% endfor %}
             </div>
-
             <div class="flex justify-start items-center gap-1 text-[14px] font-normal text-gray-400">
               <svg xmlns="{% static 'icons/map-pin.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down w-[18px] h-[18px] shrink-0 text-orange-600">
                 <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
@@ -99,17 +91,14 @@
               </svg>
               <span class="line-clamp-1">{{ pAddress }}</span>
             </div>
-
             <div class="flex justify-start items-center gap-2 py-1 overflow-x-auto scrollbar-hide lg:scrollbar-x-show whitespace-nowrap cursor-w-resize">
               {% for num in plist.property_contact %}
-              <a href="tel:{{ num }}">
-                <div class="flex justify-start items-center gap-2 text-sm font-medium px-1 py-0.5 rounded-md border border-black/20 dark:border-white/20 text-black/70 dark:text-white/70 w-fit">
-                  <span class="truncate">{{ num }}</span>
-                </div>
-              </a>
+                <a href="tel:{{ num }}">
+                  <div class="flex justify-start items-center gap-2 text-sm font-medium px-1 py-0.5 rounded-md border border-black/20 dark:border-white/20 text-black/70 dark:text-white/70 w-fit">
+                    <span class="truncate">{{ num }}</span>
+                  </div>
+                </a>
               {% endfor %}
-
-              {% comment %} <a href="tel:{{ plist.property_contact.1 }}">{{ plist.property_contact.1 }}</a> {% endcomment %}
             </div>
           </div>
         </div>

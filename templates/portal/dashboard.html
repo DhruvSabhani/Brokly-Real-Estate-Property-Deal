@@ -42,7 +42,7 @@
     <div class="flex justify-between items-center gap-3">
       <div class="flex justify-center items-center">
         {% comment %}menu bar btn{% endcomment %}
-        <button id="protal-menu-btn" title="{% trans 'Menu' %}" class="rounded-lg flex justify-center items-center w-[42px] h-[42px] border-2 border-black/7 dark:border-white/15 bg-white dark:bg-transparent text-black dark:text-white">
+        <button type="button" id="protal-menu-btn" title="{% trans 'Menu' %}" class="rounded-lg flex justify-center items-center w-[42px] h-[42px] border-2 border-black/7 dark:border-white/15 bg-white dark:bg-transparent text-black dark:text-white">
           <svg xmlns="{% static 'icons/menu.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu-icon lucide-menu">
             <path d="M4 5h16" />
             <path d="M4 12h16" />
@@ -61,7 +61,7 @@
           </svg>
         </a>
         {% comment %}search box{% endcomment %}
-        <button title="{% trans 'Search' %}" id="pSearchBtn" class="relative w-[46px] h-[46px] rounded-full flex justify-center items-center border-0 border-black/5 dark:border-white/5 bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-transparent dark:hover:bg-[#3B3D3E]">
+        <button type="button" title="{% trans 'Search' %}" id="pSearchBtn" class="relative w-[46px] h-[46px] rounded-full flex justify-center items-center border-0 border-black/5 dark:border-white/5 bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-transparent dark:hover:bg-[#3B3D3E]">
           <svg xmlns="{% static 'icons/search.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search w-[22px] h-[22px] text-black/60 hover:text-black/80 dark:text-white dark:hover:text-white/80">
             <path d="m21 21-4.34-4.34" />
             <circle cx="11" cy="11" r="8" />

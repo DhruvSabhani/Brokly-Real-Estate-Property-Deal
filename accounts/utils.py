@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from functools import wraps
-from accounts.models import *
-from common.models import *
+from accounts.models import CustomUser, UserProfile, PortalProfile
+from common.models import ProfileAddresses
 
 
 def user_required(view_func):
@@ -38,10 +38,8 @@ def portal_required(view_func):
     @wraps(view_func)
     def wrapper(request, *args, **kwarge):
         portal_id = request.session.get("portal_login")
-
         if not portal_id:
             return redirect("/portal/login/")
-
         user = CustomUser.objects.filter(
             id=portal_id, is_portal=True, is_active=True
         ).first()

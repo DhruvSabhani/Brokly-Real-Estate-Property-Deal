@@ -1,6 +1,12 @@
 from django.core.cache import cache
 from accounts.models import Language, CountryCode
-from propertys.models import PropertyType, PropertyPreferred, PropertyFacility, Property
+from propertys.models import (
+    PropertyType,
+    PropertyPreferred,
+    PropertyFacility,
+    Property,
+    PropertyPhoto,
+)
 
 
 def user_context(request):
@@ -14,7 +20,7 @@ def user_context(request):
 
 
 def portal_context(request):
-    pProfileId = request.session.get("portal_profile")
+    profile_id = request.session.get("portal_profile")
     if not hasattr(request, "portal_obj"):
         return {}
 
@@ -27,5 +33,7 @@ def portal_context(request):
         "property_types": PropertyType.objects.filter(is_active=True),
         "property_preferred": PropertyPreferred.objects.filter(is_active=True),
         "property_facilities": PropertyFacility.objects.filter(is_active=True),
-        "propertys": Property.objects.filter(profile=pProfileId),
+        "propertys": Property.objects.filter(
+            profile=profile_id, is_active=False
+        ).order_by("-id"),
     }

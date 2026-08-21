@@ -1,0 +1,94 @@
+{% extends 'base_portal.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block ptitle %}
+  {% trans 'Add Property' %}
+{% endblock %}
+
+{% block portal_dasktop_header %}
+  <div class="flex justify-center items-center leading-tight px-2">
+    <h1 class="text-[20px] font-semibold text-black dark:text-white">{% trans 'Add New Property' %}</h1>
+  </div>
+{% endblock %}
+
+{% block portal_mobile_header %}
+  <div class="w-screen h-15 py-2 bg-[#fdfdfd] dark:bg-[#121212]">
+    <div class="flex justify-between items-center gap-3 px-1">
+      <div class="flex justify-center items-center">
+        {% comment %}back btn{% endcomment %}
+        <button type="button" title="{% trans 'Back' %}" id="backPageBtn" onclick="history.back()" class="w-[44px] h-[44px] rounded-full flex justify-center items-center border-0 border-black/5 dark:border-white/5 bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-transparent dark:hover:bg-[#3B3D3E]">
+          <svg xmlns="{% static 'icons/chevron-left.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left w-7 h-7 text-black/60 hover:text-black/80 dark:text-white dark:hover:text-white/80">
+            <path d="m15 18-6-6 6-6" />
+          </svg>
+        </button>
+        <div class="ml-3 flex justify-center items-center leading-tight">
+          <h1 class="truncate text-xl font-semibold text-black dark:text-white">{% trans 'Add New Property' %}</h1>
+        </div>
+      </div>
+      <div class="flex justify-center items-center gap-4">
+        {% comment %}notifications{% endcomment %}
+        <a href="#" title="{% trans 'Notifications' %}" id="pNotificationsBtn" class="relative w-[46px] h-[46px] rounded-full flex justify-center items-center border-0 border-black/5 dark:border-white/5 bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-transparent dark:hover:bg-[#3B3D3E]">
+          <div class="absolute top-0 right-0 w-[18px] h-[18px] bg-orange-500 rounded-full flex justify-center items-center text-[13px] font-medium text-white">2</div>
+          <svg xmlns="{% static 'icons/bell.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell w-[22px] h-[22px] text-black/60 hover:text-black/80 dark:text-white dark:hover:text-white/80">
+            <path d="M10.268 21a2 2 0 0 0 3.464 0" />
+            <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
+          </svg>
+        </a>
+        {% comment %}menu bar button{% endcomment %}
+        <button id="protal-menu-btn" title="{% trans 'Menu' %}" class="rounded-lg flex justify-center items-center w-[42px] h-[42px] border-2 border-black/7 dark:border-white/15 bg-white dark:bg-transparent text-black dark:text-white">
+          <svg xmlns="{% static 'icons/menu.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu-icon lucide-menu">
+            <path d="M4 5h16" />
+            <path d="M4 12h16" />
+            <path d="M4 19h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block pcontent %}
+  <section id="add-property-container" class="pt-15 lg:pt-13 w-full bg-[#fdfdfd] dark:bg-[#121212] mt-2">
+    <div id="property-form-steps" class="flex flex-col justify-center items-center mb-4 px-8">
+      <div class="flex justify-center items-center gap-2 w-full lg:max-w-2/3">
+        <div id="step-0" class="step w-[280px] lg:w-[180px] h-[45px] rounded-full text-xl border-2 border-gray-300/30 text-gray-500/50 flex justify-center items-center active">1</div>
+        <div id="step-0-complete" class="w-full h-[2px] bg-red-300/30"></div>
+        <div id="step-1" class="step w-[280px] lg:w-[180px] h-[45px] rounded-full text-xl border-2 border-gray-300/30 text-gray-500/50 flex justify-center items-center">2</div>
+        <div id="step-1-complete" class="w-full h-[2px] bg-red-300/30"></div>
+        <div id="step-2" class="step w-[280px] lg:w-[180px] h-[45px] rounded-full text-xl border-2 border-gray-300/30 text-gray-500/50 flex justify-center items-center">3</div>
+        <div id="step-2-complete" class="w-full h-[2px] bg-red-300/30"></div>
+        <div id="step-3" class="step w-[280px] lg:w-[180px] h-[45px] rounded-full text-xl border-2 border-gray-300/30 text-gray-500/50 flex justify-center items-center">4</div>
+      </div>
+      <div id="steps-name" class="flex justify-between items-start py-1 w-full lg:max-w-2/3">
+        <div id="step-0-name" class="step-name flex justify-center items-center relative right-4 active"><h1 class="w-full text-center text-sm text-gray-500/50">{% trans 'Basic Details' %}</h1></div>
+        <div id="step-1-name" class="step-name flex justify-center items-center relative lg:left-2"><h1 class="w-[100px] text-center text-sm text-gray-500/50">{% trans 'Location' %}</h1></div>
+        <div id="step-2-name" class="step-name flex justify-center items-center relative left-[14px] lg:left-6"><h1 class="w-[100px] text-center text-sm text-gray-500/50">{% trans 'Photos' %}</h1></div>
+        <div id="step-3-name" class="step-name flex justify-center items-center relative left-7 lg:left-9"><h1 class="w-[100px] lg:w-full text-center text-sm text-gray-500/50">{% trans 'Review & Publish' %}</h1></div>
+      </div>
+    </div>
+    <div id="property-details" class="property-details">
+      <div class="step-content mb-2 active">
+        {% include "portal/propertys/property-create-edit/basic-details-form.html" %}
+      </div>
+      <div class="step-content mb-2">
+        {% include "portal/propertys/property-create-edit/location-form.html" %}
+      </div>
+      <div class="step-content mb-2">
+        {% include "portal/propertys/property-create-edit/photos-form.html" %}
+      </div>
+      <div class="step-content mb-2">
+        {% include "portal/propertys/property-create-edit/review-publish.html" %}
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/portal/property/property-create-edit/property-create-base.js' %}" defer></script>
+  <script src="{% static 'js/portal/property/property-create-edit/basic-details-form.js' %}" defer></script>
+  <script src="{% static 'js/portal/property/property-create-edit/location-form.js' %}" defer></script>
+  <script src="{% static 'js/portal/property/property-create-edit/photos-form.js' %}" defer></script>
+  <script src="{% static 'js/portal/property/property-create-edit/review-publish.js' %}" defer></script>
+  <script src="{% static 'js/portal/property/property-create-edit/property-edit-base.js' %}" defer></script>
+{% endblock %}

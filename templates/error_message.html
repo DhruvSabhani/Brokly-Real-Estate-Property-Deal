@@ -1,4 +1,5 @@
-{% load static tailwind_tags %} {% load i18n %}
+{% load static tailwind_tags %}
+{% load i18n %}
 
 <script defer>
   window.allError = {
@@ -6,6 +7,8 @@
     networkEr: "{% trans 'Network error. Please try again.' %}",
     upDate: "{% trans 'Are you sure you want to update your data?' %}",
     profileUpdate: "{% trans 'Update profile' %}",
+    cancelPropertyMess: "{% trans 'Are you sure you want to cancel this property?' %}",
+    publishPropertyMess: "{% trans 'Are you sure you want to publish this property?' %}",
   };
   window.languageEr = {
     checkLang: "{% trans 'Language change failed. Please try again.' %}",
@@ -15,11 +18,17 @@
     sendOtp: "{% trans 'OTP Sending...' %}",
     required: "{% trans 'Please enter a complete 6-digit OTP.' %}",
   };
+  window.countryEr = {
+    selectCountry: "{% trans 'Select Country' %}",
+    required: "{% trans 'Please select a country.' %}",
+  };
   window.stateEr = {
     selectState: "{% trans 'Select State' %}",
+    required: "{% trans 'Please select a state.' %}",
   };
   window.cityEr = {
     selectCity: "{% trans 'Select City' %}",
+    required: "{% trans 'Please select a city.' %}",
   };
   window.userNameEr = {
     required: "{% trans 'Please enter a username.' %}",
@@ -38,5 +47,25 @@
     validPn: "{% trans 'Enter a valid phone number.' %}",
     uniquePn: "{% trans 'Please enter a unique phone number.' %}",
     required: "{% trans 'Please enter the correct phone number.' %}",
+  };
+  window.fieldProAreaEr = {
+    required: "{% trans 'Please enter the locality or area.' %}",
+  };
+  window.fieldProLandmarkEr = {
+    required: "{% trans 'Please enter the property landmark.' %}",
+  };
+  window.fieldProPinEr = {
+    required: "{% trans 'Please enter the property pincode.' %}",
+  };
+  window.fieldProAddressLineEr = {
+    required: "{% trans 'Please enter the property address.' %}",
+  };
+  window.fieldProPhotosEr = {
+    coverPhoto: "{% trans 'Cover Photo' %}",
+    selectLimit: "{% trans 'You can select a maximum of 10 photos!' %}",
+    uploadLimit: "{% trans 'All 10 photos are done!' %}",
+    deplicatePhoto: "{% trans 'Duplicate photo are not allowed' %}",
+    typeFormatsEr: "{% trans 'This photo format is not supported' %}",
+    maxPhotoSize: "{% trans 'Maximum size 5 MB' %}",
   };
 </script>

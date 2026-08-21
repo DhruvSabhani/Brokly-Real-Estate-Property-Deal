@@ -24,18 +24,14 @@
     <aside id="navbar" class="group fixed inset-y-0 left-0 max-h-screen z-50 w-96 lg:w-[60px] lg:hover:w-72 flex flex-col overflow-hidden bg-[#ffffff] lg:bg-[#fdfdfd] hover:bg-[#ffffff] dark:bg-[#0e0d0d] dark:lg:bg-[#0e0d0d] dark:hover:bg-[#0e0d0d] text-black dark:text-white -translate-x-full lg:translate-x-0 transition-all duration-300">
       {% include 'partials/user/navbar.html' %}
     </aside>
-
     {% comment %}dasktop header view{% endcomment %}
     <header class="hidden lg:block z-40 fixed top-0 left-[56px] right-0 px-1">
       {% block u_d_header %}
-
       {% endblock %}
     </header>
-
     {% comment %}mobile header view{% endcomment %}
     <header class="lg:hidden fixed top-0 left-0 z-40">
       {% block u_m_header %}
-
       {% endblock %}
     </header>
     <script>
@@ -44,7 +40,7 @@
       const uNavBtn = document.getElementById('u-menu-btn')
       const navbar = document.getElementById('navbar')
       const umNavCloseBtn = document.getElementById('u-m-nav-close-btn')
-      
+
       function openNav() {
         ubody.classList.add('overflow-hidden', 'scrollbar-hide')
         usfix.classList.remove('hidden')
@@ -65,14 +61,12 @@
     {% comment %}main content{% endcomment %}
     <main class="lg:ml-[60px] mb-20 min-h-full bg-[#fdfdfd] dark:bg-[#0e0d0d] px-1">
       {% block ucontent %}
-
       {% endblock %}
     </main>
-
     {% comment %}desktop bottom near me button{% endcomment %}
     {% if active == 'home' %}
       <div class="fixed bottom-10 left-[50%] hidden lg:flex justify-center items-center z-40">
-        <a href="{% url 'near_me' %}" id="nearMeBtn" title="{% trans 'Near Me' %}" class="flex justify-center items-center gap-2 px-4 h-10 rounded-full bg-orange-500 text-white shadow-[0_0_5px_rgba(0,0,0,0.6)] dark:shadow-[0_0_50px_rgba(255,255,255,0.2)] active:scale-95 transition-all duration-1000">
+        <a href="{% url 'user-near-me' %}" id="nearMeBtn" title="{% trans 'Near Me' %}" class="flex justify-center items-center gap-2 px-4 h-10 rounded-full bg-orange-500 text-white shadow-[0_0_5px_rgba(0,0,0,0.6)] dark:shadow-[0_0_50px_rgba(255,255,255,0.2)] active:scale-95 transition-all duration-1000">
           <div class="flex justify-center items-center">
             <svg xmlns="{% static 'icons/map-pin.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin w-5 h-5">
               <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
@@ -87,9 +81,7 @@
     <div class="lg:hidden fixed bottom-0 right-0 z-40 w-full px-1 bg-[#fafafa] dark:bg-[#111010] shadow-lg">
       {% include 'partials/user/mobile_footer.html' %}
     </div>
-
     {% include 'logout_modal.html' %}
-
     <script src="{% static 'js/user/image-loader.js' %}" defer></script>
     <script src="{% static 'js/logout-modal.js' %}" defer></script>
     <script src="{% static 'js/user/filter-lists-scroll.js' %}" defer></script>

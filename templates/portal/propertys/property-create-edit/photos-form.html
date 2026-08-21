@@ -1,0 +1,142 @@
+{% load static %}
+{% load i18n %}
+
+<div id="property-photos-details" class="property-photos-details">
+  <div class="flex flex-col lg:flex-row justify-between items-start w-full gap-y-2 lg:gap-0">
+    <form id="add-property-photos-form" class="w-full px-1" data-property-photos-store-url="{% url 'portal-property-photo-store' %}" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="flex flex-1 flex-col justify-start items-center w-full gap-x-2 gap-y-2 border rounded-xl border-black/10 dark:border-white/10 px-2 py-2">
+        <div class="flex justify-center items-center w-full gap-4 px-2 py-2">
+          <div class="w-19 h-16 lg:w-16 lg:h-14 rounded-full bg-[#FDF4EF] dark:bg-white/4 flex justify-center items-center">
+            <svg xmlns="{% static 'icons/images.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-images-icon lucide-images text-black/80 dark:text-white/80"><path d="m22 11-1.296-1.296a2.4 2.4 0 0 0-3.408 0L11 16"/><path d="M4 8a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2"/><circle cx="13" cy="7" r="1" fill="currentColor"/><rect x="8" y="2" width="14" height="14" rx="2"/></svg>
+          </div>
+          <div class="flex justify-between items-center w-full">
+            <div class="w-full flex flex-col justify-center items-start">
+              <h1 class="text-lg font-semibold text-black dark:text-white">{% trans 'Photos' %}</h1>
+              <p class="text-sm text-black/50 dark:text-white/50">
+                {% trans 'Add high-quality photos to showcase your property' %}
+              </p>
+            </div>
+            <div class="flex justify-end items-center">
+              <button type="button" id="photos-form-clear-btn" class="px-7 h-12 lg:h-10 flex justify-center items-center bg-transparent border border-black/10 dark:border-white/10 text-[17px] lg:text-base text-black dark:text-white rounded-lg">{% trans 'Clear' %}</button>
+              <script>
+                document.getElementById('photos-form-clear-btn').addEventListener('click', () => {
+                  openmessagemodal({
+                    messmodtitle: "{% trans 'Clear Form?' %}",
+                    messmodmessage: "{% trans 'Are you sure you want to clear this form? All entered details will be permanently removed.' %}",
+                    messmodposibtn: "{% trans 'Yes' %}",
+                    messmodposibtnaction: photosFormClear,
+                  });
+                });
+              </script>
+            </div>
+          </div>
+        </div>
+        
+        {% comment %}property photos{% endcomment %}
+        <div class="flex justify-start items-start w-full px-2">
+          <label for="proc-photo-input" class="border-2 border-dashed border-black/10 dark:border-white/10 bg-black/1 dark:bg-white/1 rounded-xl w-full xl:max-w-2/3 h-[200px] flex justify-center items-center cursor-pointer">
+            <div class="flex flex-col justify-center items-center gap-1">
+              <svg xmlns="{% static 'icons/cloud-upload.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cloud-upload-icon lucide-cloud-upload text-gray-500 w-10 h-10"><path d="M12 13v8"/><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="m8 17 4-4 4 4"/></svg>
+              <span class="text-base font-semibold text-black/90 dark:text-white/90 w-[50%] text-center leading-tight">{% trans 'Drag & drop photos here or click to select photos' %}</span>
+              <span class="font-semibold text-black/50 dark:text-white/50 text-center leading-tight">{% trans "or" %}</span>
+              <span class="px-4 h-10 flex justify-center items-center bg-transparent border border-orange-500 text-base font-medium text-orange-500 rounded-lg leading-tight">{% trans 'Select Photos' %}</span>
+              <span class="text-[13px] text-black/50 dark:text-white/50 text-center leading-tight w-[70%]">{% trans 'Supported formats: PNG, JPEG (JPG), and WebP. Maximum size: 5 MB per photo.' %}</span>
+            </div>
+          </label>
+          <input type="file" id="proc-photo-input" accept="image/jpeg, image/jpg, image/png, image/webp" multiple class="transition-all opacity-0 hidden">
+        </div>
+
+        {% comment %} upload title(uploaded count) add Reorder button {% endcomment %}
+        <div class="flex justify-between items-center w-full px-2 py-1">
+          {% comment %} upload title(uploaded count) {% endcomment %}
+          <div class="flex justify-start items-center">
+            <h1 class="text-base font-semibold text-black dark:text-white">
+              {% trans 'Uploaded Photos' %}
+              (<span id="uploaded-photos-count">0</span>/10)
+            </h1>
+          </div>
+        </div>
+
+        {% comment %} upload photos show {% endcomment %}
+        <div class="flex justify-start items-start w-full px-2">
+          <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-2 w-full" id="uploaded-photos-container">
+          </div>
+        </div>
+
+        {% comment %}back and save & continue button{% endcomment %}
+        <div class="w-full flex justify-between items-center px-2 py-1">
+          <button type="button" class="px-8 h-12 lg:h-10 flex justify-center items-center bg-transparent border border-black/10 dark:border-white/10 text-[17px] lg:text-base text-black dark:text-white rounded-lg" onclick="backStep();">
+            <span class="flex justify-center items-center gap-2">
+              {% trans 'Back' %}
+            </span>
+          </button>
+          <button type="submit" id="property-photos-btn" class="relative px-7 h-12 lg:h-10 flex justify-center items-center border-2 border-orange-400 bg-orange-400 text-[17px] lg:text-base font-medium text-white rounded-lg" onclick="event.stopPropagation();">
+            <span class="flex justify-center items-center gap-2">
+              {% trans 'Save & Continue' %}
+            </span>
+            <div id="loader-photos-btn" class="absolute inset-0 flex justify-center items-center backdrop-blur rounded-full transition-all duration-300 opacity-100 scale-100">
+              <div class="w-5 h-5 border-[4px] border-white/20 border-t-white rounded-full animate-[spin_0.5s_linear_infinite]"></div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </form>
+    <aside class="flex justify-start items-start w-full lg:w-[500px] xl:w-[600px] 2xl:w-[700px] px-1">
+      <div class="w-full flex flex-col justify-center items-start gap-x-2 gap-y-2 bg-[#F7FCF7] dark:bg-[#0F1A13] border rounded-xl border-black/10 dark:border-white/10 px-3 py-2">
+        <div class="flex justify-between items-center gap-4 py-2">
+          <div class="w-10 h-10 rounded-full bg-[#ECF8EF] dark:bg-[#16261B] flex justify-center items-center">
+            <svg xmlns="{% static 'icons/lightbulb.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lightbulb-icon lucide-lightbulb text-red-500"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" /><path d="M9 18h6" /><path d="M10 22h4" /></svg>
+          </div>
+          <span class="text-lg font-semibold text-red-500">{% trans 'Quick Tips' %}</span>
+        </div>
+        {% for tip in proPhotosQuickTips %}
+          <div class="flex justify-between items-center px-2 gap-3">
+            <svg xmlns="{% static 'icons/check.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check text-red-500"><path d="M20 6 9 17l-5-5" /></svg>
+            <span class="text-sm w-full text-gray-500">{{ tip }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    </aside>
+  </div>
+</div>
+
+{% comment %} Select photo Modal {% endcomment %}
+<div id="proc-select-photos-modal" class="w-screen h-screen hidden justify-center pt-[70px] px-10 fixed z-50 inset-0 bg-black/90 backdrop-blur-0 transition-all duration-300">
+  <div class="w-full max-w-[30rem] h-fit origin-bottom-right bg-[#f7f9fc] dark:bg-[#121212] px-2 py-2 rounded-2xl overflow-hidden">
+    {% comment %}header{% endcomment %}
+    <div class="flex justify-between items-center mb-1">
+      <h1 id="photo-modal-title" data-edit-photo="{% trans 'Edit Photo' %}" data-select-photo="{% trans 'Select Photo' %}" class="text-lg font-semibold text-black dark:text-white px-2">{% trans 'Select Photo' %}</h1>
+      <button id="photo-modal-close" class="w-8 h-8 ml-4 bg-white dark:bg-[#1A1A1A] hover:bg-gray-100 dark:hover:bg-[#252525] flex justify-center items-center rounded-full transition-all duration-300">
+        <svg xmlns="{% static 'icons/x.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x w-6 h-6"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+      </button>
+    </div>
+    {% comment %}body{% endcomment %}
+    <div class="flex flex-col justify-center items-center">
+      {% comment %} select photo show {% endcomment %}
+      <div class="relative">
+        <img id="proc-selected-photo" src="{% static 'images/property-default-img.png' %}" alt="Selected Photo" class="h-50 object-contain rounded-lg">
+        <label for="proc-photo-edit-input" class="absolute top-0 bg-black/50 backdrop-blur-0 h-50 w-full object-contain rounded-lg transition-all opacity-0 scale-95 hidden justify-center items-center cursor-pointer">
+          <svg xmlns="{% static 'icons/camera.svg' %}" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-camera-icon lucide-camera text-white"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/></svg>
+        </label>
+        <input type="file" id="proc-photo-edit-input" accept="image/jpeg, image/jpg, image/png, image/webp" class="transition-all opacity-0 hidden">
+      </div>
+      <p id="proc-photo-error" class="mess-error w-full text-sm wrap-break-word font-normal text-red-600 px-2"></p>
+
+      {% comment %} input image title {% endcomment %}
+      <div class="flex justify-start items-start w-full gap-x-4">
+        {% comment %} property image title {% endcomment %}
+        <div id="proc-img-title-box" class="flex flex-col w-full py-1">
+          <label for="proc-img-title" class="form-label px-2 py-1 text-base lg:text-[15px] font-semibold text-black/90 dark:text-white/90">{% trans 'Image Title' %}</label>
+          <input type="text" name="proc-img-title" id="proc-img-title" class="w-full h-12 lg:h-10 text-base flex justify-between items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur-xl px-2" placeholder="{% trans 'Enter a title for this image' %}" />
+        </div>
+      </div>
+      {% comment %} property photo cancel, skip, save title button {% endcomment %}
+      <div class="flex justify-end items-center w-full py-2 mt-2 mr-7 gap-x-13">
+        <button type="button" id="proc-photo-cancel-btn" class="text-base font-semibold text-red-500 outline-0 hidden transition-all opacity-0 scale-95">{% trans 'Cancel' %}</button>
+        <button type="button" id="proc-photo-skip-btn" class="text-base font-semibold text-black/80 dark:text-white outline-0 hidden transition-all opacity-0 scale-95">{% trans 'Ok' %}</button>
+        <button type="button" id="proc-photo-title-btn" class="text-base font-semibold text-gray-500/50 outline-0 hidden transition-all opacity-0 scale-95">{% trans 'Save' %}</button>
+      </div>
+    </div>
+  </div>
+</div>

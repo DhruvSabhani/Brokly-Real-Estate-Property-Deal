@@ -1,112 +1,145 @@
 [
-    {
-        "model": "accounts.State",
-        "pk": 1,
-        "fields": {
-            "name": "Andhra Pradesh",
-            "is_active": "True",
-            "created_at": "2026-05-08 12:25:12.251692+05:30",
-            "country_code_id": "1"
-        }
-    },
-    {
-        "model": "accounts.State",
-        "pk": 2,
-        "fields": {
-            "name": "Arunachal Pradesh",
-            "is_active": "True",
-            "created_at": "2026-05-08 12:25:33.175051+05:30",
-            "country_code_id": "1"
-        }
-    },
-    {
-        "model": "accounts.State",
-        "pk": 3,
-        "fields": {
-            "name": "Assam",
-            "is_active": "True",
-            "created_at": "2026-05-08 12:25:33.175051+05:30",
-            "country_code_id": "1"
-        }
-    },
-    {
-        "model": "accounts.State",
-        "pk": 4,
-        "fields": {
-            "name": "Bihar",
-            "is_active": "True",
-            "created_at": "2026-05-08 12:25:33.175051+05:30",
-            "country_code_id": "1"
-        }
-    },
-    {
-        "model": "accounts.State",
-        "pk": 5,
-        "fields": {
-            "name": "Chhattisgarh",
-            "is_active": "True",
-            "created_at": "2026-05-08 12:25:33.175051+05:30",
-            "country_code_id": "1"
-        }
-    },
-    {
-        "model": "accounts.State",
-        "pk": 6,
-        "fields": {
-            "name": "Goa",
-            "is_active": "True",
-            "created_at": "2026-05-08 12:25:33.175051+05:30",
-            "country_code_id": "1"
-        }
-    },
-    {
-        "model": "accounts.State",
-        "pk": 7,
-        "fields": {
-            "name": "Gujarat",
-            "is_active": "True",
-            "created_at": "2026-05-08 12:25:33.175051+05:30",
-            "country_code_id": "1"
-        }
-    },
-    {
-        "model": "accounts.State",
-        "pk": 8,
-        "fields": {
-            "name": "Alabama",
-            "is_active": "True",
-            "created_at": "2026-05-08 12:25:33.175051+05:30",
-            "country_code_id": "2"
-        }
-    },
-    {
-        "model": "accounts.State",
-        "pk": 9,
-        "fields": {
-            "name": "Alaska",
-            "is_active": "True",
-            "created_at": "2026-05-08 12:25:33.175051+05:30",
-            "country_code_id": "2"
-        }
-    },
-    {
-        "model": "accounts.State",
-        "pk": 10,
-        "fields": {
-            "name": "Arizona",
-            "is_active": "True",
-            "created_at": "2026-05-08 12:25:33.175051+05:30",
-            "country_code_id": "2"
-        }
-    },
-    {
-        "model": "accounts.State",
-        "pk": 11,
-        "fields": {
-            "name": "Arkansas",
-            "is_active": "True",
-            "created_at": "2026-05-08 12:25:33.175051+05:30",
-            "country_code_id": "2"
-        }
+  {
+    "model": "accounts.State",
+    "pk": 1,
+    "fields": {
+      "name": "Andhra Pradesh",
+      "state_name_gu": "આંધ્ર પ્રદેશ",
+      "latitude": null,
+      "longitude": null,
+      "is_active": "True",
+      "created_at": "2026-05-08 12:25:12.251692+05:30",
+      "country_code_id": "1"
     }
+  },
+  {
+    "model": "accounts.State",
+    "pk": 2,
+    "fields": {
+      "name": "Arunachal Pradesh",
+      "state_name_gu": "અરુણાચલ પ્રદેશ",
+      "latitude": null,
+      "longitude": null,
+      "is_active": "True",
+      "created_at": "2026-05-08 12:25:33.175051+05:30",
+      "country_code_id": "1"
+    }
+  },
+  {
+    "model": "accounts.State",
+    "pk": 3,
+    "fields": {
+      "name": "Assam",
+      "state_name_gu": "આસામ",
+      "latitude": null,
+      "longitude": null,
+      "is_active": "True",
+      "created_at": "2026-05-08 12:25:33.175051+05:30",
+      "country_code_id": "1"
+    }
+  },
+  {
+    "model": "accounts.State",
+    "pk": 4,
+    "fields": {
+      "name": "Bihar",
+      "state_name_gu": "બિહાર",
+      "latitude": null,
+      "longitude": null,
+      "is_active": "True",
+      "created_at": "2026-05-08 12:25:33.175051+05:30",
+      "country_code_id": "1"
+    }
+  },
+  {
+    "model": "accounts.State",
+    "pk": 5,
+    "fields": {
+      "name": "Chhattisgarh",
+      "state_name_gu": "છત્તીસગઢ",
+      "latitude": null,
+      "longitude": null,
+      "is_active": "True",
+      "created_at": "2026-05-08 12:25:33.175051+05:30",
+      "country_code_id": "1"
+    }
+  },
+  {
+    "model": "accounts.State",
+    "pk": 6,
+    "fields": {
+      "name": "Goa",
+      "state_name_gu": "ગોવા",
+      "latitude": "15.2993",
+      "longitude": "74.1240",
+      "is_active": "True",
+      "created_at": "2026-05-08 12:25:33.175051+05:30",
+      "country_code_id": "1"
+    }
+  },
+  {
+    "model": "accounts.State",
+    "pk": 7,
+    "fields": {
+      "name": "Gujarat",
+      "state_name_gu": "ગુજરાત",
+      "latitude": "22.3094",
+      "longitude": "72.1362",
+      "is_active": "True",
+      "created_at": "2026-05-08 12:25:33.175051+05:30",
+      "country_code_id": "1"
+    }
+  },
+  {
+    "model": "accounts.State",
+    "pk": 8,
+    "fields": {
+      "name": "Alabama",
+      "state_name_gu": "અલાબામા",
+      "latitude": null,
+      "longitude": null,
+      "is_active": "True",
+      "created_at": "2026-05-08 12:25:33.175051+05:30",
+      "country_code_id": "2"
+    }
+  },
+  {
+    "model": "accounts.State",
+    "pk": 9,
+    "fields": {
+      "name": "Alaska",
+      "state_name_gu": "અલાસ્કા",
+      "latitude": null,
+      "longitude": null,
+      "is_active": "True",
+      "created_at": "2026-05-08 12:25:33.175051+05:30",
+      "country_code_id": "2"
+    }
+  },
+  {
+    "model": "accounts.State",
+    "pk": 10,
+    "fields": {
+      "name": "Arizona",
+      "state_name_gu": "એરિઝોના",
+      "latitude": null,
+      "longitude": null,
+      "is_active": "True",
+      "created_at": "2026-05-08 12:25:33.175051+05:30",
+      "country_code_id": "2"
+    }
+  },
+  {
+    "model": "accounts.State",
+    "pk": 11,
+    "fields": {
+      "name": "Arkansas",
+      "state_name_gu": "આર્કાન્સાસ",
+      "latitude": null,
+      "longitude": null,
+      "is_active": "True",
+      "created_at": "2026-05-08 12:25:33.175051+05:30",
+      "country_code_id": "2"
+    }
+  }
 ]

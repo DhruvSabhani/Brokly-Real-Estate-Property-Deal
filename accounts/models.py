@@ -35,6 +35,12 @@ class CountryCode(models.Model):
     country_code = models.CharField(max_length=10, unique=True)
     country_name = models.CharField(max_length=255, unique=True)
     country_name_gu = models.CharField(max_length=255, blank=True, null=True)
+    latitude = models.DecimalField(
+        max_digits=12, decimal_places=7, null=True, blank=True
+    )
+    longitude = models.DecimalField(
+        max_digits=12, decimal_places=7, null=True, blank=True
+    )
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -126,6 +132,13 @@ class State(models.Model):
         "CountryCode", on_delete=models.SET_NULL, null=True, blank=True
     )
     name = models.CharField(max_length=255)
+    state_name_gu = models.CharField(max_length=255, blank=True, null=True)
+    latitude = models.DecimalField(
+        max_digits=12, decimal_places=7, null=True, blank=True
+    )
+    longitude = models.DecimalField(
+        max_digits=12, decimal_places=7, null=True, blank=True
+    )
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -140,6 +153,13 @@ class State(models.Model):
 class City(models.Model):
     state = models.ForeignKey("State", on_delete=models.CASCADE, related_name="cities")
     name = models.CharField(max_length=255)
+    city_name_gu = models.CharField(max_length=255, blank=True, null=True)
+    latitude = models.DecimalField(
+        max_digits=12, decimal_places=7, null=True, blank=True
+    )
+    longitude = models.DecimalField(
+        max_digits=12, decimal_places=7, null=True, blank=True
+    )
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

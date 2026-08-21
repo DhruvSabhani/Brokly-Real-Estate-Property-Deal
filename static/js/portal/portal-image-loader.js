@@ -7,7 +7,7 @@ const pprofilebtn = document.getElementById('pProfileBtn');
 const pimgHead = document.getElementById('pImgHead');
 const pimgHeadloader = document.getElementById('pImgHeadLoader');
 const pprofilemenu = document.getElementById('pProfileMenu');
-// ----------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------
 // show loader
 function showLoader(loader) {
   loader.classList.remove('hidden');

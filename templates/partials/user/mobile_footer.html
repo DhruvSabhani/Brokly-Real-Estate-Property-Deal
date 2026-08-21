@@ -2,18 +2,9 @@
 {% load i18n %}
 <div class="grid grid-cols-5 gap-3">
     {% comment %}home{% endcomment %}
-    <a href="{% url 'user_dashboard' %}"
-       title="{% trans 'Home' %}"
-       class="group flex lg:hidden flex-col justify-center items-center gap-1 transition-all duration-100">
+    <a href="{% url 'user-dashboard' %}" title="{% trans 'Home' %}" class="group flex lg:hidden flex-col justify-center items-center gap-1 transition-all duration-100">
         <div class="flex justify-center items-center w-15 h-7 rounded-[15px] {% if active == 'home' %} bg-orange-500 text-white {% else %} text-black/80 dark:text-white/90 group-hover:bg-orange-500 {% endif %}">
-            <svg xmlns="{% static 'icons/home.svg' %}"
-                 viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="2"
-                 stroke-linecap="round"
-                 stroke-linejoin="round"
-                 class="lucide lucide-home-icon lucide-home w-[22px] h-[22px]">
+            <svg xmlns="{% static 'icons/home.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home-icon lucide-home w-[22px] h-[22px]">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
                 <polyline points="9 22 9 12 15 12 15 22" />
             </svg>
@@ -21,36 +12,22 @@
         <span class="whitespace-nowrap truncate text-[11px] font-medium text-black/80 dark:text-white/90">{% trans 'Home' %}</span>
     </a>
     {% comment %}shortlisted{% endcomment %}
-    <a href="{% url 'shortlisted' %}"
+    <a href="{% url 'user-shortlisted' %}"
        title="{% trans 'Shortlisted' %}"
        class="group flex lg:hidden flex-col justify-center items-center gap-1 transition-all duration-100">
-        <div class="flex justify-center items-center w-15 h-7 rounded-[15px] {% if active == 'shortlisted' %} bg-orange-500 text-white {% else %} text-black/80 dark:text-white/90 group-hover:bg-orange-500 {% endif %}">
-            <svg xmlns="{% static 'icons/heart.svg' %}"
-                 viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="2"
-                 stroke-linecap="round"
-                 stroke-linejoin="round"
-                 class="lucide lucide-heart-icon lucide-heart w-[22px] h-[22px]">
+        <div class="flex justify-center items-center w-15 h-7 rounded-[15px] {% if active == 'userShortlisted' %} bg-orange-500 text-white {% else %} text-black/80 dark:text-white/90 group-hover:bg-orange-500 {% endif %}">
+            <svg xmlns="{% static 'icons/heart.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart-icon lucide-heart w-[22px] h-[22px]">
                 <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />
             </svg>
         </div>
         <span class="whitespace-nowrap truncate text-[11px] font-medium text-black/80 dark:text-white/90">{% trans 'Shortlisted' %}</span>
     </a>
     {% comment %}near me{% endcomment %}
-    <a href="{% url 'near_me' %}"
+    <a href="{% url 'user-near-me' %}"
        title="{% trans 'Near Me' %}"
        class="group flex lg:hidden flex-col justify-center items-center gap-1 py-1 transition-all duration-100">
         <div class="flex justify-center items-center w-10 h-10 rounded-full bg-black/5 dark:bg-white/5 text-black/90 dark:text-white group-hover:bg-orange-500 group-hover:text-white">
-            <svg xmlns="{% static 'icons/map-pin.svg' %}"
-                 viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="2"
-                 stroke-linecap="round"
-                 stroke-linejoin="round"
-                 class="lucide lucide-map-pin-icon lucide-map-pin w-6 h-6">
+            <svg xmlns="{% static 'icons/map-pin.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin w-6 h-6">
                 <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
                 <circle cx="12" cy="10" r="3" />
             </svg>
@@ -58,18 +35,11 @@
         <span class="whitespace-nowrap truncate text-[11px] font-medium text-black/80 dark:text-white/90">{% trans 'Near Me' %}</span>
     </a>
     {% comment %}messages{% endcomment %}
-    <a href="{% url 'messages' %}"
+    <a href="{% url 'user-messages' %}"
        title="{% trans 'Messages' %}"
        class="group flex lg:hidden flex-col justify-center items-center gap-1 transition-all duration-100">
-        <div class="flex justify-center items-center w-15 h-7 rounded-[15px] {% if active == 'messages' %} bg-orange-500 text-white {% else %} text-black/80 dark:text-white/90 group-hover:bg-orange-500 {% endif %}">
-            <svg xmlns="{% static 'icons/messages-square.svg' %}"
-                 viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="2"
-                 stroke-linecap="round"
-                 stroke-linejoin="round"
-                 class="lucide lucide-messages-square-icon lucide-messages-square w-[22px] h-[22px]">
+        <div class="flex justify-center items-center w-15 h-7 rounded-[15px] {% if active == 'userMessages' %} bg-orange-500 text-white {% else %} text-black/80 dark:text-white/90 group-hover:bg-orange-500 {% endif %}">
+            <svg xmlns="{% static 'icons/messages-square.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-messages-square-icon lucide-messages-square w-[22px] h-[22px]">
                 <path d="M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
                 <path d="M20 9a2 2 0 0 1 2 2v10.286a.71.71 0 0 1-1.212.502l-2.202-2.202A2 2 0 0 0 17.172 19H10a2 2 0 0 1-2-2v-1" />
             </svg>
@@ -77,18 +47,11 @@
         <span class="whitespace-nowrap truncate text-[11px] font-medium text-black/80 dark:text-white/90">{% trans 'Messages' %}</span>
     </a>
     {% comment %}profile{% endcomment %}
-    <a href="{% url 'user_setting' %}"
+    <a href="{% url 'user-setting' %}"
        title="{% trans 'Profile' %}"
        class="group flex lg:hidden flex-col justify-center items-center gap-1 transition-all duration-100">
-        <div class="flex justify-center items-center w-15 h-7 rounded-[15px] {% if active == 'setting' %} bg-orange-500 text-white {% else %} text-black/80 dark:text-white/90 group-hover:bg-orange-500 {% endif %}">
-            <svg xmlns="{% static 'icons/user.svg' %}"
-                 viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="2"
-                 stroke-linecap="round"
-                 stroke-linejoin="round"
-                 class="lucide lucide-user-icon lucide-user w-[22px] h-[22px]">
+        <div class="flex justify-center items-center w-15 h-7 rounded-[15px] {% if active == 'userSetting' %} bg-orange-500 text-white {% else %} text-black/80 dark:text-white/90 group-hover:bg-orange-500 {% endif %}">
+            <svg xmlns="{% static 'icons/user.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-icon lucide-user w-[22px] h-[22px]">
                 <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                 <circle cx="12" cy="7" r="4" />
             </svg>

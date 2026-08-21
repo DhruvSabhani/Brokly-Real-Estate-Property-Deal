@@ -1,0 +1,245 @@
+{% load static %}
+{% load i18n %}
+
+<div id="property-location-details" class="property-location-details">
+  <div class="flex flex-col lg:flex-row justify-between items-start w-full gap-y-2 lg:gap-0">
+    <form id="add-property-location-form" class="w-full px-1" data-property-location-store-url="{% url 'portal-property-location-store' %}" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="flex flex-1 flex-col justify-start items-center w-full gap-x-2 gap-y-2 border rounded-xl border-black/10 dark:border-white/10 px-2 py-2">
+        <div class="flex justify-center items-center w-full gap-4 px-2 py-2">
+          <div class="w-19 h-16 lg:w-16 lg:h-14 rounded-full bg-[#FDF4EF] dark:bg-white/4 flex justify-center items-center">
+            <svg xmlns="{% static 'icons/map-pin.svg' %}" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin text-black/80 dark:text-white/80"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="flex justify-between items-center w-full">
+            <div class="w-full flex flex-col justify-center items-start">
+              <h1 class="text-lg font-semibold text-black dark:text-white">{% trans 'Location' %}</h1>
+              <p class="text-sm text-black/50 dark:text-white/50">
+                {% trans 'Add the location details of your property' %}
+              </p>
+            </div>
+            <div class="flex justify-end items-center">
+              <button type="button" id="location-form-clear-btn" class="px-7 h-12 lg:h-10 flex justify-center items-center bg-transparent border border-black/10 dark:border-white/10 text-[17px] lg:text-base text-black dark:text-white rounded-lg">{% trans 'Clear' %}</button>
+              <script>
+                document.getElementById('location-form-clear-btn').addEventListener('click', () => {
+                  openmessagemodal({
+                    messmodtitle: "{% trans 'Clear Form?' %}",
+                    messmodmessage: "{% trans 'Are you sure you want to clear this form? All entered details will be permanently removed.' %}",
+                    messmodposibtn: "{% trans 'Yes' %}",
+                    messmodposibtnaction: locationFormClear,
+                  });
+                });
+              </script>
+            </div>
+          </div>
+        </div>
+        
+        {% comment %}property country and state{% endcomment %}
+        <div class="flex justify-start items-start w-full gap-x-4">
+          {% comment %}property country{% endcomment %}
+          <div id="proc-country-box" class="flex flex-col w-full py-1">
+            <label for="proc-select-country-btn" class="form-label px-2 py-1 text-base lg:text-[15px] font-semibold text-black/90 dark:text-white/90">{% trans 'Country' %}<span class="ml-1 text-red-500">*</span></label>
+            <button type="button" id="proc-select-country-btn" class="w-full h-12 lg:h-10 text-base flex justify-between items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur-xl px-2">
+              <span id="proc-selected-country" data-selected-country="{% if request.LANGUAGE_CODE == 'gu' %}{{ pAddress.country.country_name_gu|default:'' }}{% else %}{{ pAddress.country.country_name|default:'' }}{% endif %}"></span>
+              <input type="hidden" id="proc-selected-country-id" name="proc-selected-country-id" data-country-lat="{{ pAddress.country.latitude|default:'' }}" data-country-lng="{{ pAddress.country.longitude|default:'' }}" value="{{ pAddress.country.id }}" />
+              <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}" fill="none" viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="m11.6 14.5999 -3.95 -3.925c-0.0333 -0.03335 -0.0625 -0.073 -0.0875 -0.119 -0.025 -0.04615 -0.0375 -0.0955 -0.0375 -0.148 0 -0.10535 0.03445 -0.1955 0.10325 -0.2705 0.0687 -0.075 0.15925 -0.1125 0.27175 -0.1125h8.2c0.1125 0 0.2032 0.03865 0.272 0.116 0.0687 0.07715 0.103 0.16725 0.103 0.27025 0 0.02585 -0.04165 0.11375 -0.125 0.26375l-3.95 3.925c-0.05 0.05 -0.1088 0.09165 -0.1765 0.125 -0.06765 0.03335 -0.14215 0.05 -0.2235 0.05 -0.08115 0 -0.15565 -0.01665 -0.2235 -0.05 -0.06765 -0.03335 -0.1265 -0.075 -0.1765 -0.125Z" stroke-width="0.5"></path></svg>
+            </button>
+            <p id="proc-country-error" class="mess-error text-sm wrap-break-word font-normal text-red-600 px-2"></p>
+          </div>
+          {% comment %}property state{% endcomment %}
+          <div id="proc-state-box" class="flex flex-col w-full py-1">
+            <label for="proc-select-state-btn" class="form-label px-2 py-1 text-base lg:text-[15px] font-semibold text-black/90 dark:text-white/90">{% trans 'State' %}<span class="ml-1 text-red-500">*</span></label>
+            <button type="button" id="proc-select-state-btn" class="w-full h-12 lg:h-10 text-base flex justify-between items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur-xl px-2">
+              <span id="proc-selected-state" data-selected-state="{% if request.LANGUAGE_CODE == 'gu' %}{{ pAddress.state.state_name_gu|default:'' }}{% else %}{{ pAddress.state.name|default:'' }}{% endif %}"></span>
+              <input type="hidden" id="proc-selected-state-id" name="proc-selected-state-id" data-state-lat="{{ pAddress.state.latitude|default:'' }}" data-state-lng="{{ pAddress.state.longitude|default:'' }}" value="{{ pAddress.state.id }}" />
+              <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}" fill="none" viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="m11.6 14.5999 -3.95 -3.925c-0.0333 -0.03335 -0.0625 -0.073 -0.0875 -0.119 -0.025 -0.04615 -0.0375 -0.0955 -0.0375 -0.148 0 -0.10535 0.03445 -0.1955 0.10325 -0.2705 0.0687 -0.075 0.15925 -0.1125 0.27175 -0.1125h8.2c0.1125 0 0.2032 0.03865 0.272 0.116 0.0687 0.07715 0.103 0.16725 0.103 0.27025 0 0.02585 -0.04165 0.11375 -0.125 0.26375l-3.95 3.925c-0.05 0.05 -0.1088 0.09165 -0.1765 0.125 -0.06765 0.03335 -0.14215 0.05 -0.2235 0.05 -0.08115 0 -0.15565 -0.01665 -0.2235 -0.05 -0.06765 -0.03335 -0.1265 -0.075 -0.1765 -0.125Z" stroke-width="0.5"></path></svg>
+            </button>
+            <p id="proc-state-error" class="mess-error text-sm wrap-break-word font-normal text-red-600 px-2"></p>
+          </div>
+        </div>
+
+        {% comment %} property city and locality/area {% endcomment %}
+        <div class="flex justify-start items-start w-full gap-x-4">
+          {% comment %} property city {% endcomment %}
+          <div id="proc-city-box" class="flex flex-col w-full py-1">
+            <label for="proc-select-city-btn" class="form-label px-2 py-1 text-base lg:text-[15px] font-semibold text-black/90 dark:text-white/90">{% trans 'City' %}<span class="ml-1 text-red-500">*</span></label>
+            <button type="button" id="proc-select-city-btn" class="w-full h-12 lg:h-10 text-base flex justify-between items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur-xl px-2">
+              <span id="proc-selected-city" data-selected-city="{% if request.LANGUAGE_CODE == 'gu' %}{{ pAddress.city.city_name_gu|default:'' }}{% else %}{{ pAddress.city.name|default:'' }}{% endif %}"></span>
+              <input type="hidden" id="proc-selected-city-id" name="proc-selected-city-id" data-city-lat="{{ pAddress.city.latitude|default:'' }}" data-city-lng="{{ pAddress.city.longitude|default:'' }}" value="{{ pAddress.city.id }}" />
+              <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}" fill="none" viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="m11.6 14.5999 -3.95 -3.925c-0.0333 -0.03335 -0.0625 -0.073 -0.0875 -0.119 -0.025 -0.04615 -0.0375 -0.0955 -0.0375 -0.148 0 -0.10535 0.03445 -0.1955 0.10325 -0.2705 0.0687 -0.075 0.15925 -0.1125 0.27175 -0.1125h8.2c0.1125 0 0.2032 0.03865 0.272 0.116 0.0687 0.07715 0.103 0.16725 0.103 0.27025 0 0.02585 -0.04165 0.11375 -0.125 0.26375l-3.95 3.925c-0.05 0.05 -0.1088 0.09165 -0.1765 0.125 -0.06765 0.03335 -0.14215 0.05 -0.2235 0.05 -0.08115 0 -0.15565 -0.01665 -0.2235 -0.05 -0.06765 -0.03335 -0.1265 -0.075 -0.1765 -0.125Z" stroke-width="0.5"></path></svg>
+            </button>
+            <p id="proc-city-error" class="mess-error text-sm wrap-break-word font-normal text-red-600 px-2"></p>
+          </div>
+          {% comment %} property locality/area {% endcomment %}
+          <div id="proc-area-box" class="flex flex-col w-full py-1">
+            <label for="proc-area" class="form-label px-2 py-1 text-base lg:text-[15px] font-semibold text-black/90 dark:text-white/90">{% trans 'Locality / Area' %}<span class="ml-1 text-red-500">*</span></label>
+            <input type="text" name="proc-area" id="proc-area" class="w-full h-12 lg:h-10 text-base flex justify-between items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur-xl px-2" placeholder="{% trans 'e.g. Satellite, Navrangpura' %}"/>
+            <p id="proc-area-error" class="mess-error text-sm wrap-break-word font-normal text-red-600 px-2"></p>
+          </div>
+        </div>
+
+        {% comment %} property landmark and pincode {% endcomment %}
+        <div class="flex justify-start items-start w-full gap-x-4">
+          {% comment %} property landmark {% endcomment %}
+          <div id="proc-landmark-box" class="flex flex-col w-full py-1">
+            <label for="proc-landmark" class="form-label px-2 py-1 text-base lg:text-[15px] font-semibold text-black/90 dark:text-white/90">{% trans 'Landmark' %}</label>
+            <input type="text" name="proc-landmark" id="proc-landmark" class="w-full h-12 lg:h-10 text-base flex justify-between items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur-xl px-2" placeholder="{% trans 'e.g. Near Railway Station' %}"/>
+            <p id="proc-landmark-error" class="mess-error text-sm wrap-break-word font-normal text-red-600 px-2"></p>
+          </div>
+          {% comment %} property pincode {% endcomment %}
+          <div id="proc-pincode-box" class="flex flex-col w-full py-1">
+            <label for="proc-pincode" class="form-label px-2 py-1 text-base lg:text-[15px] font-semibold text-black/90 dark:text-white/90">{% trans 'Pincode' %}<span class="ml-1 text-red-500">*</span></label>
+            <input type="text" name="proc-pincode" id="proc-pincode" class="w-full h-12 lg:h-10 text-base flex justify-between items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur-xl px-2" maxlength="10" autocomplete="postal-code" placeholder="{% trans 'e.g. 110022' %}"/>
+            <p id="proc-pincode-error" class="mess-error text-sm wrap-break-word font-normal text-red-600 px-2"></p>
+          </div>
+        </div>
+
+        {% comment %} property address_line {% endcomment %}
+        <div class="flex justify-start items-start w-full gap-x-4">
+          <div id="proc-address-line-box" class="flex flex-col w-full py-1">
+            <label for="proc-address-line" class="form-label px-2 py-1 text-base lg:text-[15px] font-semibold text-black/90 dark:text-white/90">{% trans 'Address Line' %}<span class="ml-1 text-red-500">*</span></label>
+            <textarea name="proc-address-line" id="proc-address-line" rows="3" class="w-full text-base flex justify-between items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur-xl px-2" placeholder="{% trans 'e.g. Flat 203, Shree Residency, Ring Road' %}"></textarea>
+            <p id="proc-address-line-error" class="mess-error text-sm wrap-break-word font-normal text-red-600 px-2"></p>
+          </div>
+        </div>
+
+        <div class="flex justify-start items-start w-full gap-x-4">
+          {% comment %} map show {% endcomment %}
+          <div id="proc-map-pin-box" class="flex flex-col w-full py-1">
+            <label class="form-label px-2 text-base lg:text-[15px] font-semibold text-black/90 dark:text-white/90">{% trans 'Select on Map' %}</label>
+            <p class="px-2 text-sm text-black/70 dark:text-white/70 mb-1">{% trans "Click or drag the marker to select your property location." %}</p>
+            <div id="proc-map" class="w-full h-[200px] rounded-lg"></div>
+            <div class="flex justify-start items-center px-2 py-2 gap-6">
+              <div id="proc-latitude-box" class="flex flex-col w-full">
+                <label for="proc-latitude" class="form-label py-1 text-base lg:text-[15px] font-semibold text-black/90 dark:text-white/90">{% trans 'Latitude' %}</label>
+                <input type="text" name="proc-latitude" id="proc-latitude" class="w-full h-12 lg:h-10 text-base flex justify-between items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur-xl px-2" readonly placeholder="{% trans 'Select Latitude' %}"/>
+              </div>
+              <div id="proc-longitude-box" class="flex flex-col w-full">
+                <label for="proc-longitude" class="form-label py-1 text-base lg:text-[15px] font-semibold text-black/90 dark:text-white/90">{% trans 'Longitude' %}</label>
+                <input type="text" name="proc-longitude" id="proc-longitude" class="w-full h-12 lg:h-10 text-base flex justify-between items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur-xl px-2" readonly placeholder="{% trans 'Select Longitude' %}"/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% comment %}clear and save & continue button{% endcomment %}
+        <div class="w-full flex justify-between items-center px-2 py-1">
+          <button type="button" class="px-8 h-12 lg:h-10 flex justify-center items-center bg-transparent border border-black/10 dark:border-white/10 text-[17px] lg:text-base text-black dark:text-white rounded-lg" onclick="backStep();">
+            <span class="flex justify-center items-center gap-2">
+              {% trans 'Back' %}
+            </span>
+          </button>
+          <button type="submit" id="property-location-details-btn" class="px-7 h-12 lg:h-10 flex justify-center items-center border-2 border-orange-400 bg-orange-400 text-[17px] lg:text-base font-semibold text-white rounded-lg">
+              <span class="flex justify-center items-center gap-2">
+                  {% trans 'Save & Continue' %}
+              </span>
+          </button>
+        </div>
+      </div>
+    </form>
+    <aside class="flex justify-start items-start w-full lg:w-[500px] xl:w-[600px] 2xl:w-[700px] px-1">
+      <div class="w-full flex flex-col justify-center items-start gap-x-2 gap-y-2 bg-[#F7FCF7] dark:bg-[#0F1A13] border rounded-xl border-black/10 dark:border-white/10 px-3 py-2">
+        <div class="flex justify-between items-center gap-4 py-2">
+          <div class="w-10 h-10 rounded-full bg-[#ECF8EF] dark:bg-[#16261B] flex justify-center items-center">
+            <svg xmlns="{% static 'icons/lightbulb.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lightbulb-icon lucide-lightbulb text-red-500"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" /><path d="M9 18h6" /><path d="M10 22h4" /></svg>
+          </div>
+          <span class="text-lg font-semibold text-red-500">{% trans 'Quick Tips' %}</span>
+        </div>
+        {% for tip in proLocationQuickTips %}
+          <div class="flex justify-between items-center px-2 gap-3">
+            <svg xmlns="{% static 'icons/check.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check text-red-500"><path d="M20 6 9 17l-5-5" /></svg>
+            <span class="text-sm w-full text-gray-500">{{ tip }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    </aside>
+  </div>
+</div>
+
+{% comment %}select country modal{% endcomment %}
+<div id="proc-select-country-modal" class="w-screen h-screen hidden justify-center pt-[100px] px-10 fixed z-50 inset-0 bg-black/90 backdrop-blur-0">
+  <div class="w-full max-w-[50rem] h-[300px] lg:h-[400px] origin-top-right bg-[#f7f9fc] dark:bg-[#121212] px-2 py-2 rounded-2xl overflow-hidden">
+    {% comment %}header{% endcomment %}
+    <div class="flex justify-between items-center mb-2">
+        <div class="relative search-wrapper flex justify-center items-center w-full h-10 rounded-full border border-black/10 bg-[#ffffff] dark:bg-white/10 hover:bg-[#f7f9fc] dark:hover:bg-[#3B3D3E] focus-within:border-orange-500 transition-all duration-200">
+            <svg xmlns="{% static 'icons/search.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search w-5 h-5 ml-3 text-gray-500 shrink-0"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+            <input type="search" id="country-search" class="search-input w-full h-full px-3 pr-8 bg-transparent outline-none text-base" placeholder="{% trans 'Search Property Country' %}" />
+            <button type="button" class="clear-search-btn absolute right-3 hidden text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white">
+                <svg xmlns="{% static 'icons/x.svg' %}" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+            </button>
+        </div>
+        <button id="country-modal-close" class="min-w-10 h-10 ml-4 bg-white dark:bg-[#1A1A1A] hover:bg-gray-100 dark:hover:bg-[#252525] flex justify-center items-center rounded-full transition-all duration-300" onclick="countryModalClose();">
+            <svg xmlns="{% static 'icons/x.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x w-6 h-6"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+        </button>
+    </div>
+    <div class="w-full h-px bg-gray-300 dark:bg-white/20 my-2"></div>
+    {% comment %}property country list{% endcomment %}
+    <div id="pro-country-list" class="h-[calc(300px-68px)] lg:h-[calc(400px-68px)] overflow-y-auto space-y-1">
+        <div class="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-x-2 gap-y-4 px-2">
+          {% for con in country_code %}
+            {% if request.LANGUAGE_CODE == 'gu' %}
+              <div title="{{ con.country_name_gu }}" class="pro-country-item w-full flex justify-center items-center px-4 py-2 rounded-xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] text-black/60 dark:text-white/70 border border-black/15 dark:border-white/15 transition-all duration-200" data-country-name="{{ con.country_name_gu }}" onclick="proCountrySelected('{{ con.id }}','{{ con.country_name_gu }}','{{ con.latitude }}','{{ con.longitude }}')"><span class="text-[17px]">{{ con.country_name_gu }}</span></div>
+            {% else %}
+              <div title="{{ con.country_name|capfirst }}" class="pro-country-item w-full flex justify-center items-center px-4 py-2 rounded-xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] text-black/60 dark:text-white/70 border border-black/15 dark:border-white/15 transition-all duration-200" data-country-name="{{ con.country_name }}" onclick="proCountrySelected('{{ con.id }}','{{ con.country_name|capfirst }}','{{ con.latitude }}','{{ con.longitude }}')"><span class="text-[17px]">{{ con.country_name|capfirst }}</span></div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <div id="pro-country-no-data" class="">
+            {% include 'no_data_found.html' %}
+        </div>
+    </div>
+  </div>
+</div>
+
+{% comment %}select state modal{% endcomment %}
+<div id="proc-select-state-modal" class="w-screen h-screen hidden justify-center pt-[100px] px-10 fixed z-50 inset-0 bg-black/90 backdrop-blur-0">
+    <div class="w-full max-w-[50rem] h-[300px] lg:h-[400px] origin-top-right bg-[#f7f9fc] dark:bg-[#121212] px-2 py-2 rounded-2xl overflow-hidden">
+        {% comment %}header{% endcomment %}
+        <div class="flex justify-between items-center mb-2">
+            <div class="relative search-wrapper flex justify-center items-center w-full h-10 rounded-full border border-black/10 bg-[#ffffff] dark:bg-white/10 hover:bg-[#f7f9fc] dark:hover:bg-[#3B3D3E] focus-within:border-orange-500 transition-all duration-200">
+                <svg xmlns="{% static 'icons/search.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search w-5 h-5 ml-3 text-gray-500 shrink-0"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+                <input type="search" id="state-search" class="search-input w-full h-full px-3 pr-8 bg-transparent outline-none text-base" placeholder="{% trans 'Search Property State' %}" />
+                <button type="button" class="clear-search-btn absolute right-3 hidden text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white">
+                    <svg xmlns="{% static 'icons/x.svg' %}" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                </button>
+            </div>
+            <button id="state-modal-close" class="min-w-10 h-10 ml-4 bg-white dark:bg-[#1A1A1A] hover:bg-gray-100 dark:hover:bg-[#252525] flex justify-center items-center rounded-full transition-all duration-300" onclick="stateModalClose();">
+                <svg xmlns="{% static 'icons/x.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x w-6 h-6"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+            </button>
+        </div>
+        <div class="w-full h-px bg-gray-300 dark:bg-white/20 my-2"></div>
+        {% comment %}property state list{% endcomment %}
+        <div class="h-[calc(300px-68px)] lg:h-[calc(400px-68px)] overflow-y-auto space-y-1">
+            <div id="pro-state-list" class="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-x-2 gap-y-4 px-2"></div>
+            <div id="pro-state-no-data" class="">
+                {% include 'no_data_found.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% comment %}select city modal{% endcomment %}
+<div id="proc-select-city-modal" class="w-screen h-screen hidden justify-center pt-[100px] px-10 fixed z-50 inset-0 bg-black/90 backdrop-blur-0">
+    <div class="w-full max-w-[50rem] h-[300px] lg:h-[400px] origin-top-right bg-[#f7f9fc] dark:bg-[#121212] px-2 py-2 rounded-2xl overflow-hidden">
+        {% comment %}header{% endcomment %}
+        <div class="flex justify-between items-center mb-2">
+            <div class="relative search-wrapper flex justify-center items-center w-full h-10 rounded-full border border-black/10 bg-[#ffffff] dark:bg-white/10 hover:bg-[#f7f9fc] dark:hover:bg-[#3B3D3E] focus-within:border-orange-500 transition-all duration-200">
+                <svg xmlns="{% static 'icons/search.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search w-5 h-5 ml-3 text-gray-500 shrink-0"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+                <input type="search" id="city-search" class="search-input w-full h-full px-3 pr-8 bg-transparent outline-none text-base" placeholder="{% trans 'Search Property City' %}" />
+                <button type="button" class="clear-search-btn absolute right-3 hidden text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white">
+                    <svg xmlns="{% static 'icons/x.svg' %}" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                </button>
+            </div>
+            <button id="city-modal-close" class="min-w-10 h-10 ml-4 bg-white dark:bg-[#1A1A1A] hover:bg-gray-100 dark:hover:bg-[#252525] flex justify-center items-center rounded-full transition-all duration-300" onclick="cityModalClose();">
+                <svg xmlns="{% static 'icons/x.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x w-6 h-6"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+            </button>
+        </div>
+        <div class="w-full h-px bg-gray-300 dark:bg-white/20 my-2"></div>
+        {% comment %}property city list{% endcomment %}
+        <div class="h-[calc(300px-68px)] lg:h-[calc(400px-68px)] overflow-y-auto space-y-1">
+            <div id="pro-city-list" class="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-x-2 gap-y-4 px-2"></div>
+            <div id="pro-city-no-data" class="">
+                {% include 'no_data_found.html' %}
+            </div>
+        </div>
+    </div>
+</div>

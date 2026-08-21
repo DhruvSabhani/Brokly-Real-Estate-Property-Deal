@@ -42,7 +42,7 @@
       </div>
       <div class="flex justify-center items-center gap-3">
         {% comment %}messaging{% endcomment %}
-        <a href="/u-messages/" title="{% trans 'Messaging' %}" id="uMessagingBtn" class="relative w-9 h-9 rounded-full flex justify-center items-center bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-white/10 dark:hover:bg-[#3B3D3E]">
+        <a href="{% url 'user-messages' %}" title="{% trans 'Messaging' %}" id="uMessagingBtn" class="relative w-9 h-9 rounded-full flex justify-center items-center bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-white/10 dark:hover:bg-[#3B3D3E]">
           <div class="absolute top-0 right-0 w-[14px] h-[14px] bg-orange-500 rounded-full flex items-center justify-center text-[10px] font-medium text-white">9</div>
           <svg xmlns="{% static 'icons/messages-square.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-messages-square-icon lucide-messages-square w-[19px] h-[19px] text-black/60 hover:text-black/80 dark:text-white/60 dark:hover:text-white/80">
             <path d="M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
@@ -50,14 +50,14 @@
           </svg>
         </a>
         {% comment %}shortlisted{% endcomment %}
-        <a href="/u-shortlisted/" title="{% trans 'Shortlisted' %}" id="uShortlistedBtn" class="relative w-9 h-9 rounded-full flex justify-center items-center bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-white/10 dark:hover:bg-[#3B3D3E]">
+        <a href="{% url 'user-shortlisted' %}" title="{% trans 'Shortlisted' %}" id="uShortlistedBtn" class="relative w-9 h-9 rounded-full flex justify-center items-center bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-white/10 dark:hover:bg-[#3B3D3E]">
           <div class="absolute top-0 right-0 w-[14px] h-[14px] bg-orange-500 rounded-full flex justify-center items-center text-[10px] font-medium text-white">2</div>
           <svg xmlns="{% static 'icons/heart.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart-icon lucide-heart w-[19px] h-[19px] text-black/60 hover:text-black/80 dark:text-white/60 dark:hover:text-white/80">
             <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />
           </svg>
         </a>
         {% comment %}notifications{% endcomment %}
-        <a href="/u-notifications/" title="{% trans 'Notifications' %}" id="uNotificationsBtn" class="relative w-9 h-9 rounded-full flex justify-center items-center bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-white/10 dark:hover:bg-[#3B3D3E]">
+        <a href="#" title="{% trans 'Notifications' %}" id="uNotificationsBtn" class="relative w-9 h-9 rounded-full flex justify-center items-center bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-white/10 dark:hover:bg-[#3B3D3E]">
           <div class="absolute top-0 right-0 w-[14px] h-[14px] bg-orange-500 rounded-full flex justify-center items-center text-[10px] font-medium text-white">2</div>
           <svg xmlns="{% static 'icons/bell.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell w-[19px] h-[19px] text-black/60 hover:text-black/80 dark:text-white/60 dark:hover:text-white/80">
             <path d="M10.268 21a2 2 0 0 0 3.464 0" />
@@ -79,21 +79,21 @@
           </button>
 
           <div id="uProfileMenu" class="absolute z-50 top-11 right-0 w-44 origin-top-right opacity-0 scale-95 invisible group-hover:opacity-100 group-hover:scale-100 group-hover:visible transition-all duration-200 bg-white dark:bg-[#111111] border border-black/10 dark:border-white/10 rounded-xl shadow-lg overflow-hidden">
-            <a href="/profile/" class="p-2 px-3 rounded-t-xl hover:bg-black/5 dark:hover:bg-white/5 flex justify-start items-center gap-3 text-base">
+            <a href="{% url 'user-setting' %}" class="p-2 px-3 rounded-t-xl hover:bg-black/5 dark:hover:bg-white/5 flex justify-start items-center gap-3 text-base">
               <svg xmlns="{% static 'icons/user.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-icon lucide-user">
                 <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                 <circle cx="12" cy="7" r="4" />
               </svg>
               <span>{% trans 'My Profile' %}</span>
             </a>
-            <a href="/settings/" class="p-2 px-3 hover:bg-black/5 dark:hover:bg-white/5 flex justify-start items-center gap-3 text-base">
+            <a href="{% url 'user-setting' %}" class="p-2 px-3 hover:bg-black/5 dark:hover:bg-white/5 flex justify-start items-center gap-3 text-base">
               <svg xmlns="{% static 'icons/bolt.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bolt-icon lucide-bolt">
                 <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
                 <circle cx="12" cy="12" r="4" />
               </svg>
               <span>{% trans 'Settings' %}</span>
             </a>
-            <button id="u-modal-logout-btn" class="w-full p-2 px-3 rounded-b-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 flex justify-start items-center gap-3 text-base">
+            <button type="button" id="u-modal-logout-btn" class="w-full p-2 px-3 rounded-b-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 flex justify-start items-center gap-3 text-base">
               <svg xmlns="{% static 'icons/log-out.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out">
                 <path d="m16 17 5-5-5-5" />
                 <path d="M21 12H9" />
@@ -134,7 +134,7 @@
       </div>
       <div class="flex justify-center items-center gap-4">
         {% comment %}notifications{% endcomment %}
-        <a href="/u-notifications/" title="{% trans 'Notifications' %}" id="uNotificationsBtn" class="relative w-[46px] h-[46px] rounded-full flex justify-center items-center border border-black/5 dark:border-white/3 bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-transparent dark:hover:bg-[#3B3D3E]">
+        <a href="#" title="{% trans 'Notifications' %}" id="uNotificationsBtn" class="relative w-[46px] h-[46px] rounded-full flex justify-center items-center border border-black/5 dark:border-white/3 bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-transparent dark:hover:bg-[#3B3D3E]">
           <div class="absolute top-0 right-0 w-[18px] h-[18px] bg-orange-500 rounded-full flex justify-center items-center text-[13px] font-medium text-white">2</div>
           <svg xmlns="{% static 'icons/bell.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell w-[22px] h-[22px] text-black/60 hover:text-black/80 dark:text-white dark:hover:text-white/80">
             <path d="M10.268 21a2 2 0 0 0 3.464 0" />
@@ -142,7 +142,7 @@
           </svg>
         </a>
         {% comment %}search box{% endcomment %}
-        <button title="{% trans 'Search' %}" id="uSearchBtn" class="relative w-[46px] h-[46px] rounded-full flex justify-center items-center border border-black/5 dark:border-white/3 bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-transparent dark:hover:bg-[#3B3D3E]">
+        <button type="button" title="{% trans 'Search' %}" id="uSearchBtn" class="relative w-[46px] h-[46px] rounded-full flex justify-center items-center border border-black/5 dark:border-white/3 bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-transparent dark:hover:bg-[#3B3D3E]">
           <svg xmlns="{% static 'icons/search.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search w-[22px] h-[22px] text-black/60 hover:text-black/80 dark:text-white dark:hover:text-white/80">
             <path d="m21 21-4.34-4.34" />
             <circle cx="11" cy="11" r="8" />
@@ -158,7 +158,7 @@
     {% comment %}filter lists{% endcomment %}
     <div id="filter-lists" class="relative py-3 lg:py-2">
       {% comment %}left side scroll icon{% endcomment %}
-      <button id="left-scroll-icon" class="absolute hidden justify-center items-center top-1/2 left-[-3px] -translate-y-1/2 z-0 w-8 h-8 rounded-full bg-white dark:bg-[#0e0d0d] shadow border border-black/10 dark:border-white/10 focus-within:ring-2 focus-within:ring-orange-500">
+      <button type="button" id="left-scroll-icon" class="absolute hidden justify-center items-center top-1/2 left-[-3px] -translate-y-1/2 z-0 w-8 h-8 rounded-full bg-white dark:bg-[#0e0d0d] shadow border border-black/10 dark:border-white/10 focus-within:ring-2 focus-within:ring-orange-500">
         <svg xmlns="{% static 'icons/chevron-left.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left">
           <path d="m15 18-6-6 6-6" />
         </svg>
@@ -220,10 +220,8 @@
               <span class="text-[14px] text-gray-600 dark:text-white/50">/</span>
               <span class="text-[14px] text-gray-600 dark:text-white/50">bed</span>
             </div>
-
             {% comment %}title{% endcomment %}
             <h3 class="line-clamp-2 text-[15px] font-semibold text-gray-900 dark:text-gray-100 mb-1 tracking-normal">2 BHK Flat Available Near City Center</h3>
-
             {% comment %}tags{% endcomment %}
             <div class="flex justify-start items-center gap-2 mb-1 overflow-x-auto scrollbar-hide lg:scrollbar-x-show whitespace-nowrap">
               <div class="flex justify-start items-center gap-2 text-[11px] font-medium px-1 py-0.5 rounded-md border border-black/20 dark:border-white/20 text-black/70 dark:text-white/70 w-fit">
@@ -235,7 +233,6 @@
                 </svg>
                 <span class="truncate">1/2/3 Sharing</span>
               </div>
-
               <div class="flex justify-start items-center gap-2 text-[11px] font-medium px-1 py-0.5 rounded-md border border-black/20 dark:border-white/20 text-green-700 dark:text-green-500 w-fit">
                 <svg xmlns="{% static 'icons/wifi.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wifi-icon lucide-wifi w-[15px] h-[15px] shrink-0">
                   <path d="M12 20h.01" />
@@ -246,7 +243,6 @@
                 <span class="truncate">Free WiFi</span>
               </div>
             </div>
-
             {% comment %}p location{% endcomment %}
             <div class="flex justify-start items-center gap-1 text-[15px] font-normal text-gray-400">
               <svg xmlns="{% static 'icons/map-pin.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down w-[18px] h-[18px] shrink-0 text-orange-600">

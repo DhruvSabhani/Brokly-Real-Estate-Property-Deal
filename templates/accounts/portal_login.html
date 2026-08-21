@@ -179,8 +179,7 @@
                   {% trans 'Track Clients & Leads' %}
                 </p>
                 <p class="text-[15px] leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
-                  {% trans 'Keep track of your clients, leads and conversations
-                  in one place.' %}
+                  {% trans 'Keep track of your clients, leads and conversations in one place.' %}
                 </p>
               </div>
             </div>
@@ -200,8 +199,7 @@
                   {% trans 'Grow Your Business' %}
                 </p>
                 <p class="text-[15px] leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
-                  {% trans 'Powerful tools and insights to help you close more
-                  deals.' %}
+                  {% trans 'Powerful tools and insights to help you close more deals.' %}
                 </p>
               </div>
             </div>
@@ -298,7 +296,7 @@
               </div>
 
               {% comment %}Brokly CTA{% endcomment %}
-              <a href="/home" target="_blank" id="broklyBtn" class="group w-full mt-5 py-3 lg:py-2 text-base rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold shadow-lg shadow-orange-500/20 transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-3">
+              <a href="{% url 'user-dashboard' %}" target="_blank" id="broklyBtn" class="group w-full mt-5 py-3 lg:py-2 text-base rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold shadow-lg shadow-orange-500/20 transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-3">
                 <span>{% trans 'Continue as User' %}</span>
                 <svg xmlns="{% static 'icons/arrow-right.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:translate-x-1">
                   <path d="M5 12h14" />
@@ -344,7 +342,7 @@
                 <div id="pImgLoader" class="absolute inset-0 flex justify-center items-center">
                   <div class="w-5 h-5 border-[4px] border-black/20 border-t-black dark:border-white/20 dark:border-t-white rounded-full animate-[spin_0.5s_linear_infinite]"></div>
                 </div>
-              </div>
+              </div>  
               <label for="avatarInput" class="absolute bottom-0 right-0 w-7 h-7 bg-orange-400 text-black flex justify-center items-center rounded-full cursor-pointer">
                 <svg xmlns="{% static 'icons/plus.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus">
                   <path d="M5 12h14" />

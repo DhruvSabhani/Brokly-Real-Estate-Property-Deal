@@ -16,10 +16,10 @@ class ProfileAddresses(models.Model):
     country = models.ForeignKey(CountryCode, on_delete=models.SET_NULL, null=True)
     pincode = models.CharField(max_length=10, blank=True)
     latitude = models.DecimalField(
-        max_digits=10, decimal_places=7, null=True, blank=True
+        max_digits=12, decimal_places=7, null=True, blank=True
     )
     longitued = models.DecimalField(
-        max_digits=10, decimal_places=7, null=True, blank=True
+        max_digits=12, decimal_places=7, null=True, blank=True
     )
     is_default = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)

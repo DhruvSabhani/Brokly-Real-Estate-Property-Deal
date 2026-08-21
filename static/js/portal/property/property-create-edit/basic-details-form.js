@@ -1,6 +1,6 @@
 // add property form
-const addpropertyform = document.getElementById('add-property-form');
-const addpropertyformurl = addpropertyform.dataset.url;
+const addPropertyForm = document.getElementById('add-property-form');
+const addPropertyFormUrl = addPropertyForm.dataset.basicDetailsStoreUrl;
 // property type btn
 const proSelectTypeBtn = document.getElementById('proc-select-type-btn');
 const proSelectedType = document.getElementById('proc-selected-type');
@@ -280,8 +280,8 @@ proPhoneNumber2.addEventListener('input', function () {
   }
 });
 
-function clearformfield() {
-  addpropertyform.reset();
+function basicFormClear() {
+  addPropertyForm.reset();
   togglePhone2(true);
   proSelectedType.innerText = proSelectedType.dataset.propertyType;
   proSelectedTypeId.value = null;
@@ -293,7 +293,7 @@ function clearformfield() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-addpropertyform.addEventListener('submit', async (e) => {
+addPropertyForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   let isValid = true;
   let numList = [];
@@ -361,7 +361,7 @@ addpropertyform.addEventListener('submit', async (e) => {
 
   numList = uniqueNumbersSet;
 
-  const fd = new FormData();
+  const fd = new FormData(addPropertyForm);
 
   fd.append('protypeid', proTypeId);
   fd.append('proname', proName);
@@ -375,7 +375,7 @@ addpropertyform.addEventListener('submit', async (e) => {
   fd.append('prodescription', proDescription);
 
   try {
-    const response = await fetch(addpropertyformurl, {
+    const response = await fetch(addPropertyFormUrl, {
       method: 'POST',
       headers: {
         'X-CSRFToken': getCSRF(),
@@ -389,11 +389,28 @@ addpropertyform.addEventListener('submit', async (e) => {
       return;
     }
     if (data.success) {
-      alert(data.message);
-      window.location.href = '/portal/propertys/';
+      const stepEl = document.getElementById('step-0');
+      if (stepEl) {
+        if (data.stepcomplete) stepEl.classList.add(data.stepcomplete);
+        stepEl.innerHTML = `<svg xmlns="{% static 'icons/check.svg' %}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check text-white"><path d="M20 6 9 17l-5-5"/></svg>`;
+      }
+      const stepNameEl = document.getElementById('step-0-name');
+      if (stepNameEl && data.stepcomplete) {
+        stepNameEl.classList.add(data.stepcomplete);
+      }
+
+      const stepCompleteEl = document.getElementById('step-0-complete');
+      if (stepCompleteEl) {
+        stepCompleteEl.classList.replace('bg-red-300/30', 'bg-[#ff6b00]');
+      }
+      isPropertyCreated = true;
+      nextStep();
+      if (typeof initMap === 'function') {
+        initMap();
+      }
     }
   } catch (error) {
     console.log(error);
-    alert(window.allError.tryAgain);
+    alert(window.allError?.tryAgain);
   }
 });

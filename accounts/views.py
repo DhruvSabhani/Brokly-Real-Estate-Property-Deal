@@ -296,7 +296,7 @@ def user_profile(request):
             uAddress.city = city
 
     uAddress.is_default = True
-    uAddress.is_active = True
+    uAddress.is_active = True   
 
     uAddress.save()
 
@@ -394,34 +394,34 @@ def user_dashboard(request):
 
 
 @user_required
-def near_me(request):
+def user_near_me(request):
     return render(
         request,
         "user/near_me.html",
         {
-            "active": "nearMe",
+            "active": "userNearMe",
         },
     )
 
 
 @user_required
-def shortlisted(request):
+def user_shortlisted(request):
     return render(
         request,
         "user/messages.html",
         {
-            "active": "shortlisted",
+            "active": "userShortlisted",
         },
     )
 
 
 @user_required
-def messages(request):
+def user_messages(request):
     return render(
         request,
         "user/messages.html",
         {
-            "active": "messages",
+            "active": "userMessages",
         },
     )
 
@@ -432,7 +432,7 @@ def user_help(request):
         request,
         "user/help.html",
         {
-            "active": "help",
+            "active": "userHelp",
         },
     )
 
@@ -443,7 +443,7 @@ def user_setting(request):
         request,
         "user/setting.html",
         {
-            "active": "setting",
+            "active": "userSetting",
         },
     )
 
@@ -454,7 +454,7 @@ def portal_dashboard(request):
         request,
         "portal/dashboard.html",
         {
-            "active": "portal-dashboard",
+            "active": "portalDashboard",
         },
     )
 
@@ -465,7 +465,7 @@ def portal_help(request):
         request,
         "portal/help.html",
         {
-            "active": "portal-help",
+            "active": "portalHelp",
         },
     )
 
@@ -476,7 +476,7 @@ def portal_setting(request):
         request,
         "portal/setting.html",
         {
-            "active": "portal-settings",
+            "active": "portalSettings",
         },
     )
 

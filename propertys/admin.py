@@ -86,6 +86,45 @@ class PropertyAdmin(admin.ModelAdmin):
         )
 
 
+@admin.register(PropertyLocation)
+class PropertyLocationAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "property",
+        "is_active",
+        "country",
+        "state",
+        "city",
+        "area",
+        "landmark",
+        "address_line",
+        "pincode",
+        "latitude",
+        "longitude",
+        "update_at",
+        "create_at",
+    )
+    list_filter = ("is_active",)
+    search_fields = ("property",)
+
+
+@admin.register(PropertyPhoto)
+class PropertyPhotoAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "property",
+        "is_active",
+        "image",
+        "image_title",
+        "is_primary",
+        "display_order",
+        "update_at",
+        "create_at",
+    )
+    list_filter = ("is_active",)
+    search_fields = ("property",)
+
+
 for model in apps.get_app_config("propertys").get_models():
     try:
         admin.site.register(model)

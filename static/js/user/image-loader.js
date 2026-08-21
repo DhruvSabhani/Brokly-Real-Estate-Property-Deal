@@ -7,7 +7,7 @@ const uprofilebtn = document.getElementById('uProfileBtn')
 const uimgHead = document.getElementById('uImgHead')
 const uimgHeadloader = document.getElementById('uImgHeadLoader')
 const uprofilemenu = document.getElementById('uProfileMenu')
-// ----------------------------------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
 // show loader
 function showLoader(loader) {
     loader.classList.remove('hidden')

@@ -220,8 +220,7 @@
                   {% trans 'Instant Alerts' %}
                 </p>
                 <p class="text-[11px] leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
-                  {% trans 'Get notified for new listings that match your
-                  preferences.' %}
+                  {% trans 'Get notified for new listings that match your preferences.' %}
                 </p>
               </div>
             </div>
@@ -339,7 +338,7 @@
               </div>
 
               {% comment %}Portal CTA{% endcomment %}
-              <a href="/portal/dashboard" target="_blank" id="portalBtn" class="group w-full mt-5 py-3 lg:py-2 text-base rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold shadow-lg shadow-orange-500/20 transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-3">
+              <a href="{% url 'portal-dashboard' %}" target="_blank" id="portalBtn" class="group w-full mt-5 py-3 lg:py-2 text-base rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold shadow-lg shadow-orange-500/20 transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-3">
                 <span>{% trans 'Partner with Brokly' %}</span>
                 <svg xmlns="{% static 'icons/arrow-right.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:translate-x-1">
                   <path d="M5 12h14" />
@@ -558,8 +557,7 @@
                     {% trans 'Instant Alerts' %}
                   </p>
                   <p class="text-base leading-snug font-medium text-[#212121b0] dark:text-neutral-500 w-full">
-                    {% trans 'Get notified for new listings that match your
-                    preferences.' %}
+                    {% trans 'Get notified for new listings that match your preferences.' %}
                   </p>
                 </div>
               </div>

@@ -390,7 +390,7 @@ pConBtn.addEventListener('click', function (e) {
   fd.append('ptheme', themeValue);
   fd.append('plang', languageId);
 
-  fetch('/portal-profile/', {
+  fetch('/portal/profile/', {
     method: 'POST',
     headers: {
       'X-CSRFToken': getCSRF(),
@@ -446,7 +446,7 @@ pUpdateBtn.addEventListener('click', function (e) {
   pUpbtnText.innerText = '';
   pLoaderUpdate.classList.remove('hidden');
 
-  fetch('/portal-profile/', {
+  fetch('/portal/profile/', {
     method: 'POST',
     headers: {
       'X-CSRFToken': getCSRF(),

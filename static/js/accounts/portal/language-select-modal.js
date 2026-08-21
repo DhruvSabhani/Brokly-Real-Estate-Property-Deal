@@ -10,6 +10,7 @@ if (!localStorage.getItem('plangCode')) {
   localStorage.setItem('plangName', 'English');
   localStorage.setItem('plangCode', 'en');
 }
+document.documentElement.lang = localStorage.getItem('plangCode');
 
 function getCSRF() {
   return document.querySelector('[name=csrfmiddlewaretoken]').value;

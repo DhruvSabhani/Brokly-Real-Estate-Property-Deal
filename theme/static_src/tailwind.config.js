@@ -1,11 +1,12 @@
 module.exports = {
-  darkMode: "class",
+  darkMode: 'class',
 
   content: [
-    "../templates/**/*.html",
-    "../../templates/**/*.html",
-    "../../**/templates/**/*.html",
-    "./src/**/*.{js,css}",
+    '../templates/**/*.html',
+    '../../templates/**/*.html',
+    '../../**/templates/**/*.html',
+    './src/**/*.{js,css}',
+    '../**/*.py',
   ],
 
   theme: {

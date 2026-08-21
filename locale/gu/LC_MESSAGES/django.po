@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-25 18:50+0530\n"
+"POT-Creation-Date: 2026-08-03 21:42+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: .\accounts\views.py:16 .\accounts\views.py:80 .\accounts\views.py:137
-#: .\accounts\views.py:246 .\accounts\views.py:311
+#: .\accounts\views.py:248 .\accounts\views.py:313 .\propertys\views.py:49
 msgid "Invalid request"
 msgstr ""
 
@@ -45,8 +45,8 @@ msgstr ""
 msgid "Admin accounts cannot login here"
 msgstr ""
 
-#: .\accounts\views.py:130 .\accounts\views.py:154 .\accounts\views.py:250
-#: .\accounts\views.py:315
+#: .\accounts\views.py:130 .\accounts\views.py:154 .\accounts\views.py:252
+#: .\accounts\views.py:317 .\propertys\views.py:53
 msgid "Session expired"
 msgstr ""
 
@@ -74,31 +74,29 @@ msgstr ""
 msgid "Admin canton login portal"
 msgstr ""
 
-#: .\accounts\views.py:212
+#: .\accounts\views.py:213
 msgid "Admin canton login user"
 msgstr ""
 
-#: .\accounts\views.py:232
+#: .\accounts\views.py:234
 msgid "Invalid role"
 msgstr ""
 
-#: .\accounts\views.py:255
+#: .\accounts\views.py:257
 msgid "User not found"
 msgstr ""
 
-#: .\accounts\views.py:304 .\accounts\views.py:369
+#: .\accounts\views.py:306 .\accounts\views.py:371
 msgid "Profile updated successfully"
 msgstr ""
 
-#: .\accounts\views.py:320
+#: .\accounts\views.py:322
 msgid "Portal not found"
 msgstr ""
 
-#: .\adminpanel\views.py:24
-#, fuzzy
-#| msgid "Add at least one valid phone number."
+#: .\adminpanel\views.py:24 .\propertys\views.py:71
 msgid "Invalid phone number."
-msgstr "ઓછામાં ઓછો એક માન્ય ફોન નંબર ઉમેરો."
+msgstr "કૃપા કરીને માન્ય ફોન નંબર દાખલ કરો."
 
 #: .\adminpanel\views.py:26
 msgid "Access denied."
@@ -106,6 +104,82 @@ msgstr ""
 
 #: .\adminpanel\views.py:28
 msgid "Invalid password."
+msgstr ""
+
+#: .\propertys\views.py:22
+msgid "Fill in the required fields (*) accurately to continue"
+msgstr "આગળ વધવા માટે જરૂરી (*) ક્ષેત્રો યોગ્ય રીતે ભરો."
+
+#: .\propertys\views.py:23
+msgid "Choose the correct property type and purpose"
+msgstr "યોગ્ય મિલકતનો પ્રકાર અને હેતુ પસંદ કરો."
+
+#: .\propertys\views.py:24
+msgid "Use a clear, searchable property name"
+msgstr "સ્પષ્ટ અને સરળતાથી શોધી શકાય તેવું મિલકતનું નામ લખો."
+
+#: .\propertys\views.py:25
+msgid "Enter the actual rent or selling price"
+msgstr "વાસ્તવિક ભાડું અથવા વેચાણ કિંમત દાખલ કરો."
+
+#: .\propertys\views.py:26
+msgid "Add at least one valid phone number"
+msgstr "ઓછામાં ઓછો એક માન્ય ફોન નંબર ઉમેરો."
+
+#: .\propertys\views.py:27
+msgid "Write a short, accurate property description"
+msgstr "મિલકતનું ટૂંકું અને સચોટ વર્ણન લખો."
+
+#: .\propertys\views.py:30
+msgid "Search and select the correct location"
+msgstr ""
+
+#: .\propertys\views.py:31
+msgid "Add a nearby landmark for easy reference"
+msgstr ""
+
+#: .\propertys\views.py:32
+msgid "Pin the exact location on the map"
+msgstr ""
+
+#: .\propertys\views.py:33
+msgid "Double-check the pincode"
+msgstr ""
+
+#: .\propertys\views.py:36
+msgid "Upload clear, bright and high-resolution photos"
+msgstr ""
+
+#: .\propertys\views.py:37
+msgid "Show every room and key areas"
+msgstr ""
+
+#: .\propertys\views.py:38
+msgid "Use natural lighting for best results"
+msgstr ""
+
+#: .\propertys\views.py:39
+msgid "Minimum 5 photos recommended"
+msgstr ""
+
+#: .\propertys\views.py:40
+msgid "First photo will be your cover photo"
+msgstr ""
+
+#: .\propertys\views.py:76 .\templates\error_message.html:35
+msgid "Please select a property type."
+msgstr "કૃપા કરીને પ્રોપર્ટીનો પ્રકાર પસંદ કરો."
+
+#: .\propertys\views.py:81 .\templates\error_message.html:38
+msgid "Please enter a property name."
+msgstr "કૃપા કરીને પ્રોપર્ટીનું નામ દાખલ કરો."
+
+#: .\propertys\views.py:89 .\templates\error_message.html:41
+msgid "Please enter a valid property price and select a price period."
+msgstr ""
+
+#: .\propertys\views.py:127
+msgid "Something went wrong. Please try again"
 msgstr ""
 
 #: .\templates\accounts\portal_login.html:9
@@ -187,12 +261,12 @@ msgstr ""
 
 #: .\templates\accounts\portal_login.html:267
 #: .\templates\accounts\user_login.html:301
-#: .\templates\portal\propertys\property_create.html:241
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:171
 msgid "Phone number"
 msgstr "ફોન નંબર"
 
 #: .\templates\accounts\portal_login.html:281
-#: .\templates\accounts\user_login.html:315 .\templates\error_message.html:14
+#: .\templates\accounts\user_login.html:315 .\templates\error_message.html:15
 msgid "Send OTP"
 msgstr ""
 
@@ -240,6 +314,7 @@ msgstr ""
 
 #: .\templates\accounts\portal_login.html:357
 #: .\templates\accounts\user_login.html:401
+#: .\templates\portal\propertys\property-create-edit\photos-form.html:50
 msgid "Continue"
 msgstr ""
 
@@ -269,7 +344,7 @@ msgid "City"
 msgstr ""
 
 #: .\templates\accounts\portal_login.html:426
-#: .\templates\accounts\user_login.html:470 .\templates\error_message.html:22
+#: .\templates\accounts\user_login.html:470 .\templates\error_message.html:28
 msgid "Select City"
 msgstr ""
 
@@ -297,7 +372,7 @@ msgid "Powerful tools and insights to help you close more deals."
 msgstr ""
 
 #: .\templates\accounts\portal_login.html:552
-#: .\templates\accounts\user_login.html:625 .\templates\base_portal.html:183
+#: .\templates\accounts\user_login.html:625 .\templates\base_portal.html:192
 msgid "Select Your Language"
 msgstr ""
 
@@ -441,7 +516,7 @@ msgstr ""
 msgid "perfect property"
 msgstr ""
 
-#: .\templates\base_portal.html:11
+#: .\templates\base_portal.html:12
 #: .\templates\partials\portal\portal_mobile_footer.html:7
 #: .\templates\partials\portal\portal_mobile_footer.html:24
 #: .\templates\partials\portal\portal_navbar.html:87
@@ -450,27 +525,27 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: .\templates\base_portal.html:47 .\templates\user\dashboard.html:48
+#: .\templates\base_portal.html:50 .\templates\user\dashboard.html:48
 msgid "Messaging"
 msgstr ""
 
-#: .\templates\base_portal.html:56 .\templates\portal\dashboard.html:60
-#: .\templates\portal\propertys\property_create.html:33
-#: .\templates\portal\propertys\property_list.html:33
+#: .\templates\base_portal.html:59 .\templates\portal\dashboard.html:60
+#: .\templates\portal\propertys\property-create-edit\property-create-base.html:33
+#: .\templates\portal\propertys\property-list.html:33
 #: .\templates\portal\setting.html:41 .\templates\user\dashboard.html:65
 #: .\templates\user\dashboard.html:146
 msgid "Notifications"
 msgstr ""
 
-#: .\templates\base_portal.html:65 .\templates\user\dashboard.html:74
+#: .\templates\base_portal.html:68 .\templates\user\dashboard.html:74
 msgid "You Profile"
 msgstr ""
 
-#: .\templates\base_portal.html:84 .\templates\user\dashboard.html:93
+#: .\templates\base_portal.html:92 .\templates\user\dashboard.html:93
 msgid "My Profile"
 msgstr ""
 
-#: .\templates\base_portal.html:91
+#: .\templates\base_portal.html:99
 #: .\templates\partials\portal\portal_navbar.html:180
 #: .\templates\partials\portal\portal_navbar.html:193
 #: .\templates\partials\user\navbar.html:176
@@ -479,17 +554,17 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: .\templates\base_portal.html:99 .\templates\logout_modal.html:46
+#: .\templates\base_portal.html:107 .\templates\logout_modal.html:46
 #: .\templates\logout_modal.html:55 .\templates\user\dashboard.html:108
 msgid "Logout"
 msgstr ""
 
-#: .\templates\base_portal.html:155 .\templates\base_portal.html:164
+#: .\templates\base_portal.html:163 .\templates\base_portal.html:172
 #: .\templates\partials\portal\portal_mobile_footer.html:49
 #: .\templates\partials\portal\portal_mobile_footer.html:65
 #: .\templates\partials\portal\portal_navbar.html:107
 #: .\templates\partials\portal\portal_navbar.html:121
-#: .\templates\portal\propertys\property_create.html:6
+#: .\templates\portal\propertys\property-create-edit\property-create-base.html:6
 msgid "Add Property"
 msgstr ""
 
@@ -508,83 +583,73 @@ msgstr ""
 msgid "Near Me"
 msgstr ""
 
-#: .\templates\error_message.html:5
+#: .\templates\error_message.html:6
 msgid "Something went wrong. Try again."
 msgstr ""
 
-#: .\templates\error_message.html:6
+#: .\templates\error_message.html:7
 msgid "Network error. Please try again."
 msgstr ""
 
-#: .\templates\error_message.html:7
+#: .\templates\error_message.html:8
 msgid "Are you sure you want to update your data?"
 msgstr ""
 
-#: .\templates\error_message.html:8
+#: .\templates\error_message.html:9
 msgid "Update profile"
 msgstr ""
 
-#: .\templates\error_message.html:11
+#: .\templates\error_message.html:12
 msgid "Language change failed. Please try again."
 msgstr ""
 
-#: .\templates\error_message.html:15
+#: .\templates\error_message.html:16
 msgid "OTP Sending..."
 msgstr ""
 
-#: .\templates\error_message.html:16
-#, fuzzy
-#| msgid "Please select a property type."
+#: .\templates\error_message.html:17
 msgid "Please enter a complete 6-digit OTP."
-msgstr "કૃપા કરીને પ્રોપર્ટીનો પ્રકાર પસંદ કરો."
+msgstr "કૃપા કરીને 6 અંકનો સંપૂર્ણ OTP દાખલ કરો."
 
-#: .\templates\error_message.html:19
-#, fuzzy
-#| msgid "Select Type"
+#: .\templates\error_message.html:20
+msgid "Select Country"
+msgstr "દેશ પસંદ કરો"
+
+#: .\templates\error_message.html:21
+msgid "Please select a country."
+msgstr "કૃપા કરીને દેશ પસંદ કરો."
+
+#: .\templates\error_message.html:24
 msgid "Select State"
-msgstr "પ્રકાર પસંદ કરો"
+msgstr "રાજ્ય પસંદ કરો"
 
 #: .\templates\error_message.html:25
-#, fuzzy
-#| msgid "Please select a property type."
+msgid "Please select a state."
+msgstr "કૃપા કરીને રાજ્ય પસંદ કરો."
+
+#: .\templates\error_message.html:29
+msgid "Please select a city."
+msgstr "કૃપા કરીને શહેર પસંદ કરો."
+
+#: .\templates\error_message.html:32
 msgid "Please enter a username."
-msgstr "કૃપા કરીને પ્રોપર્ટીનો પ્રકાર પસંદ કરો."
+msgstr "કૃપા કરીને વપરાશકર્તા નામ દાખલ કરો."
 
-#: .\templates\error_message.html:28
-msgid "Please select a property type."
-msgstr "કૃપા કરીને પ્રોપર્ટીનો પ્રકાર પસંદ કરો."
-
-#: .\templates\error_message.html:31
-#, fuzzy
-#| msgid "Please select a property type."
-msgid "Please enter a property name."
-msgstr "કૃપા કરીને પ્રોપર્ટીનો પ્રકાર પસંદ કરો."
-
-#: .\templates\error_message.html:34
-msgid "Please enter a valid property price and select a price period."
-msgstr ""
-
-#: .\templates\error_message.html:37
+#: .\templates\error_message.html:44
 msgid "Phone number must be at least 10 digits."
 msgstr ""
 
-#: .\templates\error_message.html:38
-#, fuzzy
-#| msgid "Add at least one valid phone number."
+#: .\templates\error_message.html:45
 msgid "Enter a valid phone number."
-msgstr "ઓછામાં ઓછો એક માન્ય ફોન નંબર ઉમેરો."
+msgstr "માન્ય ફોન નંબર દાખલ કરો."
 
-#: .\templates\error_message.html:39
-#, fuzzy
-#| msgid "Add at least one valid phone number."
+#: .\templates\error_message.html:46
 msgid "Please enter a unique phone number."
-msgstr "ઓછામાં ઓછો એક માન્ય ફોન નંબર ઉમેરો."
+msgstr "આ ફોન નંબર પહેલેથી ઉપયોગમાં છે. કૃપા કરીને બીજો ફોન નંબર દાખલ કરો."
 
-#: .\templates\error_message.html:40
-#, fuzzy
-#| msgid "add another phone number"
+#: .\templates\error_message.html:47
 msgid "Please enter the correct phone number."
-msgstr "નવો ફોન નંબર ઉમેરો"
+msgstr "કૃપા કરીને માન્ય ફોન નંબર દાખલ કરો."
 
 #: .\templates\logout_modal.html:48
 msgid "Are you sure you want to logout from your account?"
@@ -608,8 +673,7 @@ msgstr ""
 #: .\templates\partials\portal\portal_mobile_footer.html:44
 #: .\templates\partials\portal\portal_navbar.html:126
 #: .\templates\partials\portal\portal_navbar.html:139
-#: .\templates\portal\propertys\property_list.html:6
-#: .\templates\portal\propertys\property_list.html:11
+#: .\templates\portal\propertys\property-list.html:11
 msgid "Propertys"
 msgstr ""
 
@@ -678,8 +742,8 @@ msgid "Search propertyes, leads, location..."
 msgstr ""
 
 #: .\templates\portal\dashboard.html:48
-#: .\templates\portal\propertys\property_create.html:42
-#: .\templates\portal\propertys\property_list.html:42
+#: .\templates\portal\propertys\property-create-edit\property-create-base.html:42
+#: .\templates\portal\propertys\property-list.html:42
 #: .\templates\portal\setting.html:60 .\templates\user\dashboard.html:132
 msgid "Menu"
 msgstr ""
@@ -696,222 +760,242 @@ msgstr ""
 msgid "Portal Help & Support"
 msgstr ""
 
-#: .\templates\portal\propertys\property_create.html:11
-#: .\templates\portal\propertys\property_create.html:27
-#: .\templates\portal\propertys\property_list.html:27
-msgid "Add New Property"
-msgstr "નવી મિલકત ઉમેરો"
-
-#: .\templates\portal\propertys\property_create.html:21
-#: .\templates\portal\propertys\property_list.html:21
-#: .\templates\portal\setting.html:18
-msgid "Back"
-msgstr "પાછળ"
-
-#: .\templates\portal\propertys\property_create.html:66
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:15
+#: .\templates\portal\propertys\property-create-edit\property-create-base.html:67
 msgid "Basic Details"
 msgstr "મૂળભૂત વિગતો"
 
-#: .\templates\portal\propertys\property_create.html:68
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:17
 msgid "Provide basic information about your property"
 msgstr "તમારી મિલકત વિશેની મૂળભૂત માહિતી આપો"
 
-#: .\templates\portal\propertys\property_create.html:83
-msgid "Property Type"
-msgstr "મિલકતનો પ્રકાર"
-
-#: .\templates\portal\propertys\property_create.html:85
-msgid "Select Property Type"
-msgstr "મિલકતનો પ્રકાર પસંદ કરો"
-
-#: .\templates\portal\propertys\property_create.html:96
-msgid "Property Name"
-msgstr "મિલકતનું નામ"
-
-#: .\templates\portal\propertys\property_create.html:97
-msgid "Property name"
-msgstr "મિલકતનું નામ"
-
-#: .\templates\portal\propertys\property_create.html:109
-msgid "Property Price"
-msgstr "મિલકતની કિંમત"
-
-#: .\templates\portal\propertys\property_create.html:122
-#, fuzzy
-#| msgid "Select Purpose"
-msgid "Select Time Period"
-msgstr "હેતુ પસંદ કરો"
-
-#: .\templates\portal\propertys\property_create.html:125
-msgid "Per Day"
-msgstr "પ્રતિ દિવસ"
-
-#: .\templates\portal\propertys\property_create.html:126
-#, fuzzy
-#| msgid "Per Year"
-msgid "Per Week"
-msgstr "પ્રતિ વર્ષ"
-
-#: .\templates\portal\propertys\property_create.html:127
-msgid "Per Month"
-msgstr "પ્રતિ મહિનો"
-
-#: .\templates\portal\propertys\property_create.html:128
-msgid "Per Year"
-msgstr "પ્રતિ વર્ષ"
-
-#: .\templates\portal\propertys\property_create.html:140
-msgid "BHK Type"
-msgstr "BHK પ્રકાર"
-
-#: .\templates\portal\propertys\property_create.html:144
-msgid "Select BHK Type"
-msgstr "BHK પ્રકાર પસંદ કરો"
-
-#: .\templates\portal\propertys\property_create.html:147
-msgid "1 RK/Room"
-msgstr "1 RK / રૂમ"
-
-#: .\templates\portal\propertys\property_create.html:150
-msgid "1 BHK"
-msgstr "1 BHK"
-
-#: .\templates\portal\propertys\property_create.html:153
-msgid "2 BHK"
-msgstr "2 BHK"
-
-#: .\templates\portal\propertys\property_create.html:156
-msgid "3 BHK"
-msgstr "3 BHK"
-
-#: .\templates\portal\propertys\property_create.html:159
-msgid "4 BHK"
-msgstr "4 BHK"
-
-#: .\templates\portal\propertys\property_create.html:162
-msgid "5 BHK"
-msgstr "5 BHK"
-
-#: .\templates\portal\propertys\property_create.html:165
-msgid "5+ BHK"
-msgstr "5+ BHK"
-
-#: .\templates\portal\propertys\property_create.html:178
-msgid "Select Purpose"
-msgstr "હેતુ પસંદ કરો"
-
-#: .\templates\portal\propertys\property_create.html:185
-msgid "For Rent"
-msgstr "ભાડે આપવા માટે"
-
-#: .\templates\portal\propertys\property_create.html:193
-msgid "For Sale"
-msgstr "વેચાણ માટે"
-
-#: .\templates\portal\propertys\property_create.html:201
-msgid "PG / Hostel"
-msgstr "પીજી / હોસ્ટેલ"
-
-#: .\templates\portal\propertys\property_create.html:210
-msgid "Preferred For"
-msgstr "કોના માટે યોગ્ય"
-
-#: .\templates\portal\propertys\property_create.html:212
-msgid "Select Preferred For"
-msgstr "કોના માટે યોગ્ય પસંદ કરો"
-
-#: .\templates\portal\propertys\property_create.html:223
-msgid "Facilities"
-msgstr "સુવિધાઓ"
-
-#: .\templates\portal\propertys\property_create.html:225
-msgid "Select Facilities"
-msgstr "સુવિધાઓ પસંદ કરો"
-
-#: .\templates\portal\propertys\property_create.html:263
-msgid "add another phone number"
-msgstr "નવો ફોન નંબર ઉમેરો"
-
-#: .\templates\portal\propertys\property_create.html:293
-msgid "Description"
-msgstr "વર્ણન"
-
-#: .\templates\portal\propertys\property_create.html:294
-msgid "Describe your property, its features, amenities, and other details."
-msgstr "તમારી મિલકત, તેની વિશેષતાઓ, સુવિધાઓ અને અન્ય વિગતોનું વર્ણન કરો."
-
-#: .\templates\portal\propertys\property_create.html:301
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:21
+#: .\templates\portal\propertys\property-create-edit\location-form.html:21
+#: .\templates\portal\propertys\property-create-edit\photos-form.html:22
 msgid "Clear"
 msgstr "સાફ કરો"
 
-#: .\templates\portal\propertys\property_create.html:305
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:25
+#: .\templates\portal\propertys\property-create-edit\location-form.html:25
+#: .\templates\portal\propertys\property-create-edit\photos-form.html:26
 msgid "Clear Form?"
 msgstr "ફોર્મ સાફ કરવું છે?"
 
-#: .\templates\portal\propertys\property_create.html:306
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:26
+#: .\templates\portal\propertys\property-create-edit\location-form.html:26
+#: .\templates\portal\propertys\property-create-edit\photos-form.html:27
 msgid ""
 "Are you sure you want to clear this form? All entered details will be "
 "permanently removed."
 msgstr ""
 "શું તમે ખરેખર આ ફોર્મ સાફ કરવા માંગો છો? દાખલ કરેલી તમામ વિગતો કાયમ માટે દૂર થઈ જશે."
 
-#: .\templates\portal\propertys\property_create.html:307
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:27
+#: .\templates\portal\propertys\property-create-edit\location-form.html:27
+#: .\templates\portal\propertys\property-create-edit\photos-form.html:28
 msgid "Yes"
 msgstr "હા"
 
-#: .\templates\portal\propertys\property_create.html:314
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:41
+msgid "Property Type"
+msgstr "મિલકતનો પ્રકાર"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:43
+msgid "Select Property Type"
+msgstr "મિલકતનો પ્રકાર પસંદ કરો"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:52
+msgid "Property Name"
+msgstr "મિલકતનું નામ"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:53
+msgid "Property name"
+msgstr "મિલકતનું નામ"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:65
+msgid "Property Price"
+msgstr "મિલકતની કિંમત"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:72
+msgid "Select Time Period"
+msgstr "સમયગાળો પસંદ કરો"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:75
+msgid "Per Day"
+msgstr "પ્રતિ દિવસ"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:76
+msgid "Per Week"
+msgstr "દર અઠવાડિયે"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:77
+msgid "Per Month"
+msgstr "પ્રતિ મહિનો"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:78
+msgid "Per Year"
+msgstr "પ્રતિ વર્ષ"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:90
+msgid "BHK Type"
+msgstr "BHK પ્રકાર"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:93
+msgid "Select BHK Type"
+msgstr "BHK પ્રકાર પસંદ કરો"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:94
+msgid "1 RK/Room"
+msgstr "1 RK / રૂમ"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:95
+msgid "1 BHK"
+msgstr "1 BHK"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:96
+msgid "2 BHK"
+msgstr "2 BHK"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:97
+msgid "3 BHK"
+msgstr "3 BHK"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:98
+msgid "4 BHK"
+msgstr "4 BHK"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:99
+msgid "5 BHK"
+msgstr "5 BHK"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:100
+msgid "5+ BHK"
+msgstr "5+ BHK"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:112
+msgid "Select Purpose"
+msgstr "હેતુ પસંદ કરો"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:119
+msgid "For Rent"
+msgstr "ભાડે આપવા માટે"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:127
+msgid "For Sale"
+msgstr "વેચાણ માટે"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:135
+msgid "PG / Hostel"
+msgstr "પીજી / હોસ્ટેલ"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:144
+msgid "Preferred For"
+msgstr "કોના માટે યોગ્ય"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:146
+msgid "Select Preferred For"
+msgstr "કોના માટે યોગ્ય પસંદ કરો"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:155
+msgid "Facilities"
+msgstr "સુવિધાઓ"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:157
+msgid "Select Facilities"
+msgstr "સુવિધાઓ પસંદ કરો"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:193
+msgid "add another phone number"
+msgstr "નવો ફોન નંબર ઉમેરો"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:222
+msgid "Description"
+msgstr "વર્ણન"
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:223
+msgid "Describe your property, its features, amenities, and other details."
+msgstr "તમારી મિલકત, તેની વિશેષતાઓ, સુવિધાઓ અને અન્ય વિગતોનું વર્ણન કરો."
+
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:232
+#: .\templates\portal\propertys\property-create-edit\location-form.html:61
 msgid "Save & Continue"
 msgstr "સાચવો અને આગળ વધો"
 
-#: .\templates\portal\propertys\property_create.html:335
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:245
+#: .\templates\portal\propertys\property-create-edit\location-form.html:74
+#: .\templates\portal\propertys\property-create-edit\photos-form.html:63
 msgid "Quick Tips"
 msgstr "ઝડપી સૂચનો"
 
-#: .\templates\portal\propertys\property_create.html:341
-msgid "Fill in the required fields (*) accurately to continue."
-msgstr "આગળ વધવા માટે જરૂરી (*) ક્ષેત્રો યોગ્ય રીતે ભરો."
-
-#: .\templates\portal\propertys\property_create.html:347
-msgid "Choose the correct property type and purpose."
-msgstr "યોગ્ય મિલકતનો પ્રકાર અને હેતુ પસંદ કરો."
-
-#: .\templates\portal\propertys\property_create.html:353
-msgid "Use a clear, searchable property name."
-msgstr "સ્પષ્ટ અને સરળતાથી શોધી શકાય તેવું મિલકતનું નામ લખો."
-
-#: .\templates\portal\propertys\property_create.html:359
-msgid "Enter the actual rent or selling price."
-msgstr "વાસ્તવિક ભાડું અથવા વેચાણ કિંમત દાખલ કરો."
-
-#: .\templates\portal\propertys\property_create.html:365
-msgid "Add at least one valid phone number."
-msgstr "ઓછામાં ઓછો એક માન્ય ફોન નંબર ઉમેરો."
-
-#: .\templates\portal\propertys\property_create.html:371
-msgid "Write a short, accurate property description."
-msgstr "મિલકતનું ટૂંકું અને સચોટ વર્ણન લખો."
-
-#: .\templates\portal\propertys\property_create.html:390
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:267
 msgid "Search Property Type"
 msgstr "મિલકતનો પ્રકાર શોધો"
 
-#: .\templates\portal\propertys\property_create.html:436
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:305
 msgid "Search Preferred For"
 msgstr "પસંદગી શોધો"
 
-#: .\templates\portal\propertys\property_create.html:478
-#: .\templates\portal\propertys\property_create.html:538
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:337
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:388
 msgid "Clear Selection"
 msgstr "પસંદગી દૂર કરો"
 
-#: .\templates\portal\propertys\property_create.html:479
-#: .\templates\portal\propertys\property_create.html:539
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:338
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:389
 msgid "Save"
 msgstr "સાચવો"
 
-#: .\templates\portal\propertys\property_create.html:496
+#: .\templates\portal\propertys\property-create-edit\basic-details-form.html:353
 msgid "Search Facilities"
 msgstr "સુવિધાઓ શોધો"
+
+#: .\templates\portal\propertys\property-create-edit\location-form.html:15
+#: .\templates\portal\propertys\property-create-edit\property-create-base.html:68
+msgid "Location"
+msgstr ""
+
+#: .\templates\portal\propertys\property-create-edit\location-form.html:17
+msgid "Add the location details of your property"
+msgstr "તમારી પ્રોપર્ટીની સ્થાન વિગતો ઉમેરો"
+
+#: .\templates\portal\propertys\property-create-edit\location-form.html:41
+msgid "Country"
+msgstr "દેશ"
+
+#: .\templates\portal\propertys\property-create-edit\location-form.html:56
+#: .\templates\portal\propertys\property-create-edit\photos-form.html:45
+#: .\templates\portal\propertys\property-create-edit\property-create-base.html:21
+#: .\templates\portal\propertys\property-list.html:21
+#: .\templates\portal\setting.html:18
+msgid "Back"
+msgstr "પાછળ"
+
+#: .\templates\portal\propertys\property-create-edit\location-form.html:96
+msgid "Search Property Country"
+msgstr "પ્રોપર્ટીનો દેશ શોધો"
+
+#: .\templates\portal\propertys\property-create-edit\photos-form.html:16
+#: .\templates\portal\propertys\property-create-edit\property-create-base.html:69
+msgid "Photos"
+msgstr ""
+
+#: .\templates\portal\propertys\property-create-edit\photos-form.html:18
+msgid "Add high-quality photos to showcase your property"
+msgstr ""
+
+#: .\templates\portal\propertys\property-create-edit\property-create-base.html:11
+#: .\templates\portal\propertys\property-create-edit\property-create-base.html:27
+#: .\templates\portal\propertys\property-list.html:27
+msgid "Add New Property"
+msgstr "નવી મિલકત ઉમેરો"
+
+#: .\templates\portal\propertys\property-create-edit\property-create-base.html:70
+msgid "Review & Publish"
+msgstr ""
+
+#: .\templates\portal\propertys\property-list.html:6
+msgid "Property List"
+msgstr "પ્રોપર્ટી યાદી"
 
 #: .\templates\portal\setting.html:83
 msgid "Portal Setting"
@@ -948,11 +1032,6 @@ msgstr ""
 #: .\templates\user\setting.html:8
 msgid "User Setting"
 msgstr ""
-
-#, fuzzy
-#~| msgid "Property Type"
-#~ msgid "Property type is required"
-#~ msgstr "મિલકતનો પ્રકાર"
 
 #~ msgid "0"
 #~ msgstr "0"

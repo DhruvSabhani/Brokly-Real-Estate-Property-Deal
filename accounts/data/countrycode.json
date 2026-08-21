@@ -7,6 +7,8 @@
       "country_code": "+91",
       "country_name": "India",
       "country_name_gu": "ભારત",
+      "latitude": 20.5937,
+      "longitude": 78.9629,
       "is_active": true,
       "created_at": "2026-05-02 11:22:13.387307+05:30"
     }
@@ -19,7 +21,9 @@
       "country_code": "+1",
       "country_name": "USA",
       "country_name_gu": "યુ.એસ.એ.(USA)",
-      "is_active": false,
+      "latitude": 37.0902,
+      "longitude": -95.7129,
+      "is_active": true,
       "created_at": "2026-05-04 13:55:21.996032+05:30"
     }
   }

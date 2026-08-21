@@ -163,3 +163,13 @@ language change:
 locale folder create - Gujarati language
 > py manage.py makemessages -l gu // django-admin makemessages -l gu
 > py manage.py compilemessages
+
+------------------
+using map
+-----------------
+Google map
+key = "google cloued console"
+web page url:
+http://127.0.0.1:8000/*
+http://localhost/*
+https://k5xszgm5-8000.inc1.devtunnels.ms/*

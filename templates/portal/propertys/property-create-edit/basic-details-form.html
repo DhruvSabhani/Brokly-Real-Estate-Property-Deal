@@ -1,0 +1,367 @@
+{% load static %}
+{% load i18n %}
+
+<div id="property-basic-details" class="property-basic-details">
+    <div class="flex flex-col lg:flex-row justify-between items-start w-full gap-y-2 lg:gap-0">
+        <form id="add-property-form" class="w-full px-1" data-basic-details-store-url="{% url 'portal-property-store' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="flex flex-1 flex-col justify-start items-center w-full gap-x-2 gap-y-2 border rounded-xl border-black/10 dark:border-white/10 px-2 py-2">
+                <div class="flex justify-center items-center w-full gap-4 px-2 py-2">
+                    <div class="w-19 h-16 lg:w-16 lg:h-14 rounded-full bg-[#FDF4EF] dark:bg-white/4 flex justify-center items-center">
+                        <svg xmlns="{% static 'icons/receipt-text.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-receipt-text-icon lucide-receipt-text text-black/80 dark:text-white/80"><path d="M13 16H8" /><path d="M14 8H8" /><path d="M16 12H8" /><path d="M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z" /></svg>
+                    </div>
+                    <div class="flex justify-between items-center w-full">
+                        <div class="w-full flex flex-col justify-center items-start">
+                            <h1 class="text-lg font-semibold text-black dark:text-white">{% trans 'Basic Details' %}</h1>
+                            <p class="text-sm text-black/50 dark:text-white/50">
+                                {% trans 'Provide basic information about your property' %}
+                            </p>
+                        </div>
+                        <div class="flex justify-end items-center">
+                            <button type="button" id="proc-form-clear-btn" class="px-7 h-12 lg:h-10 flex justify-center items-center bg-transparent border border-black/10 dark:border-white/10 text-[17px] lg:text-base text-black dark:text-white rounded-lg">{% trans 'Clear' %}</button>
+                            <script>
+                                document.getElementById('proc-form-clear-btn').addEventListener('click', () => {
+                                    openmessagemodal({
+                                        messmodtitle: "{% trans 'Clear Form?' %}",
+                                        messmodmessage: "{% trans 'Are you sure you want to clear this form? All entered details will be permanently removed.' %}",
+                                        messmodposibtn: "{% trans 'Yes' %}",
+                                        messmodposibtnaction: basicFormClear,
+                                    });
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                {% comment %}property type and name{% endcomment %}
+                <div class="flex flex-col lg:flex-row justify-start items-start w-full gap-x-4">
+                    {% comment %}property type{% endcomment %}
+                    <div id="proc-type-box" class="flex flex-col min-w-full lg:min-w-1/3 py-1">
+                        <label for="proc-select-type-btn" class="form-label px-2 py-1 text-base lg:text-sm font-semibold text-black/90 dark:text-white/90">{% trans 'Property Type' %}<span class="ml-1 text-red-500">*</span></label>
+                        <button type="button" id="proc-select-type-btn" class="w-full h-12 lg:h-10 text-base flex justify-between items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur-xl px-2">
+                            <span id="proc-selected-type" data-property-type="{% trans 'Select Property Type' %}">{% trans 'Select Property Type' %}</span>
+                            <input type="hidden" id="proc-selected-type-id" name="proc-selected-type-id" />
+                            <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}" fill="none" viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="m11.6 14.5999 -3.95 -3.925c-0.0333 -0.03335 -0.0625 -0.073 -0.0875 -0.119 -0.025 -0.04615 -0.0375 -0.0955 -0.0375 -0.148 0 -0.10535 0.03445 -0.1955 0.10325 -0.2705 0.0687 -0.075 0.15925 -0.1125 0.27175 -0.1125h8.2c0.1125 0 0.2032 0.03865 0.272 0.116 0.0687 0.07715 0.103 0.16725 0.103 0.27025 0 0.02585 -0.04165 0.11375 -0.125 0.26375l-3.95 3.925c-0.05 0.05 -0.1088 0.09165 -0.1765 0.125 -0.06765 0.03335 -0.14215 0.05 -0.2235 0.05 -0.08115 0 -0.15565 -0.01665 -0.2235 -0.05 -0.06765 -0.03335 -0.1265 -0.075 -0.1765 -0.125Z" stroke-width="0.5"></path></svg>
+                        </button>
+                        <p id="proc-type-error" class="mess-error text-sm wrap-break-word font-normal text-red-600 px-2"></p>
+                    </div>
+                    {% comment %}property name{% endcomment %}
+                    <div id="proc-name-box" class="flex flex-col w-full py-1">
+                        <label for="proc-name" class="form-label px-2 py-1 text-base lg:text-[15px] font-semibold text-black/90 dark:text-white/90">{% trans 'Property Name' %}<span class="ml-1 text-red-500">*</span></label>
+                        <input type="text" name="proc-name" id="proc-name" class="w-full h-12 lg:h-10 text-base flex justify-between items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur-xl px-2" placeholder="{% trans 'Property name' %}"/>
+                        <p id="proc-name-error" class="mess-error text-sm wrap-break-word font-normal text-red-600 px-2"></p>
+                    </div>
+                </div>
+                {% comment %}property Price and BHK type{% endcomment %}
+                <div class="flex flex-col lg:flex-row justify-start items-start w-full gap-x-4">
+                    {% comment %}property Price{% endcomment %}
+                    <div id="proc-price-box" class="flex flex-col justify-start w-full py-1">
+                        <div class="flex flex-row justify-start w-full gap-x-3">
+                            <div class="flex flex-col w-full">
+                                <label for="proc-price" class="form-label px-2 py-1 text-base lg:text-[15px] font-semibold text-black/90 dark:text-white/90">{% trans 'Property Price' %}<span class="ml-1 text-red-500">*</span></label>
+                                <div class="w-full h-12 lg:h-10 text-base flex justify-center items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur px-2">
+                                    <svg xmlns="{% static 'icons/indian-rupee.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-indian-rupee-icon lucide-indian-rupee w-4 h-4 text-black/80 dark:text-white/80"><path d="M6 3h12" /><path d="M6 8h12" /><path d="m6 13 8.5 8" /><path d="M6 13h3" /><path d="M9 13c6.667 0 6.667-10 0-10" /></svg>
+                                    <input type="text" inputmode="numeric" name="proc-price" id="proc-price" class="ml-2 w-full text-base outline-0" placeholder="0" />
+                                </div>
+                            </div>
+                            <div class="flex flex-col w-[200px]">
+                                <label for="proc-price-type" class="form-label px-2 py-1 text-base lg:text-[15px] font-semibold text-black/90 dark:text-white/90">{% trans 'Select Time Period' %}</label>
+                                <div class="w-full h-12 lg:h-10 text-base flex justify-center items-center outline-0 rounded-lg border border-black/15 dark:border-white/15 bg-transparent cursor-pointer px-2">
+                                    <select name="proc-price-type" id="proc-price-type" class="w-[200px] flex justify-center items-center outline-0 cursor-pointer">
+                                        <option value="day" class="text-black">{% trans 'Per Day' %}</option>
+                                        <option value="week" class="text-black">{% trans 'Per Week' %}</option>
+                                        <option value="month" class="text-black" selected>{% trans 'Per Month' %}</option>
+                                        <option value="year" class="text-black">{% trans 'Per Year' %}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-start w-full">
+                            <p id="proc-price-error" class="mess-error text-sm wrap-break-word font-normal text-red-600 px-2"></p>
+                        </div>
+                    </div>
+                    {% comment %}property BHK type{% endcomment %}
+                    <div id="proc-bhk-type-box" class="flex flex-col w-full lg:w-[400px] xl:w-[500px] py-1">
+                        <label for="proc-bhk-type" class="form-label px-2 py-1 text-base lg:text-[15px] font-semibold text-black/90 dark:text-white/90">{% trans 'BHK Type' %}</label>
+                        <div class="w-full h-12 lg:h-10 text-base flex justify-center items-center outline-0 rounded-lg border border-black/15 dark:border-white/15 bg-transparent px-2 cursor-pointer">
+                            <select name="proc-bhk-type" id="proc-bhk-type" class="w-full flex justify-center items-center outline-0 cursor-pointer">
+                                <option value="" class="text-black">{% trans 'Select BHK Type' %}</option>
+                                <option value="1rk" class="text-black">{% trans '1 RK/Room' %}</option>
+                                <option value="1bhk" class="text-black">{% trans '1 BHK' %}</option>
+                                <option value="2bhk" class="text-black">{% trans '2 BHK' %}</option>
+                                <option value="3bhk" class="text-black">{% trans '3 BHK' %}</option>
+                                <option value="4bhk" class="text-black">{% trans '4 BHK' %}</option>
+                                <option value="5bhk" class="text-black">{% trans '5 BHK' %}</option>
+                                <option value="5plusbhk" class="text-black">{% trans '5+ BHK' %}</option>
+                            </select>
+                        </div>
+                        <p id="proc-bhk-type-error" class="mess-error text-sm wrap-break-word font-normal text-red-600 px-2"></p>
+                    </div>
+                </div>
+                {% comment %}property purpose, preferred and facilities{% endcomment %}
+                <div class="flex flex-col xl:flex-row justify-center items-center w-full gap-x-4">
+                    {% comment %}select purpose{% endcomment %}
+                    <div id="proc-purpose-box" class="flex flex-col w-full py-1">
+                        <label class="form-label px-2 py-1 text-base lg:text-[15px] font-semibold text-black/90 dark:text-white/90">{% trans 'Select Purpose' %}</label>
+                        <div id="proc-purpose-select-box" class="w-full grid grid-cols-3 gap-2">
+                            {% comment %}for rent{% endcomment %}
+                            <label class="group cursor-pointer w-full">
+                                <input type="radio" name="purpose" value="rent" class="peer hidden" checked />
+                                <div class="w-full h-12 lg:h-10 flex justify-center items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent text-black/60 dark:text-white/70 backdrop-blur px-2 peer-checked:border-orange-500 peer-checked:text-orange-500">
+                                    <span class="text-[15px]">{% trans 'For Rent' %}</span>
+                                </div>
+                            </label>
+                            {% comment %}for sale{% endcomment %}
+                            <label class="group cursor-pointer w-full">
+                                <input type="radio" name="purpose" value="sale" class="peer hidden" />
+                                <div class="w-full h-12 lg:h-10 flex justify-center items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent text-black/60 dark:text-white/70 backdrop-blur px-2 peer-checked:border-orange-500 peer-checked:text-orange-500">
+                                    <span class="text-[15px]">{% trans 'For Sale' %}</span>
+                                </div>
+                            </label>
+                            {% comment %}pg&hostel{% endcomment %}
+                            <label class="group cursor-pointer w-full">
+                                <input type="radio" name="purpose" value="pg/hostel" class="peer hidden" />
+                                <div class="w-full h-12 lg:h-10 flex justify-center items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent text-black/60 dark:text-white/70 backdrop-blur px-2 peer-checked:border-orange-500 peer-checked:text-orange-500">
+                                    <span class="text-[15px]">{% trans 'PG / Hostel' %}</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="flex flex-row w-full py-1">
+                        {% comment %}select preferred for{% endcomment %}
+                        <div id="proc-select-preferred-box" class="flex flex-col w-full py-1">
+                            <label for="proc-select-preferred-btn" class="form-label px-2 py-1 text-base lg:text-[15px] font-semibold text-black/90 dark:text-white/90">{% trans 'Preferred For' %}</label>
+                            <button type="button" id="proc-select-preferred-btn" class="w-[14rem] sm:w-[18rem] md:w-[21rem] lg:w-[16rem] xl:w-[12rem] 2xl:w-[18rem] h-12 lg:h-10 text-base flex justify-between items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur-xl px-2">
+                                <span id="proc-selected-preferred-names" class="truncate w-full text-left" data-property-preferred="{% trans 'Select Preferred For' %}">{% trans 'Select Preferred For' %}</span>
+                                <input type="hidden" id="proc-selected-preferred-ids" name="proc-selected-preferred-ids" />
+                                <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}" fill="none" viewBox="0 0 24 24" width="22" height="22" class="shrink-0"><path fill="currentColor" d="m11.6 14.5999 -3.95 -3.925c-0.0333 -0.03335 -0.0625 -0.073 -0.0875 -0.119 -0.025 -0.04615 -0.0375 -0.0955 -0.0375 -0.148 0 -0.10535 0.03445 -0.1955 0.10325 -0.2705 0.0687 -0.075 0.15925 -0.1125 0.27175 -0.1125h8.2c0.1125 0 0.2032 0.03865 0.272 0.116 0.0687 0.07715 0.103 0.16725 0.103 0.27025 0 0.02585 -0.04165 0.11375 -0.125 0.26375l-3.95 3.925c-0.05 0.05 -0.1088 0.09165 -0.1765 0.125 -0.06765 0.03335 -0.14215 0.05 -0.2235 0.05 -0.08115 0 -0.15565 -0.01665 -0.2235 -0.05 -0.06765 -0.03335 -0.1265 -0.075 -0.1765 -0.125Z" stroke-width="0.5"></path></svg>
+                            </button>
+                            <p id="proc-preferred-error" class="mess-error text-sm wrap-break-word font-normal text-red-600 px-2"></p>
+                        </div>
+                        {% comment %}select facilities{% endcomment %}
+                        <div id="proc-facilities-box" class="flex flex-col w-full lg:min-w-1/2 py-1">
+                            <label for="proc-select-facilities-btn" class="form-label px-2 py-1 text-base lg:text-[15px] font-semibold text-black/90 dark:text-white/90">{% trans 'Facilities' %}</label>
+                            <button type="button" id="proc-select-facilities-btn" class="w-[14rem] sm:w-[18rem] md:w-[21rem] lg:w-[16rem] xl:w-[12rem] 2xl:w-[18rem] h-12 lg:h-10 text-base flex justify-between items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur-xl px-2">
+                                <span id="proc-selected-facilities-names" class="truncate w-full text-left" data-property-facilities="{% trans 'Select Facilities' %}">{% trans 'Select Facilities' %}</span>
+                                <input type="hidden" id="proc-selected-facilities-ids" name="proc-selected-facilities-ids" />
+                                <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}" fill="none" viewBox="0 0 24 24" width="22" height="22" class="shrink-0"><path fill="currentColor" d="m11.6 14.5999 -3.95 -3.925c-0.0333 -0.03335 -0.0625 -0.073 -0.0875 -0.119 -0.025 -0.04615 -0.0375 -0.0955 -0.0375 -0.148 0 -0.10535 0.03445 -0.1955 0.10325 -0.2705 0.0687 -0.075 0.15925 -0.1125 0.27175 -0.1125h8.2c0.1125 0 0.2032 0.03865 0.272 0.116 0.0687 0.07715 0.103 0.16725 0.103 0.27025 0 0.02585 -0.04165 0.11375 -0.125 0.26375l-3.95 3.925c-0.05 0.05 -0.1088 0.09165 -0.1765 0.125 -0.06765 0.03335 -0.14215 0.05 -0.2235 0.05 -0.08115 0 -0.15565 -0.01665 -0.2235 -0.05 -0.06765 -0.03335 -0.1265 -0.075 -0.1765 -0.125Z" stroke-width="0.5"></path></svg>
+                            </button>
+                            <p id="proc-facilities-error" class="mess-error text-sm wrap-break-word font-normal text-red-600 px-2"></p>
+                        </div>
+                    </div>
+                </div>
+                {% comment %}property phone number and second phone number{% endcomment %}
+                <div class="flex flex-col xl:flex-row justify-center items-center w-full gap-x-4">
+                    {% comment %}property owner phone number{% endcomment %}
+                    <div id="proc-phone-box" class="flex flex-col w-full">
+                        <label class="form-label px-2 py-1 text-base lg:text-[15px] font-semibold text-black/90 dark:text-white/90">{% trans 'Phone number' %}<span class="ml-1 text-red-500">*</span></label>
+                        <div class="w-full flex flex-col lg:flex-row justify-start items-start gap-x-4 gap-y-2">
+                            <div id="proc-phone1" class="w-full">
+                                <div class="flex justify-start items-center gap-2">
+                                    <div class="w-[200px] h-12 lg:h-10 text-base flex justify-center items-center outline-0 rounded-lg border border-black/15 dark:border-white/15 bg-transparent cursor-not-allowed px-2">
+                                        <select name="proc-country-code1" id="proc-country-code1" class="w-full truncate flex justify-center items-center outline-0 cursor-pointer">
+                                            {% for ccode1 in country_code %}
+                                                {% if request.LANGUAGE_CODE == 'gu' %}
+                                                    <option value="{{ ccode1.country_code }}" class="text-black">{{ ccode1.country_code }} ({{ ccode1.country_name_gu }})</option>
+                                                {% else %}
+                                                    <option value="{{ ccode1.country_code }}" class="text-black">{{ ccode1.country_code }} ({{ ccode1.country_name|capfirst }})</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="w-full h-12 lg:h-10 text-base flex justify-center items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur px-2">
+                                        <input type="tel" inputmode="numeric" name="proc-phone-number1" id="proc-phone-number1" class="ml-2 w-full text-left text-base outline-0" placeholder="00000 00000" value="{{ pProfile }}" />
+                                    </div>
+                                </div>
+                                <p id="proc-phone-number1-error" class="mess-error text-sm wrap-break-word font-normal text-red-600 px-2"></p>
+                                <div class="flex justify-start items-center px-2 py-2 lg:py-1 gap-2">
+                                    <input type="checkbox" id="proc-phone2-box-check" name="proc-phone2-box-check" class="w-5 h-5 lg:w-4 lg:h-4" />
+                                    <label for="proc-phone2-box-check" class="text-sm font-normal text-black/90 dark:text-white/90">{% trans 'add another phone number' %}</label>
+                                </div>
+                            </div>
+                            <div id="proc-phone2" class="w-full">
+                                <div class="flex justify-start items-center gap-2">
+                                    <div id="proc-country-code2-select-box" class="w-[200px] h-12 lg:h-10 text-base flex justify-center items-center outline-0 rounded-lg border border-black/15 dark:border-white/15 bg-transparent cursor-pointer px-2">
+                                        <select name="proc-country-code2" id="proc-country-code2" class="w-full truncate flex justify-center items-center outline-0 cursor-pointer">
+                                            {% for ccode2 in country_code %}
+                                                {% if request.LANGUAGE_CODE == 'gu' %}
+                                                    <option value="{{ ccode2.country_code }}" class="text-black">{{ ccode2.country_code }} ({{ ccode2.country_name_gu }})</option>
+                                                {% else %}
+                                                    <option value="{{ ccode2.country_code }}" class="text-black">{{ ccode2.country_code }} ({{ ccode2.country_name|capfirst }})</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="w-full h-12 lg:h-10 text-base flex justify-center items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur px-2">
+                                        <input type="text" inputmode="numeric" name="proc-phone-number2" id="proc-phone-number2" class="ml-2 w-full text-left text-base outline-0" placeholder="00000 00000" />
+                                    </div>
+                                </div>
+                                <p id="proc-phone-number2-error" class="mess-error text-sm wrap-break-word font-normal text-red-600 px-2"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% comment %}property description{% endcomment %}
+                <div class="flex flex-col xl:flex-row justify-center items-center w-full gap-x-4">
+                    <div id="proc-description-box" class="flex flex-col w-full py-1">
+                        <label for="proc-description" class="form-label px-2 py-1 text-base lg:text-[15px] font-semibold text-black/90 dark:text-white/90">{% trans 'Description' %}</label>
+                        <textarea name="proc-description" id="proc-description" rows="3" class="w-full px-2 py-0.5 text-sm flex justify-center items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur-xl" placeholder="{% trans 'Describe your property, its features, amenities, and other details.' %}"></textarea>
+                        <p id="proc-description-error" class="mess-error text-sm wrap-break-word font-normal text-red-600 px-2"></p>
+                    </div>
+                </div>
+                {% comment %}clear and save & continue button{% endcomment %}
+                <div class="w-full flex justify-end items-center px-2 py-1">
+                    <button type="submit" id="property-basic-details-btn" class="px-4 h-12 lg:h-10 flex justify-center items-center border-2 border-orange-400 bg-orange-400 text-[17px] lg:text-base font-semibold text-white rounded-lg">
+                        <span class="flex justify-center items-center gap-2">
+                            {% trans 'Save & Continue' %}
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <aside class="flex justify-start items-start w-full lg:w-[500px] xl:w-[600px] 2xl:w-[700px] px-1">
+            <div class="w-full flex flex-col justify-center items-start gap-x-2 gap-y-2 bg-[#F7FCF7] dark:bg-[#0F1A13] border rounded-xl border-black/10 dark:border-white/10 px-3 py-2">
+                <div class="flex justify-between items-center gap-4 py-2">
+                    <div class="w-10 h-10 rounded-full bg-[#ECF8EF] dark:bg-[#16261B] flex justify-center items-center">
+                        <svg xmlns="{% static 'icons/lightbulb.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lightbulb-icon lucide-lightbulb text-red-500"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" /><path d="M9 18h6" /><path d="M10 22h4" /></svg>
+                    </div>
+                    <span class="text-lg font-semibold text-red-500">{% trans 'Quick Tips' %}</span>
+                </div>
+                {% for tip in proQuickTips %}
+                    <div class="flex justify-between items-center px-2 gap-3">
+                        <svg xmlns="{% static 'icons/check.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check text-red-500"><path d="M20 6 9 17l-5-5" /></svg>
+                        <span class="text-sm w-full text-gray-500">{{ tip }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        </aside>
+    </div>
+</div>
+
+{% comment %}select type modal{% endcomment %}
+<div id="proc-select-type-modal" class="w-screen h-screen hidden justify-center pt-[100px] px-10 fixed z-50 inset-0 bg-black/90 backdrop-blur-0">
+    <div class="w-full max-w-[50rem] h-[300px] lg:h-[400px] origin-top-right bg-[#f7f9fc] dark:bg-[#121212] px-2 py-2 rounded-2xl overflow-hidden">
+        {% comment %}header{% endcomment %}
+        <div class="flex justify-between items-center mb-2">
+            <div class="relative search-wrapper flex justify-center items-center w-full h-10 rounded-full border border-black/10 bg-[#ffffff] dark:bg-white/10 hover:bg-[#f7f9fc] dark:hover:bg-[#3B3D3E] focus-within:border-orange-500 transition-all duration-200">
+                <svg xmlns="{% static 'icons/search.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search w-5 h-5 ml-3 text-gray-500 shrink-0"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+                <input type="search" id="type-search" class="search-input w-full h-full px-3 pr-8 bg-transparent outline-none text-base" placeholder="{% trans 'Search Property Type' %}" />
+                <button type="button" class="clear-search-btn absolute right-3 hidden text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white">
+                    <svg xmlns="{% static 'icons/x.svg' %}" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                </button>
+            </div>
+            <button id="type-modal-close" class="min-w-10 h-10 ml-4 bg-white dark:bg-[#1A1A1A] hover:bg-gray-100 dark:hover:bg-[#252525] flex justify-center items-center rounded-full transition-all duration-300" onclick="typeModalClose()">
+                <svg xmlns="{% static 'icons/x.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x w-6 h-6"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+            </button>
+        </div>
+        <div class="w-full h-px bg-gray-300 dark:bg-white/20 my-2"></div>
+        {% comment %}property type list{% endcomment %}
+        <div id="pro-type-list" class="h-[calc(300px-68px)] lg:h-[calc(400px-68px)] overflow-y-auto space-y-1">
+            <div class="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-x-2 gap-y-4 px-2">
+                {% for type in property_types %}
+                    {% if request.LANGUAGE_CODE == 'gu' %}
+                        <button type="button" title="{{ type.type_name_gu }}" class="pro-type-item w-full flex justify-center items-center px-4 py-2 rounded-xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] text-black/60 dark:text-white/70 border border-black/15 dark:border-white/15 transition-all duration-200" data-type-name="{{ type.type_name_gu }}" onclick="proTypeSelected('{{ type.id }}','{{ type.type_name_gu }}')"><span class="truncate text-[17px]">{{ type.type_name_gu }}</span></button>
+                    {% else %}
+                        <button type="button" title="{{ type.type_name|capfirst }}" class="pro-type-item w-full flex justify-center items-center px-4 py-2 rounded-xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] text-black/60 dark:text-white/70 border border-black/15 dark:border-white/15 transition-all duration-200" data-type-name="{{ type.type_name }}" onclick="proTypeSelected('{{ type.id }}','{{ type.type_name|capfirst }}')"><span class="truncate text-[17px]">{{ type.type_name|capfirst }}</span></button>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div id="pro-type-no-data" class="">
+                {% include 'no_data_found.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% comment %}select preferred modal{% endcomment %}
+<div id="proc-select-preferred-modal" class="w-screen h-screen hidden justify-center pt-[100px] px-10 fixed z-50 inset-0 bg-black/90 backdrop-blur-0">
+    <div class="w-full relative max-w-[50rem] h-[400px] lg:h-[400px] origin-top-right bg-[#f7f9fc] dark:bg-[#121212] px-2 py-2 rounded-2xl overflow-hidden">
+        {% comment %}header{% endcomment %}
+        <div class="flex justify-between items-center mb-2">
+            <div class="relative search-wrapper flex justify-center items-center w-full h-10 rounded-full border border-black/10 bg-[#ffffff] dark:bg-white/10 hover:bg-[#f7f9fc] dark:hover:bg-[#3B3D3E] focus-within:border-orange-500 transition-all duration-200">
+                <svg xmlns="{% static 'icons/search.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search w-5 h-5 ml-3 text-gray-500 shrink-0"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+                <input type="search" id="preferred-search" class="search-input w-full h-full px-3 pr-8 bg-transparent outline-none text-base" placeholder="{% trans 'Search Preferred For' %}" />
+                <button type="button" class="clear-search-btn absolute right-3 hidden text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white">
+                    <svg xmlns="{% static 'icons/x.svg' %}" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                </button>
+            </div>
+            <button id="preferred-modal-close" class="min-w-10 h-10 ml-4 bg-white dark:bg-[#1A1A1A] hover:bg-gray-100 dark:hover:bg-[#252525] flex justify-center items-center rounded-full transition-all duration-300" onclick="preferredModalClose()">
+                <svg xmlns="{% static 'icons/x.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x w-6 h-6"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+            </button>
+        </div>
+        <div class="w-full h-px bg-gray-300 dark:bg-white/20 my-2"></div>
+        {% comment %}preferred list{% endcomment %}
+        <div id="pro-preferred-list" class="h-[calc(400px-135px)] lg:h-[calc(400px-125px)] overflow-y-auto space-y-1">
+            <div class="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-x-2 gap-y-2 px-2">
+                {% for preferred in property_preferred %}
+                    {% if request.LANGUAGE_CODE == 'gu' %}
+                        <label title="{{ preferred.preferred_name_gu }}" data-preferred-label-name="{{ preferred.preferred_name_gu }}" class="pro-preferred-label group cursor-pointer w-full">
+                            <input type="checkbox" name="pro-preferred" data-preferred-name="{{ preferred.preferred_name_gu }}" value="{{ preferred.pk }}" class="pro-preferred-item peer hidden" />
+                            <div class="w-full h-12 lg:h-10 flex justify-center items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent text-black/60 dark:text-white/70 backdrop-blur px-2 peer-checked:border-orange-500 peer-checked:text-orange-500"><span class="truncate text-[15px]">{{ preferred.preferred_name_gu }}</span></div>
+                        </label>
+                    {% else %}
+                        <label title="{{ preferred.preferred_name }}" data-preferred-label-name="{{ preferred.preferred_name }}" class="pro-preferred-label group cursor-pointer w-full">
+                            <input type="checkbox" name="pro-preferred" data-preferred-name="{{ preferred.preferred_name }}" value="{{ preferred.pk }}" class="pro-preferred-item peer hidden" />
+                            <div class="w-full h-12 lg:h-10 flex justify-center items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent text-black/60 dark:text-white/70 backdrop-blur px-2 peer-checked:border-orange-500 peer-checked:text-orange-500"><span class="truncate text-[15px]">{{ preferred.preferred_name }}</span></div>
+                        </label>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div id="pro-preferred-no-data" class="">
+                {% include 'no_data_found.html' %}
+            </div>
+            <div class="flex justify-between items-center w-full gap-x-2 gap-y-2 px-2 absolute bottom-2 left-0 right-0">
+                <button id="pro-preferred-item-clear-btn" class="w-full h-12 lg:h-10 flex justify-center items-center bg-transparent border-2 border-black/10 dark:border-white/10 text-[17px] text-black/80 dark:text-white rounded-xl">{% trans 'Clear Selection' %}</button>
+                <button id="pro-preferred-item-save-btn" class="w-full h-12 lg:h-10 flex justify-center items-center border-2 border-[#FE6303] bg-[#FE6303] text-[17px] text-white rounded-xl">{% trans 'Save' %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% comment %}select facilities modal{% endcomment %}
+<div id="proc-select-facilities-modal" class="w-screen h-screen hidden justify-center pt-[100px] px-10 fixed z-50 inset-0 bg-black/90 backdrop-blur-0">
+    <div class="w-full relative max-w-[50rem] h-[500px] lg:h-[400px] origin-top-right bg-[#f7f9fc] dark:bg-[#121212] px-2 py-2 rounded-2xl overflow-hidden">
+        {% comment %}header{% endcomment %}
+        <div class="flex justify-between items-center mb-2">
+            <div class="relative search-wrapper flex justify-center items-center w-full h-10 rounded-full border border-black/10 bg-[#ffffff] dark:bg-white/10 hover:bg-[#f7f9fc] dark:hover:bg-[#3B3D3E] focus-within:border-orange-500 transition-all duration-200">
+                <svg xmlns="{% static 'icons/search.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search w-5 h-5 ml-3 text-gray-500 shrink-0"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+                <input type="search" id="facilities-search" class="search-input w-full h-full px-3 pr-8 bg-transparent outline-none text-base" placeholder="{% trans 'Search Facilities' %}" />
+                <button type="button" class="clear-search-btn absolute right-3 hidden text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white">
+                    <svg xmlns="{% static 'icons/x.svg' %}" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                </button>
+            </div>
+            <button id="facilities-modal-close" class="min-w-10 h-10 ml-4 bg-white dark:bg-[#1A1A1A] hover:bg-gray-100 dark:hover:bg-[#252525] flex justify-center items-center rounded-full transition-all duration-300" onclick="facilitiesModalClose()">
+                <svg xmlns="{% static 'icons/x.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x w-6 h-6"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+            </button>
+        </div>
+        <div class="w-full h-px bg-gray-300 dark:bg-white/20 my-2"></div>
+        {% comment %}facilities list{% endcomment %}
+        <div id="pro-facilities-list" class="h-[calc(500px-135px)] lg:h-[calc(400px-125px)] overflow-y-auto space-y-1">
+            <div class="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-x-2 gap-y-2 px-2">
+                {% for facilities in property_facilities %}
+                    {% if request.LANGUAGE_CODE == 'gu' %}
+                        <label title="{{ facilities.facilities_name_gu }}" data-facilities-label-name="{{ facilities.facilities_name_gu }}" class="pro-facilities-label group cursor-pointer w-full">
+                            <input type="checkbox" name="pro-facilities" data-facilities-name="{{ facilities.facilities_name_gu }}" value="{{ facilities.pk }}" class="pro-facilities-item peer hidden" />
+                            <div class="w-full h-12 lg:h-10 flex justify-center items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent text-black/60 dark:text-white/70 backdrop-blur px-2 peer-checked:border-orange-500 peer-checked:text-orange-500">
+                                <span class="truncate text-[15px]">{{ facilities.facilities_name_gu }}</span>
+                            </div>
+                        </label>
+                    {% else %}
+                        <label title="{{ facilities.facilities_name }}" data-facilities-label-name="{{ facilities.facilities_name }}" class="pro-facilities-label group cursor-pointer w-full">
+                            <input type="checkbox" name="pro-facilities" data-facilities-name="{{ facilities.facilities_name }}" value="{{ facilities.pk }}" class="pro-facilities-item peer hidden" />
+                            <div class="w-full h-12 lg:h-10 flex justify-center items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent text-black/60 dark:text-white/70 backdrop-blur px-2 peer-checked:border-orange-500 peer-checked:text-orange-500">
+                                <span class="truncate text-[15px]">{{ facilities.facilities_name }}</span>
+                            </div>
+                        </label>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div id="pro-facilities-no-data" class="">
+                {% include 'no_data_found.html' %}
+            </div>
+            <div class="flex justify-between items-center w-full gap-x-2 gap-y-2 px-2 absolute bottom-2 left-0 right-0">
+                <button id="pro-facilities-item-clear-btn" class="w-full h-12 lg:h-10 flex justify-center items-center bg-transparent border-2 border-black/10 dark:border-white/10 text-[17px] text-black/80 dark:text-white rounded-xl">{% trans 'Clear Selection' %}</button>
+                <button id="pro-facilities-item-save-btn" class="w-full h-12 lg:h-10 flex justify-center items-center border-2 border-[#FE6303] bg-[#FE6303] text-[17px] text-white rounded-xl">{% trans 'Save' %}</button>
+            </div>
+        </div>
+    </div>
+</div>

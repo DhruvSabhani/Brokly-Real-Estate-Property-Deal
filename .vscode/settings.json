@@ -20,9 +20,9 @@
   "editor.suggestOnTriggerCharacters": true,
   "editor.snippetSuggestions": "top",
 
-  "emmet.includeLanguages": {
-    "django-html": "html"
-  },
+  // "emmet.includeLanguages": {
+  //   "django-html": "django-html"
+  // },
 
   "emmet.triggerExpansionOnTab": true,
 
@@ -34,7 +34,8 @@
 
   // Django Template → DjLint (only lint)
   "[django-html]": {
-    "editor.formatOnSave": false
+    "editor.formatOnSave": false,
+    "workbench.editor.languageDetection": true
   },
 
   // Normal HTML → Prettier
@@ -68,5 +69,8 @@
   "djlint.enable": true,
 
   // Python environment
-  "python-envs.defaultEnvManager": "ms-python.python:system"
+  "python-envs.defaultEnvManager": "ms-python.python:system",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "notebook.defaultFormatter": "esbenp.prettier-vscode",
+  "css.format.enable": false
 }

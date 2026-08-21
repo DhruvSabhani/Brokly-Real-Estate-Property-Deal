@@ -393,7 +393,7 @@ uConBtn.addEventListener('click', function (e) {
   fd.append('utheme', themeValue);
   fd.append('ulang', languageId);
 
-  fetch('/user-profile/', {
+  fetch('/user/profile/', {
     method: 'POST',
     headers: {
       'X-CSRFToken': getCSRF(),
@@ -448,7 +448,7 @@ uUpdateBtn.addEventListener('click', function (e) {
   uUpbtnText.innerText = '';
   uLoaderUpdate.classList.remove('hidden');
 
-  fetch('/user-profile/', {
+  fetch('/user/profile/', {
     method: 'POST',
     headers: {
       'X-CSRFToken': getCSRF(),
