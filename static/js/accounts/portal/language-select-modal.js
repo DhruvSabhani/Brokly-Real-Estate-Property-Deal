@@ -13,41 +13,52 @@ if (!localStorage.getItem('plangCode')) {
 document.documentElement.lang = localStorage.getItem('plangCode');
 
 function getCSRF() {
-  return document.querySelector('[name=csrfmiddlewaretoken]').value;
+  const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]');
+  return csrfToken ? csrfToken.value : '';
 }
 
-portallangbtn.addEventListener('click', () => {
-  document.getElementById('portal').classList.add('overflow-hidden', 'scrollbar-hide');
-  portallangmodal.classList.remove('hidden');
-  portallangmodal.classList.add('flex');
+if (portallangbtn) {
+  portallangbtn.addEventListener('click', () => {
+    const portalElement = document.getElementById('portal');
+    if (portalElement) {
+      portalElement.classList.add('overflow-hidden', 'scrollbar-hide');
+    }
+    portallangmodal.classList.remove('hidden');
+    portallangmodal.classList.add('flex');
 
-  setTimeout(() => {
-    portallangmodal.classList.remove('opacity-0');
-    portallang.classList.remove('scale-95');
-  }, 10);
+    portallang.classList.remove('hidden');
 
-  portallangselectloader.classList.replace('flex', 'hidden');
-  portallang.classList.remove('hidden');
-});
+    portallangselectloader.classList.remove('flex');
+    portallangselectloader.classList.add('hidden');
+
+    setTimeout(() => {
+      portallangmodal.classList.remove('opacity-0');
+      portallang.classList.remove('scale-95');
+    }, 10);
+  });
+}
 
 function langModalClose() {
+  portallangmodal.classList.add('opacity-0');
+  portallang.classList.add('scale-95');
+
   setTimeout(() => {
-    document.getElementById('portal').classList.remove('overflow-hidden', 'scrollbar-hide');
+    const portalElement = document.getElementById('portal');
+    if (portalElement) {
+      portalElement.classList.remove('overflow-hidden', 'scrollbar-hide');
+    }
     portallangmodal.classList.remove('flex');
     portallangmodal.classList.add('hidden');
   }, 300);
-
-  portallangmodal.classList.add('opacity-0');
-  portallang.classList.add('scale-95');
 }
 
 function portalLangSelected(id, name, code) {
-  localStorage.setItem('plangId', id);
-  localStorage.setItem('plangName', name);
-  localStorage.setItem('plangCode', code);
-
+  if (portallangselectloader.classList.contains('flex')) {
+    return;
+  }
   portallang.classList.add('hidden');
-  portallangselectloader.classList.replace('hidden', 'flex');
+  portallangselectloader.classList.remove('hidden');
+  portallangselectloader.classList.add('flex');
 
   const formData = new FormData();
   formData.append('language', code);
@@ -62,22 +73,38 @@ function portalLangSelected(id, name, code) {
     credentials: 'same-origin',
   })
     .then((res) => {
-      if (res.ok) {
-        setTimeout(() => {
-          portalselectedlang.innerText = name;
-          langModalClose();
-        }, 500);
-        window.location.reload();
+      if (!res.ok) {
+        throw new Error('Failed to change language');
       }
+      return res.json();
+    })
+    .then((data) => {
+      if (!data.success) {
+        throw new Error(data.message || 'Language change failed');
+      }
+      localStorage.setItem('plangId', id);
+      localStorage.setItem('plangName', name);
+      localStorage.setItem('plangCode', code);
+      document.documentElement.lang = code;
+      if (portalselectedlang) {
+        portalselectedlang.innerText = name;
+      }
+      langModalClose();
+      setTimeout(() => {
+        window.location.reload();
+      }, 400);
     })
     .catch((error) => {
       console.error('Error setting language:', error);
-      portallangselectloader.classList.replace('flex', 'hidden');
+      portallangselectloader.classList.remove('flex');
+      portallangselectloader.classList.add('hidden');
       portallang.classList.remove('hidden');
-      alert(window.languageEr.checkLang);
+      alert(window.languageEr?.checkLang);
     });
 }
 
-portallangmodal.addEventListener('click', (e) => {
-  if (e.target === portallangmodal) langModalClose();
-});
+if (portallangmodal) {
+  portallangmodal.addEventListener('click', (e) => {
+    if (e.target === portallangmodal) langModalClose();
+  });
+}

@@ -49,60 +49,105 @@
 {% endblock %}
 
 {% block pcontent %}
-  <section id="list-property-container" class="pt-15 lg:pt-13 w-full bg-[#fdfdfd] dark:bg-[#121212] mt-2">
-    <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-x-2 gap-y-2">
-      {% for plist in propertys %}
-        <div class="group cursor-pointer rounded-xl transition-all duration-300 bg-white hover:bg-black/2 dark:bg-transparent dark:hover:bg-white/4 border border-black/3 dark:border-white/3 overflow-hidden">
-          <div class="relative flex justify-center items-center w-full h-40 overflow-hidden rounded-[10px] bg-gray-100 dark:bg-white/5">
-            <img src="{{ plist.image.url }}" alt="Property image" class="w-full h-full object-cover group-hover:scale-[1.04] transition-all duration-200" />
-            <span class="absolute top-3 left-3 tracking-normal flex justify-center items-center text-[11px] font-medium px-1 py-0.4 rounded bg-blue-500 dark:bg-[#0000ff] text-white truncate" style="font-family: monospace">{{ plist.property_purpose }}</span>
-            <button id="wishlist-btn" type="button" class="absolute top-2 right-2 flex items-center justify-center w-8 h-8 rounded-full bg-white backdrop-blur shadow">
-                <svg class="text-red-500 flex justify-center items-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />
-              </svg>
-              <svg class="text-red-500 hidden justify-center items-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />
-              </svg>
-            </button>
+  {% if serialized_active_pro %}
+    <section class="pt-15 lg:pt-13 w-full bg-[#fdfdfd] dark:bg-[#121212] mt-2 px-1">
+      <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-x-2 gap-y-2">
+        {% for alist in serialized_active_pro %}
+          {% comment %} url : {% url 'portal-property-create-review' pro_id=alist.id pro_slug=alist.slug %} {% endcomment %}
+          <div id="active-property-listings" onclick="window.location.href='#'" class="property-listings group block cursor-pointer rounded-xl transition-all duration-300 bg-white hover:bg-black/2 dark:bg-transparent dark:hover:bg-white/4 border border-black/3 dark:border-white/3 px-1 py-1">
+            <div class="flex justify-between items-start w-full">
+              {% comment %} property photo {% endcomment %}
+              <div class="relative flex justify-center items-center w-[28%] h-fit overflow-hidden rounded-lg">
+                <img src="{{ alist.cover_photo }}" alt="{{ alist.name|capfirst }}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='{% static 'images/property-default-img.png' %}'" class="property-photo w-full h-30 object-contain opacity-0 group-hover:scale-[1.04] transition-all duration-200" />
+                <div class="property-photo-loader absolute inset-0 flex justify-center items-center backdrop-blur">
+                  <div class="w-5 h-5 border-[4px] border-black/20 border-t-black dark:border-white/20 dark:border-t-white rounded-full animate-[spin_0.5s_linear_infinite]"></div>
+                </div>
+              </div>
+              {% comment %} property details {% endcomment %}
+              <div class="flex flex-1 flex-col justify-start items-start px-2 gap-1 min-w-0">
+                <div class="relative flex justify-between items-center w-full">
+                  <div class="flex flex-1 overflow-x-auto scrollbar-hide whitespace-nowrap gap-2 py-1.5 mr-10">
+                    {% comment %} photo count {% endcomment %}
+                    {% if alist.photo_count > 0 %}
+                      <div title="{% trans 'Photos : ' %}{{ alist.photo_count }}" class="text-xs font-medium rounded-md flex justify-center items-center border border-black/10 dark:border-white/10 bg-transparent text-black/70 dark:text-white/70 px-1.5 py-0.3">
+                        <span>{% trans "Photos : " %}{{ alist.photo_count }}</span>
+                      </div>
+                    {% endif %}
+                    {% comment %} type {% endcomment %}
+                    {% if alist.type %}
+                      <div title="{% trans 'Property Type : ' %}{{ alist.type }}" class="text-xs font-medium rounded-md flex justify-center items-center border border-black/10 dark:border-white/10 bg-transparent text-black/70 dark:text-white/70 px-1.5 py-0.3">
+                        <span>{{ alist.type }}</span>
+                      </div>
+                    {% endif %}
+                    {% comment %} bhk_type {% endcomment %}
+                    {% if alist.bhk_type %}
+                      <div title="{% trans 'Property BHK Type : ' %}{{ alist.bhk_type }}" class="text-xs font-medium rounded-md flex justify-center items-center border border-black/10 dark:border-white/10 bg-transparent text-black/70 dark:text-white/70 px-1.5 py-0.3">
+                        <span>{{ alist.bhk_type }}</span>
+                      </div>
+                    {% endif %}
+                    {% comment %} Purpose {% endcomment %}
+                    {% if alist.purpose %}
+                      <div title="{% trans 'Property Purpose : ' %}{{ alist.purpose }}" class="text-xs font-medium rounded-md flex justify-center items-center border border-black/10 dark:border-white/10 bg-transparent text-black/70 dark:text-white/70 px-1.5 py-0.3">
+                        <span>{{ alist.purpose }}</span>
+                      </div>
+                    {% endif %}
+                  </div>
+                  <button onclick="event.preventDefault(); event.stopPropagation();" aria-label="{% trans 'Property options' %}" class="edit-property-btn absolute flex justify-center items-center top-4 right-[-1px] -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-[#F8F8F8] dark:bg-[#212121]">
+                    <svg xmlns="{% static 'Icons/ellipsis-vertical.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis-vertical-icon lucide-ellipsis-vertical w-5"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                  </button>
+                  <div onclick="event.preventDefault(); event.stopPropagation();" class="edit-property-menu hidden absolute w-40 top-0 right-12 z-30 origin-top-right overflow-hidden rounded-xl border border-black/10 bg-white opacity-100 shadow transition-all duration-200 dark:border-white/10 dark:bg-[#111111]">
+                    <button type="button" onclick="event.stopPropagation();" data-id="{{ alist.id }}" class="disabled-btn-listing w-full text-left block rounded-t-xl px-3 py-1.5 text-sm text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors"><span>{% trans 'Disabled' %}</span></button>
+                    <a href="#" onclick="event.stopPropagation();" class="w-full text-left block px-3 py-1.5 text-sm text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors"><span>{% trans 'Edit' %}</span></a>
+                    <a href="#" onclick="event.stopPropagation();" class="w-full text-left block px-3 py-1.5 text-sm text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors"><span>{% trans 'Duplicate Create' %}</span></a>
+                    <hr class="border-black/5 dark:border-white/5"/>
+                    <button type="button" onclick="event.stopPropagation();" data-id="{{ alist.id }}" class="delete-btn-listing w-full text-left block rounded-b-xl px-3 py-1.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors font-medium"><span>{% trans 'Delete' %}</span></button>
+                  </div>
+                </div>
+                <h3 class="line-clamp-2 w-full leading-tight text-sm">{{ alist.name|capfirst }}</h3>
+                <div class="gap-1">
+                  <span class="text-base text-gray-600 dark:text-white/50">₹</span>
+                  <span class="text-base font-semibold text-orange-500">{{ alist.price }}</span>
+                  <span class="text-sm text-gray-600 dark:text-white/50">/</span>
+                  <span class="text-sm text-gray-600 dark:text-white/50">{{ alist.time_period }}</span>
+                </div>
+                {% if alist.location %}
+                  <p class="line-clamp-2 w-full leading-tight text-sm text-black/50 dark:text-white/50">{{ alist.location }}</p>
+                {% endif %}
+              </div>
+            </div>
           </div>
-          <div class="px-1 py-2">
-            <div class="gap-1">
-              <span class="text-[19px] font-semibold text-orange-500">{{ plist.formatted_property_price }}</span>
-              <span class="text-[14px] text-gray-600 dark:text-white/50">/</span>
-              <span class="text-[14px] text-gray-600 dark:text-white/50">{{ plist.property_price_period }}</span>
-            </div>
-            <h3 class="line-clamp-2 text-[15px] font-semibold text-gray-900 dark:text-gray-100 mb-1 tracking-normal">{{ plist.property_name }}</h3>
-            <div class="flex justify-start items-center gap-2 mb-1 overflow-x-auto scrollbar-hide lg:scrollbar-x-show whitespace-nowrap cursor-w-resize">
-                {% for all_preferred in plist.property_preferred.all %}
-                  <div class="flex justify-start items-center gap-2 text-[11px] font-medium px-1 py-0.5 rounded-md border border-black/20 dark:border-white/20 text-black/70 dark:text-white/70 w-fit">
-                    <span class="truncate">{{ all_preferred.preferred_name }}</span>
-                  </div>
-                {% endfor %}
-                {% for all_facilities in plist.property_facilities.all %}
-                  <div class="flex justify-start items-center gap-2 text-[11px] font-medium px-1 py-0.5 rounded-md border border-black/20 dark:border-white/20 text-black/70 dark:text-white/70 w-fit">
-                    <span class="truncate">{{ all_facilities.facilities_name }}</span>
-                  </div>
-                {% endfor %}
-            </div>
-            <div class="flex justify-start items-center gap-1 text-[14px] font-normal text-gray-400">
-              <svg xmlns="{% static 'icons/map-pin.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down w-[18px] h-[18px] shrink-0 text-orange-600">
-                <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
-                <circle cx="12" cy="10" r="3" />
-              </svg>
-              <span class="line-clamp-1">{{ pAddress }}</span>
-            </div>
-            <div class="flex justify-start items-center gap-2 py-1 overflow-x-auto scrollbar-hide lg:scrollbar-x-show whitespace-nowrap cursor-w-resize">
-              {% for num in plist.property_contact %}
-                <a href="tel:{{ num }}">
-                  <div class="flex justify-start items-center gap-2 text-sm font-medium px-1 py-0.5 rounded-md border border-black/20 dark:border-white/20 text-black/70 dark:text-white/70 w-fit">
-                    <span class="truncate">{{ num }}</span>
-                  </div>
-                </a>
-              {% endfor %}
-            </div>
+        {% endfor %}
+      </div>
+      {% comment %}desktop bottom add propertys button{% endcomment %}
+      <div class="fixed bottom-10 left-[45%] z-40 hidden items-center justify-center lg:flex">
+        <a href="{% url 'portal-property-create' %}" id="PropertyCreateBtn" title="{% trans 'Add Property' %}" class="flex h-10 items-center justify-center gap-2 rounded-full bg-orange-500 px-4 text-white shadow-[0_0_5px_rgba(0,0,0,0.6)] transition-all duration-1000 active:scale-95 dark:shadow-[0_0_50px_rgba(255,255,255,0.2)]">
+          <div class="flex items-center justify-center">
+            <svg xmlns="{% static 'icons/circle-plus.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus-icon lucide-circle-plus h-5 w-5">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M8 12h8" />
+              <path d="M12 8v8" />
+            </svg>
           </div>
-        </div>
-      {% endfor %}
-    </div>
-  </section>
+          <span id="addPropertysText" class="max-w-28 overflow-hidden text-base whitespace-nowrap opacity-100 transition-all duration-1000">
+            {% trans 'Add Property' %}
+          </span>
+        </a>
+      </div>
+    </section>
+  {% else %}
+    <div class="flex justify-center items-center w-full h-140 overflow-hidden bg-[#fdfdfd] dark:bg-[#121212]">
+      <div class="flex justify-center items-center">
+        <a href="{% url 'portal-property-create' %}" title="{% trans 'Add Property' %}" class="flex flex-col justify-center items-center gap-1 py-1 transition-all duration-100">
+          <div class="flex justify-center items-center w-20 h-20 rounded-full bg-black/5 dark:bg-white/5 text-black/90 dark:text-white">
+            <svg xmlns="{% static 'icons/circle-plus.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus-icon lucide-circle-plus w-14 h-14 text-black/70 dark:text-white/70">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M8 12h8" />
+              <path d="M12 8v8" />
+            </svg>
+          </div>
+          <span class="whitespace-nowrap truncate text-base font-medium text-black/80 dark:text-white/90 py-1">{% trans 'Add Property' %}</span>
+        </a>
+      </div>
+    </div>  
+  {% endif %}
 {% endblock %}

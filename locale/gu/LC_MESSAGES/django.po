@@ -885,8 +885,8 @@ msgid "For Sale"
 msgstr "વેચાણ માટે"
 
 #: .\templates\portal\propertys\property-create-edit\basic-details-form.html:135
-msgid "PG / Hostel"
-msgstr "પીજી / હોસ્ટેલ"
+msgid "PG/Hostel"
+msgstr "પીજી/હોસ્ટેલ"
 
 #: .\templates\portal\propertys\property-create-edit\basic-details-form.html:144
 msgid "Preferred For"
@@ -1077,3 +1077,6 @@ msgstr ""
 
 #~ msgid "Cancel"
 #~ msgstr "રદ કરો"
+
+#~ msgid "India"
+#~ msgstr "ભારત"

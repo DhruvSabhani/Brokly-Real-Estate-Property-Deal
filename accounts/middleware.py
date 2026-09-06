@@ -7,9 +7,7 @@ class RoleAuthMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-
         path = request.path
-
         if path.startswith("portal/dashboard/"):
             if not request.session.get("portal_login"):
                 return redirect("/portal/login/")
@@ -26,13 +24,19 @@ class PanelLanguageMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        if request.path.startswith("/portal"):
+        if request.path.startswith("/__reload__/"):
+            return self.get_response(request)
+
+        panel = request.GET.get("panel")
+
+        if request.path.startswith("/portal/" or panel == "portal"):
             language = request.session.get("portal_language", "en")
         else:
             language = request.session.get("user_language", "en")
         translation.activate(language)
         request.LANGUAGE_CODE = language
-        response = self.get_response(request)
-        response.set_cookie("django_language", language)
-        translation.deactivate()
-        return response
+        try:
+            response = self.get_response(request)
+            return response
+        finally:
+            translation.deactivate()

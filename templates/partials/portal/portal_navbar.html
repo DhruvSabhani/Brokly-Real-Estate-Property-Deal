@@ -72,12 +72,22 @@
             <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
             <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
         </svg>
-        <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{% trans 'Active Listings' %}</span>
+        <div class="flex justify-between items-center w-full">
+            <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{% trans 'Active Listings' %}</span>
+            {% if active_property %}
+                <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{{ active_property }}</span>
+            {% endif %}
+        </div>
     </a>
     {% comment %}view disable property{% endcomment %}
-    <a href="#" title="{% trans 'Disabled Listings' %}" class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-semibold lg:transition-all lg:duration-100 {% if active == 'portalPropertyDisabledListings' %} bg-orange-500 rounded-lg text-white {% else %} text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg {% endif %}">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-slash2-icon lucide-circle-slash-2 shrink-0 lg:w-5 lg:h-5 w-6 h-6"><circle cx="12" cy="12" r="10"/><path d="M22 2 2 22"/></svg>
-        <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{% trans 'Disabled Listings' %}</span>
+    <a href="{% url 'portal-property-disabled-listings' %}" title="{% trans 'Disabled Listings' %}" class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-semibold lg:transition-all lg:duration-100 {% if active == 'portalPropertyDisabledListings' %} bg-orange-500 rounded-lg text-white {% else %} text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg {% endif %}">
+        <svg xmlns="{% static 'Icons/house-off.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-off-icon lucide-house-off shrink-0 lg:w-5 lg:h-5 w-6 h-6"><path d="M21 15.3V9l-9-7-2.4 1.9"/><path d="m2 2 20 20"/><path d="M6.4 6.4 3 9v11a2 2 0 0 0 2 2h14a2 2 0 0 0 1.8-1.2"/><path d="M12 12H9v10"/><path d="M15 22v-7"/></svg>
+        <div class="flex justify-between items-center w-full">
+            <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{% trans 'Disabled Listings' %}</span>
+            {% if disabled_property %}
+                <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{{ disabled_property }}</span>
+            {% endif %}
+        </div>
     </a>
     {% comment %}messages{% endcomment %}
     <a href="#" title="{% trans 'Messages' %}" class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-semibold lg:transition-all lg:duration-100 {% if active == 'messages' %} bg-orange-500 rounded-lg text-white {% else %} text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg {% endif %}">

@@ -25,6 +25,7 @@ urlpatterns = [
         name="portal-property-photo-store",
     ),
     path(
+        # "portal/property/review/<int:pro_id>/<slug:pro_slug>/",
         "portal/property/review/",
         views.portal_property_create_review,
         name="portal-property-create-review",
@@ -40,15 +41,30 @@ urlpatterns = [
         name="portal-property-create-active-list",
     ),
     path(
-        "portal/property/active-listings",
+        "portal/property/active-listings/",
         views.portal_property_active_listings,
         name="portal-property-active-listings",
     ),
-    # path(
-    #     "portal/property/disabled-listings",
-    #     views.portal_property_disabled_listings,
-    #     name="portal-property-disabled-listings",
-    # ),
+    path(
+        "portal/property/disabled-listings/",
+        views.portal_property_disabled_listings,
+        name="portal-property-disabled-listings",
+    ),
+    path(
+        "portal/property/disabled/<int:pro_id>/",
+        views.portal_property_active_listings_disabled,
+        name="portal-property-active-listings-disabled",
+    ),
+    path(
+        "portal/property/active/<int:pro_id>/",
+        views.portal_property_disabled_listings_active,
+        name="portal-property-disabled-listings-active",
+    ),
+    path(
+        "portal/property/delete/<int:pro_id>/",
+        views.portal_property_active_disabled_listings_delete,
+        name="portal-property-active-disabled-listings-delete",
+    ),
     # state
     path("portal/get/states/", views.portal_get_states, name="portal-get-states"),
     # city

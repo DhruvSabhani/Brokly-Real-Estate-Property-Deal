@@ -14,39 +14,53 @@ if (!localStorage.getItem('ulangCode')) {
 document.documentElement.lang = localStorage.getItem('ulangCode');
 
 function getCSRF() {
-  return document.querySelector('[name=csrfmiddlewaretoken]').value;
+  const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]');
+  return csrfToken ? csrfToken.value : '';
 }
 
-uLangBtn.addEventListener('click', () => {
-  uLangModal.classList.remove('hidden');
-  uLangModal.classList.add('flex');
+if (uLangBtn) {
+  uLangBtn.addEventListener('click', () => {
+    const userElement = document.getElementById('user');
+    if (userElement) {
+      userElement.classList.add('overflow-hidden', 'scrollbar-hide');
+    }
+    uLangModal.classList.remove('hidden');
+    uLangModal.classList.add('flex');
 
-  setTimeout(() => {
-    uLangModal.classList.remove('opacity-0');
-    uLanguage.classList.remove('scale-95');
-  }, 10);
+    uLanguage.classList.remove('hidden');
 
-  uLangSelectLoader.classList.replace('flex', 'hidden');
-  uLanguage.classList.remove('hidden');
-});
+    uLangSelectLoader.classList.remove('flex');
+    uLangSelectLoader.classList.add('hidden');
+
+    setTimeout(() => {
+      uLangModal.classList.remove('opacity-0');
+      uLanguage.classList.remove('scale-95');
+    }, 10);
+  });
+}
 
 function uCloseLanguageModal() {
+  uLangModal.classList.add('opacity-0');
+  uLanguage.classList.add('scale-95');
+
   setTimeout(() => {
+    const userElement = document.getElementById('user');
+    if (userElement) {
+      userElement.classList.remove('overflow-hidden', 'scrollbar-hide');
+    }
     uLangModal.classList.remove('flex');
     uLangModal.classList.add('hidden');
   }, 300);
-
-  uLangModal.classList.add('opacity-0');
-  uLanguage.classList.add('scale-95');
 }
 
 function uSelectedLanguage(id, name, code) {
-  localStorage.setItem('ulangId', id);
-  localStorage.setItem('ulangName', name);
-  localStorage.setItem('ulangCode', code);
+  if (uLangSelectLoader.classList.contains('flex')) {
+    return;
+  }
 
   uLanguage.classList.add('hidden');
-  uLangSelectLoader.classList.replace('hidden', 'flex');
+  uLangSelectLoader.classList.remove('hidden');
+  uLangSelectLoader.classList.add('flex');
 
   const formData = new FormData();
   formData.append('language', code);
@@ -61,22 +75,43 @@ function uSelectedLanguage(id, name, code) {
     credentials: 'same-origin',
   })
     .then((res) => {
-      if (res.ok) {
-        setTimeout(() => {
-          uSelectedLang.innerText = name;
-          uCloseLanguageModal();
-        }, 500);
-        window.location.reload();
+      if (!res.ok) {
+        throw new Error('Failed to change language');
+        // setTimeout(() => {
+        //   uSelectedLang.innerText = name;
+        //   uCloseLanguageModal();
+        // }, 500);
+        // window.location.reload();
       }
+      return res.json();
+    })
+    .then((data) => {
+      if (!data.success) {
+        throw new Error(data.message || 'Language change failed');
+      }
+      localStorage.setItem('ulangId', id);
+      localStorage.setItem('ulangName', name);
+      localStorage.setItem('ulangCode', code);
+      document.documentElement.lang = code;
+      if (uSelectedLang) {
+        uSelectedLang.innerText = name;
+      }
+      uCloseLanguageModal();
+      setTimeout(() => {
+        window.location.reload();
+      }, 400);
     })
     .catch((error) => {
       console.error('Error setting language:', error);
-      uLangSelectLoader.classList.replace('flex', 'hidden');
+      uLangSelectLoader.classList.remove('flex');
+      uLangSelectLoader.classList.add('hidden');
       uLanguage.classList.remove('hidden');
-      alert("{% trans 'Language change failed. Please try again.' %}");
+      alert(window.languageEr?.checkLang);
     });
 }
 
-uLangModal.addEventListener('click', (e) => {
-  if (e.target === uLangModal) uCloseLanguageModal();
-});
+if (uLangModal) {
+  uLangModal.addEventListener('click', (e) => {
+    if (e.target === uLangModal) uCloseLanguageModal();
+  });
+}

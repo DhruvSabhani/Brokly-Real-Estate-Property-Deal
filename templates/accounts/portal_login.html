@@ -529,14 +529,14 @@
         {% comment %}list language{% endcomment %}
         <div id="lang-list" class="h-[calc(300px-68px)] lg:h-[calc(400px-68px)] overflow-y-auto space-y-1">
           {% for l in languages %}
-            <button type="button" class="portal-lang-item w-full flex justify-between items-center px-2 py-2 rounded-xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] transition-all duration-200" onclick="portalLangSelected('{{ l.id }}','{{ l.name|capfirst }}','{{ l.code }}')">
+            <button type="button" class="portal-lang-item w-full flex justify-between items-center px-2 py-2 rounded-xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] transition-all duration-200" onclick="portalLangSelected('{{ l.id }}','{{ l.name|capfirst|escapejs }}','{{ l.code|escapejs }}')">
               <span class="text-[20px] font-medium">{{ l.name|capfirst }}</span>
               <span class="text-[16px] text-black/60 dark:text-white/70">{{ l.code }}</span>
             </button>
           {% endfor %}
         </div>
       </div>
-      <div id="portal-lang-select-loader" class="w-8 h-8 flex justify-center items-center border-[6px] border-white/30 rounded-full border-t-white animate-[spin_0.5s_linear_infinite] [animation-duration:.5s]"></div>
+      <div id="portal-lang-select-loader" class="w-8 h-8 justify-center items-center border-[6px] border-white/30 rounded-full border-t-white animate-[spin_0.5s_linear_infinite] [animation-duration:.5s]"></div>
     </div>
     {% comment %}Language Selected Modal JS{% endcomment %}
     <script src="{% static 'js/accounts/portal/language-select-modal.js' %}" defer></script>

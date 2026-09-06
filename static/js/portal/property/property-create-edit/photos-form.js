@@ -439,7 +439,7 @@ addPhotoForm.addEventListener('submit', async function (e) {
     }
     if (data.success) {
       loaderPhotosBtn.classList.remove('flex', 'opacity-100', 'scale-100');
-      loaderPhotosBtn.classList.add('hidden', 'opacity-0', 'scale-0');  
+      loaderPhotosBtn.classList.add('hidden', 'opacity-0', 'scale-0');
 
       const step2El = document.getElementById('step-2');
       if (step2El) {
@@ -463,7 +463,7 @@ addPhotoForm.addEventListener('submit', async function (e) {
     }
   } catch (error) {
     console.log(error);
-    alert(window.allError.tryAgain);
+    alert(window.allError?.tryAgain);
     if (loaderPhotosBtn) {
       loaderPhotosBtn.classList.remove('flex', 'opacity-100', 'scale-100');
       loaderPhotosBtn.classList.add('hidden', 'opacity-0', 'scale-0');

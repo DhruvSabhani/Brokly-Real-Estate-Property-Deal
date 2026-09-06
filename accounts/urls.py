@@ -4,12 +4,14 @@ from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
-    # path(
-    #     "change-language/",
-    #     views.change_panel_language,
-    #     name="change_language",
-    # ),
+    path(
+        "change-language/",
+        views.change_panel_language,
+        name="change-panel-language",
+    ),
     # User
+    path("get-states/", views.get_states, name="get-states"),
+    path("get-cities/", views.get_cities, name="get-cities"),
     path("", views.user_dashboard, name="user-dashboard"),
     path("home/", views.user_dashboard, name="user-dashboard"),
     path("login/", views.login_user, name="brokly-login"),
@@ -23,6 +25,8 @@ urlpatterns = [
     path("setting/", views.user_setting, name="user-setting"),
     path("user/logout/", views.user_logout, name="user-logout"),
     # Portal
+    path("portal/get-states/", views.get_states, name="get-states"),
+    path("portal/get-cities/", views.get_cities, name="get-cities"),
     path("portal/", views.portal_dashboard, name="portal-dashboard"),
     path("portal/dashboard/", views.portal_dashboard, name="portal-dashboard"),
     path("portal/login/", views.login_portal, name="portal-login"),
@@ -30,8 +34,4 @@ urlpatterns = [
     path("portal/help/", views.portal_help, name="portal-help"),
     path("portal/setting/", views.portal_setting, name="portal-setting"),
     path("portal/logout/", views.portal_logout, name="portal-logout"),
-    # state
-    path("get-states/", views.get_states, name="get-states"),
-    # city
-    path("get-cities/", views.get_cities, name="get-cities"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

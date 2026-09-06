@@ -18,7 +18,7 @@
                             </p>
                         </div>
                         <div class="flex justify-end items-center">
-                            <button type="button" id="proc-form-clear-btn" class="px-7 h-12 lg:h-10 flex justify-center items-center bg-transparent border border-black/10 dark:border-white/10 text-[17px] lg:text-base text-black dark:text-white rounded-lg">{% trans 'Clear' %}</button>
+                            <button type="button" id="proc-form-clear-btn" class="px-7 h-12 lg:h-10 flex justify-center items-center bg-transparent border border-black/10 dark:border-white/10 text-[17px] lg:text-base text-black dark:text-white rounded-lg truncate">{% trans 'Clear' %}</button>
                             <script>
                                 document.getElementById('proc-form-clear-btn').addEventListener('click', () => {
                                     openmessagemodal({
@@ -36,7 +36,7 @@
                 <div class="flex flex-col lg:flex-row justify-start items-start w-full gap-x-4">
                     {% comment %}property type{% endcomment %}
                     <div id="proc-type-box" class="flex flex-col min-w-full lg:min-w-1/3 py-1">
-                        <label for="proc-select-type-btn" class="form-label px-2 py-1 text-base lg:text-sm font-semibold text-black/90 dark:text-white/90">{% trans 'Property Type' %}<span class="ml-1 text-red-500">*</span></label>
+                        <label for="proc-select-type-btn" class="form-label px-2 py-1 text-base lg:text-[15px] font-semibold text-black/90 dark:text-white/90">{% trans 'Property Type' %}<span class="ml-1 text-red-500">*</span></label>
                         <button type="button" id="proc-select-type-btn" class="w-full h-12 lg:h-10 text-base flex justify-between items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur-xl px-2">
                             <span id="proc-selected-type" data-property-type="{% trans 'Select Property Type' %}">{% trans 'Select Property Type' %}</span>
                             <input type="hidden" id="proc-selected-type-id" name="proc-selected-type-id" />
@@ -121,7 +121,7 @@
                             <label class="group cursor-pointer w-full">
                                 <input type="radio" name="purpose" value="pg/hostel" class="peer hidden" />
                                 <div class="w-full h-12 lg:h-10 flex justify-center items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent text-black/60 dark:text-white/70 backdrop-blur px-2 peer-checked:border-orange-500 peer-checked:text-orange-500">
-                                    <span class="text-[15px]">{% trans 'PG / Hostel' %}</span>
+                                    <span class="text-[15px]">{% trans 'PG/Hostel' %}</span>
                                 </div>
                             </label>
                         </div>
@@ -258,11 +258,7 @@
         <div id="pro-type-list" class="h-[calc(300px-68px)] lg:h-[calc(400px-68px)] overflow-y-auto space-y-1">
             <div class="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-x-2 gap-y-4 px-2">
                 {% for type in property_types %}
-                    {% if request.LANGUAGE_CODE == 'gu' %}
-                        <button type="button" title="{{ type.type_name_gu }}" class="pro-type-item w-full flex justify-center items-center px-4 py-2 rounded-xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] text-black/60 dark:text-white/70 border border-black/15 dark:border-white/15 transition-all duration-200" data-type-name="{{ type.type_name_gu }}" onclick="proTypeSelected('{{ type.id }}','{{ type.type_name_gu }}')"><span class="truncate text-[17px]">{{ type.type_name_gu }}</span></button>
-                    {% else %}
-                        <button type="button" title="{{ type.type_name|capfirst }}" class="pro-type-item w-full flex justify-center items-center px-4 py-2 rounded-xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] text-black/60 dark:text-white/70 border border-black/15 dark:border-white/15 transition-all duration-200" data-type-name="{{ type.type_name }}" onclick="proTypeSelected('{{ type.id }}','{{ type.type_name|capfirst }}')"><span class="truncate text-[17px]">{{ type.type_name|capfirst }}</span></button>
-                    {% endif %}
+                    <button type="button" title="{{ type.translated_type_name|capfirst }}" class="pro-type-item w-full flex justify-center items-center px-4 py-2 rounded-xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] text-black/60 dark:text-white/70 border border-black/15 dark:border-white/15 transition-all duration-200" data-type-name="{{ type.translated_type_name }}" onclick="proTypeSelected('{{ type.id }}','{{ type.translated_type_name|capfirst }}')"><span class="truncate text-[17px]">{{ type.translated_type_name|capfirst }}</span></button>
                 {% endfor %}
             </div>
             <div id="pro-type-no-data" class="">
@@ -293,17 +289,10 @@
         <div id="pro-preferred-list" class="h-[calc(400px-135px)] lg:h-[calc(400px-125px)] overflow-y-auto space-y-1">
             <div class="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-x-2 gap-y-2 px-2">
                 {% for preferred in property_preferred %}
-                    {% if request.LANGUAGE_CODE == 'gu' %}
-                        <label title="{{ preferred.preferred_name_gu }}" data-preferred-label-name="{{ preferred.preferred_name_gu }}" class="pro-preferred-label group cursor-pointer w-full">
-                            <input type="checkbox" name="pro-preferred" data-preferred-name="{{ preferred.preferred_name_gu }}" value="{{ preferred.pk }}" class="pro-preferred-item peer hidden" />
-                            <div class="w-full h-12 lg:h-10 flex justify-center items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent text-black/60 dark:text-white/70 backdrop-blur px-2 peer-checked:border-orange-500 peer-checked:text-orange-500"><span class="truncate text-[15px]">{{ preferred.preferred_name_gu }}</span></div>
-                        </label>
-                    {% else %}
-                        <label title="{{ preferred.preferred_name }}" data-preferred-label-name="{{ preferred.preferred_name }}" class="pro-preferred-label group cursor-pointer w-full">
-                            <input type="checkbox" name="pro-preferred" data-preferred-name="{{ preferred.preferred_name }}" value="{{ preferred.pk }}" class="pro-preferred-item peer hidden" />
-                            <div class="w-full h-12 lg:h-10 flex justify-center items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent text-black/60 dark:text-white/70 backdrop-blur px-2 peer-checked:border-orange-500 peer-checked:text-orange-500"><span class="truncate text-[15px]">{{ preferred.preferred_name }}</span></div>
-                        </label>
-                    {% endif %}
+                    <label title="{{ preferred.translated_preferred_name }}" data-preferred-label-name="{{ preferred.translated_preferred_name }}" class="pro-preferred-label group cursor-pointer w-full">
+                        <input type="checkbox" name="pro-preferred" data-preferred-name="{{ preferred.translated_preferred_name }}" value="{{ preferred.pk }}" class="pro-preferred-item peer hidden" />
+                        <div class="w-full h-12 lg:h-10 flex justify-center items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent text-black/60 dark:text-white/70 backdrop-blur px-2 peer-checked:border-orange-500 peer-checked:text-orange-500"><span class="truncate text-[15px]">{{ preferred.translated_preferred_name }}</span></div>
+                    </label>
                 {% endfor %}
             </div>
             <div id="pro-preferred-no-data" class="">
@@ -338,21 +327,12 @@
         <div id="pro-facilities-list" class="h-[calc(500px-135px)] lg:h-[calc(400px-125px)] overflow-y-auto space-y-1">
             <div class="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-x-2 gap-y-2 px-2">
                 {% for facilities in property_facilities %}
-                    {% if request.LANGUAGE_CODE == 'gu' %}
-                        <label title="{{ facilities.facilities_name_gu }}" data-facilities-label-name="{{ facilities.facilities_name_gu }}" class="pro-facilities-label group cursor-pointer w-full">
-                            <input type="checkbox" name="pro-facilities" data-facilities-name="{{ facilities.facilities_name_gu }}" value="{{ facilities.pk }}" class="pro-facilities-item peer hidden" />
-                            <div class="w-full h-12 lg:h-10 flex justify-center items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent text-black/60 dark:text-white/70 backdrop-blur px-2 peer-checked:border-orange-500 peer-checked:text-orange-500">
-                                <span class="truncate text-[15px]">{{ facilities.facilities_name_gu }}</span>
-                            </div>
-                        </label>
-                    {% else %}
-                        <label title="{{ facilities.facilities_name }}" data-facilities-label-name="{{ facilities.facilities_name }}" class="pro-facilities-label group cursor-pointer w-full">
-                            <input type="checkbox" name="pro-facilities" data-facilities-name="{{ facilities.facilities_name }}" value="{{ facilities.pk }}" class="pro-facilities-item peer hidden" />
-                            <div class="w-full h-12 lg:h-10 flex justify-center items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent text-black/60 dark:text-white/70 backdrop-blur px-2 peer-checked:border-orange-500 peer-checked:text-orange-500">
-                                <span class="truncate text-[15px]">{{ facilities.facilities_name }}</span>
-                            </div>
-                        </label>
-                    {% endif %}
+                    <label title="{{ facilities.translated_facilities_name }}" data-facilities-label-name="{{ facilities.translated_facilities_name }}" class="pro-facilities-label group cursor-pointer w-full">
+                        <input type="checkbox" name="pro-facilities" data-facilities-name="{{ facilities.translated_facilities_name }}" value="{{ facilities.pk }}" class="pro-facilities-item peer hidden" />
+                        <div class="w-full h-12 lg:h-10 flex justify-center items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent text-black/60 dark:text-white/70 backdrop-blur px-2 peer-checked:border-orange-500 peer-checked:text-orange-500">
+                            <span class="truncate text-[15px]">{{ facilities.translated_facilities_name }}</span>
+                        </div>
+                    </label>
                 {% endfor %}
             </div>
             <div id="pro-facilities-no-data" class="">

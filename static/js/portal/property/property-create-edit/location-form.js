@@ -118,19 +118,22 @@ proSelectStateBtn.addEventListener('click', () => {
   proStateND.classList.add('hidden');
 
   const pro_country_id = document.getElementById('proc-selected-country-id').value;
-  fetch(`/portal/get/states/?pro_country_id=${pro_country_id}`)
+  fetch(`/portal/get/states/?pro_country_id=${pro_country_id}&panel=portal`)
     .then((res) => res.json())
     .then(({ states }) => {
-      if (!states.length) {
+      if (!states.length || states.length === 0) {
         proStateList.innerHTML = '';
         proStateND.classList.remove('hidden');
         return;
       }
       proStateND.classList.add('hidden');
       const statehtml = states
-        .map((s) => {
-          const stateName = currentLanguage === 'gu' ? s.state_name_gu : s.name;
-          return `<div title="${stateName}" class="pro-state-item w-full flex justify-center items-center px-4 py-2 rounded-xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] text-black/60 dark:text-white/70 border border-black/15 dark:border-white/15 transition-all duration-200" data-state-name="${stateName}" onclick="proStateSelected('${s.id}','${stateName}','${s.latitude}','${s.longitude}')"><span class="text-[17px]">${stateName}</span></div>`;
+        .map((state) => {
+          let stateName = state.name;
+          if (stateName && typeof stateName === 'string' && /^[A-Za-z]/.test(stateName)) {
+            stateName = stateName.charAt(0).toUpperCase() + stateName.slice(1);
+          }
+          return `<div title="${stateName}" class="pro-state-item w-full flex justify-center items-center px-4 py-2 rounded-xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] text-black/60 dark:text-white/70 border border-black/15 dark:border-white/15 transition-all duration-200" data-state-name="${stateName}" onclick="proStateSelected('${state.id}','${stateName}','${state.latitude}','${state.longitude}')"><span class="text-[17px]">${stateName}</span></div>`;
         })
         .join('');
       proStateList.innerHTML = statehtml;
@@ -182,19 +185,19 @@ proSelectCityBtn.addEventListener('click', () => {
   proCityND.classList.add('hidden');
 
   const pro_state_id = document.getElementById('proc-selected-state-id').value;
-  fetch(`/portal/get/cities/?pro_state_id=${pro_state_id}`)
+  fetch(`/portal/get/cities/?pro_state_id=${pro_state_id}&panel=portal`)
     .then((res) => res.json())
     .then(({ cities }) => {
-      if (!cities.length) {
+      if (!cities.length || cities.length === 0) {
         proCityList.innerHTML = '';
         proCityND.classList.remove('hidden');
         return;
       }
       proCityND.classList.add('hidden');
       const cityhtml = cities
-        .map((c) => {
-          const cityName = currentLanguage === 'gu' ? c.city_name_gu : c.name;
-          return `<div title="${cityName}" class="pro-city-item w-full flex justify-center items-center px-4 py-2 rounded-xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] text-black/60 dark:text-white/70 border border-black/15 dark:border-white/15 transition-all duration-200" data-city-name="${cityName}" onclick="proCitySelected('${c.id}','${cityName}','${c.latitude}','${c.longitude}')"><span class="text-[17px]">${cityName}</span></div>`;
+        .map((city) => {
+          let cityName = city.name;
+          return `<div title="${cityName}" class="pro-city-item w-full flex justify-center items-center px-4 py-2 rounded-xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] text-black/60 dark:text-white/70 border border-black/15 dark:border-white/15 transition-all duration-200" data-city-name="${cityName}" onclick="proCitySelected('${city.id}','${cityName}','${city.latitude}','${city.longitude}')"><span class="text-[17px]">${cityName}</span></div>`;
         })
         .join('');
       proCityList.innerHTML = cityhtml;

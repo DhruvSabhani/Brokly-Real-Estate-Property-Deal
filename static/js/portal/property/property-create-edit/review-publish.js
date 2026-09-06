@@ -1,3 +1,6 @@
+const reviewEl = document.getElementById('property-review');
+const propertyId = reviewEl.dataset.propertyId;
+const propertySlug = reviewEl.dataset.propertySlug;
 const reviewStepsConfig = [
   { id: 'proc-basic-details-btn', step: 0 },
   { id: 'proc-location-btn', step: 1 },
@@ -58,6 +61,7 @@ async function loadPropertyReview() {
     const response = await fetch('/portal/property/review/', {
       method: 'GET',
       headers: {
+        'X-CSRFToken': getCSRF(),
         'X-Requested-With': 'XMLHttpRequest',
       },
     });
@@ -66,11 +70,13 @@ async function loadPropertyReview() {
       alert(data.message);
       return;
     }
-    isPropertyCreated = true;
-    renderProprtyReview(data);
+    if (data.success) {
+      isPropertyCreated = true;
+      renderProprtyReview(data);
+    }
   } catch (error) {
     console.log(error);
-    alert(window.allError.tryAgain);
+    alert(window.allError?.tryAgain || 'Something went wrong. Try again.');
   }
 }
 // loadPropertyReview();
@@ -92,7 +98,7 @@ if (propertyCancelBtn) {
 
     if (!confirm(window.allError.cancelPropertyMess)) return;
     try {
-      const response = await fetch('/portal/property/disable-list/', {
+      const response = await fetch('/portal/property/disabled-list/', {
         method: 'POST',
         headers: {
           'X-CSRFToken': getCSRF(),
@@ -109,7 +115,7 @@ if (propertyCancelBtn) {
         if (data.redirect_url) {
           window.location.replace(data.redirect_url);
         } else {
-          window.location.replace('/portal/property/create/');
+          window.location.replace('/portal/property/disabled-listings/');
         }
       }
     } catch (error) {

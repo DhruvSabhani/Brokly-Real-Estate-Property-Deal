@@ -6,7 +6,7 @@ from common.models import *
 from django.http import JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
 import json
-from django.utils import timezone
+from django.utils import timezone, translation
 from django.utils.translation import get_language, gettext as _
 from accounts.utils import user_required, portal_required
 
@@ -15,13 +15,18 @@ def change_panel_language(request):
     if request.method != "POST":
         return JsonResponse({"error": True, "message": _("Invalid request")})
 
-    language = request.POST.get("language")
-    panel = request.POST.get("panel")
+    language = request.POST.get("language", "").strip()
+    panel = request.POST.get("panel", "").strip()
 
     allowed_languages = [code for code, name in settings.LANGUAGES]
 
     if language not in allowed_languages:
-        return JsonResponse({"error": True, "message": _("Invalid language")})
+        return JsonResponse(
+            {
+                "error": True,
+                "message": _("Invalid language"),
+            }
+        )
 
     if panel == "user":
         request.session["user_language"] = language
@@ -34,7 +39,10 @@ def change_panel_language(request):
                 "message": _("Invalid panel"),
             }
         )
-    return JsonResponse(
+    request.session.modified = True
+    translation.activate(language)
+    request.LANGUAGE_CODE = language
+    response = JsonResponse(
         {
             "success": True,
             "message": _("Language changed successfully"),
@@ -42,20 +50,33 @@ def change_panel_language(request):
             "panel": panel,
         }
     )
+    return response
 
 
 def get_states(request):
     country_id = request.GET.get("country_id")
-    statemodal = State.objects.filter(country_code=country_id, is_active=True).values(
-        "id", "name"
-    )
-    return JsonResponse({"states": list(statemodal)})
+    statemodal = State.objects.filter(country_code=country_id, is_active=True)
+    state_data = [
+        {
+            "id": state.pk,
+            "name": state.translated_state_name(),
+        }
+        for state in statemodal
+    ]
+    return JsonResponse({"states": state_data})
 
 
 def get_cities(request):
     state_id = request.GET.get("state_id")
-    citymodal = City.objects.filter(state=state_id, is_active=True).values("id", "name")
-    return JsonResponse({"cities": list(citymodal)})
+    citymodal = City.objects.filter(state=state_id, is_active=True)
+    city_data = [
+        {
+            "id": city.pk,
+            "name": city.translated_city_name(),
+        }
+        for city in citymodal
+    ]
+    return JsonResponse({"cities": city_data})
 
 
 def generate_otp(phone):
@@ -201,9 +222,13 @@ def verify_otp(request):
                 "img": pProfile.img.url if pProfile.img else None,
                 "name": pProfile.name if pProfile.name else None,
                 "state_id": pAddress.state.pk if pAddress.state else None,
-                "state_name": pAddress.state.name if pAddress.state else None,
+                "state_name": (
+                    pAddress.state.translated_state_name() if pAddress.state else None
+                ),
                 "city_id": pAddress.city.pk if pAddress.city else None,
-                "city_name": pAddress.city.name if pAddress.city else None,
+                "city_name": (
+                    pAddress.city.translated_city_name() if pAddress.city else None
+                ),
             }
 
     # user login
@@ -225,9 +250,13 @@ def verify_otp(request):
                 "img": uProfile.img.url if uProfile.img else None,
                 "name": uProfile.name if uProfile.name else None,
                 "state_id": uAddress.state.pk if uAddress.state else None,
-                "state_name": uAddress.state.name if uAddress.state else None,
+                "state_name": (
+                    uAddress.state.translated_state_name() if uAddress.state else None
+                ),
                 "city_id": uAddress.city.pk if uAddress.city else None,
-                "city_name": uAddress.city.name if uAddress.city else None,
+                "city_name": (
+                    uAddress.city.translated_city_name() if uAddress.city else None
+                ),
             }
 
     else:
@@ -296,7 +325,7 @@ def user_profile(request):
             uAddress.city = city
 
     uAddress.is_default = True
-    uAddress.is_active = True   
+    uAddress.is_active = True
 
     uAddress.save()
 
@@ -378,6 +407,7 @@ def login_user(request):
 
 
 def login_portal(request):
+    request.session.pop("new_property_id", None)
     return login_with_otp(request, "portal")
 
 
@@ -489,6 +519,7 @@ def user_logout(request):
 
 
 def portal_logout(request):
+    request.session.pop("new_property_id", None)
     request.session.pop("portal_login", None)
     # request.session.pop("code", None)
     # request.session.pop("phone", None)

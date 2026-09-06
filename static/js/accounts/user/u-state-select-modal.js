@@ -14,7 +14,7 @@ uStateBtn.addEventListener('click', () => {
 
   let uCountry_ID = document.getElementById('uCountryId').value;
 
-  fetch(`/get-states/?country_id=${uCountry_ID}`)
+  fetch(`/get-states/?country_id=${uCountry_ID}&panel=user`)
     .then((res) => res.json())
     .then((data) => {
       let html = '';
@@ -23,9 +23,12 @@ uStateBtn.addEventListener('click', () => {
         uStateND.classList.remove('hidden');
         return;
       }
-      data.states.forEach((s) => {
-        let name = s.name.charAt(0).toUpperCase() + s.name.slice(1);
-        html += `<div class="uState-item flex justify-between items-center p-3 rounded-3xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] transition-all duration-200" data-name="${s.name.toLowerCase()}" onclick="uStateSelected('${s.id}','${name}')"><span>${name}</span></div>`;
+      data.states.forEach((state) => {
+        let stateName = state.name || '';
+        if (stateName && typeof stateName === 'string' && /^[A-Za-z]/.test(stateName)) {
+          stateName = stateName.charAt(0).toUpperCase() + stateName.slice(1);
+        }
+        html += `<div class="uState-item flex justify-between items-center p-3 rounded-3xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] transition-all duration-200" data-name="${stateName}" onclick="uStateSelected('${state.id}','${stateName}')"><span>${stateName}</span></div>`;
       });
       uStateList.innerHTML = html;
     });
@@ -48,7 +51,7 @@ uStateSeaI.addEventListener('keyup', () => {
   let visibleCount = 0;
 
   uSitems.forEach((item) => {
-    let state_name = item.getAttribute('data-name');
+    let state_name = (item.getAttribute('data-name') || '').toLowerCase();
 
     if (state_name.includes(uSvalue)) {
       item.style.display = 'flex';

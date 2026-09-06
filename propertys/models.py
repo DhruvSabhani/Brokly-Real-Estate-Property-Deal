@@ -1,6 +1,7 @@
 from django.db import models
 from accounts.models import CountryCode, State, City, PortalProfile
 from django.utils.translation import get_language, gettext_lazy as _
+from django.utils.text import slugify
 
 
 # Create your models here.
@@ -11,11 +12,12 @@ class PropertyType(models.Model):
     update_at = models.DateTimeField(auto_now=True)
     create_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
+    def translated_type_name(self):
         current_lang = get_language()
-        if current_lang == "gu" and self.type_name_gu:
-            return self.type_name_gu
-        return self.type_name or ""
+        localized_field = f"type_name_{current_lang}"
+        if hasattr(self, localized_field) and getattr(self, localized_field):
+            return getattr(self, localized_field)
+        return self.type_name
 
 
 class PropertyPreferred(models.Model):
@@ -25,11 +27,12 @@ class PropertyPreferred(models.Model):
     update_at = models.DateTimeField(auto_now=True)
     create_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
+    def translated_preferred_name(self):
         current_lang = get_language()
-        if current_lang == "gu" and self.preferred_name_gu:
-            return self.preferred_name_gu
-        return self.preferred_name or ""
+        localized_field = f"preferred_name_{current_lang}"
+        if hasattr(self, localized_field) and getattr(self, localized_field):
+            return getattr(self, localized_field)
+        return self.preferred_name
 
 
 class PropertyFacility(models.Model):
@@ -39,11 +42,12 @@ class PropertyFacility(models.Model):
     update_at = models.DateTimeField(auto_now=True)
     create_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
+    def translated_facilities_name(self):
         current_lang = get_language()
-        if current_lang == "gu" and self.facilities_name_gu:
-            return self.facilities_name_gu
-        return self.facilities_name or ""
+        localized_field = f"facilities_name_{current_lang}"
+        if hasattr(self, localized_field) and getattr(self, localized_field):
+            return getattr(self, localized_field)
+        return self.facilities_name
 
 
 class Property(models.Model):
@@ -69,7 +73,7 @@ class Property(models.Model):
     ]
 
     profile = models.ForeignKey(
-        PortalProfile, on_delete=models.CASCADE, null=True, blank=True
+        "accounts.PortalProfile", on_delete=models.CASCADE, null=True, blank=True
     )
     type = models.ForeignKey(
         PropertyType, on_delete=models.SET_NULL, null=True, blank=True
@@ -87,15 +91,15 @@ class Property(models.Model):
     property_purpose = models.CharField(
         max_length=10, choices=PURPOSE_CHOCICES, default="rent"
     )
-    property_preferred = models.ManyToManyField(PropertyPreferred, blank=True)
-    property_facilities = models.ManyToManyField(PropertyFacility, blank=True)
+    property_preferred = models.ManyToManyField("PropertyPreferred", blank=True)
+    property_facilities = models.ManyToManyField("PropertyFacility", blank=True)
     property_contact = models.JSONField(default=list, blank=True)
     property_description = models.TextField(null=True, blank=True)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False, db_index=True)
+    slug = models.SlugField(max_length=700, null=True, blank=True, db_index=True)
     update_at = models.DateTimeField(auto_now=True)
     create_at = models.DateTimeField(auto_now_add=True)
 
-    @property
     def formatted_property_price(self):
         if self.property_price:
             return f"{int(self.property_price):,}"
@@ -113,23 +117,40 @@ class Property(models.Model):
         value = self.property_purpose or ""
         return str(dict(self.PURPOSE_CHOCICES).get(value, ""))
 
+    def generate_property_slug(self):
+        location = getattr(self, "location", None)
+        property_type = self.type.type_name if self.type else "property"
+        purpose = (
+            self.get_property_purpose_display() if self.property_purpose else "property"
+        )
+        area = ""
+        city = ""
+        if location:
+            area = location.area or ""
+            if location.city:
+                city = location.city.name or ""
+        value = f"{property_type}-for-{purpose}-in-{area}-{city}"
+        return slugify(value)
+
     def __str__(self):
         return self.property_name or str(self.pk)
 
 
 class PropertyLocation(models.Model):
-    property = models.ForeignKey(
-        Property, on_delete=models.CASCADE, null=True, blank=True
+    property = models.OneToOneField(
+        Property,
+        on_delete=models.CASCADE,
+        related_name="location",
     )
     country = models.ForeignKey(
-        CountryCode, on_delete=models.SET_NULL, null=True, blank=True
+        CountryCode, on_delete=models.PROTECT, null=True, blank=True
     )
-    state = models.ForeignKey(State, on_delete=models.SET_NULL, null=True, blank=True)
-    city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True, blank=True)
-    area = models.CharField(max_length=150, null=True, blank=True)
-    landmark = models.CharField(max_length=150, null=True, blank=True)
-    address_line = models.CharField(max_length=255, null=True, blank=True)
-    pincode = models.CharField(max_length=20, null=True, blank=True)
+    state = models.ForeignKey(State, on_delete=models.PROTECT, null=True, blank=True)
+    city = models.ForeignKey(City, on_delete=models.PROTECT, null=True, blank=True)
+    area = models.CharField(max_length=150, blank=True, default="")
+    landmark = models.CharField(max_length=150, blank=True, default="")
+    address_line = models.CharField(max_length=255, blank=True, default="")
+    pincode = models.CharField(max_length=20, blank=True, default="")
     latitude = models.DecimalField(
         max_digits=12, decimal_places=7, null=True, blank=True
     )
@@ -145,9 +166,9 @@ class PropertyLocation(models.Model):
             str(self.address_line) if self.address_line else None,
             str(self.landmark) if self.landmark else None,
             str(self.area) if self.area else None,
-            str(self.city) if self.city else None,
-            str(self.state) if self.state else None,
-            str(self.country) if self.country else None,
+            str(self.city.translated_city_name()) if self.city else None,
+            str(self.state.translated_state_name()) if self.state else None,
+            str(self.country.translated_country_name()) if self.country else None,
         ]
 
         valid_parts = [p for p in parts if p]
@@ -168,12 +189,12 @@ class PropertyLocation(models.Model):
 
 class PropertyPhoto(models.Model):
     property = models.ForeignKey(
-        Property, on_delete=models.CASCADE, null=True, blank=True
+        Property, on_delete=models.CASCADE, related_name="photos"
     )
-    image = models.ImageField(upload_to="property/%Y/%m/%d/", null=True, blank=True)
-    image_title = models.CharField(max_length=150, null=True, blank=True)
+    image = models.ImageField(upload_to="property/photos/", null=True, blank=True)
+    image_title = models.CharField(max_length=150, blank=True, default="")
     is_primary = models.BooleanField(default=False)
-    display_order = models.PositiveIntegerField(default=0)
+    display_order = models.PositiveIntegerField(default=1)
     is_active = models.BooleanField(default=False)
     update_at = models.DateTimeField(auto_now=True)
     create_at = models.DateTimeField(auto_now_add=True)

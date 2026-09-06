@@ -33,7 +33,11 @@ def portal_context(request):
         "property_types": PropertyType.objects.filter(is_active=True),
         "property_preferred": PropertyPreferred.objects.filter(is_active=True),
         "property_facilities": PropertyFacility.objects.filter(is_active=True),
-        "propertys": Property.objects.filter(
+        "count_property": Property.objects.filter(profile=profile_id).count(),
+        "active_property": Property.objects.filter(
+            profile=profile_id, is_active=True
+        ).count(),
+        "disabled_property": Property.objects.filter(
             profile=profile_id, is_active=False
-        ).order_by("-id"),
+        ).count(),
     }

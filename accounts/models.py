@@ -10,6 +10,7 @@ from django.contrib.auth.hashers import make_password, check_password
 import os
 import uuid
 from datetime import timedelta
+from django.utils.translation import get_language, gettext_lazy as _
 
 # Create your models here.
 
@@ -44,8 +45,12 @@ class CountryCode(models.Model):
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return str(self.country_name)
+    def translated_country_name(self):
+        current_lang = get_language()
+        localized_field = f"country_name_{current_lang}"
+        if hasattr(self, localized_field) and getattr(self, localized_field):
+            return getattr(self, localized_field)
+        return self.country_name
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
@@ -146,12 +151,21 @@ class State(models.Model):
         unique_together = ["country_code", "name"]
         ordering = ["name"]
 
-    def __str__(self):
-        return str(self.name)
+    def translated_state_name(self):
+        current_lang = (get_language() or "en").split("-")[0]
+        localized_field = f"state_name_{current_lang}"
+        localized_name = getattr(
+            self,
+            localized_field,
+            None,
+        )
+        return localized_name or self.name
 
 
 class City(models.Model):
-    state = models.ForeignKey("State", on_delete=models.CASCADE, related_name="cities")
+    state = models.ForeignKey(
+        "State", on_delete=models.SET_NULL, null=True, blank=True, related_name="cities"
+    )
     name = models.CharField(max_length=255)
     city_name_gu = models.CharField(max_length=255, blank=True, null=True)
     latitude = models.DecimalField(
@@ -167,8 +181,15 @@ class City(models.Model):
         unique_together = ["state", "name"]
         ordering = ["name"]
 
-    def __str__(self):
-        return str(self.name)
+    def translated_city_name(self):
+        current_lang = (get_language() or "en").split("-")[0]
+        localized_field = f"city_name_{current_lang}"
+        localized_name = getattr(
+            self,
+            localized_field,
+            None,
+        )
+        return localized_name or self.name
 
 
 class Language(models.Model):

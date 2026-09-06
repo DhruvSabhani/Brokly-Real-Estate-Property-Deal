@@ -29,14 +29,26 @@ class ProfileAddresses(models.Model):
     def profile_fully_address(self):
         parts = [
             str(self.area) if self.area else None,
-            str(self.city) if self.city else None,
-            str(self.state) if self.state else None,
-            str(self.country) if self.country else None,
+            str(self.city.translated_city_name()) if self.city else None,
+            str(self.state.translated_state_name()) if self.state else None,
+            str(self.country.translated_country_name()) if self.country else None,
         ]
-        profile_address = ", ".join([p for p in parts if p])
-        if self.pincode:
-            profile_address += f"- {self.pincode}"
+        # profile_address = ", ".join([p for p in parts if p])
+        # if self.pincode:
+        #     profile_address += f"- {self.pincode}"
 
+        # return profile_address
+
+        valid_parts = [p for p in parts if p]
+        if not valid_parts:
+            return ""
+        valid_parts[0] = valid_parts[0].capitalize()
+
+        profile_address = ", ".join(valid_parts)
+        profile_address = profile_address[0].upper() + profile_address[1:]
+
+        if self.pincode:
+            profile_address += f" - {self.pincode}"
         return profile_address
 
     def __str__(self):

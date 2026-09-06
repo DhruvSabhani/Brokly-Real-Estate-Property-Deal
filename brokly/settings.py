@@ -30,6 +30,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LANGUAGE_CODE = "en-us"
+LANGUAGES = [
+    ("en", _("English")),
+    ("gu", _("Gujarati")),
+]
+USE_I18N = True
 
 # Application definition
 
@@ -58,7 +64,9 @@ NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.locale.LocaleMiddleware",
+    # language change middleware
+    "accounts.middleware.PanelLanguageMiddleware",
+    # "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -66,8 +74,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django_browser_reload.middleware.BrowserReloadMiddleware",
     "accounts.middleware.RoleAuthMiddleware",
-    # language change middleware
-    "accounts.middleware.PanelLanguageMiddleware",
 ]
 
 ROOT_URLCONF = "brokly.urls"
@@ -129,13 +135,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "Asia/Kolkata"
-
-USE_I18N = True
-
-LANGUAGES = [("en", "English"), ("gu", "Gujarati")]
 
 USE_TZ = True
 

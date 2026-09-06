@@ -1,10 +1,12 @@
 from django.conf import settings
 from django.urls import reverse
+from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
 from accounts.utils import portal_required
 from django.http import JsonResponse
-from django.utils.translation import gettext as _
+from django.utils.translation import get_language, gettext as _
 from accounts.models import CountryCode, State, City, PortalProfile
+from accounts.views import get_states, get_cities
 from propertys.models import (
     Property,
     PropertyType,
@@ -21,18 +23,32 @@ from django.db import transaction
 
 def portal_get_states(request):
     pro_country_id = request.GET.get("pro_country_id")
-    statemodal = State.objects.filter(
-        country_code=pro_country_id, is_active=True
-    ).values("id", "name", "state_name_gu", "latitude", "longitude")
-    return JsonResponse({"states": list(statemodal)})
+    statemodal = State.objects.filter(country_code=pro_country_id, is_active=True)
+    state_data = [
+        {
+            "id": state.pk,
+            "name": state.translated_state_name(),
+            "latitude": state.latitude,
+            "longitude": state.longitude,
+        }
+        for state in statemodal
+    ]
+    return JsonResponse({"states": state_data})
 
 
 def portal_get_cities(request):
     pro_state_id = request.GET.get("pro_state_id")
-    citymodal = City.objects.filter(state=pro_state_id, is_active=True).values(
-        "id", "name", "city_name_gu", "latitude", "longitude"
-    )
-    return JsonResponse({"cities": list(citymodal)})
+    citymodal = City.objects.filter(state=pro_state_id, is_active=True)
+    city_data = [
+        {
+            "id": city.pk,
+            "name": city.translated_city_name(),
+            "latitude": city.latitude,
+            "longitude": city.longitude,
+        }
+        for city in citymodal
+    ]
+    return JsonResponse({"cities": city_data})
 
 
 @portal_required
@@ -147,6 +163,7 @@ def portal_property_store(request):
             property_obj.property_purpose = propurpose
             property_obj.property_contact = procontact
             property_obj.property_description = prodescription
+            property_obj.slug = property_obj.generate_property_slug()
             property_obj.save()
             # ManyToMany
             preferredfor_ids = []
@@ -323,10 +340,13 @@ def portal_property_create_review(request):
             {
                 "success": True,
                 "property": {
-                    "type": (property_obj.type.type_name if property_obj.type else ""),
-                    "type": (property_obj.type.type_name if property_obj.type else ""),
-                    "name": property_obj.property_name or "",
-                    "price": (property_obj.formatted_property_price or ""),
+                    "type": (
+                        property_obj.type.translated_type_name()
+                        if property_obj.type
+                        else ""
+                    ),
+                    "name": (property_obj.property_name or ""),
+                    "price": (property_obj.formatted_property_price() or ""),
                     "price_period": (
                         property_obj.get_property_price_period_display()
                         if property_obj.property_price_period
@@ -342,14 +362,14 @@ def portal_property_create_review(request):
                         if property_obj.property_purpose
                         else ""
                     ),
-                    "description": property_obj.property_description or "",
+                    "description": (property_obj.property_description or ""),
                     "contacts": (property_obj.property_contact or []),
                     "preferred_for": [
-                        {"name": item.preferred_name}
+                        {"name": item.translated_preferred_name()}
                         for item in (property_obj.property_preferred.all())
                     ],
                     "facilities": [
-                        {"name": item.facilities_name}
+                        {"name": item.translated_facilities_name()}
                         for item in (property_obj.property_facilities.all())
                     ],
                 },
@@ -374,6 +394,8 @@ def portal_property_create_review(request):
 
 @portal_required
 def portal_property_create_disabled_list(request):
+    if request.method != "POST":
+        return JsonResponse({"error": True, "message": _("Invalid request")})
     profile_id = request.session.get("portal_profile")
     property_id = request.session.get("new_property_id")
     if not profile_id or not property_id:
@@ -383,7 +405,7 @@ def portal_property_create_disabled_list(request):
         return JsonResponse(
             {
                 "success": True,
-                "redirect_url": reverse(portal_property_create),
+                "redirect_url": reverse(portal_property_disabled_listings),
             }
         )
     except Exception as e:
@@ -402,11 +424,13 @@ def portal_property_create_active_list(request):
         property_obj = get_object_or_404(
             Property, id=property_id, profile_id=profile_id
         )
-        property_obj.is_active = True
-        property_obj.save()
-
         PropertyLocation.objects.filter(property=property_obj).update(is_active=True)
         PropertyPhoto.objects.filter(property=property_obj).update(is_active=True)
+
+        property_obj.is_active = True
+        property_obj.slug = property_obj.generate_property_slug()
+        property_obj.save()
+
         request.session.pop("new_property_id", None)
         return JsonResponse(
             {
@@ -419,14 +443,203 @@ def portal_property_create_active_list(request):
         return JsonResponse(
             {"error": True, "message": _("Something went wrong. Please try again")}
         )
+        # return JsonResponse({"error": True, "message": str(e)})
 
 
 @portal_required
 def portal_property_active_listings(request):
+    profile_id = request.session.get("portal_profile")
+    pro_active = (
+        Property.objects.filter(profile=profile_id, is_active=True)
+        .select_related("type")
+        .prefetch_related(
+            Prefetch(
+                "photos",
+                queryset=PropertyPhoto.objects.filter(is_active=True).order_by(
+                    "display_order"
+                ),
+                to_attr="prefetched_photos",
+            ),
+        )
+        .order_by("-create_at")
+    )
+
+    serialized_active_pro = []
+    for pro in pro_active:
+        pro_type = pro.type.translated_type_name() if pro.type else ""
+        pro_name = pro.property_name
+        pro_slug = pro.slug
+        all_photos = list(getattr(pro, "prefetched_photos", []))
+        first_photo = all_photos[0] if all_photos else None
+        cover_photo_url = (
+            first_photo.image.url
+            if first_photo and first_photo.image
+            else "/static/images/property-default-img.png"
+        )
+        photo_count = len([p for p in all_photos if p.image])
+        pro_bhk_type = pro.get_property_bhk_type_display()
+        pro_purpose = pro.get_property_purpose_display()
+        pro_price = pro.formatted_property_price()
+        pro_time_period = pro.get_property_price_period_display()
+        pro_location = getattr(pro, "location", None)
+        location_text = pro_location.property_full_address() if pro_location else ""
+
+        serialized_active_pro.append(
+            {
+                "id": pro.pk,
+                "slug": pro_slug,
+                "cover_photo": cover_photo_url,
+                "photo_count": photo_count,
+                "type": pro_type,
+                "name": pro_name,
+                "bhk_type": pro_bhk_type,
+                "purpose": pro_purpose,
+                "price": pro_price,
+                "time_period": pro_time_period,
+                "location": location_text,
+            }
+        )
+
     return render(
         request,
         "portal/propertys/property-active-listings.html",
         {
             "active": "portalPropertyActiveListings",
+            "serialized_active_pro": serialized_active_pro,
         },
+    )
+
+
+@portal_required
+def portal_property_disabled_listings(request):
+    profile_id = request.session.get("portal_profile")
+    pro_disabled = (
+        Property.objects.filter(profile=profile_id, is_active=False)
+        .select_related("type")
+        .prefetch_related(
+            Prefetch(
+                "photos",
+                queryset=PropertyPhoto.objects.filter(is_active=False).order_by(
+                    "display_order"
+                ),
+                to_attr="prefetched_photos",
+            ),
+        )
+        .order_by("-create_at")
+    )
+
+    serialized_disabled_pro = []
+    for pro in pro_disabled:
+        pro_type = pro.type.translated_type_name() if pro.type else ""
+        pro_name = pro.property_name
+        pro_slug = pro.slug
+        all_photos = list(getattr(pro, "prefetched_photos", []))
+        first_photo = all_photos[0] if all_photos else None
+        cover_photo_url = (
+            first_photo.image.url
+            if first_photo and first_photo.image
+            else "/static/images/property-default-img.png"
+        )
+        photo_count = len([p for p in all_photos if p.image])
+        pro_bhk_type = pro.get_property_bhk_type_display()
+        pro_purpose = pro.get_property_purpose_display()
+        pro_price = pro.formatted_property_price()
+        pro_time_period = pro.get_property_price_period_display()
+        pro_location = getattr(pro, "location", None)
+        location_text = pro_location.property_full_address() if pro_location else ""
+
+        serialized_disabled_pro.append(
+            {
+                "id": pro.pk,
+                "slug": pro_slug,
+                "cover_photo": cover_photo_url,
+                "photo_count": photo_count,
+                "type": pro_type,
+                "name": pro_name,
+                "bhk_type": pro_bhk_type,
+                "purpose": pro_purpose,
+                "price": pro_price,
+                "time_period": pro_time_period,
+                "location": location_text,
+            }
+        )
+
+    return render(
+        request,
+        "portal/propertys/property-disabled-listings.html",
+        {
+            "active": "portalPropertyDisabledListings",
+            "serialized_disabled_pro": serialized_disabled_pro,
+        },
+    )
+
+
+@portal_required
+def portal_property_active_listings_disabled(request, pro_id):
+    if request.method != "POST":
+        return JsonResponse({"error": True, "message": _("Invalid request")})
+    profile_id = request.session.get("portal_profile")
+    try:
+        property_obj = Property.objects.select_related("type").get(
+            profile=profile_id, id=pro_id
+        )
+        PropertyLocation.objects.filter(property=property_obj).update(is_active=False)
+        PropertyPhoto.objects.filter(property=property_obj).update(is_active=False)
+    except Property.DoesNotExist:
+        return JsonResponse({"error": True, "error": "Property not found"})
+    property_obj.is_active = False
+    property_obj.save()
+
+    return JsonResponse(
+        {
+            "success": True,
+            "redirect_url": reverse(portal_property_disabled_listings),
+        }
+    )
+
+
+@portal_required
+def portal_property_disabled_listings_active(request, pro_id):
+    if request.method != "POST":
+        return JsonResponse({"error": True, "message": _("Invalid request")})
+    profile_id = request.session.get("portal_profile")
+    try:
+        property_obj = Property.objects.select_related("type").get(
+            profile=profile_id, id=pro_id
+        )
+        PropertyLocation.objects.filter(property=property_obj).update(is_active=True)
+        PropertyPhoto.objects.filter(property=property_obj).update(is_active=True)
+    except Property.DoesNotExist:
+        return JsonResponse({"error": True, "error": "Property not found"})
+    property_obj.is_active = True
+    property_obj.save()
+
+    return JsonResponse(
+        {
+            "success": True,
+            "redirect_url": reverse(portal_property_active_listings),
+        }
+    )
+
+
+@portal_required
+def portal_property_active_disabled_listings_delete(request, pro_id):
+    if request.method != "POST":
+        return JsonResponse({"error": True, "message": _("Invalid request")})
+    profile_id = request.session.get("portal_profile")
+    try:
+        property_obj = (
+            Property.objects.select_related("type")
+            .get(profile=profile_id, id=pro_id)
+            .delete()
+        )
+        PropertyLocation.objects.filter(property=property_obj).delete()
+        PropertyPhoto.objects.filter(property=property_obj).delete()
+    except Property.DoesNotExist:
+        return JsonResponse({"error": True, "error": "Property not found"})
+
+    return JsonResponse(
+        {
+            "success": True,
+        }
     )

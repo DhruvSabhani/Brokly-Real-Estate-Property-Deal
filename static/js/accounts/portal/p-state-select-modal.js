@@ -14,7 +14,7 @@ pStateBtn.addEventListener('click', () => {
 
   let pCountry_ID = document.getElementById('pCountryId').value;
 
-  fetch(`/get-states/?country_id=${pCountry_ID}`)
+  fetch(`/portal/get-states/?country_id=${pCountry_ID}&panel=portal`)
     .then((res) => res.json())
     .then((data) => {
       let html = '';
@@ -23,11 +23,20 @@ pStateBtn.addEventListener('click', () => {
         pStateND.classList.remove('hidden');
         return;
       }
-      data.states.forEach((s) => {
-        let name = s.name.charAt(0).toUpperCase() + s.name.slice(1);
-        html += `<div class="pState-item flex justify-between items-center p-3 rounded-3xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] transition-all duration-200" data-name="${s.name.toLowerCase()}" onclick="pStateSelected('${s.id}','${name}')"><span>${name}</span></div>`;
+      pStateND.classList.add('hidden');
+      data.states.forEach((state) => {
+        let stateName = state.name || '';
+        if (stateName && typeof stateName === 'string' && /^[A-Za-z]/.test(stateName)) {
+          stateName = stateName.charAt(0).toUpperCase() + stateName.slice(1);
+        }
+        html += `<div class="pState-item flex justify-between items-center p-3 rounded-3xl cursor-pointer hover:bg-orange-50 dark:hover:bg-[#1F2937] transition-all duration-200" data-name="${stateName}" onclick="pStateSelected('${state.id}','${stateName}')"><span>${stateName}</span></div>`;
       });
       pStateList.innerHTML = html;
+    })
+    .catch((error) => {
+      console.log(error);
+      pStateList.innerHTML = '';
+      pStateND.classList.remove('hidden');
     });
 });
 function pCloseStateModal() {
@@ -43,12 +52,12 @@ function pStateSelected(id, name) {
   pCloseStateModal();
 }
 pStateSeaI.addEventListener('keyup', () => {
-  let pSvalue = pStateSeaI.value.toLowerCase();
+  let pSvalue = pStateSeaI.value.trim().toLowerCase();
   let pSitems = document.querySelectorAll('.pState-item');
   let visibleCount = 0;
 
   pSitems.forEach((item) => {
-    let state_name = item.getAttribute('data-name');
+    const state_name = (item.getAttribute('data-name') || '').toLowerCase();
 
     if (state_name.includes(pSvalue)) {
       item.style.display = 'flex';

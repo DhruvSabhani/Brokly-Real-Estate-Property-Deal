@@ -82,9 +82,9 @@
       {% include 'partials/user/mobile_footer.html' %}
     </div>
     {% include 'logout_modal.html' %}
-    <script src="{% static 'js/user/image-loader.js' %}" defer></script>
-    <script src="{% static 'js/logout-modal.js' %}" defer></script>
-    <script src="{% static 'js/user/filter-lists-scroll.js' %}" defer></script>
+    <script src="{% static 'js/user/image-loader.js' %}?v=1.0.1" defer></script>
+    <script src="{% static 'js/logout-modal.js' %}?v=1.0.1" defer></script>
+    <script src="{% static 'js/user/filter-lists-scroll.js' %}?v=1.0.1" defer></script>
     <script defer>
       document.querySelectorAll('.search-wrapper').forEach((wrapper) => {
         const searchInput = wrapper.querySelector('.search-input')

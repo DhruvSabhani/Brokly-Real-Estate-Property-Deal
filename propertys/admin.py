@@ -53,6 +53,7 @@ class PropertyAdmin(admin.ModelAdmin):
         "id",
         "is_active",
         "profile",
+        "slug",
         "type",
         "property_name",
         "property_price",
