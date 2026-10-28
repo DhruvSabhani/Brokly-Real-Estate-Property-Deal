@@ -337,7 +337,7 @@ function verifyOTP() {
         pLogin.classList.replace('flex', 'hidden');
         pProfile.classList.remove('hidden');
         pProfile.classList.add('flex');
-      }
+      }   
       if (data.profile) {
         pname.value = data.profile.name || '';
         pSelectedState.innerText = data.profile.state_name || window.stateEr.selectState;

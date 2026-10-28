@@ -8,7 +8,7 @@ def admin_required(view_func):
     def wrapper(requset, *args, **kwargs):
         admin_id = requset.session.get("admin_login")
         if not admin_id:
-            return redirect("admin-login")
+            return redirect("admin_login")
         try:
             admin = CustomUser.objects.get(
                 pk=admin_id, is_superuser=True, is_staff=True

@@ -173,11 +173,11 @@ class PropertyLocation(models.Model):
 
         valid_parts = [p for p in parts if p]
         if not valid_parts:
-            return ""
-        valid_parts[0] = valid_parts[0].capitalize()
+            return f"- {self.pincode}" if self.pincode else ""
+        # valid_parts[0] = valid_parts[0].capitalize()
 
         property_location = ", ".join(valid_parts)
-        property_location = property_location[0].upper() + property_location[1:]
+        property_location = property_location.title()
 
         if self.pincode:
             property_location += f" - {self.pincode}"

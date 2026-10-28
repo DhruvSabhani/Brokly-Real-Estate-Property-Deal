@@ -1,58 +1,59 @@
-// nav image loader
-const uimg = document.getElementById('uImg')
-const uimgloader1 = document.getElementById('uImgLoader1')
-const uimgloader2 = document.getElementById('uImgLoader2')
-// header image loader
-const uprofilebtn = document.getElementById('uProfileBtn')
-const uimgHead = document.getElementById('uImgHead')
-const uimgHeadloader = document.getElementById('uImgHeadLoader')
-const uprofilemenu = document.getElementById('uProfileMenu')
-// -----------------------------------------------------------------------------------
-// show loader
-function showLoader(loader) {
-    loader.classList.remove('hidden')
-    loader.classList.add('flex')
-}
-// hide loader
-function hideLoader(loader) {
-    loader.classList.remove('flex')
-    loader.classList.add('hidden')
+const elements = {
+  // nav image loader
+  uImg: document.getElementById('uImg'),
+  uImgLoader1: document.getElementById('uImgLoader1'),
+  uImgLoader2: document.getElementById('uImgLoader2'),
+  // header image loader
+  uProfileBtn: document.getElementById('uProfileBtn'),
+  uImgHead: document.getElementById('uImgHead'),
+  uImgHeadLoader: document.getElementById('uImgHeadLoader'),
+  uProfileMenu: document.getElementById('uProfileMenu'),
+  // settings image loader
+  uSetProfileImg: document.getElementById('uSetProfileImg'),
+  uSetProfileImgLoad: document.getElementById('uSetProfileImgLoad'),
+  // settings profile edit image loader
+  uEditProfileImg: document.getElementById('uEditProfileImg'),
+  uEditProfileImgLoad: document.getElementById('uEditProfileImgLoad'),
+};
+
+const DEFAULT_AVATAR = "{% static 'images/avatar.png' %}";
+
+const showLoader = (loader) => {
+  if (!loader) return;
+  loader.classList.replace('hidden', 'flex');
+};
+
+const hideLoader = (loader) => {
+  if (!loader) return;
+  loader.classList.replace('flex', 'hidden');
+};
+
+function manageImageLoading(imgElement, loaders) {
+  if (!imgElement) return;
+  const loaderList = Array.isArray(loaders) ? loaders : [loaders];
+  loaderList.forEach(showLoader);
+  const clearLoaders = () => loaderList.forEach(hideLoader);
+  if (imgElement.complete && imgElement.naturalWidth > 0) {
+    clearLoaders();
+  } else {
+    imgElement.addEventListener('load', clearLoaders);
+    imgElement.addEventListener('error', () => {
+      clearLoaders();
+      imgElement.src = DEFAULT_AVATAR;
+    });
+  }
 }
 
-// nav image loader
-showLoader(uimgloader1)
-showLoader(uimgloader2)
-if (uimg.complete) {
-    hideLoader(uimgloader1)
-    hideLoader(uimgloader2)
-} else {
-    uimg.onload = () => {
-        hideLoader(uimgloader1)
-        hideLoader(uimgloader2)
-    }
-
-    uimg.onerror = () => {
-        hideLoader(uimgloader1)
-        hideLoader(uimgloader2)
-        uimg.src = "{% static 'images/avatar.png' %}"
-    }
+manageImageLoading(elements.uImg, [elements.uImgLoader1, elements.uImgLoader2]);
+manageImageLoading(elements.uImgHead, elements.uImgHeadLoader);
+manageImageLoading(elements.uSetProfileImg, elements.uSetProfileImgLoad);
+manageImageLoading(elements.uEditProfileImg, elements.uEditProfileImgLoad);
+if (elements.uProfileBtn && elements.uProfileMenu) {
+  elements.uProfileBtn.addEventListener('click', () => {
+    elements.uProfileMenu.classList.toggle('opacity-0');
+    elements.uProfileMenu.classList.toggle('scale-95');
+    elements.uProfileMenu.classList.toggle('invisible');
+  });
 }
 
-// header image loader
-showLoader(uimgHeadloader);
-if (uimgHead.complete) {
-    hideLoader(uimgHeadloader);
-} else {
-    uimgHead.onload = () => {
-        hideLoader(uimgHeadloader);
-    }
-    uimgHead.onerror = () => {
-        hideLoader(uimgHeadloader);
-        uimgHead.src = "{% static 'images/avatar.png' %}";
-    }
-}
-uprofilebtn.addEventListener('click', () => {
-    uprofilemenu.classList.toggle('opacity-0');
-    uprofilemenu.classList.toggle('scale-95');
-    uprofilemenu.classList.toggle('invisible');
-});
+

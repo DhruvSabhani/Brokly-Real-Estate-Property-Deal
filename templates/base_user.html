@@ -6,6 +6,7 @@
     {% load static %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>
       {% block utitle %}
         {% trans 'Home' %}
@@ -17,11 +18,14 @@
     {% tailwind_css %}
     {% comment %}CSS{% endcomment %}
     <link rel="stylesheet" as="style" href="{% static 'css/dashboard/base.css' %}" />
+    {% comment %} leaflet map link {% endcomment %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   </head>
-  <body id="u-dashboard" class="w-full bg-[#fdfdfd] text-black dark:bg-[#0e0d0d] dark:text-white tracking-wide transition-all duration-300">
+  <body id="u-dashboard" class="w-full bg-[#fafafa] text-black dark:bg-[#121212] dark:text-white tracking-wide transition-all duration-300">
     <div id="screen-fix" class="w-screen h-screen hidden fixed inset-0 bg-black/90 backdrop-blur-0 z-50 overflow-hidden scrollbar-hide"></div>
     {% comment %}navbar{% endcomment %}
-    <aside id="navbar" class="group fixed inset-y-0 left-0 max-h-screen z-50 w-96 lg:w-[60px] lg:hover:w-72 flex flex-col overflow-hidden bg-[#ffffff] lg:bg-[#fdfdfd] hover:bg-[#ffffff] dark:bg-[#0e0d0d] dark:lg:bg-[#0e0d0d] dark:hover:bg-[#0e0d0d] text-black dark:text-white -translate-x-full lg:translate-x-0 transition-all duration-300">
+    <aside id="navbar" class="group fixed inset-y-0 left-0 max-h-screen z-50 w-96 lg:w-[60px] lg:hover:w-72 flex flex-col overflow-hidden bg-[#FDFDFD] text-black dark:bg-[#121212] dark:text-white -translate-x-full lg:translate-x-0 transition-all duration-300" role="dialog" aria-modal="true">
       {% include 'partials/user/navbar.html' %}
     </aside>
     {% comment %}dasktop header view{% endcomment %}
@@ -40,33 +44,30 @@
       const uNavBtn = document.getElementById('u-menu-btn')
       const navbar = document.getElementById('navbar')
       const umNavCloseBtn = document.getElementById('u-m-nav-close-btn')
-
       function openNav() {
         ubody.classList.add('overflow-hidden', 'scrollbar-hide')
         usfix.classList.remove('hidden')
         navbar.classList.remove('-translate-x-full')
       }
-      
       function closeNav() {
         ubody.classList.remove('overflow-hidden', 'scrollbar-hide')
         usfix.classList.add('hidden')
         navbar.classList.add('-translate-x-full')
       }
-      
       uNavBtn?.addEventListener('click', openNav)
       umNavCloseBtn?.addEventListener('click', closeNav)
       usfix?.addEventListener('click', closeNav)
     </script>
 
     {% comment %}main content{% endcomment %}
-    <main class="lg:ml-[60px] mb-20 min-h-full bg-[#fdfdfd] dark:bg-[#0e0d0d] px-1">
+    <main class="px-1 lg:ml-[60px] min-h-screen bg-[#FFFFFF] text-black dark:bg-[#121212] dark:text-white">
       {% block ucontent %}
       {% endblock %}
     </main>
     {% comment %}desktop bottom near me button{% endcomment %}
     {% if active == 'home' %}
-      <div class="fixed bottom-10 left-[50%] hidden lg:flex justify-center items-center z-40">
-        <a href="{% url 'user-near-me' %}" id="nearMeBtn" title="{% trans 'Near Me' %}" class="flex justify-center items-center gap-2 px-4 h-10 rounded-full bg-orange-500 text-white shadow-[0_0_5px_rgba(0,0,0,0.6)] dark:shadow-[0_0_50px_rgba(255,255,255,0.2)] active:scale-95 transition-all duration-1000">
+      <div class="fixed bottom-10 left-[46%] hidden lg:flex justify-center items-center z-40">
+        <a href="{% url 'accounts:user_near_me' %}" id="nearMeBtn" title="{% trans 'Near Me' %}" class="flex justify-center items-center gap-2 px-4 h-10 rounded-full bg-orange-500 text-white shadow-[0_0_5px_rgba(0,0,0,0.6)] dark:shadow-[0_0_50px_rgba(255,255,255,0.2)] active:scale-95 transition-all duration-1000">
           <div class="flex justify-center items-center">
             <svg xmlns="{% static 'icons/map-pin.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin w-5 h-5">
               <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
@@ -78,34 +79,726 @@
       </div>
     {% endif %}
 
-    <div class="lg:hidden fixed bottom-0 right-0 z-40 w-full px-1 bg-[#fafafa] dark:bg-[#111010] shadow-lg">
+    <div class="fixed bottom-0 right-0 z-40 w-full px-1 bg-[#fafafa] dark:bg-[#111010] shadow-lg">
       {% include 'partials/user/mobile_footer.html' %}
+    </div>
+    {% comment %} address modal html {% endcomment %}
+    <div id="uAddressModal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
+      <div id="uAddressModalBackdrop" class="absolute inset-0 bg-black/50 backdrop-blur-0 opacity-100 transition-opacity duration-300 ease-out"></div>
+      <div id="uAddreeModalPanel" class="absolute top-0 right-0 w-full h-full lg:max-w-[500px] bg-[#FDFDFD] dark:bg-[#121212] flex flex-col transform translate-x-0 transition-transform duration-300 ease-out">
+        {% comment %} header {% endcomment %}
+        <div class="w-full px-4 py-2 flex justify-between items-center">
+          <div class="flex items-center gap-2">
+            <h1 class="text-xl lg:text-lg font-semibold tracking-wide">{% trans "Manage Addresses" %}</h1>
+          </div>
+          <button id="uCloseAddressModalBtn" class="w-10 h-10 flex justify-center items-center rounded-full text-black/80 dark:text-white/80 transition-colors">
+            <svg xmlns="{% static 'icons/x.svg' %}" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x">
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </button>
+        </div>
+        <div id="uAddressContainer" class="w-full h-full flex flex-col items-start overflow-y-auto px-4 transition-all duration-300 ease-out opacity-100 scale-100">
+        {% comment %} <div id="uAddressContainer" class="w-full h-full hidden flex-col items-start overflow-y-auto px-4 transition-all duration-300 ease-out opacity-0 scale-0"> {% endcomment %}
+          {% comment %} add new address btn {% endcomment %}
+          <button type="button" id="uAddAddressTriggerBtn" class="bg-orange-500 text-white rounded-xl text-xs px-4 py-2 mb-3 flex items-center gap-2 font-medium text-right cursor-pointer">
+              <svg xmlns="{% static 'icons/plus.svg' %}" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus preview-icon"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+              {% trans "Add New Address" %}
+          </button>
+          {% comment %} selected address {% endcomment %}
+          {% if uDefaultAddress %}
+            <label class="u-address-card-container block px-2 py-2 w-full bg-transparent hover:bg-black/5 dark:hover:bg-white/5 rounded-lg relative cursor-pointer transition-all duration-300">
+              <div class="flex justify-between items-start">
+                <div class="flex justify-center items-center gap-3">
+                  <input type="radio" name="selected_address" value="{{ uDefaultAddress.id }}" checked class="select-address mt-1 w-4 h-4 peer hidden">
+                  <div class="rounded-xl px-3 py-3 flex justify-center items-center bg-[#fff8f4] dark:bg-[#2d221c]">
+                    <svg xmlns="{% static 'icons/house.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house preview-icon text-[#222222] dark:text-[#ffaa77]"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                  </div>
+                  <div class="flex flex-col justify-center items-center">
+                    <p class="max-w-[320px] text-gray-900 dark:text-white font-normal text-sm">{{ uDefaultAddress }}</p>
+                  </div>
+                </div>
+                <div class="relative flex justify-center items-start px-4">
+                  <button onclick="event.preventDefault(); event.stopPropagation();" class="u-edit-address absolute flex justify-center items-center w-8 h-8 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors rounded-full">
+                    <svg xmlns="{% static 'icons/ellipsis-vertical.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis-vertical-icon lucide-ellipsis-vertical w-[18px] text-gray-600 dark:text-gray-300"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                  </button>
+                  <div onclick="event.preventDefault(); event.stopPropagation();" class="u-edit-address-menu hidden absolute w-32 -top-1 right-12 z-50 origin-top-right overflow-hidden rounded-xl border border-black/10 bg-white shadow transition-all duration-200 dark:border-white/10 dark:bg-[#111111]">
+                    <button type="button" onclick="event.stopPropagation();" data-id="{{ uDefaultAddress.id }}" class="u-edit-address-btn w-full text-left block rounded-t-xl px-3 py-1.5 text-sm text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors font-medium"><span>{% trans 'Edit' %}</span></button>
+                    <hr class="border-black/5 dark:border-white/5"/>
+                    <button type="button" onclick="event.stopPropagation();" data-id="{{ uDefaultAddress.id }}" class="u-delete-btn-address w-full text-left block rounded-b-xl px-3 py-1.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors font-medium"><span>{% trans 'Delete' %}</span></button>
+                  </div>
+                </div>
+              </div>
+            </label>
+          {% endif %}
+          {% comment %} select address list {% endcomment %}
+          {% for address in uAddressList %}
+            <label class="u-address-card-container block px-2 py-2 w-full bg-transparent hover:bg-black/5 dark:hover:bg-white/5 rounded-lg relative cursor-pointer transition-all duration-300">
+              <div class="flex justify-between items-start">
+                <div class="flex justify-center items-center gap-3">
+                  <input type="radio" name="selected_address" value="{{ address.id }}" class="select-address mt-1 w-4 h-4 peer hidden">
+                  <div class="rounded-xl px-3 py-3 flex justify-center items-center bg-[#f4f4f5] dark:bg-[#18181b]">
+                    <svg xmlns="{% static 'icons/map-pin.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin preview-icon text-[#71717a] dark:text-[#a1a1aa]"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+                  </div>
+                  <div class="flex flex-col justify-center items-center">
+                    <p class="max-w-[350px] text-gray-600 dark:text-gray-400 font-normal text-sm">{{ address }}</p>
+                  </div>
+                </div>
+                <div class="relative flex justify-center items-start px-4">
+                  <button onclick="event.preventDefault(); event.stopPropagation();" class="u-edit-address absolute flex justify-center items-center w-8 h-8 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors rounded-full">
+                    <svg xmlns="{% static 'icons/ellipsis-vertical.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis-vertical-icon lucide-ellipsis-vertical w-[18px] text-gray-600 dark:text-gray-300"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                  </button>
+                  <div onclick="event.preventDefault(); event.stopPropagation();" class="u-edit-address-menu hidden absolute w-32 -top-1 right-12 z-50 origin-top-right overflow-hidden rounded-xl border border-black/10 bg-white shadow transition-all duration-200 dark:border-white/10 dark:bg-[#111111]">
+                    <button type="button" onclick="event.stopPropagation();" data-id="{{ address.id }}" class="u-edit-address-btn w-full text-left block rounded-t-xl px-3 py-1.5 text-sm text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors font-medium"><span>{% trans 'Edit' %}</span></button>
+                    <hr class="border-black/5 dark:border-white/5"/>
+                    <button type="button" onclick="event.stopPropagation();" data-id="{{ address.id }}" class="u-delete-btn-address w-full text-left block rounded-b-xl px-3 py-1.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors font-medium"><span>{% trans 'Delete' %}</span></button>
+                  </div>
+                </div>
+              </div>
+            </label>
+          {% endfor %}
+        </div>
+        {% comment %} add address form container html {% endcomment %}
+        <div id="uAddressFormContainer" class="w-full hidden flex-col justify-center items-start overflow-y-auto px-4 transition-all duration-300 ease-out opacity-0 scale-95">
+        <!-- {% comment %} <div id="uAddressFormContainer" class="w-full h-full flex flex-col justify-center items-start overflow-y-auto px-4 transition-all duration-300 ease-out opacity-100 scale-100"> {% endcomment %} -->
+          <!-- {% comment %} action="{% url 'common.add_profile_address' %}" {% endcomment %} -->
+          <form id="uAddressForm" method="POST" action="{% url 'common:add_profile_address' %}" enctype="multipart/form-data"  class="w-full h-full flex flex-col justify-center items-start">
+            {% csrf_token %}
+            <div class="w-full h-full flex flex-col justify-between items-start">
+              <div class="overflow-y-auto w-full h-full mb-16 flex flex-col items-start gap-x-2 gap-y-2">
+                {% comment %} map pin {% endcomment %}
+                <div class="w-full leading-none flex flex-col">
+                  <p class="text-sm font-semibold text-black/90 dark:text-white/90">{% trans 'Select on Map' %}</p>
+                  <p class="text-sm text-black/70 dark:text-white/70 mb-1">{% trans "click or drag the marker to select your location." %}</p>
+                  <div id="uAddAddressMap" class="w-full h-[220px] rounded-2xl z-0 border border-black/10 dark:border-white/10"></div>
+                  <input type="hidden" id="uAddAddressLatitude" name="latitude">
+                  <input type="hidden" id="uAddAddressLongitude" name="longitude">
+                </div>
+                {% comment %} country field {% endcomment %}
+                <div class="w-full flex flex-col">
+                  <label for="uAddAddressCountry" class="text-sm py-1 font-semibold text-black/90 dark:text-white/90">{% trans 'Country' %}<span class="ml-1 text-red-500">*</span></label>
+                  <div class="relative">
+                    <select id="uAddAddressCountry" name="country" class="w-full appearance-none text-[15px] flex justify-between items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur-xl px-2 py-2">
+                      {% comment %} <option value="" class="text-black">{% trans "Select country" %}</option> {% endcomment %}
+                      {% for country in countries %}
+                        <option class="text-black" value="{{ country.id }}" data-country-lat="{{ country.latitude|default:'' }}"
+                          data-country-lng="{{ country.longitude|default:'' }}" {% if uDefaultAddress.country.id == country.id %}selected{% endif %}>{{ country.translated_country_name }}</option>
+                      {% endfor %}
+                    </select>
+                    <svg class="pointer-events-none absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9 6 6 6-6"/>
+                    </svg>
+                  </div>
+                  <p class="u-add-address-error text-sm wrap-break-word leading-tight text-red-600 px-1"></p>
+                </div>
+                {% comment %} state field {% endcomment %}
+                <div class="w-full flex flex-col">
+                  <label for="uAddAddressState" class="text-sm py-1 font-semibold text-black/90 dark:text-white/90">{% trans 'State' %}<span class="ml-1 text-red-500">*</span></label>
+                  <div class="relative">
+                    <select id="uAddAddressState" name="state" class="w-full appearance-none text-[15px] flex justify-between items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur-xl px-2 py-2">
+                      <option value="" class="text-black">{% trans "Select state" %}</option>
+                    </select>
+                    <svg class="pointer-events-none absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9 6 6 6-6"/>
+                    </svg>
+                  </div>
+                  <p class="u-add-address-error text-sm wrap-break-word leading-tight text-red-600 px-1"></p>
+                </div>
+                {% comment %} city field {% endcomment %}
+                <div class="w-full flex flex-col">
+                  <label for="uAddAddressCity" class="text-sm py-1 font-semibold text-black/90 dark:text-white/90">{% trans 'City' %}<span class="ml-1 text-red-500">*</span></label>
+                  <div class="relative">
+                    <select id="uAddAddressCity" name="city" class="w-full appearance-none text-[15px] flex justify-between items-center outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur-xl px-2 py-2">
+                      <option value="" class="text-black">{% trans "Select city" %}</option>
+                    </select>
+                    <svg class="pointer-events-none absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9 6 6 6-6"/>
+                    </svg>
+                  </div>
+                  <p class="u-add-address-error text-sm wrap-break-word leading-tight text-red-600 px-1"></p>
+                </div>
+                {% comment %} area field {% endcomment %}
+                <div class="w-full flex flex-col">
+                  <label for="uAddAddressArea" class="text-sm py-1 font-semibold text-black/90 dark:text-white/90">{% trans 'Area / Locality' %}<span class="ml-1 text-red-500">*</span></label>
+                  <input type="text" name="area" id="uAddAddressArea" class="w-full text-[15px] outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur-xl px-2 py-2" placeholder="{% trans 'e.g. Satellite, Navrangpura' %}"/>
+                  <p class="u-add-address-error text-sm wrap-break-word leading-tight text-red-600 px-1"></p>
+                </div>
+                {% comment %} pincode field {% endcomment %}
+                <div class="w-full flex flex-col">
+                  <label for="uAddAddressPincode" class="text-sm py-1 font-semibold text-black/90 dark:text-white/90">{% trans 'Pincode' %}<span class="ml-1 text-red-500">*</span></label>
+                  <input type="text" id="uAddAddressPincode" name="pincode"  class="w-full text-[15px] outline-0 border rounded-lg border-black/15 dark:border-white/15 bg-transparent backdrop-blur-xl px-2 py-2" autocomplete="postal-code" placeholder="{% trans 'e.g., 380054 or SW1A 1AA' %}"/>
+                  <p class="u-add-address-error text-sm wrap-break-word leading-tight text-red-600 px-1"></p>
+                </div>
+              </div>
+              {% comment %} cancel and save btn {% endcomment %}
+              <div class="w-full px-3 py-2 gap-3 flex justify-between h-16 lg:h-14 fixed bottom-0 left-0 bg-[#FDFDFD] dark:bg-[#121212] shadow-[0_-4px_12px_rgba(0,0,0,0.03)] z-10">
+                <!-- cancel btn -->
+                <button type="button" id="uAddAddressCancelBtn" class="w-full rounded-xl border-2 border-red-500/80 text-red-500 text-[15px] font-semibold tracking-wide transition-all duration-150">{% trans "Cancel" %}</button>
+                <!-- save btn -->
+                <button type="submit" id="uAddAddressSaveBtn" class="w-full flex justify-center items-center rounded-xl bg-orange-500 text-white text-[15px] font-semibold tracking-wide transition-all duration-150">
+                  <span id="uAddAddressSaveBtnText" class="transition-all duration-200 opacity-100 scale-100">{% trans "Save Address" %}</span>
+                  <div id="uAddAddressSaveBtnLoader" class="absolute hidden opacity-0 scale-90 transition-all duration-200">
+                    <div class="w-6 h-6 border-[4px] border-white/30 rounded-full border-t-white animate-[spin_0.3s_linear_infinite]"></div>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
     {% include 'logout_modal.html' %}
     <script src="{% static 'js/user/image-loader.js' %}?v=1.0.1" defer></script>
-    <script src="{% static 'js/logout-modal.js' %}?v=1.0.1" defer></script>
     <script src="{% static 'js/user/filter-lists-scroll.js' %}?v=1.0.1" defer></script>
+    <script src="{% static 'js/logout-modal.js' %}?v=1.0.1" defer></script>
     <script defer>
       document.querySelectorAll('.search-wrapper').forEach((wrapper) => {
-        const searchInput = wrapper.querySelector('.search-input')
-        const searchClearBtn = wrapper.querySelector('.clear-search-btn')
-      
-        if (!searchInput || !searchClearBtn) return
-      
+        const searchInput = wrapper.querySelector('.search-input');
+        const searchClearBtn = wrapper.querySelector('.clear-search-btn');
+        if (!searchInput || !searchClearBtn) return;
         function toggleSeatchClearBtn() {
-          searchClearBtn.classList.toggle('hidden', searchInput.value.trim() === '')
+          searchClearBtn.classList.toggle('hidden', searchInput.value.trim() === '');
         }
-      
-        searchInput.addEventListener('input', toggleSeatchClearBtn)
-      
+        searchInput.addEventListener('input', toggleSeatchClearBtn);
         searchClearBtn.addEventListener('click', () => {
-          searchInput.value = ''
-          searchInput.focus()
-          toggleSeatchClearBtn()
+          searchInput.value = '';
+          searchInput.focus();
+          toggleSeatchClearBtn();
         })
-        toggleSeatchClearBtn()
+        toggleSeatchClearBtn();
       })
     </script>
+    {% comment %} address box {% endcomment %}
+    <script defer>
+      document.addEventListener('DOMContentLoaded', (e) => {
+        e.preventDefault();
+        // address
+        const uAddressBtns = document.querySelectorAll(".uAddressTriggerBtn");
+        // address modal
+        const uAddressModal = document.getElementById('uAddressModal');
+        const uAddressModalBackdrop = document.getElementById('uAddressModalBackdrop');
+        const uAddreeModalPanel = document.getElementById('uAddreeModalPanel');
+        const uCloseAddressModalBtn = document.getElementById('uCloseAddressModalBtn');
+        // all address
+        const uAllAddress = document.querySelectorAll(".select-address");
+        // address edit option(edti,delete)
+        const uEditAddress = document.querySelectorAll('.u-edit-address');
+        const uEditBtnAddress = document.querySelectorAll('.u-edit-address-btn');
+        const uDeleteBtnAddress = document.querySelectorAll('.u-delete-btn-address');
+        // new address add
+        const uAddressContainer = document.getElementById('uAddressContainer');
+        const uAddAddressTriggerBtn = document.getElementById('uAddAddressTriggerBtn');
+        const uAddressFormContainer = document.getElementById('uAddressFormContainer');
+        const uAddressForm = document.getElementById('uAddressForm');
+        // new address map, latitude and longitude
+        const mapElement = document.getElementById("uAddAddressMap");
+        const uAddAddressLatitude = document.getElementById("uAddAddressLatitude");
+        const uAddAddressLongitude = document.getElementById("uAddAddressLongitude");
+        let map = null;
+        let marker = null;
+        let DEFAULT_LOCATION = { lat: 0, lng: 0 };
+        let DEFAULT_ZOOM = 3;
+        // select country, state, city field
+        const uAddAddressCountry = document.getElementById('uAddAddressCountry');
+        const uAddAddressState = document.getElementById('uAddAddressState');
+        const uAddAddressCity = document.getElementById('uAddAddressCity');
+        // area field
+        const uAddAddressArea = document.getElementById("uAddAddressArea");
+        // pincode field
+        const uAddAddressPincode = document.getElementById("uAddAddressPincode");
+        // cancel and save btn
+        const uAddAddressCancelBtn = document.getElementById('uAddAddressCancelBtn');
+        const uAddAddressSaveBtn = document.getElementById('uAddAddressSaveBtn');
+        const uAddAddressSaveBtnText = document.getElementById('uAddAddressSaveBtnText');
+        const uAddAddressSaveBtnLoader = document.getElementById('uAddAddressSaveBtnLoader');
+
+        function switchViewAnimated(hideTarget, showTarget) {
+          if (!hideTarget || !showTarget) return;
+          hideTarget.classList.remove('opacity-100', 'scale-100');
+          hideTarget.classList.add('opacity-0', 'scale-95');
+          setTimeout(() => {
+            hideTarget.classList.replace('flex', 'hidden');
+            showTarget.classList.replace('hidden', 'flex');
+            setTimeout(() => {
+              showTarget.classList.remove('opacity-0', 'scale-95');
+              showTarget.classList.add('opacity-100', 'scale-100');
+            }, 10);
+          }, 100);
+        }
+
+        function toggleButtonLoading(button, buttonText, buttonLoader, isLoading) {
+          if (!button || !buttonText || !buttonLoader) return;
+          if (isLoading) {
+            button.disabled = true;
+            button.classList.add('opacity-80', 'cursor-not-allowed');
+            buttonText.classList.replace('opacity-100', 'opacity-0');
+            buttonText.classList.replace('scale-100', 'scale-90');
+            buttonText.classList.add('hidden');
+            buttonLoader.classList.replace("hidden", "flex");
+            requestAnimationFrame(() => {
+              buttonLoader.classList.replace('opacity-0', 'opacity-100');
+              buttonLoader.classList.replace('scale-90', 'scale-100');
+            });
+          } else {
+            buttonLoader.classList.replace('opacity-100', 'opacity-0');
+            buttonLoader.classList.replace('scale-100', 'scale-90');
+            buttonLoader.classList.replace("flex", "hidden");
+            buttonText.classList.remove('hidden');
+            requestAnimationFrame(() => {
+              buttonText.classList.replace('opacity-0', 'opacity-100');
+              buttonText.classList.replace('scale-90', 'scale-100');
+            });
+            button.disabled = false;
+            button.classList.remove('opacity-80', 'cursor-not-allowed');
+          }
+        }
+
+        function openModalDrawer(sideModal, backDrop, modalPanel) {
+          if (!sideModal || !backDrop || !modalPanel) return;
+          sideModal.classList.replace("hidden", "block");
+          setTimeout(() => {
+            backDrop.classList.replace("opacity-0", "opacity-100");
+            modalPanel.classList.replace("translate-x-full", "translate-x-0");
+          }, 10);
+        }
+        function closeModalDrawer(sideModal, backDrop, modalPanel) {
+          if (!sideModal || !backDrop || !modalPanel) return;
+          backDrop.classList.replace("opacity-100", "opacity-0");
+          modalPanel.classList.replace("translate-x-0", "translate-x-full");
+          setTimeout(() => {
+            sideModal.classList.replace("block", "hidden");
+          }, 300);
+        }
+
+        uAddressBtns?.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            switchViewAnimated(uAddressFormContainer, uAddressContainer);
+            openModalDrawer(uAddressModal, uAddressModalBackdrop, uAddreeModalPanel);
+          });
+        });
+        uCloseAddressModalBtn?.addEventListener("click", () => {
+          closeModalDrawer(uAddressModal, uAddressModalBackdrop, uAddreeModalPanel);
+        });
+        uAddressModalBackdrop?.addEventListener("click", () => {
+          closeModalDrawer(uAddressModal, uAddressModalBackdrop, uAddreeModalPanel);
+        });
+
+        uEditAddress?.forEach((btn) => {
+          btn.addEventListener("click",(e) => {
+            e.stopPropagation();
+            const currentMenu = btn.nextElementSibling;
+            document.querySelectorAll(".u-edit-address-menu").forEach((menu) => {
+              if (menu !== currentMenu) {
+                menu.classList.add("hidden");
+              }
+            });
+            currentMenu.classList.toggle("hidden");
+          });
+        });
+        document.addEventListener("click", () => {
+          document.querySelectorAll(".u-edit-address-menu").forEach((menu) => {
+            menu.classList.add("hidden");
+          });
+        });
+
+        // default address select
+        uAllAddress.forEach((el) => {
+          el.addEventListener("click", async (e) => { 
+            e.preventDefault();
+            const addressId = el.value;
+            try {
+              const response = await fetch(`/profile/address/${addressId}/default-select/`, {
+                method: "POST",
+                headers: {
+                  "X-CSRFToken": getCSRF(),
+                  "X-Requested-With": "XMLHttpRequest",
+                },
+              });
+              const data = await response.json();
+              if (response.ok && data.success) {
+                window.location.href = data.redirect;
+              } else {
+                alert(data.message);
+                return;
+              }
+            } catch (error) {
+              console.log(error);
+              alert(window.allError.tryAgain);
+            }
+          }); 
+        });
+
+        // delete address
+        if (uDeleteBtnAddress) {
+          uDeleteBtnAddress.forEach((btn) => {
+            btn.addEventListener("click", async (e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              // Quick native pop-up option inside the click listener:
+              if (!confirm(window.profileAddressEr.deleteConfirm)) return;
+
+              const addressId = btn.getAttribute("data-id");
+              const addressCard = btn.closest('.u-address-card-container');
+              if (!addressId || !addressCard) return;
+              try {
+                const response = await fetch(`/profile/address/${addressId}/delete/`, {
+                  method: "POST",
+                  headers: {
+                    "X-CSRFToken": getCSRF(),
+                    "X-Requested-With": "XMLHttpRequest",
+                  },
+                });
+                const data = await response.json();
+                if (data.success) {
+                  addressCard.style.transition = "all 0.2s ease";
+                  addressCard.style.opacity = "0";
+                  addressCard.style.transform = "scale(0.95)";
+                  setTimeout(() => {
+                    addressCard.remove();
+                  }, 300);
+                  window.location.href = data.redirect;
+                } else {
+                  alert(data.message);
+                  return;
+                }
+              } catch (error) {
+                console.log(error);
+                alert(window.allError.tryAgain);
+              }
+            });
+          });
+        }
+
+        // new add address
+        uAddAddressTriggerBtn?.addEventListener('click', () => switchViewAnimated(uAddressContainer, uAddressFormContainer));
+        uAddAddressCancelBtn?.addEventListener('click', () => switchViewAnimated(uAddressFormContainer, uAddressContainer));
+
+        // get valid coordinates from a selected option
+        function getCoordinates(selectField, latKey, lngKey) {
+          if (!selectField || selectField.selectedIndex < 0) { return null };
+          const option = selectField.options[selectField.selectedIndex];
+          if (!option || !option.value) { return null };
+          const lat = parseFloat(option.dataset[latKey]);
+          const lng = parseFloat(option.dataset[lngKey]);
+          if (!Number.isFinite(lat) || !Number.isFinite(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180) {
+            return null;
+          }
+          if (lat === 0 && lng === 0) return null;
+          return { lat, lng };
+        }
+
+        // load state
+        async function loadStates(countryId, selectedStateId = "") {
+          uAddAddressState.innerHTML = "";
+            
+          const placeholder = document.createElement("option");
+          placeholder.value = "";
+          placeholder.className = "text-black";
+          placeholder.textContent = window.stateEr?.selectState ?? "Select state";
+          uAddAddressState.add(placeholder);
+
+          if (!countryId) return;
+ 
+          try {
+            const response = await fetch(`/get-states/?country_id=${encodeURIComponent(countryId)}`);
+            if (!response.ok){
+              throw new Error(`HTTP error : ${response.status}`);
+            }
+            const data = await response.json();
+            const states = data.states ?? [];
+
+            if (states.length === 0) {
+              placeholder.textContent = window.stateEr?.noStateFound ?? "No states found";
+              return;
+            }           
+            states.forEach(state => {
+              const stateOption = document.createElement("option");
+              stateOption.value = state.id;
+              stateOption.textContent = state.name;
+              stateOption.className = "text-black";
+              stateOption.dataset.stateLat = state.latitude ?? "";
+              stateOption.dataset.stateLng = state.longitude ?? "";
+              
+              if (String(state.id) == String(selectedStateId)){
+                stateOption.selected = true;
+              }
+              
+              uAddAddressState.add(stateOption);
+            });
+            
+          } catch (error) {
+            console.error("Error loading states", error);
+            uAddAddressState.innerHTML = '<option value="" class="text-black">{% trans "Select state" %}</option>';
+            throw error;
+          }
+        }
+
+        // load city
+        async function loadCities(stateId, selectedCityId) {
+          uAddAddressCity.innerHTML = "";
+            
+          const placeholder = document.createElement("option");
+          placeholder.value = "";
+          placeholder.className = "text-black";
+          placeholder.textContent = window.cityEr?.selectCity ?? "Select city";
+          uAddAddressCity.add(placeholder);
+
+          if (!stateId) return;
+
+          try {
+            const response = await fetch(`/get-cities/?state_id=${encodeURIComponent(stateId)}`);
+            if (!response.ok){
+              throw new Error(`HTTP error : ${response.status}`);
+            }
+            const data = await response.json();
+            const cities = data.cities ?? [];
+            if (cities.length === 0){
+              placeholder.textContent = window.cityEr?.noCityFound ?? "No cities found";
+            }
+
+            cities.forEach(city => {
+              const cityOption = document.createElement("option");
+              cityOption.className = "text-black";
+              cityOption.value = city.id;
+              cityOption.textContent = city.name;
+              cityOption.dataset.cityLat = city.latitude ?? "";
+              cityOption.dataset.cityLng = city.longitude ?? "";
+              if (String(city.id) == String(selectedCityId)) {
+                cityOption.selected = true;
+              }
+              uAddAddressCity.add(cityOption);
+            });
+            
+          } catch (error) {
+            console.error("Error loading cities", error);
+            uAddAddressCity.innerHTML = '<option value="" class="text-black">{% trans "Select city" %}</option>';
+            throw error;            
+          }
+        }
+
+        // get location function city, state, country
+        function getSelectedLocation() {
+          return (
+            getCoordinates(uAddAddressCity, "cityLat", "cityLng") ||
+            getCoordinates(uAddAddressState, "stateLat", "stateLng") ||
+            getCoordinates(uAddAddressCountry, "countryLat", "countryLng") ||
+            DEFAULT_LOCATION
+          );
+        }
+
+        // set zoom basec selected location
+        function getSelectedZoom() {
+          if (getCoordinates(uAddAddressCity, "cityLat", "cityLng")) {
+            return 10;
+          }
+          if (getCoordinates(uAddAddressState, "stateLat", "stateLng")) {
+            return 5;
+          }
+          if (getCoordinates(uAddAddressCountry, "countryLat", "countryLng")) {
+            return 3;
+          }
+          return DEFAULT_ZOOM;
+        }
+
+        // update map, marker and coordinates
+        function updateMapLocation(zoom = getSelectedZoom()) {
+          if (!map || !marker) return;
+
+          const location = getSelectedLocation();
+          const latLng = [location.lat, location.lng];
+
+          map.setView(latLng, zoom);
+          marker.setLatLng(latLng);
+
+          uAddAddressLatitude.value  =  location.lat.toFixed(7);
+          uAddAddressLongitude.value  =  location.lng.toFixed(7);
+        }
+
+        // initialize map and load saved address
+        async function initializeAddressMap() {
+          // map show
+          if (!mapElement) {
+            console.error("Map element not found");
+            return;
+          }
+          if (typeof L === "undefined") {
+            console.error("Leaflet failed to load");
+            return;
+          }
+          // first load city, then state
+          try {
+            // state load default value
+            await loadStates(uAddAddressCountry.value, "{{ uDefaultAddress.state.id|default:'' }}");
+            // city load default value
+            await loadCities(uAddAddressState.value, "{{ uDefaultAddress.city.id|default:'' }}");
+          } catch (error) {
+            console.error("Unable to load saved address:", error);
+          }
+          
+          const location = getSelectedLocation();
+          const zoom = getSelectedZoom();
+          const initialLocation = [location.lat, location.lng];
+
+          map = L.map(mapElement).setView(initialLocation, zoom);
+          L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            maxZoom: 19,
+            // referrerPolicy: "strict-origin-when-cross-origin",
+           //attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          }).addTo(map);
+          marker = L.marker(initialLocation, {
+            draggable: true
+          }).addTo(map);
+          function updateCoordinates(latlng) {
+            uAddAddressLatitude.value = latlng.lat.toFixed(7);
+            uAddAddressLongitude.value = latlng.lng.toFixed(7);
+          }
+          updateCoordinates(marker.getLatLng());
+          marker.on("dragend", function () {
+            updateCoordinates(marker.getLatLng());
+          });
+          map.on("click", function (event) {
+            marker.setLatLng(event.latlng);
+            updateCoordinates(event.latlng);
+          });
+          setTimeout(() => map.invalidateSize(), 300);
+
+          // country change
+          uAddAddressCountry.addEventListener("change", async function () {
+            try {
+              await loadStates(this.value, "");
+              await loadCities("", "");
+              updateMapLocation();
+            } catch (error) {
+              console.error(error);
+            }
+
+          });
+          // state change
+          uAddAddressState.addEventListener("change", async function () {
+            try {
+              await loadCities(this.value, "");
+              updateMapLocation();
+            } catch (error) {
+              console.error(error);
+            }
+          });
+          // city change
+          uAddAddressCity.addEventListener("change", async function () {
+            updateMapLocation();
+          });
+        }
+        initializeAddressMap();
+
+        // pincode field
+        uAddAddressPincode.addEventListener("input", function () {
+          this.value = this.value.replace(/[^a-zA-Z0-9]/g, "");
+        });
+
+        // edit address
+        if (uEditBtnAddress) {
+          uEditBtnAddress.forEach((btn) => {
+            btn.addEventListener("click", async (e) => {
+              e.preventDefault();
+              const addressId = btn.dataset.id;
+              if (!addressId) return;
+              try {
+                const response = await fetch(`/profile/address/edit/${addressId}/`, {
+                  method: "GET",
+                  headers: {
+                    "X-CSRFToken": getCSRF(),
+                    "X-Requested-With": "XMLHttpRequest",
+                  },
+                });
+                const data = await response.json();
+                if (!response.ok || !data.success) {
+                  alert(data.message || window.allError.tryAgain);
+                  return;                  
+                }
+                if (data.success) {
+                  const address = data.address
+                  uAddAddressLatitude.value = address.latitude;
+                  uAddAddressLongitude.value = address.longitude;
+                  uAddAddressCountry.value = address.country_id;
+                  await loadStates(address.country_id, address.state_id);
+                  await loadCities(address.state_id,address.city_id);
+                  uAddAddressArea.value = address.area;
+                  uAddAddressPincode.value = address.pincode;
+                  switchViewAnimated(uAddressContainer, uAddressFormContainer);
+                }
+              } catch (error) {
+                console.log(error);
+                alert(window.allError.tryAgain);
+              }
+            });
+          });
+        }
+
+        // save address btn
+        if (uAddressForm) {
+          uAddressForm.addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            let isValid = true;
+            uAddressForm.querySelectorAll(".u-add-address-error").forEach(error => { error.textContent = ""; });
+            const validAddressFormField = (elementId, errorMessage) => {
+              const field = document.getElementById(elementId);
+              if (!field) return true;
+              const container = field.closest(".w-full.flex.flex-col");
+              const errorElement = container?.querySelector(".u-add-address-error");
+              let valid = true;
+              if (!field.value.trim()) { valid = false; };
+              if (elementId === "uAddAddressPincode" && field.value.trim() && !/^[a-zA-Z0-9 ]+$/.test(field.value.trim())) { valid = false; }
+              if (!valid) {
+                if (errorElement) { errorElement.textContent = errorMessage; }
+                isValid = false;
+              }
+              return valid;
+            }
+            validAddressFormField("uAddAddressCountry", window.countryEr.required);
+            validAddressFormField("uAddAddressState", window.stateEr.required);
+            validAddressFormField("uAddAddressCity", window.cityEr.required);
+            validAddressFormField("uAddAddressArea", window.areaEr.required);
+            validAddressFormField("uAddAddressPincode", window.pincodeEr.required);
+            if (!isValid) {
+              const firstError = uAddressForm.querySelector(".u-add-address-error:not(:empty)");
+              firstError?.scrollIntoView({ behavior: "smooth", block: "center"});
+              return;
+            }
+            if (!confirm(window.profileAddressEr.confirm)) return;
+            toggleButtonLoading(uAddAddressSaveBtn, uAddAddressSaveBtnText, uAddAddressSaveBtnLoader, true);
+            try {
+              const response = await fetch(uAddressForm.action, {
+                method: "POST",
+                body: new FormData(uAddressForm),
+                headers: {
+                  "X-Requested-With": "XMLHttpRequest"
+                }
+              });
+              const data = await response.json();
+              if (!response.ok || !data.success) {
+                alert(data.message || window.allError.tryAgain);
+                return;
+              }
+              if (data.success) {
+                toggleButtonLoading(uAddAddressSaveBtn, uAddAddressSaveBtnText, uAddAddressSaveBtnLoader, false);
+                window.location.href = data.redirect;
+              }
+            } catch (error) {
+              console.log("Address submission failed:", error);
+              toggleButtonLoading(uAddAddressSaveBtn, uAddAddressSaveBtnText, uAddAddressSaveBtnLoader, false);
+              alert(window.allError.tryAgain);
+            }
+          });
+        }
+
+      });
+    </script>  
     {% include "error_message.html" %}
+    {% comment %} CSRF token function {% endcomment %}
+    <script defer>
+      function getCSRF() {
+        return document.cookie.split('; ').find((row) => row.startsWith('csrftoken='))?.split('=')[1];
+      }
+    </script>
   </body>
 </html>

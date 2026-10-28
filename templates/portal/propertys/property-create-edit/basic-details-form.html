@@ -3,7 +3,7 @@
 
 <div id="property-basic-details" class="property-basic-details">
     <div class="flex flex-col lg:flex-row justify-between items-start w-full gap-y-2 lg:gap-0">
-        <form id="add-property-form" class="w-full px-1" data-basic-details-store-url="{% url 'portal-property-store' %}" method="POST" enctype="multipart/form-data">
+        <form id="add-property-form" class="w-full px-1" data-basic-details-store-url="{% url 'propertys:portal_property_store' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="flex flex-1 flex-col justify-start items-center w-full gap-x-2 gap-y-2 border rounded-xl border-black/10 dark:border-white/10 px-2 py-2">
                 <div class="flex justify-center items-center w-full gap-4 px-2 py-2">

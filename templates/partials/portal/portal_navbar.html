@@ -28,14 +28,10 @@
                 <a href="#" class="flex justify-center items-center gap-1 text-black/80 hover:text-black dark:text-white/90 dark:hover:text-white">
                     <span class="text-xl font-semibold flex justify-center items-center">
                         {% trans 'Select Place' %}
-                        <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}" fill="none" viewBox="0 0 24 24" width="24" height="24">
-                            <path fill="currentColor" d="m11.6 14.5999 -3.95 -3.925c-0.0333 -0.03335 -0.0625 -0.073 -0.0875 -0.119 -0.025 -0.04615 -0.0375 -0.0955 -0.0375 -0.148 0 -0.10535 0.03445 -0.1955 0.10325 -0.2705 0.0687 -0.075 0.15925 -0.1125 0.27175 -0.1125h8.2c0.1125 0 0.2032 0.03865 0.272 0.116 0.0687 0.07715 0.103 0.16725 0.103 0.27025 0 0.02585 -0.04165 0.11375 -0.125 0.26375l-3.95 3.925c-0.05 0.05 -0.1088 0.09165 -0.1765 0.125 -0.06765 0.03335 -0.14215 0.05 -0.2235 0.05 -0.08115 0 -0.15565 -0.01665 -0.2235 -0.05 -0.06765 -0.03335 -0.1265 -0.075 -0.1765 -0.125Z" stroke-width="0.5">
-                            </path>
-                        </svg>
                     </span>
                 </a>
             </div>
-            <span class="truncate text-base text-left text-black/50 dark:text-white/50 font-normal w-65">{{ pAddress }}</span>
+            <span class="truncate text-base text-left text-black/50 dark:text-white/50 font-normal w-65">{% if pDefaultAddress %}{{ pDefaultAddress }}{% endif %}</span>
         </div>
         <div class="flex justify-center items-center">
             <svg xmlns="{% static 'icons/chevron-right.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right-icon lucide-chevron-right text-black dark:text-white w-6 h-6">
@@ -47,7 +43,7 @@
 {% comment %}Menu{% endcomment %}
 <nav class="flex flex-1 flex-col p-3 lg:p-2 gap-2 overflow-y-auto scrollbar-hide">
     {% comment %}dashboard{% endcomment %}
-    <a href="{% url 'portal-dashboard' %}" title="{% trans 'Dashboard' %}" class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-semibold lg:transition-all lg:duration-100 {% if active == 'portalDashboard' %} bg-orange-500 rounded-lg text-white {% else %} text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg {% endif %}">
+    <a href="{% url 'accounts:portal_dashboard' %}" title="{% trans 'Dashboard' %}" class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-semibold lg:transition-all lg:duration-100 {% if active == 'portalDashboard' %} bg-orange-500 rounded-lg text-white {% else %} text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg {% endif %}">
         <svg xmlns="{% static 'icons/layout-dashboard.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard-icon lucide-layout-dashboard shrink-0 lg:w-5 lg:h-5 w-6 h-6">
             <rect width="7" height="9" x="3" y="3" rx="1" />
             <rect width="7" height="5" x="14" y="3" rx="1" />
@@ -57,7 +53,7 @@
         <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{% trans 'Dashboard' %}</span>
     </a>
     {% comment %}add property{% endcomment %}
-    <a href="{% url 'portal-property-create' %}" title="{% trans 'Add Property' %}" class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-semibold lg:transition-all lg:duration-100 {% if active == 'portalPropertyCreate' %} bg-orange-500 rounded-lg text-white {% else %} text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg {% endif %}">
+    <a href="{% url 'propertys:portal_property_create' %}" title="{% trans 'Add Property' %}" class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-semibold lg:transition-all lg:duration-100 {% if active == 'portalPropertyCreate' %} bg-orange-500 rounded-lg text-white {% else %} text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg {% endif %}">
         <svg xmlns="{% static 'icons/circle-plus.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus-icon lucide-circle-plus shrink-0 lg:w-5 lg:h-5 w-6 h-6">
             <circle cx="12" cy="12" r="10" />
             <path d="M8 12h8" />
@@ -66,7 +62,7 @@
         <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{% trans 'Add Property' %}</span>
     </a>
     {% comment %}view publish property{% endcomment %}
-    <a href="{% url 'portal-property-active-listings' %}" title="{% trans 'Active Listings' %}"
+    <a href="{% url 'propertys:portal_property_active_listings' %}" title="{% trans 'Active Listings' %}"
        class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-semibold lg:transition-all lg:duration-100 {% if active == 'portalPropertyActiveListings' %} bg-orange-500 rounded-lg text-white {% else %} text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg {% endif %}">
         <svg xmlns="{% static 'icons/house.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house shrink-0 lg:w-5 lg:h-5 w-6 h-6">
             <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
@@ -80,7 +76,7 @@
         </div>
     </a>
     {% comment %}view disable property{% endcomment %}
-    <a href="{% url 'portal-property-disabled-listings' %}" title="{% trans 'Disabled Listings' %}" class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-semibold lg:transition-all lg:duration-100 {% if active == 'portalPropertyDisabledListings' %} bg-orange-500 rounded-lg text-white {% else %} text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg {% endif %}">
+    <a href="{% url 'propertys:portal_property_disabled_listings' %}" title="{% trans 'Disabled Listings' %}" class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-semibold lg:transition-all lg:duration-100 {% if active == 'portalPropertyDisabledListings' %} bg-orange-500 rounded-lg text-white {% else %} text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg {% endif %}">
         <svg xmlns="{% static 'Icons/house-off.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-off-icon lucide-house-off shrink-0 lg:w-5 lg:h-5 w-6 h-6"><path d="M21 15.3V9l-9-7-2.4 1.9"/><path d="m2 2 20 20"/><path d="M6.4 6.4 3 9v11a2 2 0 0 0 2 2h14a2 2 0 0 0 1.8-1.2"/><path d="M12 12H9v10"/><path d="M15 22v-7"/></svg>
         <div class="flex justify-between items-center w-full">
             <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{% trans 'Disabled Listings' %}</span>
@@ -98,7 +94,7 @@
         <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{% trans 'Messages' %}</span>
     </a>
     {% comment %}Help{% endcomment %}
-    <a href="{% url 'portal-help' %}" title="{% trans 'Help & Support' %}" class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-semibold lg:transition-all lg:duration-100 {% if active == 'portalHelp' %} bg-orange-500 rounded-lg text-white {% else %} text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg {% endif %}">
+    <a href="{% url 'accounts:portal_help' %}" title="{% trans 'Help & Support' %}" class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-semibold lg:transition-all lg:duration-100 {% if active == 'portalHelp' %} bg-orange-500 rounded-lg text-white {% else %} text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg {% endif %}">
         <svg xmlns="{% static 'icons/headset.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 lg:w-5 lg:h-5 w-6 h-6">
             <path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z" />
             <path d="M21 16v2a4 4 0 0 1-4 4h-5" />
@@ -106,7 +102,7 @@
         <span class="ml-6 lg:ml-5 whitespace-nowrap lg:hidden lg:transition-all duration-100 lg:group-hover:block">{% trans 'Help & Support' %}</span>
     </a>
     {% comment %}Setting{% endcomment %}
-    <a href="{% url 'portal-setting' %}" title="{% trans 'Settings' %}" class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-semibold lg:transition-all duration-100 {% if active == 'portalSettings' %} bg-orange-500 rounded-lg text-white {% else %} text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg {% endif %}">
+    <a href="{% url 'accounts:portal_settings' %}" title="{% trans 'Settings' %}" class="flex h-12 lg:h-[34px] items-center text-[19px] lg:text-base lg:p-[11px] p-[20px] font-semibold lg:transition-all duration-100 {% if active == 'portalSettings' %} bg-orange-500 rounded-lg text-white {% else %} text-black/80 hover:bg-black/5 dark:text-white/90 dark:hover:bg-white/5 rounded-lg {% endif %}">
         <svg xmlns="{% static 'icons/settings.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 lg:w-5 lg:h-5 w-6 h-6">
             <path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" />
             <circle cx="12" cy="12" r="3" />
@@ -116,6 +112,7 @@
 </nav>
 {% comment %}Bottom{% endcomment %}
 <div class="flex flex-col">
+    {% comment %} language {% endcomment %}
     <div class="p-5 lg:p-2">
         <div class="portal-lang-btn text-orange-500 lg:text-gray-600 lg:dark:text-white">
             <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
@@ -126,11 +123,12 @@
                     <path d="M2 12h20" />
                 </svg>
                 <span id="portal-selected-lang" class="font-semibold font-sans px-2">
-                    {% if request.LANGUAGE_CODE == 'gu' %}
+                    {% comment %} {% if request.LANGUAGE_CODE == 'gu' %}
                         ગુજરાતી
                     {% else %}
                         English
-                    {% endif %}
+                    {% endif %} {% endcomment %}
+                    {{ pLanguage.name }}
                 </span>
                 <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}" fill="none" viewBox="0 0 24 24" width="20" height="20">
                     <path fill="currentColor" d="m11.6 14.5999 -3.95 -3.925c-0.0333 -0.03335 -0.0625 -0.073 -0.0875 -0.119 -0.025 -0.04615 -0.0375 -0.0955 -0.0375 -0.148 0 -0.10535 0.03445 -0.1955 0.10325 -0.2705 0.0687 -0.075 0.15925 -0.1125 0.27175 -0.1125h8.2c0.1125 0 0.2032 0.03865 0.272 0.116 0.0687 0.07715 0.103 0.16725 0.103 0.27025 0 0.02585 -0.04165 0.11375 -0.125 0.26375l-3.95 3.925c-0.05 0.05 -0.1088 0.09165 -0.1765 0.125 -0.06765 0.03335 -0.14215 0.05 -0.2235 0.05 -0.08115 0 -0.15565 -0.01665 -0.2235 -0.05 -0.06765 -0.03335 -0.1265 -0.075 -0.1765 -0.125Z" stroke-width="0.5">
@@ -194,10 +192,10 @@
     </div>
     {% comment %}Profile{% endcomment %}
     <div class="p-3">
-        <a href="{% url 'portal-setting' %}" title="{{ pProfile.name|default:'Portal User'|capfirst }} {% trans 'Profile' %}" class="flex items-center rounded-full lg:transition-all lg:duration-100">
+        <a href="{% url 'accounts:portal_settings' %}" title="{{ pProfile.name|default:'Portal User'|capfirst }} {% trans 'Profile' %}" class="flex items-center rounded-full lg:transition-all lg:duration-100">
             <div class="relative hidden lg:flex justify-center items-center lg:group-hover:hidden w-9 h-9">
-                {% if pProfile.img %}
-                    <img src="{{ pProfile.img.url }}" alt="User avatar" id="pImg" onerror="this.onerror=null;this.src='{% static 'images/avatar.png' %}'" class="w-full h-full object-cover border border-black/20 dark:border-white/20 rounded-full">
+                {% if pProfile.image_exists %}
+                    <img src="{{ pProfile.img.url }}" alt="User avatar" id="pImg" class="w-full h-full object-cover border border-black/20 dark:border-white/20 rounded-full">
                 {% else %}
                     <img src="{% static 'images/avatar.png' %}" alt="User avatar" id="pImg" class="w-full h-full object-cover border border-black/20 dark:border-white/20 rounded-full">
                 {% endif %}
@@ -207,8 +205,8 @@
             </div>
             <div class="flex lg:hidden lg:group-hover:flex justify-between w-full lg:w-[263px] border border-black/10 hover:border-orange-500 dark:border-white/15 bg-black/2 dark:bg-white/1 rounded-xl px-2 py-2">
                 <div class="relative flex justify-center items-center w-16 h-16 lg:w-10 lg:h-10">
-                    {% if pProfile.img %}
-                        <img src="{{ pProfile.img.url }}" alt="User avatar" id="pImg" onerror="this.onerror=null;this.src='{% static 'images/avatar.png' %}'" class="w-full h-full object-cover border border-black/20 dark:border-white/20 rounded-full">
+                    {% if pProfile.image_exists %}
+                        <img src="{{ pProfile.img.url }}" alt="User avatar" id="pImg" class="w-full h-full object-cover border border-black/20 dark:border-white/20 rounded-full">
                     {% else %}
                         <img src="{% static 'images/avatar.png' %}" alt="User avatar" id="pImg" class="w-full h-full object-cover border border-black/20 dark:border-white/20 rounded-full">
                     {% endif %}

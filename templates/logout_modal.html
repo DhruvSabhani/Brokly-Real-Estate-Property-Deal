@@ -1,18 +1,8 @@
 {% load static %}
 {% load i18n %}
 {% comment %}modal{% endcomment %}
-<div id="logout-modal" class="w-screen h-screen transition-all duration-100 fixed inset-0 bg-black/90 backdrop-blur-0 hidden justify-center pt-[200px] z-50">
-    <div class="origin-top-right bg-white dark:bg-[#121212] w-full max-w-[30rem] h-[280px] px-2 py-2 rounded-xl">
-        {% comment %}header{% endcomment %}
-        <div class="flex justify-end items-center px-2">
-            {% comment %} <h1 class="text-xl font-semibold">{% trans 'Logout' %}</h1> {% endcomment %}
-            <button type="button" class="w-[35px] h-[35px] hover:bg-orange-50 dark:hover:bg-[#374151] animate-fadeInUp flex justify-center items-center rounded-full transition-all duration-300" onclick="logoutmodelclose();">
-                <svg xmlns="{% static 'icons/x.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x text-black/70 dark:text-[#ffffff]/70">
-                    <path d="M18 6 6 18" />
-                    <path d="m6 6 12 12" />
-                </svg>
-            </button>
-        </div>
+<div id="logoutModal" class="w-screen h-screen transition-all duration-100 fixed inset-0 bg-black/90 backdrop-blur-0 hidden justify-center pt-[200px] z-50">
+    <div class="origin-top-right bg-white dark:bg-[#121212] w-full max-w-[30rem] h-[240px] px-2 py-3 rounded-xl">
         {% comment %}body{% endcomment %}
         <div class="flex flex-col justify-center items-center gap-y-2">
             <div class="w-16 h-16 rounded-full bg-orange-500/15 dark:bg-orange-100/15 flex justify-center items-center">
@@ -33,7 +23,3 @@
         </div>
     </div>
 </div>
-
-{% block extra_js %}
-    <script src="{% static 'js/logout-modal.js' %}" defer></script>
-{% endblock %}

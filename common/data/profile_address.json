@@ -1,0 +1,116 @@
+[
+  {
+    "model": "common.ProfileAddresses",
+    "pk": 1,
+    "fields": {
+      "profile_role": "user",
+      "profile_id": "1",
+      "area": "New Ujala, Sarkhej",
+      "city": "1",
+      "state": "7",
+      "country": "1",
+      "pincode": 907856,
+      "latitude": 23.022505,
+      "longitude": 72.571362,
+      "is_default": false,
+      "is_active": true,
+      "create_at": "2026-10-15 11:25:55.811441+05:30",
+      "update_at": "2026-10-15 11:25:55.811441+05:30"
+    }
+  },
+  {
+    "model": "common.ProfileAddresses",
+    "pk": 2,
+    "fields": {
+      "profile_role": "user",
+      "profile_id": "1",
+      "area": "Abc, dfe",
+      "city": "1",
+      "state": "7",
+      "country": "1",
+      "pincode": 223732,
+      "latitude": 23.022505,
+      "longitude": 72.571362,
+      "is_default": false,
+      "is_active": true,
+      "create_at": "2026-10-15 11:25:55.811441+05:30",
+      "update_at": "2026-10-15 11:25:55.811441+05:30"
+    }
+  },
+  {
+    "model": "common.ProfileAddresses",
+    "pk": 3,
+    "fields": {
+      "profile_role": "user",
+      "profile_id": "1",
+      "area": "qejeo kmso nd",
+      "city": "1",
+      "state": "7",
+      "country": "1",
+      "pincode": 383882,
+      "latitude": 23.022505,
+      "longitude": 72.571362,
+      "is_default": false,
+      "is_active": true,
+      "create_at": "2026-10-15 11:25:55.811441+05:30",
+      "update_at": "2026-10-15 11:25:55.811441+05:30"
+    }
+  },
+  {
+    "model": "common.ProfileAddresses",
+    "pk": 4,
+    "fields": {
+      "profile_role": "portal",
+      "profile_id": "5",
+      "area": "qg ddg zddg",
+      "city": "1",
+      "state": "7",
+      "country": "1",
+      "pincode": 346525,
+      "latitude": 23.022505,
+      "longitude": 72.571362,
+      "is_default": true,
+      "is_active": true,
+      "create_at": "2026-10-15 11:25:55.811441+05:30",
+      "update_at": "2026-10-15 11:25:55.811441+05:30"
+    }
+  },
+  {
+    "model": "common.ProfileAddresses",
+    "pk": 5,
+    "fields": {
+      "profile_role": "portal",
+      "profile_id": "5",
+      "area": "bsoos djdu",
+      "city": "1",
+      "state": "7",
+      "country": "1",
+      "pincode": 943937,
+      "latitude": 23.022505,
+      "longitude": 72.571362,
+      "is_default": false,
+      "is_active": true,
+      "create_at": "2026-10-15 11:25:55.811441+05:30",
+      "update_at": "2026-10-15 11:25:55.811441+05:30"
+    }
+  },
+  {
+    "model": "common.ProfileAddresses",
+    "pk": 6,
+    "fields": {
+      "profile_role": "portal",
+      "profile_id": "5",
+      "area": "m kdd k",
+      "city": "1",
+      "state": "7",
+      "country": "1",
+      "pincode": 228372,
+      "latitude": 23.022505,
+      "longitude": 72.571362,
+      "is_default": false,
+      "is_active": true,
+      "create_at": "2026-10-15 11:25:55.811441+05:30",
+      "update_at": "2026-10-15 11:25:55.811441+05:30"
+    }
+  }
+]

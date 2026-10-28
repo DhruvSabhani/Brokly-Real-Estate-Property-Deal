@@ -11,6 +11,7 @@ import os
 import uuid
 from datetime import timedelta
 from django.utils.translation import get_language, gettext_lazy as _
+from brokly import settings
 
 # Create your models here.
 
@@ -91,6 +92,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         else:
             self.full_phone = None
         super().save(*args, **kwargs)
+
+    def phone_number(self):
+        code = self.country_code.country_code if self.country_code else ""
+        number = str(self.phone).strip() if self.phone else ""
+        if code and number:
+            return f"{code} {number}"
+        return number or code or "-"
 
     def __str__(self):
         return self.full_phone or self.phone
@@ -254,6 +262,13 @@ class UserProfile(models.Model):
                 pass
         super().save(*args, **kwargs)
 
+    def image_exists(self):
+        if self.img and os.path.exists(
+            os.path.join(settings.MEDIA_ROOT, self.img.name)
+        ):
+            return True
+        return False
+
 
 def portal_image_path(instance, filename):
     ext = filename.split(".")[-1]
@@ -288,3 +303,10 @@ class PortalProfile(models.Model):
             except PortalProfile.DoesNotExist:
                 pass
         super().save(*args, **kwargs)
+
+    def image_exists(self):
+        if self.img and os.path.exists(
+            os.path.join(settings.MEDIA_ROOT, self.img.name)
+        ):
+            return True
+        return False

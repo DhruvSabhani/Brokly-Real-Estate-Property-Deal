@@ -1,55 +1,57 @@
-// nav image loader
-const pimg = document.getElementById('pImg');
-const pimgloader1 = document.getElementById('pImgLoader1');
-const pimgloader2 = document.getElementById('pImgLoader2');
-// header image loader
-const pprofilebtn = document.getElementById('pProfileBtn');
-const pimgHead = document.getElementById('pImgHead');
-const pimgHeadloader = document.getElementById('pImgHeadLoader');
-const pprofilemenu = document.getElementById('pProfileMenu');
-// ---------------------------------------------------------------------------------------
-// show loader
-function showLoader(loader) {
-  loader.classList.remove('hidden');
-  loader.classList.add('flex');
+const elements = {
+  // nav image loader
+  pImg: document.getElementById('pImg'),
+  pImgLoader1: document.getElementById('pImgLoader1'),
+  pImgLoader2: document.getElementById('pImgLoader2'),
+  // header image loader
+  pProfileBtn: document.getElementById('pProfileBtn'),
+  pImgHead: document.getElementById('pImgHead'),
+  pImgHeadLoader: document.getElementById('pImgHeadLoader'),
+  pProfileMenu: document.getElementById('pProfileMenu'),
+  // settings image loader
+  pSetProfileImg: document.getElementById('pSetProfileImg'),
+  pSetProfileImgLoad: document.getElementById('pSetProfileImgLoad'),
+  // settings profile edit image loader
+  pEditProfileImg: document.getElementById('pEditProfileImg'),
+  pEditProfileImgLoad: document.getElementById('pEditProfileImgLoad'),
+};
+
+const DEFAULT_AVATAR = "{% static 'images/avatar.png' %}";
+
+const showLoader = (loader) => {
+  if (!loader) return;
+  loader.classList.replace('hidden', 'flex');
+};
+
+const hideLoader = (loader) => {
+  if (!loader) return;
+  loader.classList.replace('flex', 'hidden');
+};
+
+function manageImageLoading(imgElement, loaders) {
+  if (!imgElement) return;
+  const loaderList = Array.isArray(loaders) ? loaders : [loaders];
+  loaderList.forEach(showLoader);
+  const clearLoaders = () => loaderList.forEach(hideLoader);
+  if (imgElement.complete && imgElement.naturalWidth > 0) {
+    clearLoaders();
+  } else {
+    imgElement.addEventListener('load', clearLoaders);
+    imgElement.addEventListener('error', () => {
+      clearLoaders();
+      imgElement.src = DEFAULT_AVATAR;
+    });
+  }
 }
-// hide loader
-function hideLoader(loader) {
-  loader.classList.remove('flex');
-  loader.classList.add('hidden');
+
+manageImageLoading(elements.pImg, [elements.pImgLoader1, elements.pImgLoader2]);
+manageImageLoading(elements.pImgHead, elements.pImgHeadLoader);
+manageImageLoading(elements.pSetProfileImg, elements.pSetProfileImgLoad);
+manageImageLoading(elements.pEditProfileImg, elements.pEditProfileImgLoad);
+if (elements.pProfileBtn && elements.pProfileMenu) {
+  elements.pProfileBtn.addEventListener('click', () => {
+    elements.pProfileMenu.classList.toggle('opacity-0');
+    elements.pProfileMenu.classList.toggle('scale-95');
+    elements.pProfileMenu.classList.toggle('invisible');
+  });
 }
-// nav image loader
-showLoader(pimgloader1);
-showLoader(pimgloader2);
-if (pimg.complete) {
-  hideLoader(pimgloader1);
-  hideLoader(pimgloader2);
-} else {
-  pimg.onload = () => {
-    hideLoader(pimgloader1);
-    hideLoader(pimgloader2);
-  };
-  pimg.onerror = () => {
-    hideLoader(pimgloader1);
-    hideLoader(pimgloader2);
-    pimg.src = "{% static 'images/avatar.png' %}";
-  };
-}
-// header image loader
-showLoader(pimgHeadloader);
-if (pimgHead.complete) {
-  hideLoader(pimgHeadloader);
-} else {
-  pimgHead.onload = () => {
-    hideLoader(pimgHeadloader);
-  };
-  pimgHead.onerror = () => {
-    hideLoader(pimgHeadloader);
-    pimgHead.src = "{% static 'images/avatar.png' %}";
-  };
-}
-pprofilebtn.addEventListener('click', () => {
-  pprofilemenu.classList.toggle('opacity-0');
-  pprofilemenu.classList.toggle('scale-95');
-  pprofilemenu.classList.toggle('invisible');
-});

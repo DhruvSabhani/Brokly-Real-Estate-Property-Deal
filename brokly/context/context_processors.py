@@ -1,5 +1,5 @@
 from django.core.cache import cache
-from accounts.models import Language, CountryCode
+from accounts.models import Language, CountryCode, State, City
 from propertys.models import (
     PropertyType,
     PropertyPreferred,
@@ -15,7 +15,9 @@ def user_context(request):
     return {
         "user": getattr(request, "user_obj", None),
         "uProfile": getattr(request, "uProfile", None),
-        "uAddress": getattr(request, "uAddress", None),
+        "uDefaultAddress": getattr(request, "uDefaultAddress", None),
+        "uAddressList": getattr(request, "uAddressList", None),
+        "countries": CountryCode.objects.filter(is_active=True),
     }
 
 
@@ -26,9 +28,13 @@ def portal_context(request):
 
     return {
         "languages": Language.objects.filter(is_active=True),
+        "pLanguage": Language.objects.filter(
+            is_active=True, code=request.LANGUAGE_CODE
+        ).first(),
         "portal": getattr(request, "portal_obj", None),
         "pProfile": getattr(request, "pProfile", None),
-        "pAddress": getattr(request, "pAddress", None),
+        "pDefaultAddress": getattr(request, "pDefaultAddress", None),
+        "pAddressList": getattr(request, "pAddressList", None),
         "country_code": CountryCode.objects.filter(is_active=True),
         "property_types": PropertyType.objects.filter(is_active=True),
         "property_preferred": PropertyPreferred.objects.filter(is_active=True),

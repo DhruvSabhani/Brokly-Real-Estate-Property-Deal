@@ -19,20 +19,32 @@
     required: "{% trans 'Please enter a complete 6-digit OTP.' %}",
   };
   window.countryEr = {
-    selectCountry: "{% trans 'Select Country' %}",
+    selectCountry: "{% trans 'Select country' %}",
     required: "{% trans 'Please select a country.' %}",
   };
   window.stateEr = {
-    selectState: "{% trans 'Select State' %}",
+    selectState: "{% trans 'Select state' %}",
+    noStateFound: "{% trans 'No states found' %}",
     required: "{% trans 'Please select a state.' %}",
   };
   window.cityEr = {
-    selectCity: "{% trans 'Select City' %}",
+    selectCity: "{% trans 'Select city' %}",
+    noCityFound: "{% trans 'No cities found' %}",
     required: "{% trans 'Please select a city.' %}",
   };
+  window.areaEr = {
+    required: "{% trans 'Please enter area / locality.' %}",
+  }
+  window.pincodeEr = {
+    required: "{% trans 'Enter a valid pincord using letters and numbers only.' %}",
+  }
   window.userNameEr = {
     required: "{% trans 'Please enter a username.' %}",
   };
+  window.profileAddressEr = {
+    confirm: "{% trans 'Are you sure you want to save the address?' %}",
+    deleteConfirm: "{% trans 'Are you sure you want to delete this address?' %}",
+  }
   window.fieldProTypeEr = {
     required: "{% trans 'Please select a property type.' %}",
   };
@@ -59,6 +71,7 @@
   };
   window.fieldProAddressLineEr = {
     required: "{% trans 'Please enter the property address.' %}",
+    confirm: "{% trans 'Are you sure you want to delete this address?' %}",
   };
   window.fieldProPhotosEr = {
     coverPhoto: "{% trans 'Cover Photo' %}",

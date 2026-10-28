@@ -2,7 +2,7 @@ from django.conf import settings
 from django.urls import reverse
 from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
-from accounts.utils import portal_required
+from accounts.utils import user_required, portal_required
 from django.http import JsonResponse
 from django.utils.translation import get_language, gettext as _
 from accounts.models import CountryCode, State, City, PortalProfile
@@ -482,7 +482,7 @@ def portal_property_active_listings(request):
         pro_price = pro.formatted_property_price()
         pro_time_period = pro.get_property_price_period_display()
         pro_location = getattr(pro, "location", None)
-        location_text = pro_location.property_full_address() if pro_location else ""
+        location_text = pro_location.property_full_address() if pro_location else "None"
 
         serialized_active_pro.append(
             {
@@ -546,7 +546,7 @@ def portal_property_disabled_listings(request):
         pro_price = pro.formatted_property_price()
         pro_time_period = pro.get_property_price_period_display()
         pro_location = getattr(pro, "location", None)
-        location_text = pro_location.property_full_address() if pro_location else ""
+        location_text = pro_location.property_full_address() if pro_location else "None"
 
         serialized_disabled_pro.append(
             {

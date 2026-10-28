@@ -1,6 +1,7 @@
 from urllib import request
 from django.conf import settings
 from django.shortcuts import render, redirect
+from propertys.services import user_property_listings
 from accounts.models import *
 from common.models import *
 from django.http import JsonResponse
@@ -8,6 +9,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 import json
 from django.utils import timezone, translation
 from django.utils.translation import get_language, gettext as _
+from django.views.decorators.http import require_POST
 from accounts.utils import user_required, portal_required
 
 
@@ -60,6 +62,8 @@ def get_states(request):
         {
             "id": state.pk,
             "name": state.translated_state_name(),
+            "latitude": state.latitude,
+            "longitude": state.longitude,
         }
         for state in statemodal
     ]
@@ -73,6 +77,8 @@ def get_cities(request):
         {
             "id": city.pk,
             "name": city.translated_city_name(),
+            "latitude": city.latitude,
+            "longitude": city.longitude,
         }
         for city in citymodal
     ]
@@ -214,13 +220,40 @@ def verify_otp(request):
 
         pProfile, created = PortalProfile.objects.get_or_create(user=user)
         request.session["portal_profile"] = pProfile.pk
-        pAddress, created = ProfileAddresses.objects.get_or_create(
-            profile_role=role, profile_id=pProfile.pk, country=country
+
+        address_queryset = ProfileAddresses.objects.filter(
+            profile_role=role, profile_id=pProfile.pk, is_active=True
         )
+
+        pAddress = address_queryset.filter(is_default=True).first()
+
+        if not pAddress:
+            pAddress = address_queryset.first()
+            if pAddress:
+                pAddress.is_default = True
+                pAddress.save()
+            else:
+                pAddress = ProfileAddresses.objects.create(
+                    profile_role=role,
+                    profile_id=pProfile.pk,
+                    country=country,
+                    is_default=True,
+                    is_active=True,
+                )
+
+        profile_data = {
+            "img": None,
+            "name": None,
+            "state_id": None,
+            "state_name": None,
+            "city_id": None,
+            "city_name": None,
+        }
+
         if pProfile.img or pProfile.name or pAddress.state:
             profile_data = {
                 "img": pProfile.img.url if pProfile.img else None,
-                "name": pProfile.name if pProfile.name else None,
+                "name": pProfile.name.title() if pProfile.name else None,
                 "state_id": pAddress.state.pk if pAddress.state else None,
                 "state_name": (
                     pAddress.state.translated_state_name() if pAddress.state else None
@@ -235,20 +268,47 @@ def verify_otp(request):
     elif role == "user":
         if user.is_superuser:
             return JsonResponse(
-                {"error": True, "message": _("Admin canton login user")}
+                {"error": True, "message": _("Admin canton login as a regular user")}
             )
         user.is_user = True
         request.session["user_login"] = user.pk
 
         uProfile, created = UserProfile.objects.get_or_create(user=user)
         request.session["user_profile"] = uProfile.pk
-        uAddress, created = ProfileAddresses.objects.get_or_create(
-            profile_role=role, profile_id=uProfile.pk, country=country
+
+        address_queryset = ProfileAddresses.objects.filter(
+            profile_role=role, profile_id=uProfile.pk, is_active=True
         )
+
+        uAddress = address_queryset.filter(is_default=True).first()
+
+        if not uAddress:
+            uAddress = address_queryset.first()
+            if uAddress:
+                uAddress.is_default = True
+                uAddress.save()
+            else:
+                uAddress = ProfileAddresses.objects.create(
+                    profile_role=role,
+                    profile_id=uProfile.pk,
+                    country=country,
+                    is_default=True,
+                    is_active=True,
+                )
+
+        profile_data = {
+            "img": None,
+            "name": None,
+            "state_id": None,
+            "state_name": None,
+            "city_id": None,
+            "city_name": None,
+        }
+
         if uProfile.img or uProfile.name or uAddress.state:
             profile_data = {
                 "img": uProfile.img.url if uProfile.img else None,
-                "name": uProfile.name if uProfile.name else None,
+                "name": uProfile.name.title() if uProfile.name else None,
                 "state_id": uAddress.state.pk if uAddress.state else None,
                 "state_name": (
                     uAddress.state.translated_state_name() if uAddress.state else None
@@ -286,9 +346,16 @@ def user_profile(request):
         return JsonResponse({"error": True, "message": _("User not found")})
 
     uProfile, created = UserProfile.objects.get_or_create(user=user)
-    uAddress, created = ProfileAddresses.objects.get_or_create(
+    address_queryset = ProfileAddresses.objects.filter(
         profile_role="user", profile_id=uProfile.pk
     )
+    uAddress = address_queryset.filter(is_active=True).first()
+    if not uAddress:
+        uAddress = address_queryset.first()
+    if not uAddress:
+        uAddress = ProfileAddresses.objects.create(
+            profile_role="user", profile_id=uProfile.pk, is_active=True, is_default=True
+        )
 
     utheme = request.POST.get("utheme")
     ulang = request.POST.get("ulang")
@@ -324,9 +391,10 @@ def user_profile(request):
         if city:
             uAddress.city = city
 
+    address_queryset.exclude(id=uAddress.pk).update(is_active=True, is_default=False)
+
     uAddress.is_default = True
     uAddress.is_active = True
-
     uAddress.save()
 
     return JsonResponse(
@@ -351,9 +419,19 @@ def portal_profile(request):
         return JsonResponse({"error": True, "message": _("Portal not found")})
 
     pProfile, created = PortalProfile.objects.get_or_create(user=portal)
-    pAddress, created = ProfileAddresses.objects.get_or_create(
+    address_queryset = ProfileAddresses.objects.filter(
         profile_role="portal", profile_id=pProfile.pk
     )
+    pAddress = address_queryset.filter(is_active=True).first()
+    if not pAddress:
+        pAddress = address_queryset.first()
+    if not pAddress:
+        pAddress = ProfileAddresses.objects.create(
+            profile_role="portal",
+            profile_id=pProfile.pk,
+            is_active=True,
+            is_default=True,
+        )
 
     ptheme = request.POST.get("ptheme")
     plang = request.POST.get("plang")
@@ -389,9 +467,10 @@ def portal_profile(request):
         if city:
             pAddress.city = city
 
+    address_queryset.exclude(id=pAddress.pk).update(is_active=True, is_default=False)
+
     pAddress.is_default = True
     pAddress.is_active = True
-
     pAddress.save()
 
     return JsonResponse(
@@ -418,7 +497,7 @@ def user_dashboard(request):
         "user/dashboard.html",
         {
             "active": "home",
-            "range": "1111111111111",
+            "properties": user_property_listings(),
         },
     )
 
@@ -468,13 +547,58 @@ def user_help(request):
 
 
 @user_required
-def user_setting(request):
+def user_settings(request):
     return render(
         request,
-        "user/setting.html",
+        "user/settings.html",
         {
-            "active": "userSetting",
+            "active": "userSettings",
         },
+    )
+
+
+@user_required
+@require_POST
+def user_profile_update(request):
+    profile_id = request.session.get("user_profile")
+
+    uProfile = UserProfile.objects.filter(id=profile_id).first()
+
+    if not uProfile:
+        return JsonResponse({"success": False, "message": _("User profile not found")})
+
+    uploaded_avatar = request.FILES.get("uEditAvatarInput")
+    full_name = request.POST.get("uEditNameInput", "").strip()
+
+    if len(full_name) > 20:
+        return JsonResponse(
+            {"success": False, "message": _("Full name must be 20 characters or less")}
+        )
+
+    if uploaded_avatar:
+        if uploaded_avatar.size > 2 * 1024 * 1024:
+            return JsonResponse(
+                {
+                    "success": False,
+                    "message": _("Uploaded avatar image size must be less than (2MB)"),
+                }
+            )
+
+        if uProfile.img and uProfile.img.name != "static/images/avatar.png":
+            try:
+                if os.path.isfile(uProfile.img.path):
+                    os.remove(uProfile.img.path)
+            except (ValueError, OSError):
+                pass
+
+        uProfile.img = uploaded_avatar
+    uProfile.name = full_name
+    uProfile.save()
+    return JsonResponse(
+        {
+            "success": True,
+            "message": _("Profile updated successfully"),
+        }
     )
 
 
@@ -501,13 +625,58 @@ def portal_help(request):
 
 
 @portal_required
-def portal_setting(request):
+def portal_settings(request):
     return render(
         request,
-        "portal/setting.html",
+        "portal/settings.html",
         {
             "active": "portalSettings",
         },
+    )
+
+
+@portal_required
+@require_POST
+def portal_profile_update(request):
+    profile_id = request.session.get("portal_profile")
+
+    pProfile = PortalProfile.objects.filter(id=profile_id).first()
+
+    if not pProfile:
+        return JsonResponse({"success": False, "message": _("User profile not found")})
+
+    uploaded_avatar = request.FILES.get("pEditAvatarInput")
+    full_name = request.POST.get("pEditNameInput", "").strip()
+
+    if len(full_name) > 20:
+        return JsonResponse(
+            {"success": False, "message": _("Full name must be 20 characters or less")}
+        )
+
+    if uploaded_avatar:
+        if uploaded_avatar.size > 2 * 1024 * 1024:
+            return JsonResponse(
+                {
+                    "success": False,
+                    "message": _("Uploaded avatar image size must be less than (2MB)"),
+                }
+            )
+
+        if pProfile.img and pProfile.img.name != "static/images/avatar.png":
+            try:
+                if os.path.isfile(pProfile.img.path):
+                    os.remove(pProfile.img.path)
+            except (ValueError, OSError):
+                pass
+
+        pProfile.img = uploaded_avatar
+    pProfile.name = full_name
+    pProfile.save()
+    return JsonResponse(
+        {
+            "success": True,
+            "message": _("Profile updated successfully"),
+        }
     )
 
 

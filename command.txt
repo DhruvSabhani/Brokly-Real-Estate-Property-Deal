@@ -1,3 +1,4 @@
+----------------------------------------
 tailwind start command :
 ----------------------------------------
 cd ../
@@ -5,6 +6,7 @@ venv\Scripts\activate
 cd brokly
 py manage.py tailwind start
 
+----------------------------------------
 runserver start command :
 ----------------------------------------
 cd ../
@@ -12,6 +14,18 @@ venv\Scripts\activate
 cd brokly
 py manage.py runserver
 
+----------------------------------------
+Github add project
+----------------------------------------
+> git init  
+> git add .
+> git commit -m "Upload brokly project"
+> git remote add origin https://github.com/DhruvSabhani/Brokly-Real-Estate-Property-Deal.git
+> git branch -M main 
+> git push -u origin main 
+> git add .
+> git commit -m "Update"
+> git push origin main
 
 Brokly-Real-Estate-Property-Deal
 --->a create Platform to Users select or search location related property(PG, Plot, Commercial) show.
@@ -35,7 +49,8 @@ brokly/
 ├── property/(app)                  # Property Config
 │   ├── models.py                   # PropertyDetails, PropertyImage
 │   ├── views.py                    # Add/List/Filter property
-│   ├── urls.py 
+│   ├── urls.py
+│   ├── services.py                 # user dashboard in property show function
 │   └── filters.py                  # Best Searching, Price, location filter
 │
 ├── interactions/(app)              # User actions
@@ -136,17 +151,6 @@ Rest Framework
 > pip install djangorestframework
 > pip install django-filter
 
-Github add project
-> git init  
-> git add .
-> git commit -m "Upload brokly project"
-> git remote add origin https://github.com/DhruvSabhani/Brokly-Real-Estate-Property-Deal.git
-> git branch -M main 
-> git push -u origin main 
-> git add .
-> git commit -m "Update"
-> git push origin main
-
 create a app
 > py manage.py startapp accounts
 
@@ -157,16 +161,22 @@ create a Dark/white mode : user to django-tailwind css
 > py manage.py tailwind install
 > py manage.py tailwind start
 
--------------------
+-------------------------------------------------------------------------
 language change:
--------------------
+-------------------------------------------------------------------------
 locale folder create - Gujarati language
 > py manage.py makemessages -l gu // django-admin makemessages -l gu
 > py manage.py compilemessages
 
-------------------
-using map
------------------
+-------------------------------------------------------------------------
+Brokly using map
+-------------------------------------------------------------------------
+Leaflet.js and OpenStreetMap map
+
+
+-------------------------------------------------------------------------
+portal using map
+-------------------------------------------------------------------------
 Google map
 key = "google cloued console"
 web page url:

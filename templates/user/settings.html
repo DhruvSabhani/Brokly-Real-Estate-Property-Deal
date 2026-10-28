@@ -1,0 +1,312 @@
+{% extends 'base_user.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block utitle %}
+    {% trans 'Settings' %}
+{% endblock %}
+
+{% block u_d_header %}
+    <div class="px-2 py-2 w-full bg-[#fdfdfd] dark:bg-[#121212]">
+        <div class="flex justify-between items-center">
+            <div class="leading-tight flex flex-1 justify-start items-center">
+                <h1 class="text-lg font-medium text-black/90 dark:text-white/90">{% trans 'Settings' %}</h1>
+            </div>
+            <div class="flex justify-center items-center gap-3">
+                {% comment %}messaging{% endcomment %}
+                <a href="{% url 'accounts:user_messages' %}" title="{% trans 'Messaging' %}" id="uMessagingBtn" class="relative w-9 h-9 rounded-full flex justify-center items-center bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-white/10 dark:hover:bg-[#3B3D3E]">
+                <div class="absolute top-1 right-1 w-[14px] h-[14px] bg-orange-500 rounded-full flex items-center justify-center text-[10px] font-medium text-white">9</div>
+                <svg xmlns="{% static 'icons/messages-square.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-messages-square-icon lucide-messages-square w-[19px] h-[19px] text-black/60 hover:text-black/80 dark:text-white/60 dark:hover:text-white/80">
+                    <path d="M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                    <path d="M20 9a2 2 0 0 1 2 2v10.286a.71.71 0 0 1-1.212.502l-2.202-2.202A2 2 0 0 0 17.172 19H10a2 2 0 0 1-2-2v-1" />
+                </svg>
+                </a>
+                {% comment %}shortlisted{% endcomment %}
+                <a href="{% url 'accounts:user_shortlisted' %}" title="{% trans 'Shortlisted' %}" id="uShortlistedBtn" class="relative w-9 h-9 rounded-full flex justify-center items-center bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-white/10 dark:hover:bg-[#3B3D3E]">
+                <div class="absolute top-1 right-1 w-[14px] h-[14px] bg-orange-500 rounded-full flex justify-center items-center text-[10px] font-medium text-white">2</div>
+                <svg xmlns="{% static 'icons/heart.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart-icon lucide-heart w-[19px] h-[19px] text-black/60 hover:text-black/80 dark:text-white/60 dark:hover:text-white/80">
+                    <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />
+                </svg>
+                </a>
+                {% comment %}notifications{% endcomment %}
+                <a href="#" title="{% trans 'Notifications' %}" id="uNotificationsBtn" class="relative w-9 h-9 rounded-full flex justify-center items-center bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-white/10 dark:hover:bg-[#3B3D3E]">
+                <div class="absolute top-1 right-1 w-[14px] h-[14px] bg-orange-500 rounded-full flex justify-center items-center text-[10px] font-medium text-white">2</div>
+                <svg xmlns="{% static 'icons/bell.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell w-[19px] h-[19px] text-black/60 hover:text-black/80 dark:text-white/60 dark:hover:text-white/80">
+                    <path d="M10.268 21a2 2 0 0 0 3.464 0" />
+                    <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
+                </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block u_m_header %}
+    <div class="w-screen h-15 px-2 py-2 bg-[#fdfdfd] dark:bg-[#121212]">
+        <div class="flex justify-between items-center gap-3">
+            <div class="flex justify-center items-center">
+                {% comment %}back btn{% endcomment %}
+                <button title="{% trans 'Back' %}" id="backPageBtn" onclick="history.back()" class="w-[44px] h-[44px] rounded-full flex justify-center items-center border-0 border-black/5 dark:border-white/5 bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-transparent dark:hover:bg-[#3B3D3E]">
+                    <svg xmlns="{% static 'icons/chevron-left.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left w-7 h-7 text-black/60 hover:text-black/80 dark:text-white dark:hover:text-white/80">
+                        <path d="m15 18-6-6 6-6" />
+                    </svg>
+                </button>
+                <div class="ml-3 flex justify-center items-center leading-tight">
+                    <h1 class="truncate text-xl font-semibold text-black dark:text-white">{% trans 'Settings' %}</h1>
+                </div>
+            </div>
+            <div class="flex justify-center items-center gap-4">
+                {% comment %}notifications{% endcomment %}
+                <a href="#" title="{% trans 'Notifications' %}" id="uNotificationsBtn" class="relative w-[46px] h-[46px] rounded-full flex justify-center items-center border-0 border-black/5 dark:border-white/5 bg-[#ffffff] hover:bg-[#f7f9fc] dark:bg-transparent dark:hover:bg-[#3B3D3E]">
+                    <div class="absolute top-1 right-2 w-4 h-4 bg-orange-500 rounded-full flex justify-center items-center text-xs font-medium text-white"><span>2</span></div>
+                    <svg xmlns="{% static 'icons/bell.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell w-[22px] h-[22px] text-black/60 hover:text-black/80 dark:text-white dark:hover:text-white/80">
+                        <path d="M10.268 21a2 2 0 0 0 3.464 0" />
+                        <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
+                    </svg>
+                </a>
+                {% comment %}menu bar button{% endcomment %}
+                <button id="u-menu-btn" title="{% trans 'Menu' %}" class="rounded-lg flex justify-center items-center w-[42px] h-[42px] border-2 border-black/7 dark:border-white/15 bg-white dark:bg-transparent text-black dark:text-white">
+                    <svg xmlns="{% static 'icons/menu.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu-icon lucide-menu">
+                        <path d="M4 5h16" />
+                        <path d="M4 12h16" />
+                        <path d="M4 19h16" />
+                    </svg>
+                </button>
+            </div>    
+        </div>    
+    </div>    
+{% endblock %}
+
+{% block ucontent %}
+    <section class="pt-14 lg:pt-12 w-full max-w-[500px] mx-auto">
+        {% comment %} profile info html {% endcomment %}
+        <div id="uSettingsMenuContainer" class="px-1 py-2 flex flex-col justify-center items-center transition-all duration-300 ease-out opacity-100 scale-100">
+            {% comment %} profile image and name {% endcomment %}
+            <div class="relative flex justify-center items-center w-[100px] h-[100px] rounded-full overflow-hidden">
+                {% if uProfile.image_exists %}
+                    <img src="{{ uProfile.img.url }}" alt="User avatar" id="uSetProfileImg" class="w-full h-full object-cover" />
+                    <div id="uSetProfileImgLoad" class="absolute inset-0 flex justify-center items-center backdrop-blur rounded-full">
+                        <div class="w-5 h-5 border-[4px] border-black/20 border-t-black dark:border-white/20 dark:border-t-white rounded-full animate-[spin_0.5s_linear_infinite]"></div>
+                    </div>
+                {% else %}
+                    <img src="{% static 'images/avatar.png' %}" alt="User avatar" id="uSetProfileImg" class="w-full h-full object-cover" />
+                {% endif %}
+            </div>
+            {% comment %} name {% endcomment %}
+            <div class="mt-4 text-center text-lg font-semibold text-black/90 dark:text-white/90">
+                <span>{{ uProfile.name|title }}</span>
+            </div>
+            {% comment %} setting lists {% endcomment %}
+            <div class="mt-6 flex justify-center items-center w-full">
+                <div class="w-full">
+                    <ul class="flex flex-col justify-start items-start gap-2 w-full">
+                        {% comment %} edit profile {% endcomment %}
+                        <li class="w-full" title="{% trans 'Edit Profile' %}">
+                            <button type="button" id="uEditProfileTriggerBtn" class="flex justify-between items-center w-full min-h-[45px] px-4 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-150">
+                                <span class="text-black/90 dark:text-white/90 font-semibold">{% trans 'Edit profile' %}</span>
+                                <svg xmlns="{% static 'icons/chevron-right.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right-icon lucide-chevron-right text-black/60 dark:text-white/60">
+                                    <path d="m9 18 6-6-6-6" />
+                                </svg>
+                            </button>
+                            {% comment %} <a href="#" class="flex justify-between items-center w-full px-3 py-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-[#eaeaea] dark:hover:bg-[#2c2b2b]">
+                                <span class="text-black/80 dark:text-white/80">{% trans 'Edit Profile' %}</span>
+                                <svg xmlns="{% static 'icons/chevron-right.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right-icon lucide-chevron-right text-black/60 dark:text-white/60">
+                                    <path d="m9 18 6-6-6-6" />
+                                </svg>
+                            </a> {% endcomment %}
+                        </li>
+                        {% comment %} phone number {% endcomment %}
+                        <li class="w-full" title="{% trans 'Copy' %} {{ user.phone_number }}">
+                            <button type="button" id="uCopyPhoneBtn" data-phone-value="{{ user.phone_number }}" class="flex flex-col justify-center items-start leading-tight w-full min-h-[52px] px-4 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-150 cursor-copy">
+                                <span id="uCopyToastText" class="absolute right-3 text-xs font-semibold text-orange-500 opacity-0 scale-90 transition-all duration-200 pointer-events-none">{% trans "Copied!" %}</span>
+                                <span class="text-black/90 dark:text-white/90 font-semibold">{% trans 'Phone number' %}</span>
+                                <span class="text-sm text-gray-500 font-normal">{{ user.phone_number }}</span>
+                            </button>
+                        </li>
+                        {% comment %} address {% endcomment %}
+                        <li class="w-full">
+                            <button type="button" class="uAddressTriggerBtn flex flex-col justify-center items-start leading-tight w-full min-h-[52px] px-4 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-150 cursor-copy">
+                                <span class="absolute right-5">
+                                    <svg xmlns="{% static 'icons/chevron-right.svg' %}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right-icon lucide-chevron-right text-black/60 dark:text-white/60">
+                                    <path d="m9 18 6-6-6-6" /></svg>
+                                </span>
+                                <span class="text-black/90 dark:text-white/90 font-semibold">{% trans 'Select Address' %}</span>
+                                <span class="text-sm text-gray-500 font-normal text-left tracking-wide">{% if uDefaultAddress %}{{ uDefaultAddress }}{% endif %}</span>
+                            </button>
+                        </li>
+                        {% comment %} language selection {% endcomment %}
+                        {% comment %} theme selection {% endcomment %}
+                        {% comment %} logout {% endcomment %}
+                        {% comment %} account delete {% endcomment %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% comment %} list menu html {% endcomment %}
+        <div id="uProfileEditFormContainer" class="p-1 py-2 hidden flex-col justify-center items-center transition-all duration-300 ease-out opacity-0 scale-95">
+            <form id="uProfileEditForm" method="POST" action="{% url 'accounts:user_profile_update' %}" enctype="multipart/form-data" class="w-full flex flex-col justify-center items-center">
+                {% csrf_token %}
+                {% comment %} edit profile image {% endcomment %}
+                <div class="relative flex justify-center items-center w-32 h-32 rounded-full">
+                    {% if uProfile.image_exists %}
+                        <img src="{{ uProfile.img.url }}" alt="User avatar" id="uEditProfileImg" class="w-full h-full object-cover rounded-full" />
+                        <div id="uEditProfileImgLoad" class="absolute inset-0 flex justify-center items-center backdrop-blur rounded-full">
+                            <div class="w-10 h-10 border-[4px] border-black/20 border-t-black dark:border-white/20 dark:border-t-white rounded-full animate-[spin_0.5s_linear_infinite]"></div>
+                        </div>
+                    {% else %}
+                        <img src="{% static 'images/avatar.png' %}" alt="User avatar" id="uEditProfileImg" class="w-full h-full object-cover rounded-full" />
+                    {% endif %}
+                    <label for="uEditAvatarInput" class="absolute bottom-1 -right-1 w-10 h-10 bg-orange-500 rounded-full border-2 border-white dark:border-gray-900 flex justify-center items-center cursor-pointer hover:bg-orange-600 transition-colors">
+                        <svg xmlns="{% static 'icons/camera.svg' %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-camera preview-icon w-5 h-5 text-white"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/></svg>
+                    </label>
+                    <input type="file" id="uEditAvatarInput" name="uEditAvatarInput" accept="image/*" class="hidden" />
+                </div>
+                {% comment %} edit profile name {% endcomment %}
+                <div class="mt-6 flex flex-col justify-center items-start w-full max-w-[450px]">
+                    <label for="uEditNameInput" class="w-full text-base py-0.5 ml-1 font-semibold text-black/60 dark:text-white/60">{% trans "Full Name" %}</label>
+                    <input type="text" id="uEditNameInput" name="uEditNameInput" placeholder="{% trans 'Enter your full name' %}" class="w-full font-normal px-3 py-3 lg:px-2 lg:py-2 bg-transparent rounded-lg outline-none border focus:ring-2 focus:ring-orange-500 border-black/15 dark:border-white/15 backdrop-blur-xl text-gray-900 placeholder:text-gray-400 dark:text-white text-base" value="{{ uProfile.name }}" />
+                    <p id="uEditNameInputError" class="text-sm w-[450px] wrap-break-word font-normal text-red-600 px-1"></p>
+                </div>
+                {% comment %} save and cancel buttons {% endcomment %}
+                <div class="mt-12 gap-5 flex flex-col justify-center items-center w-full">
+                    <button type="submit" id="uEditSaveBtn" class="w-36 flex justify-center items-center rounded-lg bg-orange-500 text-white text-[15px] font-semibold tracking-wide transition-all duration-150 h-10">
+                        <span id="uEditSaveBtnText" class="transition-all duration-200 opacity-100 scale-100">{% trans "Save profile" %}</span>
+                        <div id="uEditSaveBtnLoader" class="absolute hidden opacity-0 scale-90 transition-all duration-200">
+                            <div class="w-6 h-6 border-[4px] border-white/30 rounded-full border-t-white animate-[spin_0.3s_linear_infinite]"></div>
+                        </div>
+                    </button>
+                    <button type="button" id="uEditCancelBtn" class="text-lg lg:text-base bg-transparent text-black/90 dark:text-white/90 font-semibold">{% trans "Cancel" %}</button>
+                </div>
+            </form>    
+        </div>
+    </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', (e) => {
+            e.preventDefault();
+            const viewMenu = document.getElementById('uSettingsMenuContainer');
+            // edit profile
+            const triggerEditBtn = document.getElementById('uEditProfileTriggerBtn');
+            const viewEditProfile = document.getElementById('uProfileEditFormContainer');
+            // edit profile form
+            const uProfileEditForm = document.getElementById('uProfileEditForm');
+            const uEditAvatarInput = document.getElementById('uEditAvatarInput');
+            const uEditNameInput = document.getElementById('uEditNameInput');
+            const uEditNameInputError = document.getElementById('uEditNameInputError');
+            const uEditSaveBtn = document.getElementById('uEditSaveBtn');
+            const uEditSaveBtnText = document.getElementById('uEditSaveBtnText');
+            const uEditSaveBtnLoader = document.getElementById('uEditSaveBtnLoader');
+            const uEditCancelBtn = document.getElementById('uEditCancelBtn');
+            // copy phone number
+            const uCopyPhoneBtn = document.getElementById('uCopyPhoneBtn');
+            const uCopyToastText = document.getElementById('uCopyToastText');
+
+            function switchViewAnimated(hideTarget, showTarget) {
+                if (!hideTarget || !showTarget) return;
+                hideTarget.classList.remove('opacity-100', 'scale-100');
+                hideTarget.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => {
+                    hideTarget.classList.replace('flex', 'hidden');
+                    showTarget.classList.replace('hidden', 'flex');
+                    setTimeout(() => {
+                        showTarget.classList.remove('opacity-0', 'scale-95');
+                        showTarget.classList.add('opacity-100', 'scale-100');
+                    }, 10);
+                }, 100);
+            }
+
+            function toggleButtonLoading(button, buttonText, buttonLoader, isLoading) {
+                if (!button || !buttonText || !buttonLoader) return;
+                if (isLoading) {
+                    button.disabled = true;
+                    button.classList.add('opacity-80', 'cursor-not-allowed');
+                    buttonText.classList.replace('opacity-100', 'opacity-0');
+                    buttonText.classList.replace('scale-100', 'scale-90');
+                    buttonText.classList.add('hidden');
+                    buttonLoader.classList.replace("hidden", "flex");
+                    requestAnimationFrame(() => {
+                        buttonLoader.classList.replace('opacity-0', 'opacity-100');
+                        buttonLoader.classList.replace('scale-90', 'scale-100');
+                    });
+                } else {
+                    buttonLoader.classList.replace('opacity-100', 'opacity-0');
+                    buttonLoader.classList.replace('scale-100', 'scale-90');
+                    buttonLoader.classList.replace("flex", "hidden");
+                    buttonText.classList.remove('hidden');
+                    requestAnimationFrame(() => {
+                        buttonText.classList.replace('opacity-0', 'opacity-100');
+                        buttonText.classList.replace('scale-90', 'scale-100');
+                    });
+                    button.disabled = false;
+                    button.classList.remove('opacity-80', 'cursor-not-allowed');
+                }
+            }
+
+            triggerEditBtn?.addEventListener('click', () => switchViewAnimated(viewMenu, viewEditProfile));
+            uEditCancelBtn?.addEventListener('click', () => switchViewAnimated(viewEditProfile, viewMenu));
+
+            // edit profile image 
+            uEditAvatarInput?.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    document.getElementById('uEditProfileImg').src = URL.createObjectURL(file);
+                }
+            });
+
+            // edit profile name
+            uEditNameInput?.addEventListener('input', (e) => {
+                let name = e.target.value.trim();
+                if (name.length > 20) {
+                    uEditNameInputError.innerText = '{% trans "Maximum 20 characters allowed" %}';
+                } else {
+                    uEditNameInputError.innerText = '';
+                }
+            });
+        
+            uProfileEditForm?.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                if (uEditNameInput && uEditNameInput.value.trim().length > 20) return;
+                toggleButtonLoading(uEditSaveBtn, uEditSaveBtnText, uEditSaveBtnLoader, true);
+                try {
+                    const editData = new FormData(uProfileEditForm);
+                    const response = await fetch(uProfileEditForm.action, {
+                        method: "POST",
+                        body: editData,
+                    });
+                    const data = await response.json();
+                    if (data.success) {
+                        toggleButtonLoading(uEditSaveBtn, uEditSaveBtnText, uEditSaveBtnLoader, false);
+                        setTimeout(() => {
+                            alert(data.message);
+                            window.location.reload();
+                        }, 150); 
+                    } else {
+                        toggleButtonLoading(uEditSaveBtn, uEditSaveBtnText, uEditSaveBtnLoader, false);
+                        alert(data.message);
+                    }
+                } catch (networkError) {
+                    toggleButtonLoading(uEditSaveBtn, uEditSaveBtnText, uEditSaveBtnLoader, false);
+                    alert(window.allError?.tryAgain);
+                }
+            });
+
+            uCopyPhoneBtn?.addEventListener("click", async () => {
+                const pnValue = uCopyPhoneBtn.dataset.phoneValue ? uCopyPhoneBtn.dataset.phoneValue.trim() : "";
+                if (!pnValue || pnValue === "-") return;
+                try {
+                    await navigator.clipboard.writeText(pnValue);
+                    if (uCopyToastText) {
+                        uCopyToastText.classList.remove("opacity-0", "scale-90");
+                        uCopyToastText.classList.add("opacity-100", "scale-100");
+                        setTimeout(() => {
+                            uCopyToastText.classList.remove("opacity-100", "scale-100");
+                            uCopyToastText.classList.add("opacity-0", "scale-90");
+                        }, 1500);
+                    }
+                } catch (clipboardError) {
+                    console.error("Secure data replication failed:", clipboardError);
+                }
+            });
+        });
+    </script>
+{% endblock %}

@@ -31,8 +31,8 @@
     "fields": {
       "name": "Vadodara (Baroda)",
       "city_name_gu": "વડોદરા (બરોડા)",
-      "latitude": null,
-      "longitude": null,
+      "latitude": 22.3072,
+      "longitude": 73.1812,
       "is_active": true,
       "created_at": "2026-05-11 11:25:55.811441+05:30",
       "state_id": "7"
@@ -44,8 +44,8 @@
     "fields": {
       "name": "Rajkot",
       "city_name_gu": "રાજકોટ",
-      "latitude": null,
-      "longitude": null,
+      "latitude": 22.3039,
+      "longitude": 70.8022,
       "is_active": true,
       "created_at": "2026-05-11 11:25:55.811441+05:30",
       "state_id": "7"
@@ -57,8 +57,8 @@
     "fields": {
       "name": "Panaji (Panjim)",
       "city_name_gu": "પણજી (પંજિમ)",
-      "latitude": null,
-      "longitude": null,
+      "latitude": 15.4909,
+      "longitude": 73.8278,
       "is_active": true,
       "created_at": "2026-05-11 11:25:55.811441+05:30",
       "state_id": "6"
@@ -70,8 +70,8 @@
     "fields": {
       "name": "Vasco da Gama",
       "city_name_gu": "વાસ્કો દ ગામા",
-      "latitude": null,
-      "longitude": null,
+      "latitude": 15.3959,
+      "longitude": 73.8143,
       "is_active": true,
       "created_at": "2026-05-11 11:25:55.811441+05:30",
       "state_id": "6"
@@ -83,8 +83,8 @@
     "fields": {
       "name": "Margao (Madgaon)",
       "city_name_gu": "મડગાંવ (માર્ગાઓ)",
-      "latitude": null,
-      "longitude": null,
+      "latitude": 15.2736,
+      "longitude": 73.9581,
       "is_active": true,
       "created_at": "2026-05-11 11:25:55.811441+05:30",
       "state_id": "6"
@@ -96,8 +96,8 @@
     "fields": {
       "name": "Huntsville",
       "city_name_gu": "હન્ટ્સવિલ",
-      "latitude": null,
-      "longitude": null,
+      "latitude": 34.7304,
+      "longitude": -86.5861,
       "is_active": true,
       "created_at": "2026-05-11 11:25:55.811441+05:30",
       "state_id": "8"
@@ -109,8 +109,8 @@
     "fields": {
       "name": "Birmingham",
       "city_name_gu": "બર્મિંગહામ",
-      "latitude": null,
-      "longitude": null,
+      "latitude": 33.5186,
+      "longitude": -86.8104,
       "is_active": true,
       "created_at": "2026-05-11 11:25:55.811441+05:30",
       "state_id": "8"
@@ -122,8 +122,8 @@
     "fields": {
       "name": "Anchorage",
       "city_name_gu": "એન્કોરેજ",
-      "latitude": null,
-      "longitude": null,
+      "latitude": 61.2181,
+      "longitude": -149.9003,
       "is_active": true,
       "created_at": "2026-05-11 11:25:55.811441+05:30",
       "state_id": "9"
@@ -135,8 +135,8 @@
     "fields": {
       "name": "Fairbanks",
       "city_name_gu": "ફેયરબેન્ક્સ",
-      "latitude": null,
-      "longitude": null,
+      "latitude": 64.8401,
+      "longitude": -147.72,
       "is_active": true,
       "created_at": "2026-05-11 11:25:55.811441+05:30",
       "state_id": "9"

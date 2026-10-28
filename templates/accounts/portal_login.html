@@ -222,7 +222,6 @@
           </div>
         </div>
       </section>
-
       {% comment %}right side{% endcomment %}
       <section class="relative w-full min-h-full flex flex-col justify-center items-center lg:overflow-hidden">
         <div class="absolute inset-0 lg:hidden overflow-hidden">
@@ -236,16 +235,16 @@
           <div id="pLogin" class="w-full max-w-[450px] flex flex-col justify-center items-center mt-[155px] lg:mt-[30px]">
             <img src="{% static 'images/logo.svg' %}" alt="Brokly Portal Logo" class="w-30 hidden lg:flex" />
             <h2 class="text-center text-2xl font-bold text-gray-950 dark:text-white">{% trans 'Brokly Portal Login' %}</h2>
-            <p class="text-center w-[300px] text-gray-500 dark:text-white/50">
-              {% trans 'Access your Brokly portal and manage your business efficiently.' %}
+            <p class="text-center text-sm w-[300px] text-[#212121b0] dark:text-white/50 leading-tight">
+              {% trans 'Access your Brokly Portal and manage your properties, clients, and deals efficiently.' %}
             </p>
             {% comment %}phone input{% endcomment %}
             <label for="phone" class="mt-6 w-full text-[18px] lg:text-[15px] mr-1 py-2 font-semibold text-black/90 dark:text-white/90">{% trans 'Mobile Number' %}</label>
             <div class="flex w-full h-14 lg:h-12 overflow-hidden rounded-xl focus-within:ring-2 focus-within:ring-orange-500 border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl">
               <button type="button" id="pCountryCodeBtn" class="px-4 flex items-center justify-center gap-1 font-semibold bg-[#f1f3f6] dark:bg-white/5 text-black/90 dark:text-white text-lg">
                 <span id="pSelectedCode">+91</span>
-                {% comment %} <svg xmlns="{% static 'icons/arrow-drop-down.svg' %}" fill="none" viewBox="0 0 24 24" width="22" height="22">
-                  <path fill="currentColor" d="m11.6 14.5999 -3.95 -3.925c-0.0333 -0.03335 -0.0625 -0.073 -0.0875 -0.119 -0.025 -0.04615 -0.0375 -0.0955 -0.0375 -0.148 0 -0.10535 0.03445 -0.1955 0.10325 -0.2705 0.0687 -0.075 0.15925 -0.1125 0.27175 -0.1125h8.2c0.1125 0 0.2032 0.03865 0.272 0.116 0.0687 0.07715 0.103 0.16725 0.103 0.27025 0 0.02585 -0.04165 0.11375 -0.125 0.26375l-3.95 3.925c-0.05 0.05 -0.1088 0.09165 -0.1765 0.125 -0.06765 0.03335 -0.14215 0.05 -0.2235 0.05 -0.08115 0 -0.15565 -0.01665 -0.2235 -0.05 -0.06765 -0.03335 -0.1265 -0.075 -0.1765 -0.125Z" stroke-width="0.5"></path>
+                {% comment %} <svg stroke="currentColor" fill="none" viewBox="0 0 24 24" class="h-4 w-4">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9 6 6 6-6"/>
                 </svg> {% endcomment %}
                 <input type="hidden" id="pCountryId" name="pCountryId" value="1" />
               </button>
@@ -296,7 +295,7 @@
               </div>
 
               {% comment %}Brokly CTA{% endcomment %}
-              <a href="{% url 'user-dashboard' %}" target="_blank" id="broklyBtn" class="group w-full mt-5 py-3 lg:py-2 text-base rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold shadow-lg shadow-orange-500/20 transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-3">
+              <a href="{% url 'accounts:user_dashboard' %}" target="_blank" id="broklyBtn" class="group w-full mt-5 py-3 lg:py-2 text-base rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold shadow-lg shadow-orange-500/20 transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-3">
                 <span>{% trans 'Continue as User' %}</span>
                 <svg xmlns="{% static 'icons/arrow-right.svg' %}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:translate-x-1">
                   <path d="M5 12h14" />

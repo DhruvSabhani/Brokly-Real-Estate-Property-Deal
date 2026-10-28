@@ -12,7 +12,7 @@ from .utils import admin_required
 
 def admin_login(request):
     if request.session.get("admin_login"):
-        return redirect("admin-dashboard")
+        return redirect("admin_dashboard")
 
     if request.method == "POST":
         phone = request.POST.get("phone")
@@ -41,4 +41,4 @@ def admin_dashboard(request):
 
 def admin_logout(request):
     request.session.pop("admin_login", None)
-    return redirect("admin-login")
+    return redirect("admin_login")

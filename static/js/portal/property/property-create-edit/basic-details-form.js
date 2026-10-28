@@ -411,6 +411,6 @@ addPropertyForm.addEventListener('submit', async (e) => {
     }
   } catch (error) {
     console.log(error);
-    alert(window.allError?.tryAgain);
+    alert(window.allError.tryAgain);
   }
 });
